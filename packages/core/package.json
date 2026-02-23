@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "LotOS UI Core — design tokens, contracts, RTL engine. Zero framework dependencies.",
   "license": "MIT",
+  "author": "Lotos Technologies <lotos@lotos.dev>",
   "type": "module",
   "exports": {
     ".": {
@@ -26,6 +27,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
+    "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src --ext .ts",

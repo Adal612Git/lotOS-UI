@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/*
+ * Tell Tailwind v4 to scan @lotos/claude-arm sources.
+ * Button and other components use Tailwind utility classes — this ensures
+ * those classes are included in the generated output.
+ */
+@source "../../packages/claude-arm/src";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dropdown BEM component styles
+   The @lotos/claude-arm Dropdown provides behaviour + ARIA.
+   Visual styles are the consumer's responsibility (headless approach).
+   We use the Lotos design tokens (CSS vars) already loaded via styles.css.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.lotos-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.lotos-dropdown__trigger-wrapper {
+  display: inline-flex;
+}
+
+/* Menu panel */
+.lotos-dropdown__menu {
+  position: absolute;
+  z-index: 50;
+  min-width: 11rem;
+  margin: 0;
+  padding: var(--lotos-space-1) 0;
+  list-style: none;
+  background-color: var(--lotos-bg-secondary);
+  border: 1px solid var(--lotos-border-strong);
+  border-radius: var(--lotos-radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  outline: none;
+}
+
+/* Placement modifiers */
+.lotos-dropdown__menu--bottom-start {
+  top: calc(100% + var(--lotos-space-1));
+  left: 0;
+}
+.lotos-dropdown__menu--bottom-end {
+  top: calc(100% + var(--lotos-space-1));
+  right: 0;
+}
+.lotos-dropdown__menu--top-start {
+  bottom: calc(100% + var(--lotos-space-1));
+  left: 0;
+}
+.lotos-dropdown__menu--top-end {
+  bottom: calc(100% + var(--lotos-space-1));
+  right: 0;
+}
+.lotos-dropdown__menu--fit {
+  min-width: unset;
+  width: 100%;
+}
+
+/* Separator */
+.lotos-dropdown__separator {
+  height: 1px;
+  background-color: var(--lotos-border);
+  margin: var(--lotos-space-1) 0;
+}
+
+/* Item */
+.lotos-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--lotos-space-2);
+  padding: var(--lotos-space-2) var(--lotos-space-3);
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-primary);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  outline: none;
+  transition: background-color var(--lotos-transition-fast);
+}
+
+.lotos-dropdown__item:not([aria-disabled="true"]):hover,
+.lotos-dropdown__item:not([aria-disabled="true"]):focus {
+  background-color: var(--lotos-border);
+}
+
+.lotos-dropdown__item--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.lotos-dropdown__item--destructive {
+  color: var(--lotos-electric-red);
+}
+
+.lotos-dropdown__item--destructive:not([aria-disabled="true"]):hover,
+.lotos-dropdown__item--destructive:not([aria-disabled="true"]):focus {
+  background-color: rgba(233, 69, 96, 0.12);
+  color: var(--lotos-accent-hover);
+}
+
+.lotos-dropdown__item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.lotos-dropdown__item-label {
+  flex: 1;
+  min-width: 0;
+}
