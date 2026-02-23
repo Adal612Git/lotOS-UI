@@ -1,0 +1,36 @@
+{
+    "name": "@lotos/sentinel",
+    "version": "0.0.1",
+    "description": "LotOS Sentinel — immune system for AI-generated UI. Validates, warns, blocks bad compositions.",
+    "license": "MIT",
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "dev": "tsc -p tsconfig.build.json --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "check-types": "tsc --noEmit",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@repo/typescript-config": "workspace:*",
+        "@types/node": "^22.15.3",
+        "typescript": "^5.7.2",
+        "vitest": "^2.0.0"
+    },
+    "dependencies": {
+        "@lotos/core": "workspace:*",
+        "zod": "^3.24.0"
+    }
+}

@@ -1,0 +1,114 @@
+---
+title: Tooltip
+description: Accessible tooltip with role="tooltip", aria-describedby injection, hover+focus, delay, and 4 placements.
+---
+
+# Tooltip
+
+The `Tooltip` component wraps any trigger element and injects `aria-describedby` pointing to the tooltip element when visible. It uses `React.cloneElement` to add event handlers without requiring a wrapper component.
+
+## Import
+
+```tsx
+import { Tooltip } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Tooltip content="Save your work">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+## Placements
+
+```tsx
+<Tooltip content="Above" placement="top">
+  <Button>Hover me</Button>
+</Tooltip>
+
+<Tooltip content="Below" placement="bottom">
+  <Button>Hover me</Button>
+</Tooltip>
+
+<Tooltip content="Left" placement="left">
+  <Button>Hover me</Button>
+</Tooltip>
+
+<Tooltip content="Right" placement="right">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+## Delay
+
+```tsx
+{/* Show immediately */}
+<Tooltip content="Quick tip" delay={0}>
+  <Button>No delay</Button>
+</Tooltip>
+
+{/* Default: 200ms */}
+<Tooltip content="Patient tip">
+  <Button>With delay</Button>
+</Tooltip>
+```
+
+## Rich content
+
+```tsx
+<Tooltip
+  content={
+    <div>
+      <strong>Keyboard shortcut</strong>
+      <br />
+      <kbd>Ctrl</kbd> + <kbd>S</kbd>
+    </div>
+  }
+>
+  <Button>Save</Button>
+</Tooltip>
+```
+
+## Disabled
+
+```tsx
+<Tooltip content="This won't show" disabled>
+  <Button>No tooltip</Button>
+</Tooltip>
+```
+
+## Max width
+
+```tsx
+<Tooltip content="A very long tooltip that wraps nicely" maxWidth={200}>
+  <Button>Info</Button>
+</Tooltip>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `children` | `ReactElement` | — | **Required** — the trigger element |
+| `content` | `ReactNode` | — | **Required** — tooltip content |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Tooltip placement |
+| `delay` | `number` | `200` | Show delay in milliseconds |
+| `disabled` | `boolean` | `false` | Disable the tooltip |
+| `maxWidth` | `number` | `280` | Max width in pixels |
+
+## Accessibility
+
+- `role="tooltip"` on the tooltip element
+- `aria-describedby` is set on the trigger when tooltip is visible, removed when hidden
+- `aria-hidden="true"` on the tooltip when not visible
+- Shows on both `mouseenter` and `focus` (keyboard accessible)
+- Hides on `mouseleave` and `blur`
+- Sentinel warns when `content` is empty
+
+## Anti-hallucination rules (MCP)
+
+- ✅ The `children` element must be a **single** React element (not a fragment)
+- ❌ Do NOT use `div` or `span` as trigger — use an interactive element (`button`, `a`) for keyboard accessibility
+- ❌ Do NOT replicate tooltip behavior with `title` HTML attribute — it has terrible screen reader support

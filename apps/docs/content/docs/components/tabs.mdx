@@ -1,0 +1,123 @@
+---
+title: Tabs
+description: Accessible tab interface with role=tablist/tab/tabpanel, arrow key navigation, three variants, and lazy panel rendering.
+---
+
+# Tabs
+
+The `Tabs` component implements the WAI-ARIA tablist pattern. Arrow keys navigate between tabs, panels are lazy-mounted (content only renders when the tab is active), and each tab/panel pair is linked via `aria-controls`/`aria-labelledby`.
+
+## Import
+
+```tsx
+import { Tabs } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Tabs
+  label="Account settings"
+  tabs={[
+    { value: 'profile', label: 'Profile', content: <ProfileForm /> },
+    { value: 'security', label: 'Security', content: <SecurityForm /> },
+    { value: 'billing', label: 'Billing', content: <BillingForm /> },
+  ]}
+/>
+```
+
+## Variants
+
+```tsx
+{/* Default — underline active indicator */}
+<Tabs label="Settings" variant="underline" tabs={tabs} />
+
+{/* Pills — filled background on active */}
+<Tabs label="Settings" variant="pills" tabs={tabs} />
+
+{/* Card — bordered tabs */}
+<Tabs label="Settings" variant="card" tabs={tabs} />
+```
+
+## Controlled
+
+```tsx
+const [tab, setTab] = useState('profile')
+
+<Tabs
+  label="Settings"
+  value={tab}
+  onChange={setTab}
+  tabs={tabs}
+/>
+```
+
+## With icons
+
+```tsx
+tabs={[
+  { value: 'profile', label: 'Profile', icon: <UserIcon />, content: <ProfileForm /> },
+  { value: 'security', label: 'Security', icon: <ShieldIcon />, content: <SecurityForm /> },
+]}
+```
+
+## Vertical orientation
+
+```tsx
+<Tabs
+  label="Navigation"
+  orientation="vertical"
+  tabs={tabs}
+/>
+```
+
+## Disabled tab
+
+```tsx
+tabs={[
+  { value: 'active', label: 'Active', content: <div>Works</div> },
+  { value: 'locked', label: 'Locked', content: <div>Locked</div>, disabled: true },
+]}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `tabs` | `TabItem[]` | — | **Required** — tab definitions |
+| `label` | `string` | — | Accessible name for the tablist (required) |
+| `value` | `string` | — | Controlled active tab |
+| `defaultValue` | `string` | first enabled | Initial tab (uncontrolled) |
+| `onChange` | `(value: string) => void` | — | Called when tab changes |
+| `variant` | `'underline' \| 'pills' \| 'card'` | `'underline'` | Visual style |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Layout and keyboard direction |
+
+### TabItem
+
+| Field | Type | Description |
+|---|---|---|
+| `value` | `string` | Unique identifier |
+| `label` | `ReactNode` | Tab button content |
+| `content` | `ReactNode` | Panel content (lazy mounted) |
+| `icon` | `ReactNode` | Icon before label |
+| `disabled` | `boolean` | Disable this tab |
+
+## Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `→` / `↓` | Next tab (wraps) |
+| `←` / `↑` | Previous tab (wraps) |
+| `Home` | First tab |
+| `End` | Last tab |
+| `Tab` | Move focus into the active panel |
+
+## Accessibility
+
+- `role="tablist"` with `aria-label` and `aria-orientation`
+- `role="tab"` with `aria-selected` and `aria-controls`
+- `role="tabpanel"` with `aria-labelledby`
+- `tabIndex={0}` on active tab, `tabIndex={-1}` on inactive (roving tabindex)
+- Panels use `hidden` attribute — screen readers know they exist but are inactive
+- Lazy rendering: panel content is only in the DOM when active
+- Sentinel warns when `label` is missing

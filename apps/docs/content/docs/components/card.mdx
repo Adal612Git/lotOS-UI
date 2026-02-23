@@ -1,0 +1,65 @@
+---
+title: Card
+description: Content container with glass morphism, interactive mode, and full keyboard navigation support.
+---
+
+# Card
+
+`Card` is a flexible content container. It supports static and interactive modes, glass morphism, configurable shadow/padding/border, and full keyboard navigation when used as a clickable element.
+
+## Import
+
+```tsx
+import { Card } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Card padding="md" shadow="sm">
+  <h3>Card Title</h3>
+  <p>Card description content here.</p>
+</Card>
+```
+
+## Interactive card
+
+When `interactive=true` or `onClick` is provided, the card receives `role="button"`, `tabIndex={0}`, and responds to `Enter`/`Space` keyboard events.
+
+```tsx
+<Card interactive onClick={handleClick} padding="lg">
+  <h3>Click me</h3>
+  <p>This entire card is clickable.</p>
+</Card>
+```
+
+> **Anti-hallucination rule**: Do NOT nest interactive cards inside other interactive cards. This is ambiguous for assistive technologies.
+
+## Glass morphism
+
+The `glass` prop adds a frosted-glass effect. Use it on dark backgrounds (Deep Navy, Ocean Blue).
+
+```tsx
+<Card glass padding="lg" shadow="lg">
+  <h3>Glass card</h3>
+  <p>Beautiful on dark backgrounds.</p>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `padding` | `'none' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Inner padding |
+| `shadow` | `'none' \| 'sm' \| 'md' \| 'lg'` | `'sm'` | Box shadow |
+| `border` | `'none' \| 'default' \| 'strong'` | `'default'` | Border style |
+| `interactive` | `boolean` | `false` | Adds `role="button"` and keyboard support |
+| `glass` | `boolean` | `false` | Glassmorphism backdrop blur effect |
+| `onClick` | `(e) => void` | — | Click handler (implies `interactive`) |
+| `aria-label` | `string` | — | Label for interactive cards |
+
+## Accessibility
+
+- Interactive cards get `role="button"` and `tabIndex={0}` automatically
+- `Enter` and `Space` trigger `onClick`
+- Focus ring follows the LotOS focus indicator

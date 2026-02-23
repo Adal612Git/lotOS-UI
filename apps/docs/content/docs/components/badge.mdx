@@ -1,0 +1,69 @@
+---
+title: Badge
+description: Small, inline status indicator with 6 variants, 3 sizes, and optional dot mode.
+---
+
+# Badge
+
+The `Badge` component communicates status, counts, and metadata in a compact format. It supports a dot-only mode with proper ARIA labeling for screen readers.
+
+## Import
+
+```tsx
+import { Badge } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Badge variant="success">Active</Badge>
+<Badge variant="error">Failed</Badge>
+<Badge variant="warning">Pending</Badge>
+```
+
+## Variants
+
+| Variant | Color | Use case |
+|---|---|---|
+| `default` | Neutral grey | Generic labels |
+| `success` | Green | Completed, active, online |
+| `warning` | Amber | Pending, review needed |
+| `error` | Red | Failed, offline, critical |
+| `info` | Blue | Informational |
+| `outline` | Transparent + border | Subtle labels, Beta tags |
+
+## Sizes
+
+```tsx
+<Badge variant="info" size="sm">Small</Badge>
+<Badge variant="info" size="md">Medium</Badge>
+<Badge variant="info" size="lg">Large</Badge>
+```
+
+## Dot mode
+
+Use `dot` for a compact status indicator. When there is no visible text, you **must** provide `aria-label`.
+
+```tsx
+{/* With text */}
+<Badge dot variant="success">Online</Badge>
+
+{/* Without text — MUST have aria-label */}
+<Badge dot variant="error" aria-label="Offline status" />
+```
+
+> **Sentinel warning**: A dot badge with no text and no `aria-label` will trigger a console warning. Screen reader users won't know the status.
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `variant` | `'default' \| 'success' \| 'warning' \| 'error' \| 'info' \| 'outline'` | `'default'` | Visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+| `dot` | `boolean` | `false` | Show status dot |
+| `aria-label` | `string` | — | Required for dot-only badges |
+
+## Accessibility
+
+- Dot-only badges require `aria-label` for screen reader users
+- All text content is rendered as-is (no ARIA roles added — use `role="status"` on a parent for live updates)

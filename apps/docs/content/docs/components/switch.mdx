@@ -1,0 +1,76 @@
+---
+title: Switch
+description: Toggle switch with role="switch", track+thumb animation, label, and description.
+---
+
+# Switch
+
+The `Switch` component is a toggle control with `role="switch"` semantics. It renders a native `<input type="checkbox">` behind a CSS-animated track + thumb, so it remains fully keyboard accessible and works in all browsers without JavaScript polyfills.
+
+## Import
+
+```tsx
+import { Switch } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Switch label="Dark mode" />
+```
+
+## Controlled
+
+```tsx
+const [enabled, setEnabled] = useState(false)
+
+<Switch
+  label="Notifications"
+  checked={enabled}
+  onChange={(e) => setEnabled(e.target.checked)}
+/>
+```
+
+## With description
+
+```tsx
+<Switch
+  label="Auto-save"
+  description="Automatically save your work every 30 seconds"
+/>
+```
+
+## Sizes
+
+```tsx
+<Switch label="Small"  size="sm" />
+<Switch label="Medium" size="md" />
+<Switch label="Large"  size="lg" />
+```
+
+## Disabled
+
+```tsx
+<Switch label="Premium feature" disabled />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | Visible label (or use `aria-label`) |
+| `description` | `string` | — | Helper text below the switch |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+| `disabled` | `boolean` | `false` | Disables the switch |
+| `checked` | `boolean` | — | Controlled on/off state |
+| `onChange` | `ChangeEventHandler` | — | Change handler |
+
+## Accessibility
+
+- Uses `role="switch"` on the `<input>` element
+- `aria-checked` is set automatically by the native checkbox
+- Label is associated via `htmlFor`/`id`
+- Sentinel warns when no `label` or `aria-label` is provided
+- Keyboard: `Space` toggles the switch
+
+> **Anti-hallucination rule**: Do NOT use `<div onClick>` as a custom switch. Always use `<Switch>` — the native input behind the track is what makes it accessible.

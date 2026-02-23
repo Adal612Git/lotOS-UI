@@ -1,0 +1,137 @@
+---
+title: Accordion
+description: Collapsible content sections with aria-expanded, single/multiple mode, and animated chevron.
+---
+
+# Accordion
+
+The `Accordion` component renders a list of expandable sections. Each section is wrapped in an `<h3>` for semantic document structure. `aria-expanded` communicates state, and `role="region"` with `aria-labelledby` associates the panel with its trigger.
+
+## Import
+
+```tsx
+import { Accordion } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Accordion
+  items={[
+    {
+      value: 'shipping',
+      title: 'How long does shipping take?',
+      content: <p>Standard shipping takes 5–7 business days.</p>,
+    },
+    {
+      value: 'returns',
+      title: 'What is your return policy?',
+      content: <p>You can return any item within 30 days.</p>,
+    },
+    {
+      value: 'support',
+      title: 'How do I contact support?',
+      content: <p>Email us at support@lotos.dev.</p>,
+    },
+  ]}
+/>
+```
+
+## Multiple open at once
+
+```tsx
+<Accordion multiple items={faqItems} />
+```
+
+## Controlled
+
+```tsx
+const [open, setOpen] = useState<string>('')
+
+<Accordion
+  value={open}
+  onChange={(v) => setOpen(v as string)}
+  items={faqItems}
+/>
+```
+
+## Controlled with multiple
+
+```tsx
+const [open, setOpen] = useState<string[]>([])
+
+<Accordion
+  multiple
+  value={open}
+  onChange={(v) => setOpen(v as string[])}
+  items={faqItems}
+/>
+```
+
+## Default open
+
+```tsx
+<Accordion defaultValue="shipping" items={faqItems} />
+
+{/* Multiple defaults */}
+<Accordion multiple defaultValue={['shipping', 'returns']} items={faqItems} />
+```
+
+## Variants
+
+```tsx
+{/* Default — subtle border */}
+<Accordion variant="default" items={items} />
+
+{/* Bordered — prominent border around entire accordion */}
+<Accordion variant="bordered" items={items} />
+
+{/* Ghost — no borders, minimal visual weight */}
+<Accordion variant="ghost" items={items} />
+```
+
+## Disabled item
+
+```tsx
+items={[
+  { value: 'open', title: 'Available section', content: <p>Content here</p> },
+  { value: 'locked', title: 'Premium feature', content: <p>Upgrade to access</p>, disabled: true },
+]}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `items` | `AccordionItem[]` | — | **Required** — accordion sections |
+| `multiple` | `boolean` | `false` | Allow multiple sections open simultaneously |
+| `value` | `string \| string[]` | — | Controlled open section(s) |
+| `defaultValue` | `string \| string[]` | — | Initial open section(s) (uncontrolled) |
+| `onChange` | `(value: string \| string[]) => void` | — | Called when open state changes |
+| `variant` | `'default' \| 'bordered' \| 'ghost'` | `'default'` | Visual style |
+
+### AccordionItem
+
+| Field | Type | Description |
+|---|---|---|
+| `value` | `string` | Unique identifier |
+| `title` | `ReactNode` | Trigger / header content |
+| `content` | `ReactNode` | Expandable content (lazy mounted) |
+| `disabled` | `boolean` | Prevent this item from being toggled |
+
+## Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `Enter` / `Space` | Toggle the focused section |
+| `Tab` | Move to next interactive element |
+
+## Accessibility
+
+- Trigger wrapped in `<h3>` for document heading structure
+- `aria-expanded` on the trigger button
+- `aria-controls` points to the panel `id`
+- `role="region"` on the panel, `aria-labelledby` points to the trigger
+- `hidden` attribute on closed panels
+- Content is lazy-mounted (not in DOM when closed)
+- `aria-disabled="true"` on disabled triggers (not `disabled` attr due to heading context)

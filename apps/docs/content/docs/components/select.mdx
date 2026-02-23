@@ -1,0 +1,89 @@
+---
+title: Select
+description: Native select element with custom styling, placeholder, error state, and helper text.
+---
+
+# Select
+
+The `Select` component wraps the native `<select>` element with consistent LotOS styling, accessible label association, error states, and Sentinel validation warnings.
+
+## Import
+
+```tsx
+import { Select } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Select
+  label="Framework"
+  options={[
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue' },
+    { value: 'svelte', label: 'Svelte' },
+  ]}
+/>
+```
+
+## With placeholder
+
+```tsx
+<Select
+  label="Country"
+  placeholder="Select a country..."
+  options={countryOptions}
+/>
+```
+
+## With error
+
+```tsx
+<Select
+  label="Country"
+  options={countryOptions}
+  error="Please select a country"
+/>
+```
+
+## Disabled options
+
+```tsx
+<Select
+  label="Plan"
+  options={[
+    { value: 'free', label: 'Free' },
+    { value: 'pro', label: 'Pro — $149/mo' },
+    { value: 'enterprise', label: 'Enterprise', disabled: true },
+  ]}
+/>
+```
+
+## Sizes
+
+```tsx
+<Select label="Small"  options={opts} size="sm" />
+<Select label="Medium" options={opts} size="md" />
+<Select label="Large"  options={opts} size="lg" />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | **Required** for accessibility (or use `aria-label`) |
+| `options` | `SelectOption[]` | — | **Required** — array of `{value, label, disabled?}` |
+| `placeholder` | `string` | — | Disabled first option prompting selection |
+| `error` | `string` | — | Error message (triggers `aria-invalid`) |
+| `helperText` | `string` | — | Helper text below the select |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Visual size |
+| `disabled` | `boolean` | `false` | Disables the select |
+| `required` | `boolean` | `false` | Marks field as required |
+
+## Accessibility
+
+- Label associated via `htmlFor`/`id` (auto-generated stable IDs)
+- `aria-invalid="true"` when `error` is present
+- Error message linked via `aria-describedby` with `role="alert"`
+- `aria-required` set for required fields
+- Sentinel warns when no `label` or `aria-label` is provided

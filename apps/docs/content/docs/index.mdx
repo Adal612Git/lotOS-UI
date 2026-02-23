@@ -1,0 +1,54 @@
+---
+title: Introduction
+description: The first UI component ecosystem designed for AI agents.
+---
+
+# Welcome to LotOS UI
+
+LotOS UI is the first component ecosystem specifically designed so that **AI agents can build perfect interfaces at the first attempt**. We achieved this through three pillars:
+
+1. **MCP Server** — your AI reads component schemas, JSX examples, and anti-hallucination rules directly via the Model Context Protocol
+2. **Sentinel Guard** — runtime warnings that teach the AI your guardrails, not just your API
+3. **Framework independence** — one design system, five framework exports (React, Vue, Svelte, Solid, Angular)
+
+## What makes LotOS different?
+
+| Feature | LotOS | shadcn/ui | HeroUI |
+|---|---|---|---|
+| MCP Server | ✅ | ❌ | ❌ |
+| WCAG 2.2 AAA | ✅ | Partial | Partial |
+| RTL out of the box | ✅ | ❌ | Partial |
+| Multi-framework | ✅ (roadmap) | ❌ | ❌ |
+| Zod schema contracts | ✅ | ❌ | ❌ |
+| Sentinel Guard | ✅ | ❌ | ❌ |
+
+## The two arms
+
+LotOS is organized into two arms:
+
+- **Claude arm (`@lotos/claude-arm`)** — React 19 components with full ARIA support. This is the production arm.
+- **DeepSeek arm (`@lotos/deepseek-arm`)** — Vue/Svelte/Solid outputs via AI translation. Coming in Sprint 3.
+
+## Package structure
+
+```
+@lotos/core          — Design tokens, dark mode engine, RTL, Zod schemas, MCP server
+@lotos/claude-arm    — React 19 components (production-ready)
+@lotos/sentinel      — Runtime prop validation and Sentinel warnings
+@lotos/cli           — `lotos-ui add <component>` scaffolding CLI
+```
+
+## Quick start
+
+```bash
+# Install
+pnpm add @lotos/claude-arm
+
+# Import styles once in your root layout
+import '@lotos/claude-arm/styles.css'
+
+# Use components
+import { Button, Input, Modal } from '@lotos/claude-arm'
+```
+
+Continue reading → [Installation](/docs/getting-started/installation)

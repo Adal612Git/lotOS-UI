@@ -1,0 +1,154 @@
+---
+title: Radio Group
+description: Accessible radio group with fieldset/legend pattern, arrow key navigation, and description per option.
+---
+
+# Radio Group
+
+The `RadioGroup` component uses the `<fieldset>` + `<legend>` pattern — the correct semantic structure for a group of related radio buttons. Arrow keys cycle through options following the WAI-ARIA radio group interaction pattern.
+
+## Import
+
+```tsx
+import { RadioGroup } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<RadioGroup
+  label="Preferred contact method"
+  options={[
+    { value: 'email', label: 'Email' },
+    { value: 'phone', label: 'Phone' },
+    { value: 'sms', label: 'SMS' },
+  ]}
+/>
+```
+
+## Controlled
+
+```tsx
+const [plan, setPlan] = useState('pro')
+
+<RadioGroup
+  label="Billing plan"
+  value={plan}
+  onChange={setPlan}
+  options={[
+    { value: 'free', label: 'Free' },
+    { value: 'pro', label: 'Pro' },
+    { value: 'enterprise', label: 'Enterprise' },
+  ]}
+/>
+```
+
+## With description per option
+
+```tsx
+<RadioGroup
+  label="Shipping speed"
+  options={[
+    { value: 'standard', label: 'Standard', description: '5–7 business days, free' },
+    { value: 'express', label: 'Express', description: '2–3 business days, $9.99' },
+    { value: 'overnight', label: 'Overnight', description: 'Next business day, $24.99' },
+  ]}
+/>
+```
+
+## Horizontal layout
+
+```tsx
+<RadioGroup
+  label="Size"
+  orientation="horizontal"
+  options={[
+    { value: 'sm', label: 'S' },
+    { value: 'md', label: 'M' },
+    { value: 'lg', label: 'L' },
+    { value: 'xl', label: 'XL' },
+  ]}
+/>
+```
+
+## With error
+
+```tsx
+<RadioGroup
+  label="Contact preference"
+  options={contactOptions}
+  error="Please select a contact preference"
+/>
+```
+
+## Disabled states
+
+```tsx
+{/* Disable the entire group */}
+<RadioGroup label="Plan" options={planOptions} disabled />
+
+{/* Disable a single option */}
+<RadioGroup
+  label="Plan"
+  options={[
+    { value: 'free', label: 'Free' },
+    { value: 'enterprise', label: 'Enterprise', disabled: true },
+  ]}
+/>
+```
+
+## Default value (uncontrolled)
+
+```tsx
+<RadioGroup
+  label="Theme"
+  defaultValue="dark"
+  options={[
+    { value: 'light', label: 'Light' },
+    { value: 'dark', label: 'Dark' },
+    { value: 'system', label: 'System' },
+  ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | **Required** — rendered as `<legend>` |
+| `options` | `RadioOption[]` | — | **Required** — radio option definitions |
+| `value` | `string` | — | Controlled selected value |
+| `defaultValue` | `string` | — | Initial value (uncontrolled) |
+| `onChange` | `(value: string) => void` | — | Called when selection changes |
+| `error` | `string` | — | Error message (`role="alert"`) |
+| `helperText` | `string` | — | Helper text |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout direction |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+| `name` | `string` | auto-generated | Form name for the radio group |
+| `disabled` | `boolean` | `false` | Disable all options |
+
+### RadioOption
+
+| Field | Type | Description |
+|---|---|---|
+| `value` | `string` | Option value |
+| `label` | `string` | Visible text |
+| `description` | `string` | Secondary text below label |
+| `disabled` | `boolean` | Disable this specific option |
+
+## Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `Tab` | Move focus into / out of the group |
+| `↓` / `→` | Select next option (wraps) |
+| `↑` / `←` | Select previous option (wraps) |
+
+## Accessibility
+
+- `<fieldset>` with `<legend>` — correct grouping for screen readers
+- Each `<input type="radio">` associated with its `<label>` via `id`/`htmlFor`
+- Description text linked via `aria-describedby`
+- Group `aria-invalid="true"` when `error` is present
+- Error linked via `aria-describedby` with `role="alert"`
+- Sentinel warns when `label` is missing

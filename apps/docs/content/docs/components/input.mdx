@@ -1,0 +1,116 @@
+---
+title: Input
+description: Accessible text input with label, helper text, error state, and start/end adornments.
+---
+
+# Input
+
+The `Input` component is a fully accessible text field. Every instance generates stable, unique IDs for `htmlFor`/`id` association, error linking via `aria-describedby`, and `aria-invalid` for validation states.
+
+## Import
+
+```tsx
+import { Input } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Input
+  type="email"
+  label="Email address"
+  placeholder="you@example.com"
+  required
+/>
+```
+
+> **Sentinel warning**: An `Input` without a `label` or `aria-label` triggers a console warning. Unlabeled inputs fail WCAG at all levels.
+
+## With error
+
+Use the `error` prop to show validation feedback. It sets `aria-invalid="true"` and links the error message via `aria-describedby` automatically.
+
+```tsx
+<Input
+  type="email"
+  label="Email"
+  value="not-an-email"
+  error="Please enter a valid email address"
+/>
+```
+
+## With helper text
+
+```tsx
+<Input
+  type="text"
+  label="Username"
+  helperText="Only letters, numbers, and underscores"
+/>
+```
+
+> Note: `helperText` is hidden when `error` is present — the error takes priority.
+
+## Adornments
+
+```tsx
+{/* Search with icon */}
+<Input
+  label="Search"
+  type="search"
+  placeholder="Search components..."
+  startAdornment={<SearchIcon />}
+/>
+
+{/* Password with toggle */}
+<Input
+  label="Password"
+  type={showPassword ? 'text' : 'password'}
+  endAdornment={
+    <button onClick={togglePassword} aria-label="Toggle password">
+      {showPassword ? <EyeOff /> : <Eye />}
+    </button>
+  }
+/>
+```
+
+## Sizes
+
+```tsx
+<Input label="Small" size="sm" />
+<Input label="Medium" size="md" />
+<Input label="Large"  size="lg" />
+```
+
+## Disabled and read-only
+
+```tsx
+<Input label="Email" value="me@example.com" disabled />
+<Input label="Username" value="rick" readOnly />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | **Required** for accessibility (or use `aria-label`) |
+| `type` | `string` | `'text'` | HTML input type |
+| `value` | `string` | — | Controlled value |
+| `defaultValue` | `string` | — | Uncontrolled default |
+| `placeholder` | `string` | — | Placeholder text |
+| `error` | `string` | — | Error message (triggers `aria-invalid`) |
+| `helperText` | `string` | — | Helper text below the input |
+| `required` | `boolean` | `false` | Marks field as required |
+| `disabled` | `boolean` | `false` | Disables the input |
+| `readOnly` | `boolean` | `false` | Makes the input read-only |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Visual size |
+| `startAdornment` | `ReactNode` | — | Content before the input |
+| `endAdornment` | `ReactNode` | — | Content after the input |
+| `onChange` | `ChangeEventHandler` | — | Change handler |
+
+## Accessibility
+
+- Label is associated via `htmlFor`/`id` (auto-generated stable IDs)
+- `aria-invalid="true"` when `error` is present
+- Error is linked via `aria-describedby`
+- Asterisk (`*`) for `required` fields is `aria-hidden="true"` — `aria-required` is set on the input instead

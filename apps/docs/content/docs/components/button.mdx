@@ -1,0 +1,114 @@
+---
+title: Button
+description: Interactive button element with 6 variants, 5 sizes, loading state, and full keyboard accessibility.
+---
+
+# Button
+
+The `Button` component is the foundational interactive element in LotOS UI. It supports 6 visual variants, 5 sizes, loading state, icon slots, and full keyboard/ARIA accessibility out of the box.
+
+## Import
+
+```tsx
+import { Button } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Button variant="primary" size="md">
+  Get Started
+</Button>
+```
+
+## Variants
+
+| Variant | Use case |
+|---|---|
+| `primary` | Main call-to-action |
+| `secondary` | Secondary action |
+| `ghost` | Tertiary / cancel buttons |
+| `destructive` | Delete, remove, dangerous actions |
+| `outline` | Bordered button for alternate hierarchy |
+| `link` | Inline text link with button semantics |
+
+```tsx
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive">Delete</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="link">Link</Button>
+```
+
+## Sizes
+
+```tsx
+<Button size="xs">Extra Small</Button>
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+<Button size="xl">Extra Large</Button>
+<Button size="icon" aria-label="Settings">⚙️</Button>
+```
+
+## Loading state
+
+Use `loading` to show a spinner and disable interaction. Do **not** combine with `disabled`.
+
+```tsx
+<Button variant="primary" loading>
+  Saving...
+</Button>
+```
+
+> **Sentinel warning**: Using `disabled` and `loading` together triggers a console warning. `loading` implies disabled — remove the `disabled` prop.
+
+## Full width
+
+```tsx
+<Button variant="primary" fullWidth type="submit">
+  Sign in
+</Button>
+```
+
+## Icon slots
+
+```tsx
+<Button variant="primary" leftIcon={<ArrowRight />}>
+  Continue
+</Button>
+<Button variant="ghost" rightIcon={<ExternalLink />}>
+  Open in new tab
+</Button>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'destructive' \| 'outline' \| 'link'` | `'primary'` | Visual style |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'icon'` | `'md'` | Size |
+| `disabled` | `boolean` | `false` | Disables the button |
+| `loading` | `boolean` | `false` | Shows spinner + disables |
+| `fullWidth` | `boolean` | `false` | `width: 100%` |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML button type |
+| `leftIcon` | `ReactNode` | — | Icon before label |
+| `rightIcon` | `ReactNode` | — | Icon after label |
+| `onClick` | `(e) => void` | — | Click handler |
+| `aria-label` | `string` | — | Required for icon-only buttons |
+
+## Accessibility
+
+- Keyboard: `Enter` and `Space` activate the button
+- `aria-busy="true"` is set when `loading=true`
+- Icon-only buttons (`size="icon"`) **must** have `aria-label`
+- Focus ring follows the LotOS focus indicator (2px solid Electric Red)
+
+## Anti-hallucination rules (MCP)
+
+The MCP server enforces these restrictions to prevent AI misuse:
+
+- ❌ Do NOT use `disabled` + `loading` together
+- ❌ Do NOT use `variant="primary"` with custom red className for destructive actions — use `variant="destructive"`
+- ✅ Icon-only buttons MUST have `aria-label`

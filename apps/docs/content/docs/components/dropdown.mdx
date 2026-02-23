@@ -1,0 +1,129 @@
+---
+title: Dropdown
+description: Accessible dropdown menu with keyboard navigation, separators, destructive actions, and icon support.
+---
+
+# Dropdown
+
+The `Dropdown` component implements a WAI-ARIA compliant menu with full keyboard navigation. It accepts any element as a trigger and uses a wrapper `div` with `aria-haspopup="menu"` and `aria-expanded` to communicate state to assistive technologies.
+
+## Import
+
+```tsx
+import { Dropdown } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Dropdown
+  label="User actions"
+  trigger={<Button>Options</Button>}
+  items={[
+    { value: 'edit', label: 'Edit' },
+    { value: 'duplicate', label: 'Duplicate' },
+    { value: 'delete', label: 'Delete' },
+  ]}
+  onSelect={(value) => console.log(value)}
+/>
+```
+
+## Destructive action
+
+Mark dangerous items with `destructive: true` — they render in red.
+
+```tsx
+items={[
+  { value: 'rename', label: 'Rename' },
+  { value: 'archive', label: 'Archive' },
+  { value: 'delete', label: 'Delete permanently', destructive: true },
+]}
+```
+
+## Separator
+
+Add `separator: true` to an item to render a visual divider **above** it.
+
+```tsx
+items={[
+  { value: 'edit', label: 'Edit' },
+  { value: 'duplicate', label: 'Duplicate' },
+  { value: 'delete', label: 'Delete', separator: true, destructive: true },
+]}
+```
+
+## With icons
+
+```tsx
+items={[
+  { value: 'edit', label: 'Edit', icon: <PencilIcon /> },
+  { value: 'delete', label: 'Delete', icon: <TrashIcon />, destructive: true },
+]}
+```
+
+## Placement
+
+```tsx
+<Dropdown placement="bottom-end" trigger={<Button>⋮</Button>} items={items} />
+<Dropdown placement="top-start"  trigger={<Button>⋮</Button>} items={items} />
+```
+
+## Width strategy
+
+```tsx
+{/* Menu matches trigger width */}
+<Dropdown width="trigger" trigger={<Button style={{ width: 200 }}>Select</Button>} items={items} />
+```
+
+## Disabled items
+
+```tsx
+items={[
+  { value: 'copy', label: 'Copy' },
+  { value: 'paste', label: 'Paste', disabled: true },
+]}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `trigger` | `ReactNode` | — | **Required** — the element that opens the menu |
+| `items` | `DropdownItem[]` | — | **Required** — menu item definitions |
+| `label` | `string` | — | Accessible name for the menu (required for screen readers) |
+| `onSelect` | `(value, item) => void` | — | Called when a non-disabled item is selected |
+| `placement` | `'bottom-start' \| 'bottom-end' \| 'top-start' \| 'top-end'` | `'bottom-start'` | Menu position relative to trigger |
+| `width` | `'trigger' \| 'auto'` | `'auto'` | Menu width strategy |
+
+### DropdownItem
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `value` | `string` | — | Unique identifier |
+| `label` | `string` | — | Display text |
+| `icon` | `ReactNode` | — | Icon rendered before the label |
+| `disabled` | `boolean` | `false` | Greys out and prevents interaction |
+| `destructive` | `boolean` | `false` | Red text for dangerous actions |
+| `separator` | `boolean` | `false` | Renders a divider above this item |
+
+## Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `Enter` / `Space` / `↓` | Open menu, focus first item |
+| `↑` | Open menu, focus last item |
+| `↓` / `↑` | Navigate items (wraps) |
+| `Home` / `End` | Jump to first / last item |
+| `Enter` / `Space` | Select focused item |
+| `Escape` | Close menu, return focus to trigger |
+| `Tab` | Close menu |
+
+## Accessibility
+
+- `aria-haspopup="menu"` on the trigger wrapper
+- `aria-expanded` updates automatically
+- `aria-controls` points to the menu `id` when open
+- `role="menu"` on the list, `role="menuitem"` on each item
+- `role="separator"` on dividers
+- `aria-disabled="true"` on disabled items (not `disabled` attr — menuitem doesn't support it)
+- Sentinel warns when `label` prop is missing

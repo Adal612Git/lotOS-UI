@@ -1,0 +1,45 @@
+{
+  "name": "@lotos/core",
+  "version": "0.0.1",
+  "description": "LotOS UI Core — design tokens, contracts, RTL engine. Zero framework dependencies.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tokens": {
+      "import": "./dist/tokens/index.js",
+      "types": "./dist/tokens/index.d.ts"
+    },
+    "./schemas": {
+      "import": "./dist/schemas/index.js",
+      "types": "./dist/schemas/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.24.0"
+  }
+}

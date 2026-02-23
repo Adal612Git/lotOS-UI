@@ -1,0 +1,144 @@
+---
+title: Combobox
+description: Searchable dropdown with live filtering, aria-activedescendant, full keyboard navigation, and empty state.
+---
+
+# Combobox
+
+The `Combobox` component is a searchable select that filters options as the user types. It follows the WAI-ARIA 1.2 combobox pattern with `role="combobox"`, `aria-expanded`, and `aria-activedescendant` to keep screen readers in sync with the active option.
+
+## Import
+
+```tsx
+import { Combobox } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Combobox
+  label="Country"
+  options={[
+    { value: 'mx', label: 'Mexico' },
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' },
+  ]}
+/>
+```
+
+## Controlled
+
+```tsx
+const [country, setCountry] = useState('')
+
+<Combobox
+  label="Country"
+  value={country}
+  onChange={(value) => setCountry(value)}
+  options={countryOptions}
+/>
+```
+
+## Custom placeholder
+
+```tsx
+<Combobox
+  label="Framework"
+  placeholder="Type to search..."
+  options={frameworkOptions}
+/>
+```
+
+## Custom empty state
+
+```tsx
+<Combobox
+  label="City"
+  emptyMessage="No cities match your search"
+  options={cityOptions}
+/>
+```
+
+## With error
+
+```tsx
+<Combobox
+  label="Country"
+  options={countryOptions}
+  error="Please select a valid country"
+/>
+```
+
+## With helper text
+
+```tsx
+<Combobox
+  label="Timezone"
+  helperText="Used for scheduling reminders"
+  options={timezoneOptions}
+/>
+```
+
+## Sizes
+
+```tsx
+<Combobox label="Small"  size="sm" options={opts} />
+<Combobox label="Medium" size="md" options={opts} />
+<Combobox label="Large"  size="lg" options={opts} />
+```
+
+## Disabled
+
+```tsx
+<Combobox label="Country" options={countryOptions} disabled />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | **Required** — visible label and listbox `aria-label` |
+| `options` | `ComboboxOption[]` | — | **Required** — all available options |
+| `value` | `string` | — | Controlled selected value |
+| `onChange` | `(value, option) => void` | — | Called when an option is selected |
+| `placeholder` | `string` | `'Search...'` | Input placeholder |
+| `error` | `string` | — | Error message (`aria-invalid` + `role="alert"`) |
+| `helperText` | `string` | — | Helper text below the combobox |
+| `emptyMessage` | `string` | `'No results found'` | Message when filter yields no results |
+| `disabled` | `boolean` | `false` | Disables the input |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Visual size |
+
+### ComboboxOption
+
+| Field | Type | Description |
+|---|---|---|
+| `value` | `string` | Option value passed to `onChange` |
+| `label` | `string` | Display text and filter target |
+| `disabled` | `boolean` | Exclude from filtering and interaction |
+
+## Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `↓` or `Enter` | Open listbox |
+| `↓` | Move to next option |
+| `↑` | Move to previous option |
+| `Home` | Jump to first option |
+| `End` | Jump to last option |
+| `Enter` | Select active option |
+| `Escape` | Close listbox, restore input |
+| `Tab` | Close listbox |
+
+## Accessibility
+
+- `role="combobox"` on the input, `role="listbox"` on the dropdown, `role="option"` on each item
+- `aria-expanded` toggled automatically
+- `aria-controls` points to listbox `id` when open
+- `aria-activedescendant` tracks the focused option `id`
+- `aria-autocomplete="list"` advertises filter capability
+- `aria-selected="true"` on the currently selected option
+- `aria-invalid="true"` when `error` is present; error linked via `aria-describedby` with `role="alert"`
+- Sentinel warns when `label` is missing
+
+> [!IMPORTANT]
+> The chevron button has `aria-hidden="true"` and `tabIndex={-1}` — it is purely visual. Only the input receives keyboard focus, ensuring a clean tab order.

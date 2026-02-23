@@ -1,0 +1,87 @@
+---
+title: Textarea
+description: Multi-line text input with configurable resize, live character counter, error state, and helper text.
+---
+
+# Textarea
+
+The `Textarea` component extends the native `<textarea>` with a live character counter (`aria-live="polite"`), configurable resize behavior, optional `maxChars` enforcement, and full ARIA label/error support.
+
+## Import
+
+```tsx
+import { Textarea } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Textarea label="Message" placeholder="Write your message..." />
+```
+
+## With character counter
+
+The counter uses `aria-live="polite"` so screen readers announce the count as the user types.
+
+```tsx
+<Textarea
+  label="Bio"
+  showCharCount
+  maxChars={280}
+  placeholder="Tell us about yourself"
+/>
+```
+
+## With error
+
+```tsx
+<Textarea
+  label="Description"
+  error="Description must be at least 50 characters"
+/>
+```
+
+## Resize configuration
+
+```tsx
+<Textarea label="None"       resize="none" />
+<Textarea label="Vertical"   resize="vertical" />   {/* default */}
+<Textarea label="Horizontal" resize="horizontal" />
+<Textarea label="Both"       resize="both" />
+```
+
+## Sizes
+
+```tsx
+<Textarea label="Small"  size="sm" rows={3} />
+<Textarea label="Medium" size="md" rows={4} />
+<Textarea label="Large"  size="lg" rows={6} />
+```
+
+## Required field
+
+```tsx
+<Textarea label="Feedback" required />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | **Required** for accessibility (or use `aria-label`) |
+| `error` | `string` | — | Error message (`aria-invalid` + `role="alert"`) |
+| `helperText` | `string` | — | Helper text below (hidden when `error` is present) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Visual size |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `'vertical'` | Resize handle |
+| `maxChars` | `number` | — | Maximum character limit |
+| `showCharCount` | `boolean` | `false` | Show live character counter |
+| `required` | `boolean` | `false` | Marks field as required |
+| `disabled` | `boolean` | `false` | Disables the textarea |
+
+## Accessibility
+
+- Label associated via `htmlFor`/`id`
+- `aria-invalid="true"` when `error` is present
+- Error linked via `aria-describedby` with `role="alert"`
+- Character counter uses `aria-live="polite"` and `aria-atomic="true"`
+- Sentinel warns when no `label` or `aria-label` is provided

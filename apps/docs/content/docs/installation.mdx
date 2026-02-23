@@ -1,0 +1,88 @@
+---
+title: Installation
+description: Get @lotos/claude-arm installed and your first component rendering in 2 minutes.
+---
+
+# Installation
+
+## Prerequisites
+
+- Node.js 18+
+- pnpm, npm, or yarn
+- React 19+ project (Next.js 15, Vite, etc.)
+
+## Install
+
+```bash
+pnpm add @lotos/claude-arm
+```
+
+## Import styles
+
+In your root layout or `_app.tsx`, import the global CSS once:
+
+```tsx
+// app/layout.tsx (Next.js App Router)
+import '@lotos/claude-arm/styles.css'
+```
+
+This file imports all LotOS CSS custom properties (design tokens), dark/light mode variables, and base resets.
+
+## Your first component
+
+```tsx
+import { Button } from '@lotos/claude-arm'
+
+export default function Page() {
+  return (
+    <Button variant="primary" size="md">
+      Get Started
+    </Button>
+  )
+}
+```
+
+## Dark mode
+
+LotOS uses CSS custom properties. To switch themes, set `data-theme` on your `<html>`:
+
+```tsx
+// Dark (default)
+<html data-theme="dark">
+
+// Light
+<html data-theme="light">
+
+// System (respects prefers-color-scheme)
+<html>  {/* no data-theme */}
+```
+
+## MCP Server (AI agent integration)
+
+Start the MCP server so your AI agent can read component schemas:
+
+```bash
+# Build first
+pnpm --filter @lotos/core build
+
+# Start MCP server
+node packages/core/dist/mcp/server.js
+# → LotOS MCP Server running at http://localhost:3100
+
+# Configure your AI agent
+curl http://localhost:3100/components/button
+```
+
+## TypeScript
+
+All props are generated from Zod schemas. You get full autocomplete:
+
+```ts
+import type { ButtonProps } from '@lotos/claude-arm'
+```
+
+## Next steps
+
+- [Button →](/docs/components/button)
+- [Input →](/docs/components/input)
+- [Modal →](/docs/components/modal)

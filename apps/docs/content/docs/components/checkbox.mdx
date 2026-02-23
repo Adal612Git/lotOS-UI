@@ -1,0 +1,91 @@
+---
+title: Checkbox
+description: Accessible checkbox with indeterminate state, error, description, and custom visual.
+---
+
+# Checkbox
+
+The `Checkbox` component provides a styled, accessible checkbox with support for the **indeterminate** state, error messages, and description text. The custom visual is built in CSS — no SVG library required.
+
+## Import
+
+```tsx
+import { Checkbox } from '@lotos/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Checkbox label="Accept terms and conditions" />
+```
+
+## Controlled
+
+```tsx
+const [checked, setChecked] = useState(false)
+
+<Checkbox
+  label="Subscribe to newsletter"
+  checked={checked}
+  onChange={(e) => setChecked(e.target.checked)}
+/>
+```
+
+## With description
+
+```tsx
+<Checkbox
+  label="Marketing emails"
+  description="Receive updates about new features and promotions"
+/>
+```
+
+## With error
+
+```tsx
+<Checkbox
+  label="Accept terms"
+  error="You must accept the terms to continue"
+/>
+```
+
+## Indeterminate state
+
+Useful for "select all" checkboxes in tables where some (not all) rows are selected.
+
+```tsx
+<Checkbox
+  label="Select all"
+  indeterminate={someSelected && !allSelected}
+  checked={allSelected}
+  onChange={handleSelectAll}
+/>
+```
+
+## Sizes
+
+```tsx
+<Checkbox label="Small"  size="sm" />
+<Checkbox label="Medium" size="md" />
+<Checkbox label="Large"  size="lg" />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `label` | `string` | — | Visible label (or use `aria-label`) |
+| `description` | `string` | — | Helper text below label |
+| `error` | `string` | — | Error message (`aria-invalid` + `role="alert"`) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+| `indeterminate` | `boolean` | `false` | Indeterminate visual state |
+| `disabled` | `boolean` | `false` | Disables the checkbox |
+| `checked` | `boolean` | — | Controlled checked state |
+| `onChange` | `ChangeEventHandler` | — | Change handler |
+
+## Accessibility
+
+- Label associated via `htmlFor`/`id`
+- `aria-invalid="true"` when `error` is present
+- Error linked via `aria-describedby` with `role="alert"`
+- Sentinel warns when no `label` or `aria-label` is provided
