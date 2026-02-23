@@ -1,0 +1,15 @@
+node_modules
+.turbo
+coverage
+dist
+build
+.next
+out
+*.log
+*.pem
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+apps/dropdown-demo
+apps/playground
