@@ -1,4 +1,4 @@
-import { componentSchemas, type ComponentName } from '@lotosui/core/schemas';
+import { componentSchemas, type ComponentName } from '@lotosui/core';
 import type { ZodIssue } from 'zod';
 
 export type SentinelSeverity = 'error' | 'warning';
