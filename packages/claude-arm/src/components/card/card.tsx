@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type { CardProps } from '@lotos/core';
+import type { CardProps } from '@lotosui/core';
 
 type ClassValue = string | undefined | false | null | ClassValue[];
 

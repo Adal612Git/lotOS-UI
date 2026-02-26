@@ -1,0 +1,163 @@
+## Calendario (arrancando HOY Mar 24 Feb 2026 → Dom 19 Abr 2026)
+
+ Meta del sprint primeras ventas reales sin “cobrar la librería”, usando Founders Pack + templates mientras todo el core sigue free.
+
+ Semana  Fechas            Construcción (dev)                                                      Video (planguion → grabación → publicación)                      Canal foco          KPI que manda         
+ ------  ----------------  ----------------------------------------------------------------------  ----------------------------------------------------------------  ------------------  --------------------- 
+ 0       24 Feb–1 Mar  “Housekeeping” brutal README, docs, ejemplos, starter repo, CTA único  Trailer 60s (instalación + 1 WOW) → grabar 1h → publicar Jue  GitHub + Docs       1er pico de installs  
+ 1       2–8 Mar       Demo #1 SaaS Dashboard (repo limpio, deploy)                        Tutorial largo #1 (Dashboard) + 3 shorts                          YouTube             npm descargassem     
+ 2       9–15 Mar      Demo #2 Auth Flow + Sentinel “catch” (si aplica)                    Tutorial largo #2 (Auth) + 3 shorts                               YouTube + X         Stars + clicks docs   
+ 3       16–22 Mar     Pulir DX CLI, templates básicos, “starter”                             Curso Udemy Free #1 (React UI en 2h) grabación + publicación  Udemy               installs desde Udemy  
+ 4       23–29 Mar     Pack #1 Templates FREE (landing+dashboard básico)                   Video autoridad “Accesibilidad REAL” (mini) + shorts             FB Grupos + Dev.to  Discord joins         
+ 5       30 Mar–5 Abr  Demo #3 AI Chat UI + “AI-first angle”                               Tutorial largo #3 (AI Chat) + 3 shorts                            YouTube             watch time + installs 
+ 6       6–12 Abr      Founders Pack (venta) + 1 template premium                          Video “Build in public #1” (números reales)                       Gumroad + Email     1as ventas        
+ 7       13–19 Abr     Prep de lanzamiento grande (si quieres PH)                              Trailer “PHLaunch” + kit de assets                               Product Hunt        conversion rate       
+
+---
+
+# La nueva estrategia (más concreta, menos humo) Compound-first → Amplify-next
+
+En devtools casi siempre gana esto primero clavas canales compuestos (docs, GitHub, npm, YouTube evergreen), luego amplificas (X, FB, Reddit, Discord). Es un enfoque recomendado en marcos de “developer marketing channels” tipo compound-first para no dispersarte. ([hackmamba.io][1])
+
+## 1) Tu “oferta” en una sola línea (la frase que se repite en TODO)
+
+LotOS UI componentes React listos para SaaS, con accesibilidad seria y enfoque AI-first (MCPagent workflows), instalables en minutos.
+
+Si no cabe en un banner, aún no está.
+
+## 2) Funnel único (sin laberintos)
+
+YouTubeUdemy → Docs → Install → Starter repo → “Showcase” (prueba social) → Founders Pack  Templates
+
+Tu doc anterior tenía mil canales. Aquí la regla es cada pieza de contenido debe empujar a 1 acción.
+
+CTA único recomendado (por fase)
+
+ Sem 0–2 “Instala y corre el starter”
+ Sem 3–5 “Toma el curso gratis”
+ Sem 6–7 “Compra Founders Pack (early access + templates premium)”
+
+## 3) Monetización inmediata sin traicionar el “todo free”
+
+En open-sourcedevtools suele funcionar open-core o “free product, paid acceleration”. ([reo.dev][2])
+
+Lo que vendes en Semana 6 (primeras ventas reales)
+
+ Founders Pack ($19–$39 one-time)
+  Incluye
+
+  1. 1–2 templates premium (landing + dashboard pro)
+  2. canal Discord privado + prioridad
+  3. derecho a votar roadmap + tu “build in public” con changelog VIP
+
+La librería sigue gratis, pero la gente paga por ahorrar tiempo + estatus + soporte.
+
+## 4) Tu máquina de contenido “3 demos = 30 piezas”
+
+Tu documento lo decía bien, pero aquí va el operativo
+
+### Estructura fija semanal (para no pensar, solo ejecutar)
+
+ Lun (45–60 min) guion + checklist + título + thumbnail idea
+ Mar (2–4 h) construir demo mientras grabas OBS
+ Mié (60–90 min) editar el largo + cortar 3 shorts
+ Jue publicar largo + 1 short
+ Vie 2 shorts + post en 2 grupos FB respondiendo preguntas reales
+ Sáb (30 min) recopilar comentariospreguntas → backlog de videos
+
+Esto encaja con playbooks de marketing a devs consistencia + contenido demostrable + comunidad. ([markepear.dev][3])
+
+---
+
+# “Estudio” bien hecho (cómo se investiga para que esto sí sea producto)
+
+Esto es lo que hacen los devtools que despegan
+
+## A) Teardown competitivo (2 horas, una vez)
+
+Lista 10 competidores (shadcnui, Mantine, Chakra, MUI, etc.) y responde
+
+1. ¿Cuál es su momento WOW en 60s
+2. ¿Qué venden realmente (tiempo, diseño, DX, soporte, plantillas)
+3. ¿Qué palabras usan en títulos de YouTube y docs
+
+Tu objetivo robar lenguaje, no código.
+
+## B) 10 micro-entrevistas (sin Zoom, sin drama)
+
+En DiscordFB “¿Qué parte te quita más tiempo al armar un dashboard”
+Guardas respuestas, conviertes en
+
+ nombres de videos
+ features
+ templates
+
+## C) 3 mensajes, 3 semanas (test AB “manual”)
+
+Cada semana, tu contenido usa un ángulo dominante
+
+ Semana 1 SaaS listo en minutos
+ Semana 2 Accesibilidad real
+ Semana 3 AI-first  MCP
+
+Te quedas con el que más convierta en installs.
+
+---
+
+# Guion ultra práctico para tus videos (para que Victor también lo pueda seguir)
+
+## Formato “devtools que vende” (20–35 min)
+
+1. Hook (000–020) “En 15 minutos dejamos un dashboard deployado”
+2. Resultado primero (020–100) enseña el demo ya corriendo
+3. Install (100–300) copy-paste y listo
+4. Construcción guiada (300–1800) solo lo esencial, sin relleno
+5. WOW (1800–2200) tu diferenciador (a11yMCPSentinel)
+6. Deploy + CTA (últimos 60s) “starter + Discord + curso gratis”
+
+## Shorts (30–60s) plantilla
+
+ 0–2s resultado visual
+ 2–10s “lo logras con 1 comando”
+ 10–45s mini demostración
+ 45–60s CTA único
+
+---
+
+# Riesgo real que sí vale considerar el nombre “claude-arm”
+
+npm recomienda no usar marcas registradas ajenas en nombres de paquetes y remite a políticas de disputastrademark. ([Documentación de npm][4])
+Y en el mundo ClaudeAnthropic ya ha habido casos de peticiones para renombrar por temas de marca. ([Business Insider][5])
+
+No te digo “cámbialo hoy”, pero sí te dejo una jugada elegante
+
+ Mantén `@lotosuiclaude-arm` como compat
+ Crea alias nuevo (ej. `@lotosuiai-arm`) y en docs promueves el nuevo
+ Depreca el viejo cuando tengas tracción
+
+---
+
+# Checklist para empezar YA (hoy, en 90 minutos)
+
+1. Un CTA único en README y docs (“Run the starter”)
+2. Starter repo listo + deploy (Vercel)
+3. Graba Trailer 60s (install + 1 componente WOW)
+4. Abre Discord con 4 canales `#bienvenida #showcase #ayuda #anuncios`
+5. Publica trailer en YouTube + el mismo como Reel + post en 1 grupo FB (sin spam, como “tutorial”)
+
+Si quieres verificar rápido tus paquetes desde terminal (sin pelearte con la web)
+
+```bash
+npm view @lotosuiclaude-arm version
+npm view @lotosuicore version
+```
+
+---
+
+Si me pegas tu link del repo + docs site + 1 demo actual, te lo convierto en un guion completo del Video #1 (Dashboard) con título SEO, capítulos, momentos WOW, y lista exacta de clips para sacar 3 shorts.
+
+[1] httpshackmamba.iodeveloper-marketingdeveloper-marketing-channelsutm_source=chatgpt.com 6 best developer marketing channels you should focus ...
+[2] httpswww.reo.devblogmonetize-open-source-softwareutm_source=chatgpt.com How to Monetize Open Source Software 7 Proven Strategies
+[3] httpswww.markepear.devblogdeveloper-marketing-guideutm_source=chatgpt.com Developer marketing guide (by a dev tool startup CMO)
+[4] httpsdocs.npmjs.compackage-name-guidelinesutm_source=chatgpt.com Package name guidelines
+[5] httpswww.businessinsider.comclawdbot-changes-name-moltbot-anthropic-trademark-2026-1utm_source=chatgpt.com Clawdbot creator says Anthropic 'forced' him to rename the viral AI agent 'Wasn't my decision'

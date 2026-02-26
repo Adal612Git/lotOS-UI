@@ -24,4 +24,4 @@ export type { SwitchProps } from './switch/switch.js';
 export type { TabsProps, TabItem } from './tabs/tabs.js';
 export type { TextareaProps } from './textarea/textarea.js';
 export type { TooltipProps } from './tooltip/tooltip.js';
-export type { BadgeProps, ButtonProps, CardProps, InputProps, ModalProps } from '@lotos/core';
+export type { BadgeProps, ButtonProps, CardProps, InputProps, ModalProps } from '@lotosui/core';

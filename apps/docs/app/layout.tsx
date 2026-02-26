@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     template: '%s | LotOS UI',
   },
   description:
-    'The first UI component ecosystem designed for AI agents. Accessible, type-safe, multi-framework.',
+    'Design and functional contracts for AI-assisted UI teams. React stable, multi-runtime expansion with explicit status.',
   metadataBase: new URL('https://lotos-ui.dev'),
   openGraph: {
     title: 'LotOS UI',
-    description: 'The first UI component ecosystem designed for AI agents.',
+    description: 'Design + functional contracts for AI-assisted UI teams.',
     url: 'https://lotos-ui.dev',
     siteName: 'LotOS UI',
     type: 'website',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'LotOS UI',
-    description: 'The first UI component ecosystem designed for AI agents.',
+    description: 'Design + functional contracts for AI-assisted UI teams.',
   },
 };
 

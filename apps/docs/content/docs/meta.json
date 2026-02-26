@@ -2,6 +2,7 @@
     "title": "Getting Started",
     "pages": [
         "index",
-        "installation"
+        "installation",
+        "multi-runtime"
     ]
 }

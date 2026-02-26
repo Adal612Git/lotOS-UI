@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@lotos/claude-arm": "workspace:*",
-    "@lotos/core": "workspace:*",
+    "@lotosui/claude-arm": "workspace:*",
+    "@lotosui/core": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { componentSchemas } from '@lotos/core/schemas';
+import { componentSchemas } from '@lotosui/core/schemas';
 import * as components from '../../src/components/index.js';
 import {
     fetchComponentCatalog,

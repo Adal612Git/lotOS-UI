@@ -26,6 +26,12 @@ coverage
 out/
 build
 dist
+**/.next/
+**/dist/
+**/coverage/
+**/.turbo/
+**/*.tsbuildinfo
+*.timestamp-*.mjs
 
 
 # Debug
@@ -36,3 +42,5 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+.vercel

@@ -7,7 +7,7 @@
  */
 
 import React, { useId } from 'react';
-import type { InputProps } from '@lotos/core';
+import type { InputProps } from '@lotosui/core';
 
 function cn(...classes: (string | undefined | false | null)[]): string {
     return classes.filter(Boolean).join(' ');

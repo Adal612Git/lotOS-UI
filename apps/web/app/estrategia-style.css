@@ -1,0 +1,282 @@
+/* ─── LotOS UI: Mission Control - Strategy CSS ────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg-space: #050510;
+    --pixel-purple: #7c3aed;
+    --pixel-magenta: #ff00ff;
+    --pixel-cyan: #00ffff;
+    --pixel-yellow: #ffff00;
+    --pixel-green: #39ff14;
+    --pixel-red: #ff3131;
+
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+
+    --glass: rgba(255, 255, 255, 0.03);
+    --border-pixel: 4px solid #fff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-space);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ─── Pixel Grid Background ─────────────────────────────────────────────── */
+.pixel-background {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    z-index: -1;
+}
+
+.pixel-scan {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.05), transparent);
+    animation: scan 6s linear infinite;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+@keyframes scan {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+.font-pixel {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.title-glow {
+    text-shadow:
+        4px 4px 0px var(--pixel-purple),
+        -4px -4px 0px var(--pixel-cyan);
+}
+
+/* ─── Components ──────────────────────────────────────────────────────────── */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 4px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.card-purple {
+    border-left: 8px solid var(--pixel-purple);
+}
+
+.card-cyan {
+    border-left: 8px solid var(--pixel-cyan);
+}
+
+.card-yellow {
+    border-left: 8px solid var(--pixel-yellow);
+}
+
+/* ─── Timeline ────────────────────────────────────────────────────────────── */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.timeline-date {
+    font-size: 10px;
+    color: var(--pixel-cyan);
+    text-align: right;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    border-left: 4px solid var(--pixel-magenta);
+}
+
+.timeline-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.timeline-content p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--text-dim);
+}
+
+/* ─── Funnel ──────────────────────────────────────────────────────────────── */
+.funnel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 40px 0;
+}
+
+.funnel-step {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    border: 2px solid;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+}
+
+.funnel-step::after {
+    content: "▼";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 10px;
+}
+
+.funnel-step:last-child::after {
+    content: none;
+}
+
+/* ─── 8-bit Icons (CSS) ─────────────────────────────────────────────────── */
+.pixel-icon {
+    image-rendering: pixelated;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+.float {
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.pixel-btn {
+    font-family: 'Press Start 2P', cursive;
+    background-color: var(--pixel-purple);
+    color: white;
+    border: 4px solid rgba(0, 0, 0, 0.3);
+    padding: 15px 25px;
+    cursor: pointer;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    transition: all 0.1s;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.pixel-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+    background-color: var(--pixel-magenta);
+}
+
+.pixel-btn:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Tags ────────────────────────────────────────────────────────────────── */
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 10px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.tag-purple {
+    color: var(--pixel-purple);
+    border: 1px solid var(--pixel-purple);
+}
+
+.tag-cyan {
+    color: var(--pixel-cyan);
+    border: 1px solid var(--pixel-cyan);
+}
+
+.tag-magenta {
+    color: var(--pixel-magenta);
+    border: 1px solid var(--pixel-magenta);
+}
+
+/* ─── Monetization Section ─────────────────────────────────────────────── */
+.founders-pack {
+    background: linear-gradient(135deg, rgba(255, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+    border: 4px solid var(--pixel-yellow);
+    padding: 40px;
+    text-align: center;
+}
+
+.founders-pack h2 {
+    color: var(--pixel-yellow);
+    margin-bottom: 20px;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .timeline-item {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-date {
+        text-align: left;
+    }
+}

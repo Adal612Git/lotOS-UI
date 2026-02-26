@@ -4,6 +4,13 @@ import { pathToFileURL } from 'node:url';
 import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
+import {
+    createPatternBlueprint,
+    isPatternId,
+    listDesignPatterns,
+    listRuntimeProfiles,
+    normalizeRuntimeId,
+} from '@lotosui/core';
 import { SUPPORTED_COMPONENTS } from './catalog.js';
 import { scaffoldComponent } from './scaffold.js';
 
@@ -25,6 +32,68 @@ export function createProgram(
         .description('List available components')
         .action(() => {
             stdout(SUPPORTED_COMPONENTS.join('\n'));
+        });
+
+    program
+        .command('runtimes')
+        .description('List supported runtime profiles')
+        .action(() => {
+            const runtimes = listRuntimeProfiles();
+            for (const runtime of runtimes) {
+                stdout(`${runtime.id}\t${runtime.label}\t${runtime.category}`);
+            }
+        });
+
+    program
+        .command('patterns')
+        .description('List design patterns (optionally filtered by runtime)')
+        .option('-r, --runtime <runtime>', 'Runtime id or alias (e.g. laravel, django, react)')
+        .action((options: { runtime?: string }) => {
+            const runtime = options.runtime ? normalizeRuntimeId(options.runtime) : null;
+            if (options.runtime && !runtime) {
+                stderr(chalk.red(`Unknown runtime "${options.runtime}".`));
+                process.exitCode = 1;
+                return;
+            }
+
+            const patterns = listDesignPatterns(runtime ?? undefined);
+            for (const pattern of patterns) {
+                stdout(`${pattern.id}\t${pattern.name}`);
+            }
+        });
+
+    program
+        .command('blueprint')
+        .description('Build a runtime-specific blueprint from a pattern')
+        .requiredOption('-r, --runtime <runtime>', 'Runtime id or alias')
+        .requiredOption('-p, --pattern <pattern>', 'Pattern id')
+        .action((options: { runtime: string; pattern: string }) => {
+            const runtime = normalizeRuntimeId(options.runtime);
+            if (!runtime) {
+                stderr(chalk.red(`Unknown runtime "${options.runtime}".`));
+                process.exitCode = 1;
+                return;
+            }
+
+            if (!isPatternId(options.pattern)) {
+                stderr(chalk.red(`Unknown pattern "${options.pattern}".`));
+                process.exitCode = 1;
+                return;
+            }
+
+            const blueprint = createPatternBlueprint({
+                runtime,
+                patternId: options.pattern,
+            });
+
+            stdout(JSON.stringify({
+                runtime: blueprint.runtime.id,
+                pattern: blueprint.pattern.id,
+                integration: blueprint.integration,
+                starterFiles: blueprint.starterFiles,
+                notes: blueprint.notes,
+                qualityChecklist: blueprint.qualityChecklist,
+            }, null, 2));
         });
 
     program

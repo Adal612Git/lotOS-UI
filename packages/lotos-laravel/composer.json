@@ -1,0 +1,30 @@
+{
+    "name": "lotos/lotos-ui-laravel",
+    "description": "Laravel adapter skeleton for LotOS UI",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lotos Technologies",
+            "email": "lotos@lotos.dev"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lotos\\LotOSUi\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^10.0 || ^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lotos\\LotOSUi\\LotosUiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@lotos/claude-arm/styles.css';
+import '@lotosui/claude-arm/styles.css';
 import './index.css';
 import App from './App.tsx';
 

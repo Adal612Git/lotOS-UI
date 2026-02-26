@@ -1,54 +1,49 @@
 ---
 title: Introduction
-description: The first UI component ecosystem designed for AI agents.
+description: LotOS UI gives teams a shared design and implementation contract for AI-assisted UI development.
 ---
 
 # Welcome to LotOS UI
 
-LotOS UI is the first component ecosystem specifically designed so that **AI agents can build perfect interfaces at the first attempt**. We achieved this through three pillars:
+LotOS UI is built to keep **design quality** and **functional quality** aligned while teams work with AI agents.
 
-1. **MCP Server** — your AI reads component schemas, JSX examples, and anti-hallucination rules directly via the Model Context Protocol
-2. **Sentinel Guard** — runtime warnings that teach the AI your guardrails, not just your API
-3. **Framework independence** — one design system, five framework exports (React, Vue, Svelte, Solid, Angular)
+The core idea is simple:
 
-## What makes LotOS different?
+1. **Design contract**: tokens + pattern blueprints define hierarchy, spacing, and interaction intent.
+2. **Functional contract**: schemas + framework-aware snippets keep generated code valid.
+3. **Runtime clarity**: every ecosystem has a visible status so roadmap and production are not mixed.
 
-| Feature | LotOS | shadcn/ui | HeroUI |
-|---|---|---|---|
-| MCP Server | ✅ | ❌ | ❌ |
-| WCAG 2.2 AAA | ✅ | Partial | Partial |
-| RTL out of the box | ✅ | ❌ | Partial |
-| Multi-framework | ✅ (roadmap) | ❌ | ❌ |
-| Zod schema contracts | ✅ | ❌ | ❌ |
-| Sentinel Guard | ✅ | ❌ | ❌ |
+## Current reality
 
-## The two arms
+| Capability | Status |
+|---|---|
+| React component arm (`@lotosui/claude-arm`) | Stable |
+| MCP server endpoints (`/components`, `/runtimes`, `/patterns`) | Stable |
+| Web Components package (`@lotosui/web-components`) | Prototype |
+| Laravel Blade adapter track (`lotos-laravel`) | Alpha |
+| Django, Flask, Spring, .NET, Go, C/C++, Mojo adapter tracks | Planned / in blueprint phase |
 
-LotOS is organized into two arms:
+## What makes LotOS different
 
-- **Claude arm (`@lotos/claude-arm`)** — React 19 components with full ARIA support. This is the production arm.
-- **DeepSeek arm (`@lotos/deepseek-arm`)** — Vue/Svelte/Solid outputs via AI translation. Coming in Sprint 3.
+| Feature | LotOS UI |
+|---|---|
+| Runtime status by ecosystem | Yes |
+| Shared design patterns across runtimes | Yes |
+| Schema-driven component contracts | Yes |
+| MCP endpoints for agent consumption | Yes |
+| Sentinel misuse warnings | Yes |
 
-## Package structure
+## Package map
 
 ```
-@lotos/core          — Design tokens, dark mode engine, RTL, Zod schemas, MCP server
-@lotos/claude-arm    — React 19 components (production-ready)
-@lotos/sentinel      — Runtime prop validation and Sentinel warnings
-@lotos/cli           — `lotos-ui add <component>` scaffolding CLI
+@lotosui/core          - Tokens, schemas, runtime catalog, design patterns, MCP server
+@lotosui/claude-arm    - React component arm (production)
+@lotosui/web-components- Web component prototypes
+@lotosui/sentinel      - Runtime warnings and misuse guardrails
+@lotosui/cli           - Project commands and runtime/pattern discovery
 ```
 
-## Quick start
+## Next step
 
-```bash
-# Install
-pnpm add @lotos/claude-arm
-
-# Import styles once in your root layout
-import '@lotos/claude-arm/styles.css'
-
-# Use components
-import { Button, Input, Modal } from '@lotos/claude-arm'
-```
-
-Continue reading → [Installation](/docs/getting-started/installation)
+- Start with [Installation](/docs/installation) for React production usage.
+- Continue with [Multi Runtime Guide](/docs/multi-runtime) for cross-language planning.

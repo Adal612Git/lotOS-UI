@@ -12,7 +12,7 @@
  */
 
 import React, { useEffect, useRef, useId, useCallback } from 'react';
-import type { ModalProps } from '@lotos/core';
+import type { ModalProps } from '@lotosui/core';
 
 function cn(...classes: (string | undefined | false | null)[]): string {
     return classes.filter(Boolean).join(' ');

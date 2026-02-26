@@ -19,5 +19,8 @@ export * from './rtl/index.js';
 // Component Schemas (Zod)
 export * from './schemas/index.js';
 
+// Runtime Contracts + Design Patterns
+export * from './runtime/index.js';
+
 // Re-export Zod for consumers who need it
 export { z } from 'zod';

@@ -1,0 +1,105 @@
+---
+title: Multi Runtime Guide
+description: Runtime matrix, maturity levels, and a parallel design-plus-functional workflow.
+---
+
+# Multi Runtime Guide
+
+LotOS UI supports a multi-language strategy, but each runtime has a different maturity level.
+This page keeps that state explicit so teams can plan without ambiguity.
+
+## Runtime matrix
+
+| Runtime | Language | Design track | Functional track | Notes |
+|---|---|---|---|---|
+| React | TypeScript / JavaScript | Stable | Stable | `@lotosui/claude-arm` |
+| Web Components | TypeScript | Prototype | Prototype | `@lotosui/web-components` |
+| Laravel Blade | PHP | Alpha | Alpha | `lotos-laravel` skeleton |
+| Django Templates | Python | Alpha | Planned | Blueprint-first |
+| Flask / Jinja | Python | Alpha | Planned | Blueprint-first |
+| Spring + Thymeleaf | Java | Alpha | Planned | Blueprint-first |
+| .NET Razor / Blazor | C# / .NET | Alpha | Planned | Blueprint-first |
+| Go + templ | Go | Alpha | Planned | Blueprint-first |
+| C + ncurses | C | Prototype | Planned | TUI token bridge track |
+| C++ (Qt / ImGui) | C++ | Prototype | Planned | Native token bridge track |
+| Mojo (experimental) | Mojo | Prototype | Planned | Experimental track |
+
+## Parallel workflow: design and functional at the same time
+
+### 1) Define the visual intent
+
+- Select runtime and pattern from MCP:
+  - `GET /runtimes`
+  - `GET /patterns`
+  - `GET /patterns/:id?runtime=<runtime>`
+- Keep token priorities from the pattern blueprint as non-negotiable constraints.
+
+### 2) Build with framework-safe contracts
+
+- Use schema-driven components from MCP:
+  - `GET /components/:name`
+  - `POST /components/render`
+- Ensure generated snippets match the runtime status (stable, prototype, alpha, planned).
+
+### 3) Verify both dimensions before shipping
+
+- Design checks: hierarchy, spacing rhythm, semantic color usage, contrast.
+- Functional checks: schema validity, Sentinel warnings, runtime tests.
+
+## Starter snippets
+
+### React (stable)
+
+```tsx
+import { Button } from '@lotosui/claude-arm';
+
+export function SaveAction() {
+  return <Button variant="primary">Save</Button>;
+}
+```
+
+### Web Component (prototype)
+
+```ts
+import { registerLotosWebComponents } from '@lotosui/web-components';
+
+registerLotosWebComponents();
+```
+
+```html
+<lotos-button variant="primary">Save</lotos-button>
+```
+
+### Laravel Blade (alpha)
+
+```blade
+<x-lotos-ui::lotos-button variant="primary">
+  Save
+</x-lotos-ui::lotos-button>
+```
+
+### Django template shape (planned)
+
+```django
+{# Planned adapter shape #}
+{% include "lotos/button.html" with variant="primary" label="Save" %}
+```
+
+### Go templ shape (planned)
+
+```go
+templ SaveAction() {
+  @lotos.Button("primary", "Save")
+}
+```
+
+## What is needed to reach 100%
+
+1. Production-grade adapters beyond React, starting with Laravel and Django parity.
+2. Runtime-specific docs for install, theming, forms, and accessibility patterns.
+3. MCP render support for additional frameworks beyond React/Web Component/Blade.
+4. Cross-runtime test suites that validate both visual tokens and behavior constraints.
+
+## Architecture map
+
+- Visual map of current status and gaps: [Architecture Map](/architecture-map.html)

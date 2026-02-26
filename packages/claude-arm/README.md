@@ -1,9 +1,9 @@
-# @lotos/claude-arm
+# @lotosui/claude-arm
 
 > **LotOS UI** — Accessible React component library built for AI-first development.  
 > 15 components · WCAG 2.2 AAA · MCP Server integrated · TypeScript · React 19
 
-[![npm version](https://badge.fury.io/js/%40lotos%2Fclaude-arm.svg)](https://www.npmjs.com/package/@lotos/claude-arm)
+[![npm version](https://badge.fury.io/js/%40lotosui%2Fclaude-arm.svg)](https://www.npmjs.com/package/@lotosui/claude-arm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
@@ -18,7 +18,7 @@
 ## Installation
 
 ```bash
-npm install @lotos/claude-arm
+npm install @lotosui/claude-arm
 # peer dependencies
 npm install react react-dom
 ```
@@ -26,7 +26,7 @@ npm install react react-dom
 ## Usage
 
 ```tsx
-import { Button, Input, Modal, Tabs } from '@lotos/claude-arm'
+import { Button, Input, Modal, Tabs } from '@lotosui/claude-arm'
 
 function App() {
   return (

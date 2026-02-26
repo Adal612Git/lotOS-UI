@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import type { ButtonProps } from '@lotos/core';
+import type { ButtonProps } from '@lotosui/core';
 
 // Internal: CSS class builder
 function cn(...classes: (string | undefined | false | null)[]): string {

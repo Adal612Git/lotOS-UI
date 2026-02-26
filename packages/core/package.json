@@ -1,7 +1,7 @@
-{
-  "name": "@lotos/core",
-  "version": "0.0.1",
-  "description": "LotOS UI Core — design tokens, contracts, RTL engine. Zero framework dependencies.",
+﻿{
+  "name": "@lotosui/core",
+  "version": "0.1.0",
+  "description": "LotOS UI Core â€” design tokens, contracts, RTL engine. Zero framework dependencies.",
   "license": "MIT",
   "author": "Lotos Technologies <lotos@lotos.dev>",
   "type": "module",
@@ -17,6 +17,10 @@
     "./schemas": {
       "import": "./dist/schemas/index.js",
       "types": "./dist/schemas/index.d.ts"
+    },
+    "./runtime": {
+      "import": "./dist/runtime/index.js",
+      "types": "./dist/runtime/index.d.ts"
     }
   },
   "main": "./dist/index.js",

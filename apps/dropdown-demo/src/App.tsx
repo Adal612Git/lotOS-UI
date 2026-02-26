@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Dropdown, Button } from '@lotos/claude-arm';
-import type { DropdownItem } from '@lotos/claude-arm';
-import { applyTheme } from '@lotos/core';
+import { Dropdown, Button } from '@lotosui/claude-arm';
+import type { DropdownItem } from '@lotosui/claude-arm';
+import { applyTheme } from '@lotosui/core';
 
 // ─── Inline SVG icons (no external dep) ──────────────────────────────────────
 
@@ -150,7 +150,7 @@ export default function App() {
         <header className="flex items-start justify-between">
           <div>
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[var(--lotos-accent)]">
-              @lotos/claude-arm
+              @lotosui/claude-arm
             </p>
             <h1 className="text-3xl font-bold text-[var(--lotos-fg-primary)]">
               Dropdown — Demo

@@ -1,5 +1,5 @@
 {
-    "name": "@lotos/sentinel",
+    "name": "@lotosui/sentinel",
     "version": "0.0.1",
     "description": "LotOS Sentinel — immune system for AI-generated UI. Validates, warns, blocks bad compositions.",
     "license": "MIT",
@@ -30,7 +30,7 @@
         "vitest": "^2.0.0"
     },
     "dependencies": {
-        "@lotos/core": "workspace:*",
+        "@lotosui/core": "workspace:*",
         "zod": "^3.24.0"
     }
 }

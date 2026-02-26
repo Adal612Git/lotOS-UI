@@ -21,7 +21,7 @@ export interface ScaffoldResult {
 export function getComponentTemplate(component: SupportedComponent): string {
     const componentName = componentToPascalCase(component);
     return `import React from 'react';
-import { ${componentName} as Lotos${componentName} } from '@lotos/claude-arm';
+import { ${componentName} as Lotos${componentName} } from '@lotosui/claude-arm';
 
 export type ${componentName}Props = React.ComponentProps<typeof Lotos${componentName}>;
 

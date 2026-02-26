@@ -1,0 +1,691 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LotOS UI | Arquitectura Real + Brechas</title>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(140deg, #070c16 0%, #0f172a 100%);
+      color: #e2e8f0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container { display: flex; height: 100vh; width: 100vw; }
+    .graph-container {
+      flex-grow: 1;
+      position: relative;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(14, 165, 233, 0.18), transparent 40%),
+        radial-gradient(circle at 80% 76%, rgba(239, 68, 68, 0.16), transparent 40%),
+        #020617;
+      border-right: 1px solid #1e293b;
+    }
+    #network { width: 100%; height: 100%; cursor: grab; }
+    #network:active { cursor: grabbing; }
+    .level-marker {
+      position: absolute;
+      left: 18px;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      background: rgba(2, 6, 23, 0.72);
+      pointer-events: none;
+      text-transform: uppercase;
+      z-index: 8;
+    }
+    .sidebar {
+      width: 530px;
+      background: rgba(2, 6, 23, 0.94);
+      padding: 24px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 10;
+    }
+    .header h1 {
+      font-size: 27px;
+      background: linear-gradient(90deg, #38bdf8, #22d3ee, #fb7185);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+    }
+    .header .subtitle { font-size: 12px; color: #94a3b8; margin-top: 6px; font-weight: 500; }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tech-tag {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      background: rgba(56, 189, 248, 0.11);
+      color: #67e8f9;
+    }
+    .controls-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .btn {
+      padding: 8px 6px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: #38bdf8; color: #7dd3fc; background: rgba(14, 165, 233, 0.15); }
+    .search-box input {
+      width: 100%;
+      background: #020617;
+      border: 1px solid #334155;
+      padding: 12px 14px;
+      border-radius: 7px;
+      color: #f8fafc;
+      font-size: 13px;
+      outline: none;
+    }
+    .details-card {
+      background: #0b1220;
+      border-radius: 9px;
+      border: 1px solid #334155;
+      padding: 18px;
+      display: none;
+    }
+    .status-bar, .legend {
+      background: #0b1220;
+      border: 1px solid #334155;
+      border-radius: 9px;
+      padding: 12px;
+    }
+    .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #cbd5e1; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22); }
+    .progress {
+      margin-top: 8px;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee, #38bdf8, #fb7185);
+      width: 0%;
+    }
+    .code-block {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: #020617;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #1e293b;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 170px;
+      overflow-y: auto;
+    }
+    .field-line { border-left: 2px solid #22d3ee; padding-left: 8px; }
+    .method-line { border-left: 2px solid #f59e0b; padding-left: 8px; }
+    .risk-line { border-left: 2px solid #ef4444; padding-left: 8px; }
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      font-weight: 800;
+      margin: 14px 0 8px;
+      letter-spacing: 1px;
+    }
+    .node-badge, .status-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .status-done { color: #86efac; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); }
+    .status-progress { color: #fde68a; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); }
+    .status-missing { color: #fda4af; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); }
+    .details-title { font-size: 18px; font-weight: 800; color: #f8fafc; margin: 11px 0 12px; white-space: pre-wrap; }
+    .mini-note {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.45;
+      background: rgba(148, 163, 184, 0.06);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 7px;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+    .runtime-matrix {
+      background: #0b1220;
+      border: 1px solid #334155;
+      border-radius: 9px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .runtime-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 6px;
+      align-items: center;
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+    .runtime-head {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+    }
+    .runtime-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 2px 7px;
+      border: 1px solid transparent;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .runtime-pill.stable {
+      color: #86efac;
+      border-color: rgba(34, 197, 94, 0.35);
+      background: rgba(34, 197, 94, 0.11);
+    }
+    .runtime-pill.prototype {
+      color: #93c5fd;
+      border-color: rgba(59, 130, 246, 0.35);
+      background: rgba(59, 130, 246, 0.11);
+    }
+    .runtime-pill.alpha {
+      color: #fde68a;
+      border-color: rgba(245, 158, 11, 0.35);
+      background: rgba(245, 158, 11, 0.11);
+    }
+    .runtime-pill.planned {
+      color: #cbd5e1;
+      border-color: rgba(148, 163, 184, 0.35);
+      background: rgba(148, 163, 184, 0.11);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="graph-container">
+      <div id="network"></div>
+      <div class="level-marker" style="top: 9%;">Superficies (Apps/DevX)</div>
+      <div class="level-marker" style="top: 27%;">Arms y Adapters</div>
+      <div class="level-marker" style="top: 46%;">Core Contractual</div>
+      <div class="level-marker" style="top: 64%;">MCP y Runtime API</div>
+      <div class="level-marker" style="top: 84%;">Brechas Estrategicas</div>
+    </div>
+
+    <div class="sidebar">
+      <div class="header">
+        <h1>LotOS UI - Architecture Map</h1>
+        <div class="subtitle">Estado real de diseno + funcionalidad por runtime y brechas hacia paridad productiva</div>
+        <div class="tech-tags">
+          <span class="tech-tag">React Arm</span>
+          <span class="tech-tag">Core Runtime</span>
+          <span class="tech-tag">MCP Server</span>
+          <span class="tech-tag">Web Components</span>
+          <span class="tech-tag">Laravel Skeleton</span>
+          <span class="tech-tag">Runtime Matrix</span>
+        </div>
+      </div>
+
+      <div class="controls-grid">
+        <button class="btn" onclick="setLayout('hierarchical')">[LAYOUT] Jerarquico</button>
+        <button class="btn" onclick="setLayout('force')">[LAYOUT] Libre</button>
+        <button class="btn" onclick="resetView()">[RESET] Vista</button>
+        <button class="btn" onclick="showFlow('now')">[NOW] Ya existe</button>
+        <button class="btn" onclick="showFlow('bridge')">[BRIDGE] Activo</button>
+        <button class="btn" onclick="showFlow('gaps')">[GAPS] Falta</button>
+        <button class="btn" onclick="filterByStatus('done')">[DONE] Solo DONE</button>
+        <button class="btn" onclick="filterByStatus('in_progress')">[WIP] Solo IN_PROGRESS</button>
+        <button class="btn" onclick="filterByStatus('missing')">[MISS] Solo MISSING</button>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar paquete, endpoint, patron, adapter o gap..." onkeyup="filterNodes()">
+      </div>
+
+      <div id="detailsPanel" class="details-card">
+        <div style="text-align:center; color:#94a3b8; padding:30px;">
+          [INFO] Selecciona un nodo para ver detalles tecnicos, estado y siguiente paso.
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <span style="color:#38bdf8; font-weight:700;">[STATUS] ESTADO DEL PROGRAMA</span>
+          <span style="color:#94a3b8; font-size:11px;">Snapshot: 2026-02-26</span>
+        </div>
+        <div id="statusRow" style="display:flex; justify-content:space-between; font-size:11px;">
+          <span>[DONE] 0</span>
+          <span>[IN_PROGRESS] 0</span>
+          <span>[MISSING] 0</span>
+        </div>
+        <div class="progress"><div id="progressFill" class="progress-fill"></div></div>
+        <div id="progressText" style="display:flex; justify-content:space-between; font-size:10px; color:#94a3b8; margin-top:6px;">
+          <span>Madurez puente: 0%</span>
+          <span>Objetivo: adapters productivos</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="dot" style="background:#0284c7;"></div>Apps/Surface</div>
+        <div class="legend-item"><div class="dot" style="background:#0f766e;"></div>Arms/Adapters</div>
+        <div class="legend-item"><div class="dot" style="background:#b45309;"></div>Core Contract</div>
+        <div class="legend-item"><div class="dot" style="background:#7c3aed;"></div>MCP/Runtime API</div>
+        <div class="legend-item"><div class="dot" style="background:#dc2626;"></div>Brecha/Gaps</div>
+        <div class="legend-item"><div class="dot" style="background:#475569;"></div>Gobierno/Operacion</div>
+      </div>
+
+      <div class="runtime-matrix">
+        <div class="runtime-row runtime-head">
+          <div>Runtime</div>
+          <div>Diseno</div>
+          <div>Funcional</div>
+        </div>
+        <div class="runtime-row">
+          <div>React</div>
+          <div><span class="runtime-pill stable">Stable</span></div>
+          <div><span class="runtime-pill stable">Stable</span></div>
+        </div>
+        <div class="runtime-row">
+          <div>Web Components</div>
+          <div><span class="runtime-pill prototype">Prototype</span></div>
+          <div><span class="runtime-pill prototype">Prototype</span></div>
+        </div>
+        <div class="runtime-row">
+          <div>Laravel Blade</div>
+          <div><span class="runtime-pill alpha">Alpha</span></div>
+          <div><span class="runtime-pill alpha">Alpha</span></div>
+        </div>
+        <div class="runtime-row">
+          <div>Django / Spring / .NET / Go</div>
+          <div><span class="runtime-pill alpha">Alpha</span></div>
+          <div><span class="runtime-pill planned">Planned</span></div>
+        </div>
+        <div class="runtime-row">
+          <div>C / C++ / Mojo</div>
+          <div><span class="runtime-pill prototype">Prototype</span></div>
+          <div><span class="runtime-pill planned">Planned</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const C = {
+      surface: { bg: '#082f49', border: '#38bdf8', highlight: '#67e8f9' },
+      adapter: { bg: '#042f2e', border: '#14b8a6', highlight: '#2dd4bf' },
+      core: { bg: '#3f2404', border: '#f59e0b', highlight: '#fbbf24' },
+      mcp: { bg: '#2e1065', border: '#a78bfa', highlight: '#c4b5fd' },
+      gap: { bg: '#450a0a', border: '#ef4444', highlight: '#fb7185' },
+      ops: { bg: '#1e293b', border: '#94a3b8', highlight: '#cbd5e1' }
+    };
+
+    const S = {
+      done: { border: '#22c55e', text: 'DONE' },
+      in_progress: { border: '#f59e0b', text: 'IN_PROGRESS' },
+      missing: { border: '#ef4444', text: 'MISSING' }
+    };
+
+    const nodesData = [
+      { id: 'AppsWeb', label: 'apps/web\nDemo + Marketing', level: 0, group: 'surface', status: 'done',
+        desc: 'Landing y demo visual de LotOS UI. Incluye /multi-framework y /architecture-map.html.',
+        fields: ['stack: Next.js', 'focus: adopcion + credibilidad'] },
+      { id: 'AppsDocs', label: 'apps/docs\nDocs Fumadocs', level: 0, group: 'surface', status: 'done',
+        desc: 'Documentacion tecnica de componentes y guias, incluyendo /docs/multi-runtime.',
+        fields: ['stack: Next.js + MDX', 'audiencia: equipos dev', 'docs: installation + multi-runtime'] },
+      { id: 'AppsDropdownDemo', label: 'apps/dropdown-demo\nSandbox', level: 0, group: 'surface', status: 'done',
+        desc: 'Demo puntual para validar interaccion rapida.',
+        fields: ['stack: Vite + React'] },
+
+      { id: 'ClaudeArm', label: 'packages/claude-arm\nReact Arm', level: 1, group: 'adapter', status: 'done',
+        desc: 'Arm productivo y principal fuente de valor hoy.',
+        fields: ['package: @lotosui/claude-arm', 'componentes: 15'],
+        methods: ['Button Badge Card Input Modal ...', 'fetchComponentCatalog()', 'fetchComponentSchema()'] },
+      { id: 'ReactComponents', label: 'React UI Set\n15 componentes', level: 1, group: 'adapter', status: 'done',
+        desc: 'Catalogo React usable hoy en produccion.',
+        fields: ['accordion, badge, button, card, checkbox ... tooltip'] },
+      { id: 'WebComponentsPkg', label: 'packages/web-components\nPrototype', level: 1, group: 'adapter', status: 'in_progress',
+        desc: 'Bridge multi-framework iniciado.',
+        fields: ['registerLotosWebComponents()', 'customElements API'],
+        methods: ['registerLotosButton()'] },
+      { id: 'LotosButtonWC', label: 'lotos-button\nWeb Component', level: 1, group: 'adapter', status: 'in_progress',
+        desc: 'Primer custom element funcional con tokens de core.',
+        fields: ['variant: primary|secondary|ghost|destructive|outline', 'size: sm|md|lg'] },
+      { id: 'LotosInputWC', label: 'lotos-input\nWeb Component', level: 1, group: 'adapter', status: 'in_progress',
+        desc: 'Input web component funcional con label, helper y error.',
+        fields: ['type: text|email|password|number|tel|url|search|date|time', 'size: sm|md|lg', 'attrs: required|disabled|readonly'] },
+      { id: 'LotosLaravel', label: 'packages/lotos-laravel\nSkeleton', level: 1, group: 'adapter', status: 'in_progress',
+        desc: 'Adapter inicial Laravel con button/input Blade + ServiceProvider.',
+        fields: ['mode: blade|web-component', 'components: x-lotos-ui::lotos-button, x-lotos-ui::lotos-input'],
+        methods: ['mergeConfigFrom()', 'loadViewsFrom()', 'publish config/views'] },
+
+      { id: 'CoreTokens', label: 'core/tokens + theme', level: 2, group: 'core', status: 'done',
+        desc: 'Sistema de color, spacing, typography y animacion.',
+        fields: ['colors', 'typography', 'spacing', 'animation'],
+        methods: ['applyTheme()', 'buildCssVariables()'] },
+      { id: 'CoreSchemas', label: 'core/schemas\nZod contracts', level: 2, group: 'core', status: 'done',
+        desc: 'Contratos tipados consumidos por MCP y sentinel.',
+        fields: ['button,input,modal,card,badge'],
+        methods: ['safeParse()'] },
+      { id: 'CoreRuntime', label: 'core/runtime\nRuntimes + Patterns', level: 2, group: 'core', status: 'done',
+        desc: 'Catalogo runtime y blueprints de diseno.',
+        fields: ['runtimeIds: react, php-laravel, python-django ...', 'patternIds: 5'],
+        methods: ['normalizeRuntimeId()', 'listDesignPatterns()', 'createPatternBlueprint()'] },
+      { id: 'Sentinel', label: 'packages/sentinel', level: 2, group: 'core', status: 'done',
+        desc: 'Validacion runtime de props y guardrails.',
+        fields: ['button-disabled-loading', 'input-missing-label', 'badge-dot-missing-label'],
+        methods: ['validateComponentProps()', 'assertValidComponentProps()'] },
+      { id: 'CLI', label: 'packages/cli', level: 2, group: 'core', status: 'done',
+        desc: 'CLI para catalogo, runtimes, patterns y blueprint.',
+        fields: ['commands: list, add <component>, runtimes, patterns, blueprint'],
+        methods: ['normaliza componente/runtime', 'genera wrapper local', 'emite blueprint runtime'] },
+
+      { id: 'MCPServer', label: 'core/mcp/server.ts', level: 3, group: 'mcp', status: 'done',
+        desc: 'Servidor MCP HTTP central.',
+        fields: ['version: 0.2.0', 'port: MCP_PORT|3100'],
+        methods: ['GET /health', 'GET /components', 'GET /patterns', 'GET /runtimes'] },
+      { id: 'MCPFrameworks', label: 'GET /frameworks', level: 3, group: 'mcp', status: 'done',
+        desc: 'Contrato de frameworks soportados y planeados.',
+        fields: ['supported: react, web-component, laravel-blade', 'planned: django-template, spring-thymeleaf'] },
+      { id: 'MCPRender', label: 'POST /components/render', level: 3, group: 'mcp', status: 'done',
+        desc: 'Render minimo por framework con validacion Zod.',
+        fields: ['framework + component + props + children', 'output: code + importPathByFramework'] },
+      { id: 'RuntimeMatrix', label: 'Runtime Matrix\nDesign + Functional', level: 3, group: 'ops', status: 'done',
+        desc: 'Matriz visible en web/docs/diagrama con estados por runtime.',
+        fields: ['stable/prototype/alpha/planned', 'web: /multi-framework', 'docs: /docs/multi-runtime'] },
+      { id: 'OneRoute', label: 'ONE/\nRuta Canonica', level: 3, group: 'ops', status: 'done',
+        desc: 'Gobernanza de arquitectura y estrategia en una sola ruta.',
+        fields: ['PROJECT_ARCHITECTURE_STATE', 'DEEPSEEK_FEEDBACK_VERIFIED', 'MANUAL_OPERATIVO'],
+        methods: ['verify:structure', 'verify:degraded'] },
+
+      { id: 'GapWebComponents', label: 'Gap: WC Pack Completo', level: 4, group: 'gap', status: 'in_progress',
+        desc: 'Ya existen lotos-button y lotos-input; falta completar set base.',
+        risks: ['Sin card/modal/select no hay adopcion amplia fuera de React', 'Adapters dependen de esta capa'],
+        next: ['Implementar card + badge', 'Agregar modal + select', 'Publicar catalogo minimo estable'] },
+      { id: 'GapDjango', label: 'Gap: lotos-django', level: 4, group: 'gap', status: 'missing',
+        desc: 'Adapter Django no iniciado.',
+        risks: ['Se pierde mercado Python admin/internal tools'],
+        next: ['Crear skeleton espejo de Laravel', 'Demo dashboard con templates + HTMX'] },
+      { id: 'GapSpring', label: 'Gap: lotos-spring', level: 4, group: 'gap', status: 'missing',
+        desc: 'Adapter Java Spring pendiente.',
+        risks: ['No hay entrada enterprise Java'],
+        next: ['Starter de panel operaciones', 'Token bridge thymeleaf'] },
+      { id: 'GapDotnetGo', label: 'Gap: .NET + Go adapters', level: 4, group: 'gap', status: 'missing',
+        desc: 'Runtime definido, sin implementacion.',
+        risks: ['Catalogo runtime sin ejecucion real'],
+        next: ['PoC .NET Razor', 'PoC Go templ'] },
+      { id: 'GapNativeBridge', label: 'Gap: C/C++/Mojo Token Bridge', level: 4, group: 'gap', status: 'missing',
+        desc: 'No existe puente nativo/TUI para tokens.',
+        risks: ['Expansion no-web bloqueada'],
+        next: ['Contrato export tokens JSON', 'PoC ncurses/qt/imgui'] },
+      { id: 'GapCLI', label: 'Gap: CLI multi-runtime', level: 4, group: 'gap', status: 'in_progress',
+        desc: 'CLI ya incluye runtimes/patterns/blueprint; falta framework-specific scaffolding.',
+        risks: ['Sin add --framework no hay DX completa en backend adapters'],
+        next: ['Agregar add --framework=laravel', 'Agregar list --framework'] },
+      { id: 'GapMcpRenderAdapters', label: 'Gap: Render para server templates', level: 4, group: 'gap', status: 'in_progress',
+        desc: 'POST /components/render ya soporta laravel-blade; faltan django-template y spring-thymeleaf.',
+        risks: ['MCP aun no acelera Python/Java en server templates'],
+        next: ['Agregar renderer Django template', 'Agregar renderer Spring thymeleaf'] }
+    ];
+
+    const edgesData = [
+      { from: 'AppsWeb', to: 'ClaudeArm' }, { from: 'AppsWeb', to: 'MCPServer' }, { from: 'AppsDocs', to: 'ClaudeArm' },
+      { from: 'AppsDropdownDemo', to: 'ClaudeArm' }, { from: 'ClaudeArm', to: 'ReactComponents' },
+      { from: 'ClaudeArm', to: 'CoreTokens' }, { from: 'ClaudeArm', to: 'CoreSchemas' }, { from: 'ClaudeArm', to: 'MCPServer', label: 'MCP client' },
+      { from: 'AppsWeb', to: 'RuntimeMatrix', label: 'status UI' }, { from: 'AppsDocs', to: 'RuntimeMatrix', label: 'status docs' },
+      { from: 'WebComponentsPkg', to: 'CoreTokens' }, { from: 'WebComponentsPkg', to: 'CoreSchemas' }, { from: 'WebComponentsPkg', to: 'LotosButtonWC' }, { from: 'WebComponentsPkg', to: 'LotosInputWC' },
+      { from: 'LotosLaravel', to: 'WebComponentsPkg', label: 'future base', dashes: true }, { from: 'LotosLaravel', to: 'CoreRuntime', label: 'runtime contract', dashes: true },
+      { from: 'CLI', to: 'CoreSchemas' }, { from: 'CLI', to: 'ClaudeArm' }, { from: 'Sentinel', to: 'CoreSchemas' },
+      { from: 'MCPServer', to: 'MCPFrameworks' }, { from: 'MCPServer', to: 'MCPRender' }, { from: 'MCPServer', to: 'CoreRuntime' }, { from: 'MCPServer', to: 'CoreSchemas' },
+      { from: 'RuntimeMatrix', to: 'CoreRuntime', label: 'runtime truth' }, { from: 'RuntimeMatrix', to: 'MCPFrameworks', label: 'framework truth' },
+      { from: 'OneRoute', to: 'CoreRuntime' }, { from: 'OneRoute', to: 'MCPServer' }, { from: 'OneRoute', to: 'LotosLaravel' },
+      { from: 'GapWebComponents', to: 'WebComponentsPkg', label: 'expand', dashes: true }, { from: 'GapDjango', to: 'CoreRuntime', label: 'runtime exists', dashes: true },
+      { from: 'GapDjango', to: 'MCPRender', label: 'needs renderer', dashes: true }, { from: 'GapSpring', to: 'CoreRuntime', label: 'runtime exists', dashes: true },
+      { from: 'GapDotnetGo', to: 'CoreRuntime', label: 'runtime exists', dashes: true }, { from: 'GapNativeBridge', to: 'CoreTokens', label: 'export tokens', dashes: true },
+      { from: 'GapCLI', to: 'CLI', label: 'extend commands', dashes: true }, { from: 'GapMcpRenderAdapters', to: 'MCPRender', label: 'extend output', dashes: true }
+    ];
+
+    const flowMap = {
+      now: ['AppsWeb', 'AppsDocs', 'AppsDropdownDemo', 'ClaudeArm', 'ReactComponents', 'CoreTokens', 'CoreSchemas', 'CoreRuntime', 'Sentinel', 'CLI', 'MCPServer', 'MCPFrameworks', 'MCPRender', 'RuntimeMatrix', 'OneRoute'],
+      bridge: ['AppsWeb', 'ClaudeArm', 'CoreRuntime', 'MCPServer', 'WebComponentsPkg', 'LotosButtonWC', 'LotosInputWC', 'LotosLaravel', 'MCPFrameworks', 'MCPRender', 'RuntimeMatrix'],
+      gaps: ['GapWebComponents', 'GapDjango', 'GapSpring', 'GapDotnetGo', 'GapNativeBridge', 'GapCLI', 'GapMcpRenderAdapters', 'CoreRuntime', 'WebComponentsPkg', 'MCPRender', 'CLI']
+    };
+
+    const visNodes = new vis.DataSet(nodesData.map(n => ({
+      id: n.id,
+      label: n.label,
+      level: n.level,
+      group: n.group,
+      status: n.status,
+      shape: 'box',
+      title: n.desc || n.id,
+      font: { color: '#ffffff', face: 'Inter', size: n.level <= 1 ? 13 : 12, bold: n.level <= 2 },
+      color: {
+        background: C[n.group].bg,
+        border: S[n.status].border,
+        highlight: { border: C[n.group].highlight, background: C[n.group].bg }
+      },
+      borderWidth: n.status === 'missing' ? 3 : 2,
+      margin: 10,
+      shadow: { enabled: true, color: C[n.group].border + '35', size: 16 }
+    })));
+
+    const visEdges = new vis.DataSet(edgesData.map(e => ({
+      from: e.from,
+      to: e.to,
+      label: e.label,
+      arrows: 'to',
+      dashes: e.dashes || false,
+      color: { color: e.dashes ? '#f59e0b' : '#475569', opacity: 0.72 },
+      font: { align: 'middle', size: 9, color: '#cbd5e1', background: '#0f172a' },
+      smooth: { type: 'cubicBezier', forceDirection: 'vertical', roundness: 0.6 }
+    })));
+
+    const network = new vis.Network(
+      document.getElementById('network'),
+      { nodes: visNodes, edges: visEdges },
+      getLayoutOptions('hierarchical')
+    );
+
+    network.on('click', function(params) {
+      if (params.nodes.length > 0) {
+        showNodeDetails(params.nodes[0]);
+        highlightFlow(params.nodes[0]);
+      } else {
+        document.getElementById('detailsPanel').style.display = 'none';
+        resetView(false);
+      }
+    });
+
+    function statusClass(status) {
+      if (status === 'done') return 'status-done';
+      if (status === 'in_progress') return 'status-progress';
+      return 'status-missing';
+    }
+
+    function showNodeDetails(nodeId) {
+      const node = nodesData.find(n => n.id === nodeId);
+      if (!node) return;
+
+      const panel = document.getElementById('detailsPanel');
+      const groupColor = C[node.group].border;
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="node-badge" style="background:${groupColor}18; color:${groupColor}; border:1px solid ${groupColor}45;">
+            ${node.group.toUpperCase()} - Nivel ${node.level}
+          </span>
+          <span class="status-badge ${statusClass(node.status)}">${S[node.status].text}</span>
+        </div>
+        <h2 class="details-title">${node.label}</h2>
+        <div class="mini-note">${node.desc || ''}</div>
+      `;
+
+      if (node.fields) {
+        html += `<div class="section-title">[FIELDS] Estado / Campos</div><div class="code-block">`;
+        node.fields.forEach(v => html += `<div class="field-line">${v}</div>`);
+        html += `</div>`;
+      }
+      if (node.methods) {
+        html += `<div class="section-title">[LOGIC] Logica / API</div><div class="code-block">`;
+        node.methods.forEach(v => html += `<div class="method-line">${v}</div>`);
+        html += `</div>`;
+      }
+      if (node.risks) {
+        html += `<div class="section-title">[RISKS] Riesgos</div><div class="code-block">`;
+        node.risks.forEach(v => html += `<div class="risk-line">${v}</div>`);
+        html += `</div>`;
+      }
+      if (node.next) {
+        html += `<div class="section-title">[NEXT] Siguiente paso</div><div class="code-block">`;
+        node.next.forEach(v => html += `<div class="field-line">${v}</div>`);
+        html += `</div>`;
+      }
+
+      panel.innerHTML = html;
+      panel.style.display = 'block';
+      panel.style.borderColor = groupColor;
+    }
+
+    function getLayoutOptions(type) {
+      if (type === 'hierarchical') {
+        return {
+          layout: { hierarchical: { enabled: true, direction: 'UD', sortMethod: 'directed', levelSeparation: 170, nodeSpacing: 190, treeSpacing: 240 } },
+          physics: { hierarchicalRepulsion: { nodeDistance: 195, damping: 0.13 } },
+          interaction: { hover: true, tooltipDelay: 170 }
+        };
+      }
+      return {
+        layout: { hierarchical: { enabled: false } },
+        physics: {
+          forceAtlas2Based: { gravitationalConstant: -100, centralGravity: 0.012, springLength: 220, springConstant: 0.09 },
+          solver: 'forceAtlas2Based'
+        },
+        interaction: { hover: true }
+      };
+    }
+
+    function setLayout(type) {
+      network.setOptions(getLayoutOptions(type));
+    }
+
+    function highlightFlow(focusNodeId, flowArray = null) {
+      const targets = new Set();
+      if (flowArray) {
+        flowArray.forEach(id => targets.add(id));
+      } else if (focusNodeId) {
+        edgesData.forEach(e => {
+          if (e.from === focusNodeId) targets.add(e.to);
+          if (e.to === focusNodeId) targets.add(e.from);
+        });
+        targets.add(focusNodeId);
+      }
+
+      visNodes.forEach(n => {
+        const active = targets.size === 0 ? true : targets.has(n.id);
+        visNodes.update({ id: n.id, opacity: active ? 1 : 0.16 });
+      });
+
+      visEdges.forEach(e => {
+        const active = targets.size === 0 ? true : (targets.has(e.from) && targets.has(e.to));
+        visEdges.update({ id: e.id, hidden: !active });
+      });
+    }
+
+    function showFlow(flowType) {
+      const flow = flowMap[flowType] || [];
+      highlightFlow(null, flow);
+      if (flow.length > 0) {
+        network.fit({ nodes: flow, animation: { duration: 420, easingFunction: 'easeInOutQuad' } });
+      }
+    }
+
+    function filterByStatus(status) {
+      const ids = nodesData.filter(n => n.status === status).map(n => n.id);
+      highlightFlow(null, ids);
+      if (ids.length > 0) {
+        network.fit({ nodes: ids, animation: { duration: 420, easingFunction: 'easeInOutQuad' } });
+      }
+    }
+
+    function filterNodes() {
+      const q = document.getElementById('search').value.toLowerCase().trim();
+      if (!q) {
+        resetView(false);
+        return;
+      }
+
+      const matches = nodesData.filter(n => {
+        const text = [
+          n.id, n.label, n.desc || '',
+          ...(n.fields || []), ...(n.methods || []), ...(n.risks || []), ...(n.next || [])
+        ].join(' ').toLowerCase();
+        return text.includes(q);
+      });
+
+      const ids = matches.map(m => m.id);
+      highlightFlow(null, ids);
+      if (ids.length > 0) {
+        network.fit({ nodes: ids, animation: { duration: 380, easingFunction: 'easeInOutQuad' } });
+      }
+    }
+
+    function resetView(withFit = true) {
+      visNodes.forEach(n => visNodes.update({ id: n.id, opacity: 1 }));
+      visEdges.forEach(e => visEdges.update({ id: e.id, hidden: false }));
+      if (withFit) {
+        network.fit({ animation: { duration: 350, easingFunction: 'easeInOutQuad' } });
+      }
+    }
+
+    function hydrateStatusBoard() {
+      const done = nodesData.filter(n => n.status === 'done').length;
+      const inProgress = nodesData.filter(n => n.status === 'in_progress').length;
+      const missing = nodesData.filter(n => n.status === 'missing').length;
+      const total = nodesData.length;
+      const score = ((done + inProgress * 0.5) / total) * 100;
+
+      document.getElementById('statusRow').innerHTML = `
+        <span>[DONE] ${done}</span>
+        <span>[IN_PROGRESS] ${inProgress}</span>
+        <span>[MISSING] ${missing}</span>
+      `;
+      document.getElementById('progressFill').style.width = `${Math.round(score)}%`;
+      document.getElementById('progressText').innerHTML = `
+        <span>Madurez puente: ${Math.round(score)}%</span>
+        <span>Siguiente foco: adapters productivos</span>
+      `;
+    }
+
+    hydrateStatusBoard();
+    network.fit({ animation: { duration: 360, easingFunction: 'easeInOutQuad' } });
+  </script>
+</body>
+</html>

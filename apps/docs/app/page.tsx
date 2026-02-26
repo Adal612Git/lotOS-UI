@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'LotOS UI — The AI-native UI Component Ecosystem',
   description:
-    'Build perfect interfaces at the first attempt, in any framework, without breaking anything. Accessible, type-safe, and MCP-powered.',
+    'Build UI with shared design and functional contracts. React stable today, multi-runtime expansion with explicit maturity labels.',
 };
 
 export default function HomePage() {
@@ -20,6 +20,7 @@ export default function HomePage() {
           <div className="lotos-nav__links">
             <Link href="/docs" className="lotos-nav__link">Docs</Link>
             <Link href="/docs/components/button" className="lotos-nav__link">Components</Link>
+            <Link href="/docs/multi-runtime" className="lotos-nav__link">Multi Runtime</Link>
             <a
               href="https://github.com/lotos-technologies/lotos-ui"
               target="_blank"
@@ -28,7 +29,7 @@ export default function HomePage() {
             >
               GitHub
             </a>
-            <Link href="/docs/getting-started/installation" className="lotos-nav__cta">
+            <Link href="/docs/installation" className="lotos-nav__cta">
               Get Started →
             </Link>
           </div>
@@ -49,14 +50,13 @@ export default function HomePage() {
         </h1>
 
         <p className="lotos-hero__subtitle">
-          LotOS UI is the first component ecosystem designed for agents.
+          LotOS UI is built for teams shipping with AI agents.
           MCP-powered schemas + JSX examples + anti-hallucination rules —
-          so your AI builds perfect interfaces <em>at the first attempt</em>,
-          in any framework, without breaking anything.
+          so design intent and functional implementation stay aligned from day one.
         </p>
 
         <div className="lotos-hero__actions">
-          <Link href="/docs/getting-started/installation" className="lotos-btn lotos-btn--primary">
+          <Link href="/docs/installation" className="lotos-btn lotos-btn--primary">
             Start building free
           </Link>
           <Link href="/docs" className="lotos-btn lotos-btn--ghost">
@@ -76,12 +76,12 @@ export default function HomePage() {
             <code>
               <span className="lotos-code-comment">{`# Install`}</span>{'\n'}
               <span className="lotos-code-cmd">{'$ '}</span>
-              <span className="lotos-code-text">{'pnpm add @lotos/claude-arm'}</span>{'\n\n'}
+              <span className="lotos-code-text">{'npm install @lotosui/claude-arm'}</span>{'\n\n'}
               <span className="lotos-code-comment">{`# Use in your app`}</span>{'\n'}
               <span className="lotos-code-keyword">{'import '}</span>
               <span className="lotos-code-text">{'{ Button, Input, Modal } '}</span>
               <span className="lotos-code-keyword">{'from '}</span>
-              <span className="lotos-code-string">{"'@lotos/claude-arm'"}</span>{'\n\n'}
+              <span className="lotos-code-string">{"'@lotosui/claude-arm'"}</span>{'\n\n'}
               <span className="lotos-code-tag">{'<Button '}</span>
               <span className="lotos-code-attr">{'variant'}</span>
               <span className="lotos-code-text">{'='}</span>
@@ -97,9 +97,9 @@ export default function HomePage() {
       {/* ── Stats ───────────────────────────────────────────────────────── */}
       <section className="lotos-stats" aria-label="Key metrics">
         {[
-          { value: '80+', label: 'Components' },
+          { value: '15', label: 'React Components' },
           { value: 'WCAG AAA', label: 'Accessibility' },
-          { value: '5', label: 'Frameworks' },
+          { value: '11', label: 'Runtime Tracks' },
           { value: 'MCP', label: 'AI-native' },
         ].map(({ value, label }) => (
           <div key={label} className="lotos-stat">
@@ -138,8 +138,8 @@ export default function HomePage() {
             },
             {
               icon: '⚡',
-              title: 'Multi-framework',
-              desc: 'One design system. Five exports: React, Vue, Svelte, Solid, and Angular. Your tokens never duplicate.',
+              title: 'Multi-runtime visibility',
+              desc: 'One design system with explicit maturity labels per runtime: stable, prototype, alpha, planned.',
             },
             {
               icon: '🔒',
@@ -162,10 +162,10 @@ export default function HomePage() {
           Ready to build with LotOS?
         </h2>
         <p className="lotos-cta__subtitle">
-          Start free. 80 open-source components. MCP server. No credit card required.
+          Start with the React production arm, then scale with runtime-specific expansion tracks.
         </p>
         <div className="lotos-cta__actions">
-          <Link href="/docs/getting-started/installation" className="lotos-btn lotos-btn--primary lotos-btn--lg">
+          <Link href="/docs/installation" className="lotos-btn lotos-btn--primary lotos-btn--lg">
             Read the docs
           </Link>
           <a

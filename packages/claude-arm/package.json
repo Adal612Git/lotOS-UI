@@ -1,6 +1,6 @@
 {
-    "name": "@lotos/claude-arm",
-    "version": "1.0.0",
+    "name": "@lotosui/claude-arm",
+    "version": "1.0.1",
     "description": "LotOS UI — Accessible React component library built for AI-first development. 15 components, WCAG 2.2 AAA, MCP Server integrated.",
     "license": "MIT",
     "type": "module",
@@ -19,6 +19,8 @@
         "wcag",
         "aria",
         "design-system",
+        "multi-framework",
+        "web-components",
         "lotos",
         "mcp",
         "ai"
@@ -81,7 +83,7 @@
         "vitest": "^2.1.9"
     },
     "dependencies": {
-        "@lotos/core": "workspace:*",
+        "@lotosui/core": "workspace:*",
         "zod": "^3.24.0"
     }
 }

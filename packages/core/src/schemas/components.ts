@@ -146,6 +146,251 @@ export const badgePropsSchema = basePropsSchema.extend({
     children: z.any().optional(),
 });
 
+// ─── Select ───────────────────────────────────────────────────────────────
+
+export const selectPropsSchema = basePropsSchema.extend({
+    /** Current value (controlled) */
+    value: z.string().optional(),
+    /** Default value (uncontrolled) */
+    defaultValue: z.string().optional(),
+    /** Field label */
+    label: z.string().optional(),
+    /** Placeholder shown when no value is selected */
+    placeholder: z.string().optional(),
+    /** Helper text shown below the field */
+    helperText: z.string().optional(),
+    /** Error message */
+    error: z.string().optional(),
+    /** Whether the field is required */
+    required: z.boolean().optional(),
+    /** Whether the field is disabled */
+    disabled: z.boolean().optional(),
+    /** Size variant */
+    size: z.enum(['sm', 'md', 'lg']).default('md'),
+    /** Available options */
+    options: z.array(z.object({ value: z.string(), label: z.string(), disabled: z.boolean().optional() })).optional(),
+    /** Change handler */
+    onChange: z.function().args(z.any()).optional(),
+});
+
+// ─── Checkbox ─────────────────────────────────────────────────────────────
+
+export const checkboxPropsSchema = basePropsSchema.extend({
+    /** Whether the checkbox is checked (controlled) */
+    checked: z.boolean().optional(),
+    /** Default checked state (uncontrolled) */
+    defaultChecked: z.boolean().optional(),
+    /** Checkbox label */
+    label: z.string().optional(),
+    /** Helper text */
+    helperText: z.string().optional(),
+    /** Error message */
+    error: z.string().optional(),
+    /** Whether the field is required */
+    required: z.boolean().optional(),
+    /** Whether the checkbox is disabled */
+    disabled: z.boolean().optional(),
+    /** Indeterminate state (partially checked) */
+    indeterminate: z.boolean().optional(),
+    /** Change handler */
+    onChange: z.function().args(z.any()).optional(),
+});
+
+// ─── Switch ───────────────────────────────────────────────────────────────
+
+export const switchPropsSchema = basePropsSchema.extend({
+    /** Whether the switch is on (controlled) */
+    checked: z.boolean().optional(),
+    /** Default state (uncontrolled) */
+    defaultChecked: z.boolean().optional(),
+    /** Switch label */
+    label: z.string().optional(),
+    /** Helper text */
+    helperText: z.string().optional(),
+    /** Whether the switch is disabled */
+    disabled: z.boolean().optional(),
+    /** Size variant */
+    size: z.enum(['sm', 'md', 'lg']).default('md'),
+    /** Change handler */
+    onChange: z.function().args(z.any()).optional(),
+});
+
+// ─── Textarea ─────────────────────────────────────────────────────────────
+
+export const textareaPropsSchema = basePropsSchema.extend({
+    /** Current value (controlled) */
+    value: z.string().optional(),
+    /** Default value (uncontrolled) */
+    defaultValue: z.string().optional(),
+    /** Field label */
+    label: z.string().optional(),
+    /** Placeholder text */
+    placeholder: z.string().optional(),
+    /** Helper text */
+    helperText: z.string().optional(),
+    /** Error message */
+    error: z.string().optional(),
+    /** Whether the field is required */
+    required: z.boolean().optional(),
+    /** Whether the field is disabled */
+    disabled: z.boolean().optional(),
+    /** Whether the field is read-only */
+    readOnly: z.boolean().optional(),
+    /** Number of visible rows */
+    rows: z.number().int().positive().optional(),
+    /** Maximum character count */
+    maxLength: z.number().int().positive().optional(),
+    /** Whether to show character counter */
+    showCount: z.boolean().optional(),
+    /** Size variant */
+    size: z.enum(['sm', 'md', 'lg']).default('md'),
+    /** Change handler */
+    onChange: z.function().args(z.any()).optional(),
+});
+
+// ─── Tooltip ──────────────────────────────────────────────────────────────
+
+export const tooltipPropsSchema = basePropsSchema.extend({
+    /** Tooltip text content */
+    content: z.string(),
+    /** Preferred placement relative to the trigger */
+    placement: z.enum(['top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end']).default('top'),
+    /** Delay before showing tooltip in ms */
+    delay: z.number().int().nonnegative().optional(),
+    /** Whether the tooltip is disabled */
+    disabled: z.boolean().optional(),
+    /** Trigger element */
+    children: z.any(),
+});
+
+// ─── Dropdown ─────────────────────────────────────────────────────────────
+
+export const dropdownPropsSchema = basePropsSchema.extend({
+    /** Trigger element */
+    trigger: z.any(),
+    /** Menu items */
+    items: z.array(z.object({
+        id: z.string(),
+        label: z.string(),
+        icon: z.any().optional(),
+        disabled: z.boolean().optional(),
+        destructive: z.boolean().optional(),
+        onClick: z.function().optional(),
+    })).optional(),
+    /** Whether the menu is open (controlled) */
+    open: z.boolean().optional(),
+    /** Placement relative to trigger */
+    placement: z.enum(['bottom-start', 'bottom-end', 'top-start', 'top-end']).default('bottom-start'),
+    /** Open/close handler */
+    onOpenChange: z.function().args(z.boolean()).optional(),
+});
+
+// ─── RadioGroup ───────────────────────────────────────────────────────────
+
+export const radioGroupPropsSchema = basePropsSchema.extend({
+    /** Current selected value (controlled) */
+    value: z.string().optional(),
+    /** Default value (uncontrolled) */
+    defaultValue: z.string().optional(),
+    /** Group label */
+    label: z.string().optional(),
+    /** Helper text */
+    helperText: z.string().optional(),
+    /** Error message */
+    error: z.string().optional(),
+    /** Whether the group is required */
+    required: z.boolean().optional(),
+    /** Whether the group is disabled */
+    disabled: z.boolean().optional(),
+    /** Layout direction */
+    orientation: z.enum(['horizontal', 'vertical']).default('vertical'),
+    /** Radio options */
+    options: z.array(z.object({
+        value: z.string(),
+        label: z.string(),
+        disabled: z.boolean().optional(),
+    })),
+    /** Change handler */
+    onChange: z.function().args(z.string()).optional(),
+});
+
+// ─── Combobox ─────────────────────────────────────────────────────────────
+
+export const comboboxPropsSchema = basePropsSchema.extend({
+    /** Current selected value (controlled) */
+    value: z.string().optional(),
+    /** Default value (uncontrolled) */
+    defaultValue: z.string().optional(),
+    /** Field label */
+    label: z.string().optional(),
+    /** Placeholder text */
+    placeholder: z.string().optional(),
+    /** Helper text */
+    helperText: z.string().optional(),
+    /** Error message */
+    error: z.string().optional(),
+    /** Whether the field is required */
+    required: z.boolean().optional(),
+    /** Whether the field is disabled */
+    disabled: z.boolean().optional(),
+    /** Available options */
+    options: z.array(z.object({
+        value: z.string(),
+        label: z.string(),
+        disabled: z.boolean().optional(),
+    })),
+    /** Whether the dropdown is open (controlled) */
+    open: z.boolean().optional(),
+    /** Change handler */
+    onChange: z.function().args(z.string()).optional(),
+    /** Open state change handler */
+    onOpenChange: z.function().args(z.boolean()).optional(),
+});
+
+// ─── Tabs ─────────────────────────────────────────────────────────────────
+
+export const tabsPropsSchema = basePropsSchema.extend({
+    /** Current active tab value (controlled) */
+    value: z.string().optional(),
+    /** Default active tab (uncontrolled) */
+    defaultValue: z.string().optional(),
+    /** Tab items */
+    tabs: z.array(z.object({
+        value: z.string(),
+        label: z.string(),
+        disabled: z.boolean().optional(),
+        content: z.any().optional(),
+    })),
+    /** Visual variant */
+    variant: z.enum(['underline', 'pills', 'boxed']).default('underline'),
+    /** Layout orientation */
+    orientation: z.enum(['horizontal', 'vertical']).default('horizontal'),
+    /** Change handler */
+    onChange: z.function().args(z.string()).optional(),
+});
+
+// ─── Accordion ────────────────────────────────────────────────────────────
+
+export const accordionPropsSchema = basePropsSchema.extend({
+    /** Accordion items */
+    items: z.array(z.object({
+        id: z.string(),
+        title: z.string(),
+        content: z.any(),
+        disabled: z.boolean().optional(),
+    })),
+    /** Allow multiple items open at once */
+    multiple: z.boolean().optional(),
+    /** Currently open item IDs (controlled) */
+    value: z.union([z.string(), z.array(z.string())]).optional(),
+    /** Default open item IDs (uncontrolled) */
+    defaultValue: z.union([z.string(), z.array(z.string())]).optional(),
+    /** Visual variant */
+    variant: z.enum(['default', 'bordered', 'ghost']).default('default'),
+    /** Change handler */
+    onChange: z.function().args(z.any()).optional(),
+});
+
 // ─── Exports ──────────────────────────────────────────────────────────────
 
 export type ButtonProps = z.infer<typeof buttonPropsSchema>;
@@ -153,6 +398,16 @@ export type InputProps = z.infer<typeof inputPropsSchema>;
 export type ModalProps = z.infer<typeof modalPropsSchema>;
 export type CardProps = z.infer<typeof cardPropsSchema>;
 export type BadgeProps = z.infer<typeof badgePropsSchema>;
+export type SelectProps = z.infer<typeof selectPropsSchema>;
+export type CheckboxProps = z.infer<typeof checkboxPropsSchema>;
+export type SwitchProps = z.infer<typeof switchPropsSchema>;
+export type TextareaProps = z.infer<typeof textareaPropsSchema>;
+export type TooltipProps = z.infer<typeof tooltipPropsSchema>;
+export type DropdownProps = z.infer<typeof dropdownPropsSchema>;
+export type RadioGroupProps = z.infer<typeof radioGroupPropsSchema>;
+export type ComboboxProps = z.infer<typeof comboboxPropsSchema>;
+export type TabsProps = z.infer<typeof tabsPropsSchema>;
+export type AccordionProps = z.infer<typeof accordionPropsSchema>;
 export type BaseProps = z.infer<typeof basePropsSchema>;
 
 /** Registry of all component schemas — used by the MCP Server */
@@ -162,6 +417,16 @@ export const componentSchemas = {
     modal: modalPropsSchema,
     card: cardPropsSchema,
     badge: badgePropsSchema,
+    select: selectPropsSchema,
+    checkbox: checkboxPropsSchema,
+    switch: switchPropsSchema,
+    textarea: textareaPropsSchema,
+    tooltip: tooltipPropsSchema,
+    dropdown: dropdownPropsSchema,
+    'radio-group': radioGroupPropsSchema,
+    combobox: comboboxPropsSchema,
+    tabs: tabsPropsSchema,
+    accordion: accordionPropsSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;

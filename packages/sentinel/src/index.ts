@@ -1,4 +1,4 @@
-import { componentSchemas, type ComponentName } from '@lotos/core/schemas';
+import { componentSchemas, type ComponentName } from '@lotosui/core/schemas';
 import type { ZodIssue } from 'zod';
 
 export type SentinelSeverity = 'error' | 'warning';
@@ -85,6 +85,50 @@ const warningRules: Partial<Record<ComponentName, WarningRule>> = {
                     'badge-dot-missing-label',
                     'Dot badge without text should provide aria-label.',
                     ['aria-label'],
+                ),
+            ];
+        }
+        return [];
+    },
+    select: (props) => {
+        const options = props['options'];
+        if (Array.isArray(options) && options.length === 0) {
+            return [
+                toWarning(
+                    'select',
+                    'select-empty-options',
+                    'Select has no options. Provide at least one option or use a placeholder only with dynamic options.',
+                    ['options'],
+                ),
+            ];
+        }
+        return [];
+    },
+    checkbox: (props) => {
+        const label = props['label'];
+        const ariaLabel = props['aria-label'];
+        if (!label && !ariaLabel) {
+            return [
+                toWarning(
+                    'checkbox',
+                    'checkbox-missing-label',
+                    'Checkbox should include label or aria-label for accessibility.',
+                    ['label'],
+                ),
+            ];
+        }
+        return [];
+    },
+    switch: (props) => {
+        const label = props['label'];
+        const ariaLabel = props['aria-label'];
+        if (!label && !ariaLabel) {
+            return [
+                toWarning(
+                    'switch',
+                    'switch-missing-label',
+                    'Switch should include label or aria-label so screen readers can identify it.',
+                    ['label'],
                 ),
             ];
         }

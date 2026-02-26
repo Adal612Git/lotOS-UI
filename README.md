@@ -1,135 +1,108 @@
-# Turborepo starter
+# LotOS UI
 
-This Turborepo starter is maintained by the Turborepo core team.
+Monorepo oficial de LotOS UI.
 
-## Using this example
+## Paquetes npm oficiales
 
-Run the following command:
+- `@lotosui/claude-arm` (publicado, producción)
+- `@lotosui/core` (publicado)
+- `@lotosui/cli` (paquete CLI del monorepo)
 
-```sh
-npx create-turbo@latest
+## Instalación rápida
+
+```bash
+npm install @lotosui/claude-arm
+npm install react react-dom
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```tsx
+import '@lotosui/claude-arm/styles.css';
+import { Button } from '@lotosui/claude-arm';
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Desarrollo local
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm install
+pnpm dev
 ```
 
-### Develop
+## Build y test
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+pnpm build
+pnpm test
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Nota de entorno Windows con restriccion `spawn EPERM`:
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+- `pnpm build` detecta automaticamente ese modo y ejecuta pipeline degradado:
+  - build de `@lotosui/core`
+  - `pnpm verify:100`
+  - `pnpm verify:degraded`
+- En entornos sin esa restriccion, `pnpm build` corre `turbo run build` normal.
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+## Docs
 
-### Remote Caching
+- Sitio: https://lotos-ui.vercel.app
+- App local: `apps/docs`
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## CLI
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Paquete objetivo: `@lotosui/cli`
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+pnpm --filter @lotosui/cli build
+pnpm --filter @lotosui/cli test
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Expansion multi-runtime (v0)
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+`@lotosui/core` ahora expone contratos para runtimes y patrones de diseno:
 
+- `@lotosui/core/runtime`
+- `@lotosui/web-components` (prototipos activos: `lotos-button`, `lotos-input`)
+- MCP endpoints nuevos:
+  - `GET /frameworks`
+  - `GET /runtimes`
+  - `GET /patterns`
+  - `GET /patterns/:id?runtime=<runtime>`
+  - `POST /components/render` (react, web-component, laravel-blade preview)
+- Adapter skeleton inicial:
+  - `packages/lotos-laravel`
+
+Objetivo: escalar de React-only a adapters para PHP, Python, Java, .NET, Go, C/C++, y Mojo con una base visual consistente.
+
+## Ruta unica de operacion
+
+Todo lo de arquitectura, estudios, patrones y operacion esta centralizado en `ONE/`.
+
+- `ONE/PROJECT_ARCHITECTURE_STATE_2026-02-25.md`
+- `ONE/MANUAL_OPERATIVO_VICTOR.md`
+- `ONE/LOTOS_DESIGN_PATTERNS_MULTI_RUNTIME.md`
+- `ONE/ESTUDIO_estrategiafinalventas.txt`
+- `ONE/TEMPLATE_*`
+
+Validacion rapida de orden:
+
+```bash
+pnpm verify:structure
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+Modo degradado (sin dependencias completas):
+
+```bash
+pnpm verify:degraded
 ```
 
-## Useful Links
+Verificacion de consistencia web/docs/diagrama (objetivo 100%):
 
-Learn more about the power of Turborepo:
+```bash
+pnpm verify:100
+```
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Mapa visual de arquitectura:
+
+- Fuente canonica: `LOTOSdiagrama.html`
+- Publico web: `apps/web/public/architecture-map.html`
+- Publico docs: `apps/docs/public/architecture-map.html`

@@ -1,88 +1,65 @@
 ---
 title: Installation
-description: Get @lotos/claude-arm installed and your first component rendering in 2 minutes.
+description: Install the React production arm first, then expand to multi-runtime tracks with clear status.
 ---
 
 # Installation
 
-## Prerequisites
+## Recommended path (production)
 
 - Node.js 18+
-- pnpm, npm, or yarn
-- React 19+ project (Next.js 15, Vite, etc.)
-
-## Install
+- React 19+ app (Next.js, Vite, or similar)
 
 ```bash
-pnpm add @lotos/claude-arm
+npm install @lotosui/claude-arm
 ```
 
-## Import styles
-
-In your root layout or `_app.tsx`, import the global CSS once:
+Import styles once:
 
 ```tsx
-// app/layout.tsx (Next.js App Router)
-import '@lotos/claude-arm/styles.css'
+import '@lotosui/claude-arm/styles.css';
 ```
 
-This file imports all LotOS CSS custom properties (design tokens), dark/light mode variables, and base resets.
-
-## Your first component
+Use a component:
 
 ```tsx
-import { Button } from '@lotos/claude-arm'
+import { Button } from '@lotosui/claude-arm';
 
 export default function Page() {
-  return (
-    <Button variant="primary" size="md">
-      Get Started
-    </Button>
-  )
+  return <Button variant="primary">Get Started</Button>;
 }
 ```
 
-## Dark mode
-
-LotOS uses CSS custom properties. To switch themes, set `data-theme` on your `<html>`:
-
-```tsx
-// Dark (default)
-<html data-theme="dark">
-
-// Light
-<html data-theme="light">
-
-// System (respects prefers-color-scheme)
-<html>  {/* no data-theme */}
-```
-
-## MCP Server (AI agent integration)
-
-Start the MCP server so your AI agent can read component schemas:
+## MCP integration for AI agents
 
 ```bash
-# Build first
-pnpm --filter @lotos/core build
-
-# Start MCP server
+pnpm --filter @lotosui/core build
 node packages/core/dist/mcp/server.js
-# → LotOS MCP Server running at http://localhost:3100
+```
 
-# Configure your AI agent
+Query a component contract:
+
+```bash
 curl http://localhost:3100/components/button
 ```
 
-## TypeScript
+## Expansion tracks (status-aware)
 
-All props are generated from Zod schemas. You get full autocomplete:
+These tracks are useful for teams planning multi-language delivery:
 
-```ts
-import type { ButtonProps } from '@lotos/claude-arm'
-```
+- `@lotosui/web-components` (prototype)
+- `lotos-laravel` (alpha)
+- Django / Flask / Spring / .NET / Go / C / C++ / Mojo (planned adapters using blueprint contracts)
 
-## Next steps
+Use the full runtime matrix and starter snippets here:
 
-- [Button →](/docs/components/button)
-- [Input →](/docs/components/input)
-- [Modal →](/docs/components/modal)
+- [Multi Runtime Guide](/docs/multi-runtime)
+
+## Design + functional checklist
+
+Before building a new screen:
+
+1. Choose a runtime and pattern from MCP `/runtimes` + `/patterns`.
+2. Apply design tokens and pattern section structure.
+3. Generate framework-safe snippets from component schemas.
+4. Validate with Sentinel warnings and runtime tests.

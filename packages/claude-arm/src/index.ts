@@ -25,7 +25,7 @@ export type {
     CardProps,
     InputProps,
     ModalProps,
-} from '@lotos/core';
+} from '@lotosui/core';
 
 export type { SelectProps, SelectOption } from './components/select/select.js';
 export type { CheckboxProps } from './components/checkbox/checkbox.js';
@@ -49,5 +49,14 @@ export { Accordion } from './components/accordion/accordion.js';
 export type { TabsProps, TabItem } from './components/tabs/tabs.js';
 export type { AccordionProps, AccordionItem } from './components/accordion/accordion.js';
 
-export { fetchComponentCatalog, fetchComponentSchema } from './mcp/index.js';
-export type { MCPCatalogResponse, MCPComponentResponse } from './mcp/index.js';
+export { fetchComponentCatalog, fetchComponentSchema, fetchRuntimes, fetchPatterns, fetchPatternDetail } from './mcp/index.js';
+export type {
+    MCPCatalogResponse,
+    MCPComponentResponse,
+    MCPRuntimeProfile,
+    MCPRuntimesResponse,
+    MCPPatternSummary,
+    MCPPatternsResponse,
+    MCPPatternDetailResponse,
+} from './mcp/index.js';
+

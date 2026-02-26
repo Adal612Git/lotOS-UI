@@ -21,10 +21,10 @@ Este es el documento base operativo. Luego puedes exportarlo a formato visual.
 ## 1. Que es LotOS UI
 LotOS UI es un ecosistema de componentes UI orientado a AI-first development:
 
-- `@lotos/core`: contrato central (tokens, schemas Zod, engine de tema, RTL, MCP server).
-- `@lotos/claude-arm`: libreria React productiva (15 componentes accesibles).
-- `@lotos/sentinel`: validacion runtime para evitar composiciones invalidas.
-- `@lotos/cli`: CLI para scaffolding rapido de wrappers de componentes.
+- `@lotosui/core`: contrato central (tokens, schemas Zod, engine de tema, RTL, MCP server).
+- `@lotosui/claude-arm`: libreria React productiva (15 componentes accesibles).
+- `@lotosui/sentinel`: validacion runtime para evitar composiciones invalidas.
+- `@lotosui/cli`: CLI para scaffolding rapido de wrappers de componentes.
 - `apps/docs`: sitio de documentacion (Fumadocs + Next.js).
 - `apps/web`: app Next.js de soporte/demo.
 
@@ -39,19 +39,19 @@ Propuesta de valor:
 ### 2.1 Diagrama de contexto (alto nivel)
 ```mermaid
 flowchart LR
-    U[Dev / Victor] --> CLI[@lotos/cli]
+    U[Dev / Victor] --> CLI[@lotosui/cli]
     U --> DOCS[apps/docs]
     U --> WEB[apps/web]
     U --> TEST[Turbo Pipeline]
 
-    AI[AI Agent] --> MCP[@lotos/core MCP Server]
-    MCP --> SCHEMAS[@lotos/core schemas]
-    SCHEMAS --> ARM[@lotos/claude-arm]
+    AI[AI Agent] --> MCP[@lotosui/core MCP Server]
+    MCP --> SCHEMAS[@lotosui/core schemas]
+    SCHEMAS --> ARM[@lotosui/claude-arm]
     ARM --> APP[Aplicacion Consumidora React]
-    APP --> SENT[@lotos/sentinel]
+    APP --> SENT[@lotosui/sentinel]
 
     DOCS --> ARM
-    DOCS --> CORE[@lotos/core]
+    DOCS --> CORE[@lotosui/core]
     WEB --> UI[@repo/ui]
 ```
 
@@ -119,9 +119,9 @@ erDiagram
 ```mermaid
 sequenceDiagram
     participant Agent as AI Agent
-    participant MCP as @lotos/core MCP
+    participant MCP as @lotosui/core MCP
     participant Core as componentSchemas
-    participant Arm as @lotos/claude-arm
+    participant Arm as @lotosui/claude-arm
     participant App as App React
 
     Agent->>MCP: GET /components/button
@@ -240,30 +240,30 @@ pnpm.cmd exec turbo run test:mcp
 ```
 
 ### 6.2 Paquetes clave
-`@lotos/core`
+`@lotosui/core`
 ```powershell
-pnpm.cmd --filter @lotos/core build
-pnpm.cmd --filter @lotos/core test
+pnpm.cmd --filter @lotosui/core build
+pnpm.cmd --filter @lotosui/core test
 ```
 
-`@lotos/claude-arm`
+`@lotosui/claude-arm`
 ```powershell
-pnpm.cmd --filter @lotos/claude-arm build
-pnpm.cmd --filter @lotos/claude-arm test
-pnpm.cmd --filter @lotos/claude-arm test:a11y
-pnpm.cmd --filter @lotos/claude-arm test:mcp
+pnpm.cmd --filter @lotosui/claude-arm build
+pnpm.cmd --filter @lotosui/claude-arm test
+pnpm.cmd --filter @lotosui/claude-arm test:a11y
+pnpm.cmd --filter @lotosui/claude-arm test:mcp
 ```
 
-`@lotos/sentinel`
+`@lotosui/sentinel`
 ```powershell
-pnpm.cmd --filter @lotos/sentinel build
-pnpm.cmd --filter @lotos/sentinel test
+pnpm.cmd --filter @lotosui/sentinel build
+pnpm.cmd --filter @lotosui/sentinel test
 ```
 
-`@lotos/cli`
+`@lotosui/cli`
 ```powershell
-pnpm.cmd --filter @lotos/cli build
-pnpm.cmd --filter @lotos/cli test
+pnpm.cmd --filter @lotosui/cli build
+pnpm.cmd --filter @lotosui/cli test
 ```
 
 `apps/docs`
@@ -279,19 +279,19 @@ pnpm.cmd --filter docs check-types
 Instalar en proyecto React:
 
 ```bash
-pnpm add @lotos/claude-arm
+npm install @lotosui/claude-arm
 ```
 
 Importar estilos globales una vez:
 
 ```tsx
-import '@lotos/claude-arm/styles.css';
+import '@lotosui/claude-arm/styles.css';
 ```
 
 Usar componentes:
 
 ```tsx
-import { Button, Input, Modal } from '@lotos/claude-arm';
+import { Button, Input, Modal } from '@lotosui/claude-arm';
 ```
 
 ### 7.2 Catalogo actual de componentes (15)
@@ -327,7 +327,7 @@ Compuestos:
 ## 8. Engine de tema y RTL
 
 ### 8.1 Tema (light/dark/system)
-API en `@lotos/core`:
+API en `@lotosui/core`:
 - `generateCSSVariables()`
 - `applyTheme(mode)`
 - `getActiveTheme()`
@@ -335,7 +335,7 @@ API en `@lotos/core`:
 Uso:
 
 ```ts
-import { applyTheme } from '@lotos/core';
+import { applyTheme } from '@lotosui/core';
 
 applyTheme('dark');
 applyTheme('light');
@@ -343,7 +343,7 @@ applyTheme('system');
 ```
 
 ### 8.2 RTL
-API en `@lotos/core`:
+API en `@lotosui/core`:
 - `toLogical()`
 - `setDirection('ltr' | 'rtl')`
 - `getDirection()`
@@ -352,7 +352,7 @@ API en `@lotos/core`:
 Uso:
 
 ```ts
-import { setDirection } from '@lotos/core';
+import { setDirection } from '@lotosui/core';
 
 setDirection('rtl');
 ```
@@ -368,7 +368,7 @@ Funciones disponibles:
 Ejemplo:
 
 ```ts
-import { validateComponentProps } from '@lotos/sentinel';
+import { validateComponentProps } from '@lotosui/sentinel';
 
 const result = validateComponentProps('button', {
   variant: 'primary',
@@ -401,7 +401,7 @@ Puerto:
 
 ### 10.1 Levantar MCP local
 ```powershell
-pnpm.cmd --filter @lotos/core build
+pnpm.cmd --filter @lotosui/core build
 node packages/core/dist/mcp/server.js
 ```
 
@@ -420,19 +420,19 @@ curl http://localhost:3100/components/button/examples
 ```
 
 ### 10.3 Cliente MCP desde claude-arm
-`@lotos/claude-arm` exporta:
+`@lotosui/claude-arm` exporta:
 - `fetchComponentCatalog(baseUrl?)`
 - `fetchComponentSchema(componentName, baseUrl?)`
 
 Ejemplo:
 
 ```ts
-import { fetchComponentSchema } from '@lotos/claude-arm';
+import { fetchComponentSchema } from '@lotosui/claude-arm';
 
 const button = await fetchComponentSchema('button', 'http://localhost:3100');
 ```
 
-## 11. CLI `@lotos/cli`
+## 11. CLI `@lotosui/cli`
 Archivo clave: `packages/cli/src/index.ts`
 
 Comandos:
@@ -441,9 +441,9 @@ Comandos:
 
 ### 11.1 Instalar y usar localmente
 ```powershell
-pnpm.cmd --filter @lotos/cli build
-pnpm.cmd --filter @lotos/cli exec node dist/index.js list
-pnpm.cmd --filter @lotos/cli exec node dist/index.js add button -o src/components
+pnpm.cmd --filter @lotosui/cli build
+pnpm.cmd --filter @lotosui/cli exec node dist/index.js list
+pnpm.cmd --filter @lotosui/cli exec node dist/index.js add button -o src/components
 ```
 
 Salida esperada:
@@ -478,12 +478,12 @@ No se mergea si falla cualquiera de:
 1. Levantar MCP.
 2. Darle al agente la URL MCP.
 3. Pedirle que primero consulte schema y restricciones.
-4. Exigir que use componentes de `@lotos/claude-arm`.
+4. Exigir que use componentes de `@lotosui/claude-arm`.
 5. Validar props con Sentinel en runtime.
 
 ### 13.2 Prompt operativo sugerido para agentes
 ```text
-Usa solo componentes de @lotos/claude-arm.
+Usa solo componentes de @lotosui/claude-arm.
 Antes de generar JSX, consulta MCP:
 - GET /components/<name>
 Respeta restricciones de cada componente.
@@ -517,10 +517,10 @@ pnpm.cmd --filter docs check-types
 ## 15. Calidad y pruebas (matriz)
 
 ### 15.1 Cobertura por paquete
-- `@lotos/core`: tests de tokens/theme/rtl/schemas.
-- `@lotos/claude-arm`: tests de 15 componentes + a11y + mcp contract.
-- `@lotos/sentinel`: tests de validacion y formato de issues.
-- `@lotos/cli`: tests de catalogo y scaffolding.
+- `@lotosui/core`: tests de tokens/theme/rtl/schemas.
+- `@lotosui/claude-arm`: tests de 15 componentes + a11y + mcp contract.
+- `@lotosui/sentinel`: tests de validacion y formato de issues.
+- `@lotosui/cli`: tests de catalogo y scaffolding.
 
 ### 15.2 Pipeline de calidad oficial (fase 1)
 ```powershell
@@ -594,7 +594,7 @@ Solucion:
 - usar `--force` si quieres overwrite.
 
 ```powershell
-pnpm.cmd --filter @lotos/cli exec node dist/index.js add button -o src/components --force
+pnpm.cmd --filter @lotosui/cli exec node dist/index.js add button -o src/components --force
 ```
 
 ## 18. Checklists operativos
@@ -642,7 +642,7 @@ pnpm.cmd --filter @lotos/cli exec node dist/index.js add button -o src/component
 MCP + schemas + Sentinel en runtime.
 
 ### Q: Donde agrego nuevos componentes?
-Primero schema en `@lotos/core`, luego implementacion en `@lotos/claude-arm`, luego docs y tests.
+Primero schema en `@lotosui/core`, luego implementacion en `@lotosui/claude-arm`, luego docs y tests.
 
 ### Q: Cual comando valida TODO?
 No hay uno unico canonico; usa la secuencia oficial de la seccion 15.2.
@@ -650,10 +650,10 @@ No hay uno unico canonico; usa la secuencia oficial de la seccion 15.2.
 ## 20. Guia de expansion futura (post Fase 1)
 Cuando avances:
 
-1. Expandir schemas en `@lotos/core`.
-2. Implementar componente en `@lotos/claude-arm`.
-3. Agregar guardrail en `@lotos/sentinel` si aplica.
-4. Agregar scaffolding en `@lotos/cli` si aplica.
+1. Expandir schemas en `@lotosui/core`.
+2. Implementar componente en `@lotosui/claude-arm`.
+3. Agregar guardrail en `@lotosui/sentinel` si aplica.
+4. Agregar scaffolding en `@lotosui/cli` si aplica.
 5. Documentar en `apps/docs/content/docs/components`.
 6. Agregar tests unitarios + a11y + mcp contract.
 7. Correr pipeline completo.
@@ -678,14 +678,14 @@ pnpm.cmd --filter docs dev
 pnpm.cmd --filter web dev
 
 # MCP
-pnpm.cmd --filter @lotos/core build
+pnpm.cmd --filter @lotosui/core build
 node packages/core/dist/mcp/server.js
 curl http://localhost:3100/health
 
 # CLI
-pnpm.cmd --filter @lotos/cli build
-pnpm.cmd --filter @lotos/cli exec node dist/index.js list
-pnpm.cmd --filter @lotos/cli exec node dist/index.js add button -o src/components
+pnpm.cmd --filter @lotosui/cli build
+pnpm.cmd --filter @lotosui/cli exec node dist/index.js list
+pnpm.cmd --filter @lotosui/cli exec node dist/index.js add button -o src/components
 ```
 
 ---
