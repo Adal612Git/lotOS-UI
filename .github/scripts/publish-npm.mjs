@@ -74,7 +74,7 @@ for (const target of targets) {
         continue;
     }
 
-    run('npm', ['publish', '--access', 'public', '--provenance'], resolve(rootDir, target.dir));
+    run('pnpm', ['publish', '--access', 'public', '--no-git-checks'], resolve(rootDir, target.dir));
     // eslint-disable-next-line no-console
     console.log(`Published: ${name}@${version}`);
 }

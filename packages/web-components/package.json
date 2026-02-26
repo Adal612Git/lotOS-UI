@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@lotosui/core": "^0.1.0"
+    "@lotosui/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

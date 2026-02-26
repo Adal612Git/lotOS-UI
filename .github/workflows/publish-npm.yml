@@ -55,7 +55,6 @@ jobs:
       - name: Publish selected packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: "true"
           PUBLISH_CORE: ${{ inputs.publish_core }}
           PUBLISH_SENTINEL: ${{ inputs.publish_sentinel }}
           PUBLISH_CLI: ${{ inputs.publish_cli }}
