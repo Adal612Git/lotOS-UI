@@ -1,0 +1,63 @@
+name: Publish NPM Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_core:
+        description: "Publish @lotosui/core"
+        type: boolean
+        default: true
+      publish_sentinel:
+        description: "Publish @lotosui/sentinel"
+        type: boolean
+        default: true
+      publish_cli:
+        description: "Publish @lotosui/cli"
+        type: boolean
+        default: true
+      publish_web_components:
+        description: "Publish @lotosui/web-components"
+        type: boolean
+        default: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build publishable packages
+        run: |
+          pnpm --filter @lotosui/core run build
+          pnpm --filter @lotosui/sentinel run build
+          pnpm --filter @lotosui/cli run build
+          pnpm --filter @lotosui/web-components run build
+
+      - name: Publish selected packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
+          PUBLISH_CORE: ${{ inputs.publish_core }}
+          PUBLISH_SENTINEL: ${{ inputs.publish_sentinel }}
+          PUBLISH_CLI: ${{ inputs.publish_cli }}
+          PUBLISH_WEB_COMPONENTS: ${{ inputs.publish_web_components }}
+        run: node .github/scripts/publish-npm.mjs

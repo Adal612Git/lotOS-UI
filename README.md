@@ -106,3 +106,20 @@ Mapa visual de arquitectura:
 - Fuente canonica: `LOTOSdiagrama.html`
 - Publico web: `apps/web/public/architecture-map.html`
 - Publico docs: `apps/docs/public/architecture-map.html`
+
+## Publicacion npm sin OTP manual
+
+Workflow listo: `.github/workflows/publish-npm.yml`
+
+Requisitos:
+
+1. Crear token npm tipo **Automation**.
+2. Guardarlo en GitHub repo secrets como `NPM_TOKEN`.
+3. Ejecutar workflow **Publish NPM Packages** desde Actions (manual).
+
+Publica en orden:
+
+1. `@lotosui/core`
+2. `@lotosui/sentinel`
+3. `@lotosui/cli`
+4. `@lotosui/web-components`

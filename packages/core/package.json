@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@lotosui/core",
   "version": "0.1.0",
   "description": "LotOS UI Core â€” design tokens, contracts, RTL engine. Zero framework dependencies.",
@@ -47,5 +47,8 @@
   },
   "dependencies": {
     "zod": "^3.24.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

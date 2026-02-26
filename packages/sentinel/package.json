@@ -30,7 +30,10 @@
         "vitest": "^2.0.0"
     },
     "dependencies": {
-        "@lotosui/core": "workspace:*",
+        "@lotosui/core": "^0.1.0",
         "zod": "^3.24.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

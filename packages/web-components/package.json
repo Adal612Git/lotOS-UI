@@ -32,7 +32,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@lotosui/core": "workspace:*"
+    "@lotosui/core": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
