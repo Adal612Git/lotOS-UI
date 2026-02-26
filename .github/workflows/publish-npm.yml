@@ -47,6 +47,8 @@ jobs:
 
       - name: Build publishable packages
         run: |
+          rm -rf packages/core/dist packages/sentinel/dist packages/cli/dist packages/web-components/dist
+          rm -f packages/core/tsconfig.build.tsbuildinfo packages/sentinel/tsconfig.build.tsbuildinfo packages/cli/tsconfig.build.tsbuildinfo packages/web-components/tsconfig.build.tsbuildinfo
           pnpm --filter @lotosui/core run build
           pnpm --filter @lotosui/sentinel run build
           pnpm --filter @lotosui/cli run build
