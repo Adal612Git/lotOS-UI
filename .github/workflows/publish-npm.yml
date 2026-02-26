@@ -53,6 +53,12 @@ jobs:
             echo "Missing NPM_TOKEN secret"
             exit 1
           fi
+          TOKEN_LEN=${#NPM_TOKEN}
+          echo "NPM_TOKEN length: $TOKEN_LEN"
+          if ! [[ "$NPM_TOKEN" =~ ^npm_[A-Za-z0-9]{20,}$ ]]; then
+            echo "NPM_TOKEN format looks invalid. Paste the full token value (not masked with dots)."
+            exit 1
+          fi
           printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
           npm whoami
 
