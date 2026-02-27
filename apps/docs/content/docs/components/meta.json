@@ -12,9 +12,11 @@
         "textarea",
         "tooltip",
         "dropdown",
+        "form",
         "radio-group",
         "combobox",
         "tabs",
+        "table",
         "accordion"
     ]
 }

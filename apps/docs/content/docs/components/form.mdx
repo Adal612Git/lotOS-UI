@@ -1,0 +1,50 @@
+---
+title: Form
+description: Structured form shell for operational workflows with optional heading and footer actions.
+---
+
+# Form
+
+`Form` gives you a consistent shell for grouped fields, section copy, and footer actions.
+
+## Import
+
+```tsx
+import { Form } from '@lotosui/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Form title="Create deployment" description="Launch a new rollout" onSubmit={handleSubmit}>
+  <Input label="Service" required />
+  <Input label="Owner" type="email" required />
+</Form>
+```
+
+## With actions
+
+```tsx
+<Form
+  title="Create deployment"
+  actions={<Button type="submit">Deploy</Button>}
+>
+  <Input label="Service" required />
+</Form>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `title` | `string` | — | Section heading |
+| `description` | `string` | — | Supporting copy under the heading |
+| `spacing` | `'compact' \| 'comfortable' \| 'spacious'` | `'comfortable'` | Vertical rhythm between blocks |
+| `onSubmit` | `(event) => void` | — | Native form submit handler |
+| `actions` | `ReactNode` | — | Footer action row |
+
+## Accessibility
+
+- Uses native `<form>` semantics
+- Works with keyboard submit flows
+- Keep field labels explicit; do not rely on placeholders alone

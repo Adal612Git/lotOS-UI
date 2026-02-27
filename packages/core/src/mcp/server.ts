@@ -147,6 +147,31 @@ const componentExamplesOverrides: Partial<Record<ComponentName, ComponentExample
             jsx: `<Badge variant="outline" size="sm">Beta</Badge>`,
         },
     ],
+    form: [
+        {
+            description: 'Operational form with explicit title and submit action',
+            jsx: `<Form title="Create deployment" description="Launch a new rollout" onSubmit={handleSubmit}>
+  <Input label="Service" required />
+  <Input label="Owner" type="email" required />
+</Form>`,
+        },
+    ],
+    table: [
+        {
+            description: 'Data table for operational queues',
+            jsx: `<Table
+  caption="Operations queue"
+  columns={[
+    { key: 'job', label: 'Job' },
+    { key: 'state', label: 'State' },
+  ]}
+  rows={[
+    { job: 'Deploy billing-api', state: 'Queued' },
+    { job: 'Rotate secrets', state: 'Pending' },
+  ]}
+/>`,
+        },
+    ],
 };
 
 function buildDefaultExample(component: ComponentName): ComponentExample[] {
@@ -178,9 +203,11 @@ const frameworkCatalog = {
 const componentFrameworksOverrides: Partial<Record<ComponentName, readonly FrameworkId[]>> = {
     button: ['react', 'web-component', 'laravel-blade'],
     input: ['react', 'web-component', 'laravel-blade'],
-    modal: ['react'],
-    card: ['react'],
-    badge: ['react'],
+    modal: ['react', 'laravel-blade'],
+    card: ['react', 'laravel-blade'],
+    badge: ['react', 'laravel-blade'],
+    form: ['react', 'laravel-blade'],
+    table: ['react', 'laravel-blade'],
 };
 
 const componentFrameworks: Record<ComponentName, readonly FrameworkId[]> = Object.fromEntries(
@@ -897,7 +924,9 @@ function getComponentDescription(name: ComponentName): string {
         textarea: 'Multi-line text input with helper text and character constraints.',
         tooltip: 'Contextual helper text shown on hover or focus.',
         dropdown: 'Menu-style action list triggered from a button or icon.',
+        form: 'Structured form shell with section copy, field layout, and optional footer actions.',
         'radio-group': 'Exclusive option selector with keyboard-friendly navigation.',
+        table: 'Operational data table with explicit columns and stable row rendering.',
         combobox: 'Searchable select input with text filtering and option picking.',
         tabs: 'Segmented content navigation with focus and arrow key support.',
         accordion: 'Expandable disclosure content with controlled and uncontrolled modes.',
@@ -954,9 +983,19 @@ function getComponentRestrictions(name: ComponentName): string[] {
             'Menu items should use concise action labels.',
             'Avoid destructive actions without explicit affordance.',
         ],
+        form: [
+            'Use native form semantics and explicit submit handling.',
+            'Do not rely on placeholders as the only field label.',
+            'Keep footer actions concise and visually grouped.',
+        ],
         'radio-group': [
             'Provide at least two options with distinct values.',
             'Use vertical orientation for long labels.',
+        ],
+        table: [
+            'Columns should stay stable across renders to preserve scanability.',
+            'Prefer concise scalar values; avoid complex nested content in cells.',
+            'Use explicit empty states when no rows are available.',
         ],
         combobox: [
             'Keep option labels human-readable and unique.',

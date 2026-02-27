@@ -818,3 +818,137 @@ body {
 .animate-spin {
   animation: lotos-spin 0.75s linear infinite;
 }
+
+/* Form */
+.lotos-form {
+  display: grid;
+}
+
+.lotos-form--compact { gap: 0.75rem; }
+.lotos-form--comfortable { gap: 1rem; }
+.lotos-form--spacious { gap: 1.25rem; }
+
+.lotos-form__header {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.lotos-form__title {
+  margin: 0;
+  font-size: var(--lotos-text-lg);
+  font-weight: 600;
+  color: var(--lotos-fg-primary);
+  letter-spacing: -0.01em;
+}
+
+.lotos-form__description {
+  margin: 0;
+  font-size: var(--lotos-text-sm);
+  line-height: 1.5;
+  color: var(--lotos-fg-secondary);
+}
+
+.lotos-form__grid {
+  display: grid;
+  gap: 0.875rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.lotos-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Table */
+.lotos-table-shell {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.lotos-table-shell__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.lotos-table-shell__caption {
+  margin: 0;
+  font-size: var(--lotos-text-lg);
+  font-weight: 600;
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-table-shell__meta {
+  margin: 0.25rem 0 0;
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-secondary);
+}
+
+.lotos-table-shell__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+  padding: 0 0.625rem;
+  border-radius: var(--lotos-radius-full);
+  background: var(--lotos-info-subtle);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  color: var(--lotos-info);
+  font-size: var(--lotos-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.lotos-table-shell__frame {
+  overflow-x: auto;
+  border: 1px solid var(--lotos-border);
+  border-radius: var(--lotos-radius-xl);
+  background: var(--lotos-bg-card);
+  box-shadow: var(--lotos-shadow-sm);
+}
+
+.lotos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lotos-table th,
+.lotos-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--lotos-border);
+}
+
+.lotos-table th {
+  font-size: var(--lotos-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lotos-fg-secondary);
+  background: var(--lotos-surface-2);
+}
+
+.lotos-table td {
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-table tbody tr:hover {
+  background: var(--lotos-surface-1);
+}
+
+.lotos-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.lotos-table__align-center { text-align: center; }
+.lotos-table__align-right { text-align: right; }
+
+.lotos-table__empty {
+  text-align: center;
+  color: var(--lotos-fg-muted);
+}

@@ -391,6 +391,51 @@ export const accordionPropsSchema = basePropsSchema.extend({
     onChange: z.function().args(z.any()).optional(),
 });
 
+// Form
+
+export const formPropsSchema = basePropsSchema.extend({
+    /** Optional section title */
+    title: z.string().optional(),
+    /** Optional supporting copy */
+    description: z.string().optional(),
+    /** Gap scale between fields */
+    spacing: z.enum(['compact', 'comfortable', 'spacious']).default('comfortable'),
+    /** Submit handler */
+    onSubmit: z.function().args(z.any()).optional(),
+    /** Form content */
+    children: z.any().optional(),
+    /** Footer actions */
+    actions: z.any().optional(),
+});
+
+// Table
+
+export const tableColumnSchema = z.object({
+    key: z.string(),
+    label: z.string(),
+    align: z.enum(['left', 'center', 'right']).optional(),
+});
+
+export const tableRowValueSchema = z.union([
+    z.string(),
+    z.number(),
+    z.boolean(),
+    z.null(),
+]);
+
+export const tablePropsSchema = basePropsSchema.extend({
+    /** Optional table title */
+    caption: z.string().optional(),
+    /** Optional metadata copy */
+    meta: z.string().optional(),
+    /** Column definitions */
+    columns: z.array(tableColumnSchema),
+    /** Row objects keyed by column key */
+    rows: z.array(z.record(tableRowValueSchema)),
+    /** Empty state copy */
+    emptyMessage: z.string().optional(),
+});
+
 // ─── Exports ──────────────────────────────────────────────────────────────
 
 export type ButtonProps = z.infer<typeof buttonPropsSchema>;
@@ -408,6 +453,9 @@ export type RadioGroupProps = z.infer<typeof radioGroupPropsSchema>;
 export type ComboboxProps = z.infer<typeof comboboxPropsSchema>;
 export type TabsProps = z.infer<typeof tabsPropsSchema>;
 export type AccordionProps = z.infer<typeof accordionPropsSchema>;
+export type FormProps = z.infer<typeof formPropsSchema>;
+export type TableColumn = z.infer<typeof tableColumnSchema>;
+export type TableProps = z.infer<typeof tablePropsSchema>;
 export type BaseProps = z.infer<typeof basePropsSchema>;
 
 /** Registry of all component schemas — used by the MCP Server */
@@ -427,6 +475,8 @@ export const componentSchemas = {
     combobox: comboboxPropsSchema,
     tabs: tabsPropsSchema,
     accordion: accordionPropsSchema,
+    form: formPropsSchema,
+    table: tablePropsSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;

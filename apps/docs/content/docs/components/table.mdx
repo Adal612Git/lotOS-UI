@@ -1,0 +1,60 @@
+---
+title: Table
+description: Data table for operational queues, admin listings, and review surfaces.
+---
+
+# Table
+
+`Table` renders structured tabular data from explicit column definitions and row objects.
+
+## Import
+
+```tsx
+import { Table } from '@lotosui/claude-arm'
+```
+
+## Basic usage
+
+```tsx
+<Table
+  caption="Operations queue"
+  columns={[
+    { key: 'job', label: 'Job' },
+    { key: 'state', label: 'State' },
+  ]}
+  rows={[
+    { job: 'Deploy billing-api', state: 'Queued' },
+    { job: 'Rotate secrets', state: 'Pending' },
+  ]}
+/>
+```
+
+## Alignment
+
+```tsx
+<Table
+  columns={[
+    { key: 'service', label: 'Service' },
+    { key: 'latency', label: 'Latency', align: 'right' },
+  ]}
+  rows={[
+    { service: 'billing-api', latency: '182ms' },
+  ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `caption` | `string` | — | Optional table heading |
+| `meta` | `string` | — | Optional supporting copy |
+| `columns` | `Array<{ key, label, align? }>` | required | Table column definitions |
+| `rows` | `Array<Record<string, string \| number \| boolean \| null>>` | required | Row objects keyed by `columns[].key` |
+| `emptyMessage` | `string` | `'No rows available.'` | Empty state copy |
+
+## Accessibility
+
+- Uses native table semantics
+- Keep labels explicit and column order stable
+- Prefer concise, scannable values for operational dashboards

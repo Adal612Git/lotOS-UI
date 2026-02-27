@@ -35,18 +35,22 @@ export type { TooltipProps } from './components/tooltip/tooltip.js';
 
 // Sprint 4 Components
 export { Dropdown } from './components/dropdown/dropdown.js';
+export { Form } from './components/form/form.js';
 export { RadioGroup } from './components/radio-group/radio-group.js';
 export { Combobox } from './components/combobox/combobox.js';
 
 export type { DropdownProps, DropdownItem } from './components/dropdown/dropdown.js';
+export type { FormProps } from '@lotosui/core';
 export type { RadioGroupProps, RadioOption } from './components/radio-group/radio-group.js';
 export type { ComboboxProps, ComboboxOption } from './components/combobox/combobox.js';
 
 // Sprint 5 Components
 export { Tabs } from './components/tabs/tabs.js';
+export { Table } from './components/table/table.js';
 export { Accordion } from './components/accordion/accordion.js';
 
 export type { TabsProps, TabItem } from './components/tabs/tabs.js';
+export type { TableProps } from '@lotosui/core';
 export type { AccordionProps, AccordionItem } from './components/accordion/accordion.js';
 
 export { fetchComponentCatalog, fetchComponentSchema, fetchRuntimes, fetchPatterns, fetchPatternDetail } from './mcp/index.js';
