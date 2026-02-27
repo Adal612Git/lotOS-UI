@@ -1,18 +1,29 @@
 #!/usr/bin/env node
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import {
     createPatternBlueprint,
     isPatternId,
+    listDesktopTemplates,
     listDesignPatterns,
     listRuntimeProfiles,
     normalizeRuntimeId,
 } from '@lotosui/core';
 import { SUPPORTED_COMPONENTS } from './catalog.js';
+import {
+    desktopStarterLanguages,
+    normalizeDesktopLanguage,
+    scaffoldDesktopStarter,
+} from './desktop-scaffold.js';
 import { scaffoldComponent } from './scaffold.js';
+import {
+    listStackTemplateSummaries,
+    scaffoldStackStarter,
+} from './stack-scaffold.js';
 
 export function createProgram(
     stdout: (message: string) => void = console.log,
@@ -97,6 +108,111 @@ export function createProgram(
         });
 
     program
+        .command('desktop-templates')
+        .description('List desktop app templates by tier')
+        .option('-t, --tier <tier>', 'Template tier: free or pro')
+        .action((options: { tier?: string }) => {
+            const tier = options.tier?.toLowerCase();
+            if (tier && tier !== 'free' && tier !== 'pro') {
+                stderr(chalk.red(`Unknown tier "${options.tier}". Use free or pro.`));
+                process.exitCode = 1;
+                return;
+            }
+
+            const templates = listDesktopTemplates(tier as 'free' | 'pro' | undefined);
+            for (const template of templates) {
+                stdout(
+                    `${template.id}\t${template.tier}\t${template.name}\t${template.recommendedRuntimes.join(',')}`,
+                );
+            }
+        });
+
+    program
+        .command('desktop-init')
+        .description('Scaffold a LotOS desktop starter (Python/Rust/Java/C/C++)')
+        .requiredOption('-l, --language <language>', 'Host language')
+        .requiredOption('-t, --template <template>', 'Desktop template id')
+        .option('-o, --out-dir <dir>', 'Output directory', 'desktop-starter')
+        .option('-f, --force', 'Allow writing into non-empty output dir')
+        .action(async (options: {
+            language: string;
+            template: string;
+            outDir: string;
+            force?: boolean;
+        }) => {
+            const normalizedLanguage = normalizeDesktopLanguage(options.language);
+            if (!normalizedLanguage) {
+                stderr(
+                    chalk.red(
+                        `Unsupported desktop language "${options.language}". Supported: ${desktopStarterLanguages.join(', ')}`,
+                    ),
+                );
+                process.exitCode = 1;
+                return;
+            }
+
+            const spinner = ora(`Scaffolding desktop starter (${normalizedLanguage})...`).start();
+            try {
+                const result = await scaffoldDesktopStarter({
+                    language: normalizedLanguage,
+                    templateId: options.template,
+                    outDir: options.outDir,
+                    force: !!options.force,
+                });
+                spinner.succeed(`Desktop starter created at ${result.outputDir}`);
+                stdout(JSON.stringify(result, null, 2));
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                spinner.fail(message);
+                stderr(chalk.red(message));
+                process.exitCode = 1;
+            }
+        });
+
+    program
+        .command('stacks')
+        .description('List stack starters for Java/PHP/.NET/Go/Mongo/Python/C/C++')
+        .action(() => {
+            const stacks = listStackTemplateSummaries();
+            for (const stack of stacks) {
+                stdout(
+                    `${stack.id}\t${stack.runtime}\t${stack.language}\t${stack.framework}\t${stack.databases.join(',')}`,
+                );
+            }
+        });
+
+    program
+        .command('stack-init')
+        .description('Scaffold a runtime stack starter (supports Mongo where available)')
+        .requiredOption('-s, --stack <stack>', 'Stack template id')
+        .option('-d, --database <database>', 'Database target: none or mongodb')
+        .option('-o, --out-dir <dir>', 'Output directory', 'stack-starter')
+        .option('-f, --force', 'Allow writing into non-empty output dir')
+        .action(async (options: {
+            stack: string;
+            database?: string;
+            outDir: string;
+            force?: boolean;
+        }) => {
+            const spinner = ora(`Scaffolding stack ${options.stack}...`).start();
+            try {
+                const result = await scaffoldStackStarter({
+                    stackId: options.stack,
+                    database: options.database,
+                    outDir: options.outDir,
+                    force: !!options.force,
+                });
+                spinner.succeed(`Stack starter created at ${result.outputDir}`);
+                stdout(JSON.stringify(result, null, 2));
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                spinner.fail(message);
+                stderr(chalk.red(message));
+                process.exitCode = 1;
+            }
+        });
+
+    program
         .command('add')
         .description('Scaffold a local wrapper for a LotOS component')
         .argument('<component>', 'Component name, e.g. button')
@@ -130,9 +246,22 @@ export async function run(argv: string[] = process.argv): Promise<void> {
     await program.parseAsync(argv);
 }
 
-const entryFile = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : '';
+function isDirectCliInvocation(): boolean {
+    if (!process.argv[1]) {
+        return false;
+    }
 
-if (import.meta.url === entryFile) {
+    const cliFile = fileURLToPath(import.meta.url);
+    const invokedFile = path.resolve(process.argv[1]);
+
+    try {
+        return fs.realpathSync(invokedFile) === fs.realpathSync(cliFile);
+    } catch {
+        return invokedFile === cliFile;
+    }
+}
+
+if (isDirectCliInvocation()) {
     run().catch((error: unknown) => {
         const message = error instanceof Error ? error.message : String(error);
         console.error(message);

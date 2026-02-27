@@ -379,8 +379,9 @@ const defaultStarterFilesByCategory: Record<RuntimeCategory, readonly string[]> 
         'templates/partials/pattern-shell.html',
     ],
     'desktop-webview': [
-        'src/ui/pattern_shell.cpp',
-        'src/ui/token_bridge.h',
+        'ui/shell.html',
+        'bridge/desktop_bridge.*',
+        'host/main.*',
     ],
     terminal: [
         'src/tui/pattern_shell.*',

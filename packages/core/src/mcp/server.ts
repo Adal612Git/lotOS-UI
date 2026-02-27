@@ -18,6 +18,18 @@ import {
     listDesignPatterns,
 } from '../runtime/patterns.js';
 import {
+    getDesktopTemplate,
+    isDesktopTemplateId,
+    listDesktopTemplates,
+} from '../runtime/desktop.js';
+import {
+    type DatabaseTarget,
+    getStackTemplate,
+    isDatabaseTarget,
+    isStackTemplateId,
+    listStackTemplates,
+} from '../runtime/stacks.js';
+import {
     listRuntimeProfiles,
     normalizeRuntimeId,
     runtimeIds,
@@ -591,6 +603,117 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
             return;
         }
 
+        if (pathname === '/desktop/templates') {
+            const tierQuery = url.searchParams.get('tier');
+            if (tierQuery && tierQuery !== 'free' && tierQuery !== 'pro') {
+                sendJSON(res, 400, {
+                    error: 'Invalid desktop template tier.',
+                    tier: tierQuery,
+                    available: ['free', 'pro'],
+                });
+                return;
+            }
+
+            const templates = listDesktopTemplates(tierQuery as 'free' | 'pro' | undefined).map((template) => ({
+                id: template.id,
+                name: template.name,
+                tier: template.tier,
+                summary: template.summary,
+                patternId: template.patternId,
+                recommendedRuntimes: template.recommendedRuntimes,
+                layoutZones: template.layoutZones,
+                primaryComponents: template.primaryComponents,
+            }));
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                totalTemplates: templates.length,
+                tier: tierQuery ?? null,
+                templates,
+            });
+            return;
+        }
+
+        if (pathname === '/stacks') {
+            const runtimeQuery = url.searchParams.get('runtime');
+            const databaseQuery = url.searchParams.get('database');
+
+            const runtime = runtimeQuery ? normalizeRuntimeId(runtimeQuery) : null;
+            if (runtimeQuery && !runtime) {
+                sendJSON(res, 400, {
+                    error: 'Invalid runtime filter.',
+                    runtime: runtimeQuery,
+                    available: runtimeIds,
+                });
+                return;
+            }
+
+            if (databaseQuery && !isDatabaseTarget(databaseQuery)) {
+                sendJSON(res, 400, {
+                    error: 'Invalid database filter.',
+                    database: databaseQuery,
+                    available: ['none', 'mongodb'],
+                });
+                return;
+            }
+
+            const database: DatabaseTarget | undefined = databaseQuery
+                ? (isDatabaseTarget(databaseQuery) ? databaseQuery : undefined)
+                : undefined;
+
+            const stacks = listStackTemplates({
+                runtime: runtime ?? undefined,
+                database,
+            });
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                runtime: runtime ?? null,
+                database: databaseQuery ?? null,
+                totalStacks: stacks.length,
+                stacks,
+            });
+            return;
+        }
+
+        const stackMatch = pathname.match(/^\/stacks\/([a-z0-9-]+)$/);
+        if (stackMatch) {
+            const stackId = stackMatch[1];
+            if (!stackId || !isStackTemplateId(stackId)) {
+                sendJSON(res, 404, {
+                    error: 'Stack template not found',
+                    available: listStackTemplates().map((entry) => entry.id),
+                });
+                return;
+            }
+
+            const stack = getStackTemplate(stackId);
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                stack,
+            });
+            return;
+        }
+
+        const desktopTemplateMatch = pathname.match(/^\/desktop\/templates\/([a-z0-9-]+)$/);
+        if (desktopTemplateMatch) {
+            const templateId = desktopTemplateMatch[1];
+            if (!templateId || !isDesktopTemplateId(templateId)) {
+                sendJSON(res, 404, {
+                    error: 'Desktop template not found',
+                    available: listDesktopTemplates().map((template) => template.id),
+                });
+                return;
+            }
+
+            const template = getDesktopTemplate(templateId);
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                template,
+            });
+            return;
+        }
+
         const patternMatch = pathname.match(/^\/patterns\/([a-z0-9-]+)$/);
         if (patternMatch) {
             const patternId = patternMatch[1];
@@ -739,6 +862,10 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
                 'GET /frameworks',
                 'GET /patterns',
                 'GET /patterns/:id?runtime=<runtime>',
+                'GET /desktop/templates?tier=<free|pro>',
+                'GET /desktop/templates/:id',
+                'GET /stacks?runtime=<runtime>&database=<none|mongodb>',
+                'GET /stacks/:id',
                 'GET /components',
                 'GET /components/:name',
                 'GET /components/:name/examples',

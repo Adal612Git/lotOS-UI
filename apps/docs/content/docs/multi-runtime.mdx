@@ -17,11 +17,16 @@ This page keeps that state explicit so teams can plan without ambiguity.
 | Laravel Blade | PHP | Alpha | Alpha | `lotos-laravel` skeleton |
 | Django Templates | Python | Alpha | Planned | Blueprint-first |
 | Flask / Jinja | Python | Alpha | Planned | Blueprint-first |
+| Python + PySide WebEngine | Python | Alpha | Alpha | Desktop shell starter available |
 | Spring + Thymeleaf | Java | Alpha | Planned | Blueprint-first |
+| Java + JavaFX WebView | Java | Alpha | Alpha | Desktop shell starter available |
 | .NET Razor / Blazor | C# / .NET | Alpha | Planned | Blueprint-first |
 | Go + templ | Go | Alpha | Planned | Blueprint-first |
 | C + ncurses | C | Prototype | Planned | TUI token bridge track |
+| C + WebView | C | Prototype | Alpha | Desktop shell starter available |
 | C++ (Qt / ImGui) | C++ | Prototype | Planned | Native token bridge track |
+| C++ + WebView | C++ | Prototype | Alpha | Desktop shell starter available |
+| Rust + Tauri | Rust | Alpha | Alpha | Desktop shell starter available |
 | Mojo (experimental) | Mojo | Prototype | Planned | Experimental track |
 
 ## Parallel workflow: design and functional at the same time
@@ -32,6 +37,10 @@ This page keeps that state explicit so teams can plan without ambiguity.
   - `GET /runtimes`
   - `GET /patterns`
   - `GET /patterns/:id?runtime=<runtime>`
+  - `GET /desktop/templates`
+  - `GET /desktop/templates/:id`
+  - `GET /stacks?runtime=<runtime>&database=<none|mongodb>`
+  - `GET /stacks/:id`
 - Keep token priorities from the pattern blueprint as non-negotiable constraints.
 
 ### 2) Build with framework-safe contracts
@@ -96,9 +105,30 @@ templ SaveAction() {
 ## What is needed to reach 100%
 
 1. Production-grade adapters beyond React, starting with Laravel and Django parity.
-2. Runtime-specific docs for install, theming, forms, and accessibility patterns.
+2. Runtime-specific docs for install, theming, forms, accessibility, and desktop bridge APIs.
 3. MCP render support for additional frameworks beyond React/Web Component/Blade.
 4. Cross-runtime test suites that validate both visual tokens and behavior constraints.
+
+## Desktop starter commands
+
+```bash
+lotos-ui desktop-templates
+lotos-ui desktop-templates --tier pro
+lotos-ui desktop-init --language python --template control-center-desktop --out-dir desktop/python-control-center
+```
+
+## Full stack starter commands (including Mongo)
+
+```bash
+lotos-ui stacks
+lotos-ui stack-init --stack php-laravel-starter --database mongodb --out-dir stack/php-laravel
+lotos-ui stack-init --stack python-django-starter --database mongodb --out-dir stack/python-django
+lotos-ui stack-init --stack java-spring-starter --database mongodb --out-dir stack/java-spring
+lotos-ui stack-init --stack dotnet-razor-starter --database mongodb --out-dir stack/dotnet
+lotos-ui stack-init --stack go-templ-starter --database mongodb --out-dir stack/go-templ
+lotos-ui stack-init --stack c-webview-desktop --database none --out-dir stack/c-webview
+lotos-ui stack-init --stack cpp-webview-desktop --database none --out-dir stack/cpp-webview
+```
 
 ## Architecture map
 

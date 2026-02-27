@@ -67,11 +67,45 @@ pnpm --filter @lotosui/cli test
   - `GET /runtimes`
   - `GET /patterns`
   - `GET /patterns/:id?runtime=<runtime>`
+  - `GET /desktop/templates?tier=<free|pro>`
+  - `GET /desktop/templates/:id`
+  - `GET /stacks?runtime=<runtime>&database=<none|mongodb>`
+  - `GET /stacks/:id`
   - `POST /components/render` (react, web-component, laravel-blade preview)
 - Adapter skeleton inicial:
   - `packages/lotos-laravel`
 
 Objetivo: escalar de React-only a adapters para PHP, Python, Java, .NET, Go, C/C++, y Mojo con una base visual consistente.
+
+## Desktop apps (Python, Rust, Java, C, C++)
+
+`@lotosui/cli` ya incluye scaffolding para app desktop con UI LotOS y bridge JS:
+
+```bash
+pnpm --filter @lotosui/cli build
+pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
+pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center
+```
+
+Incluye:
+
+- Plantillas `free` y `pro` para escritorio.
+- Shell visual con componentes LotOS (`@lotosui/web-components`).
+- Starter host por lenguaje:
+  - Python (`pywebview`)
+  - Rust (`wry`)
+  - Java (JavaFX WebView)
+  - C/C++ (webview)
+
+### Stack starters (Java, PHP, .NET, Go, Mongo, Python, C, C++)
+
+```bash
+pnpm --filter @lotosui/cli exec lotos-ui stacks
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s java-spring-starter -d mongodb -o stack/java-spring
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s php-laravel-starter -d mongodb -o stack/php-laravel
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s dotnet-razor-starter -d mongodb -o stack/dotnet
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s go-templ-starter -d mongodb -o stack/go-templ
+```
 
 ## Ruta unica de operacion
 

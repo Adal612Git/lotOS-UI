@@ -43,6 +43,27 @@ The core idea is simple:
 @lotosui/cli           - Project commands and runtime/pattern discovery
 ```
 
+## System architecture
+
+1. Core contracts (`@lotosui/core`): tokens, schema rules, runtime catalog, pattern blueprints, stack templates.
+2. UI execution arms:
+- React production arm (`@lotosui/claude-arm`)
+- Cross-framework web components (`@lotosui/web-components`)
+3. Intelligence/control plane:
+- MCP endpoints for agents (`/components`, `/runtimes`, `/patterns`, `/desktop/templates`, `/stacks`)
+- Sentinel warnings (`@lotosui/sentinel`)
+4. Delivery tooling (`@lotosui/cli`):
+- `blueprint` for runtime + pattern contracts
+- `desktop-init` for Python/Rust/Java/C/C++ desktop shells
+- `stack-init` for PHP/Python/Java/.NET/Go + Mongo capable starters
+
+## What teams can do right now
+
+1. Start a production React UI with schema-safe components.
+2. Generate cross-language starter stacks with one CLI command.
+3. Build desktop shells with rich visual templates and bridge contracts.
+4. Keep AI-generated output aligned to design and implementation contracts via MCP.
+
 ## Next step
 
 - Start with [Installation](/docs/installation) for React production usage.

@@ -62,9 +62,9 @@ const runtimeTracks: RuntimeTrack[] = [
     runtime: 'Django Templates',
     language: 'Python',
     designStatus: 'alpha',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Pattern mapping from core runtime hints',
-    functionalOutput: 'Adapter pipeline',
+    functionalOutput: 'stack-init starter + adapter pipeline',
     strength: 'Operations-focused UX path',
     primaryUse: 'Backoffice workflows and analytics',
   },
@@ -72,9 +72,9 @@ const runtimeTracks: RuntimeTrack[] = [
     runtime: 'Flask / Jinja',
     language: 'Python',
     designStatus: 'alpha',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Lean server-template recipes',
-    functionalOutput: 'Adapter pipeline',
+    functionalOutput: 'stack-init starter + adapter pipeline',
     strength: 'Low-overhead integration',
     primaryUse: 'Internal tools and data ops consoles',
   },
@@ -82,9 +82,9 @@ const runtimeTracks: RuntimeTrack[] = [
     runtime: 'Spring + Thymeleaf',
     language: 'Java',
     designStatus: 'alpha',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Enterprise section architecture',
-    functionalOutput: 'Adapter pipeline',
+    functionalOutput: 'stack-init starter + adapter pipeline',
     strength: 'Audit-friendly design constraints',
     primaryUse: 'Enterprise operations suites',
   },
@@ -92,9 +92,9 @@ const runtimeTracks: RuntimeTrack[] = [
     runtime: '.NET Razor / Blazor',
     language: 'C# / .NET',
     designStatus: 'alpha',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Forms + data command pattern map',
-    functionalOutput: 'Adapter pipeline',
+    functionalOutput: 'stack-init starter + adapter pipeline',
     strength: 'Business app form ergonomics',
     primaryUse: 'Line-of-business tooling',
   },
@@ -102,11 +102,41 @@ const runtimeTracks: RuntimeTrack[] = [
     runtime: 'Go + templ',
     language: 'Go',
     designStatus: 'alpha',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Timeline and incident blueprint mapping',
-    functionalOutput: 'Adapter pipeline',
+    functionalOutput: 'stack-init starter + adapter pipeline',
     strength: 'Lightweight runtime + fast server output',
     primaryUse: 'Monitoring and high-load dashboards',
+  },
+  {
+    runtime: 'Python + PySide Desktop',
+    language: 'Python',
+    designStatus: 'alpha',
+    functionalStatus: 'alpha',
+    designOutput: 'Desktop shell + rich template tiers',
+    functionalOutput: 'desktop-init + stack-init starter',
+    strength: 'Fast desktop delivery with elegant UI shell',
+    primaryUse: 'Internal desktop tooling and control rooms',
+  },
+  {
+    runtime: 'Java + JavaFX Desktop',
+    language: 'Java',
+    designStatus: 'alpha',
+    functionalStatus: 'alpha',
+    designOutput: 'Desktop shell + runtime bridge contract',
+    functionalOutput: 'desktop-init + stack-init starter',
+    strength: 'Enterprise desktop path with native packaging',
+    primaryUse: 'Ops/finance desktop suites',
+  },
+  {
+    runtime: 'C + WebView',
+    language: 'C',
+    designStatus: 'prototype',
+    functionalStatus: 'alpha',
+    designOutput: 'Desktop token bridge blueprint',
+    functionalOutput: 'stack-init starter',
+    strength: 'Lightweight native shell',
+    primaryUse: 'Embedded and low-overhead desktop apps',
   },
   {
     runtime: 'C + ncurses',
@@ -119,13 +149,13 @@ const runtimeTracks: RuntimeTrack[] = [
     primaryUse: 'Restricted environments and terminals',
   },
   {
-    runtime: 'C++ (Qt / ImGui)',
+    runtime: 'C++ (WebView / Qt / ImGui)',
     language: 'C++',
     designStatus: 'prototype',
-    functionalStatus: 'planned',
+    functionalStatus: 'alpha',
     designOutput: 'Desktop token bridge blueprint',
-    functionalOutput: 'Native adapter pipeline',
-    strength: 'High-control desktop tooling UX',
+    functionalOutput: 'stack-init starter + native adapter pipeline',
+    strength: 'High-control desktop tooling UX with webview fast path',
     primaryUse: 'Tooling-heavy desktop products',
   },
   {
@@ -183,6 +213,22 @@ const statusLabel: Record<TrackStatus, string> = {
 };
 
 const statusOrder: TrackStatus[] = ['stable', 'prototype', 'alpha', 'planned'];
+
+const architectureLayers = [
+  '@lotosui/core: tokens, schemas, runtime catalog, patterns, MCP contracts',
+  '@lotosui/claude-arm: React production component arm',
+  '@lotosui/web-components: cross-framework web component primitives',
+  '@lotosui/cli: blueprint, desktop-init, stack-init generators',
+  '@lotosui/sentinel: misuse warnings and quality guardrails',
+  'MCP server: /components, /runtimes, /patterns, /desktop/templates, /stacks',
+  'Adapters/starters: Laravel, Django, Flask, Spring, .NET, Go, Python desktop, Java desktop, C/C++ desktop',
+] as const;
+
+const quickCommands = `pnpm --filter @lotosui/cli exec lotos-ui stacks
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s php-laravel-starter -d mongodb -o stack/php-laravel
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s java-spring-starter -d mongodb -o stack/java-spring
+pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
+pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center`;
 
 export default function MultiFrameworkPage() {
   const [query, setQuery] = useState('');
@@ -389,6 +435,21 @@ goal: design intent + valid implementation`}</code>
           <li>Status-separated design/functional signals for execution clarity.</li>
           <li>Direct bridge to docs and architecture map from same surface.</li>
         </ul>
+      </section>
+
+      <section className="mf-panel mf-architecture">
+        <div className="mf-section-head">
+          <h2>System Architecture Snapshot</h2>
+          <p>Operational view of what is already live in the product stack.</p>
+        </div>
+        <ul>
+          {architectureLayers.map((layer) => (
+            <li key={layer}>{layer}</li>
+          ))}
+        </ul>
+        <pre>
+          <code>{quickCommands}</code>
+        </pre>
       </section>
 
       <style>{`
@@ -731,6 +792,18 @@ goal: design intent + valid implementation`}</code>
         }
         .mf-velocity li + li {
           margin-top: 7px;
+        }
+        .mf-architecture pre {
+          margin: 12px 0 0;
+          padding: 12px;
+          border-radius: 10px;
+          background: rgba(7, 15, 28, 0.7);
+          border: 1px solid rgba(194, 216, 239, 0.14);
+          font-family: 'JetBrains Mono', 'Cascadia Mono', monospace;
+          font-size: 12px;
+          line-height: 1.5;
+          color: #cce5ff;
+          overflow: auto;
         }
         @keyframes mf-rise {
           0% {
