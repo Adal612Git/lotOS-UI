@@ -1,12 +1,24 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'NeuroTask — Built with LotOS UI',
-  description: 'Interactive demo of @lotosui/claude-arm: 15 accessible React components, WCAG 2.2 AAA, MCP Server integrated, 158 tests passing. Built for AI-first development.',
-  keywords: ['react', 'ui library', 'accessibility', 'wcag', 'components', 'lotos', 'mcp', 'ai'],
+  title: 'LotOS UI - AI-native Multi-runtime UI Platform',
+  description:
+    'Build production-grade interfaces across React, PHP, Python, Java, .NET, Go, and desktop stacks with MCP contracts, schemas, and guardrails.',
+  keywords: [
+    'react',
+    'ui library',
+    'design system',
+    'components',
+    'mcp',
+    'ai',
+    'desktop ui',
+    'multi runtime',
+    'lotos',
+  ],
   openGraph: {
-    title: 'NeuroTask × LotOS UI',
-    description: '15 accessible React components in action. Built with @lotosui/claude-arm.',
+    title: 'LotOS UI',
+    description:
+      'AI-native multi-runtime UI platform with stack and desktop generators.',
     type: 'website',
   },
 };
@@ -18,9 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body style={{ margin: 0, padding: 0 }}>
-        {children}
-      </body>
+      <body style={{ margin: 0, padding: 0 }}>{children}</body>
     </html>
   );
 }
