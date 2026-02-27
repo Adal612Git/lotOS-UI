@@ -95,7 +95,12 @@ for (const target of targets) {
 
     run('pnpm', ['pack', '--pack-destination', packDir], resolve(rootDir, target.dir));
     const tarball = findLatestTarball(packDir);
-    run('npm', ['publish', tarball, '--access', 'public', '--provenance']);
+    const authMode = (process.env.PUBLISH_AUTH_MODE ?? 'oidc').toLowerCase();
+    const publishArgs = ['publish', tarball, '--access', 'public'];
+    if (authMode === 'oidc') {
+        publishArgs.push('--provenance');
+    }
+    run('npm', publishArgs);
     // eslint-disable-next-line no-console
     console.log(`Published: ${name}@${version}`);
 }
