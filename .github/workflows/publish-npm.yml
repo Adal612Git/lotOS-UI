@@ -45,25 +45,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Configure npm auth
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-        run: |
-          if [ -z "$NPM_TOKEN" ]; then
-            echo "Missing NPM_PUBLISH_TOKEN secret"
-            exit 1
-          fi
-          TOKEN_LEN=${#NPM_TOKEN}
-          echo "NPM_TOKEN length: $TOKEN_LEN"
-          TOKEN_SHA=$(printf '%s' "$NPM_TOKEN" | sha256sum | cut -d' ' -f1)
-          echo "NPM_TOKEN sha256: $TOKEN_SHA"
-          if ! [[ "$NPM_TOKEN" =~ ^npm_[A-Za-z0-9]{20,}$ ]]; then
-            echo "NPM_TOKEN format looks invalid. Paste the full token value (not masked with dots)."
-            exit 1
-          fi
-          printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
-          npm whoami || echo "npm whoami failed; continuing to publish for direct verification"
-
       - name: Build publishable packages
         run: |
           rm -rf packages/core/dist packages/sentinel/dist packages/cli/dist packages/web-components/dist
@@ -75,9 +56,7 @@ jobs:
 
       - name: Publish selected packages
         env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          NPM_CONFIG_USERCONFIG: /home/runner/.npmrc
+          NPM_CONFIG_PROVENANCE: "true"
           PUBLISH_CORE: ${{ inputs.publish_core }}
           PUBLISH_SENTINEL: ${{ inputs.publish_sentinel }}
           PUBLISH_CLI: ${{ inputs.publish_cli }}

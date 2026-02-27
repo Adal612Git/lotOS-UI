@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
@@ -43,6 +43,22 @@ function readPackageMeta(pkgDir) {
     return { name: manifest.name, version: manifest.version };
 }
 
+function findLatestTarball(packDir) {
+    const tarballs = readdirSync(packDir)
+        .filter((name) => name.endsWith('.tgz'))
+        .map((name) => ({
+            name,
+            mtimeMs: statSync(resolve(packDir, name)).mtimeMs,
+        }))
+        .sort((a, b) => b.mtimeMs - a.mtimeMs);
+
+    if (tarballs.length === 0) {
+        throw new Error(`No tarballs found in ${packDir}`);
+    }
+
+    return resolve(packDir, tarballs[0].name);
+}
+
 function isVersionPublished(name, version) {
     const lookup = runCapture('npm', ['view', `${name}@${version}`, 'version']);
     if (lookup.status === 0) {
@@ -74,7 +90,12 @@ for (const target of targets) {
         continue;
     }
 
-    run('pnpm', ['publish', '--access', 'public', '--no-git-checks'], resolve(rootDir, target.dir));
+    const packDir = resolve(rootDir, '.tmp-packs');
+    mkdirSync(packDir, { recursive: true });
+
+    run('pnpm', ['pack', '--pack-destination', packDir], resolve(rootDir, target.dir));
+    const tarball = findLatestTarball(packDir);
+    run('npm', ['publish', tarball, '--access', 'public', '--provenance']);
     // eslint-disable-next-line no-console
     console.log(`Published: ${name}@${version}`);
 }
