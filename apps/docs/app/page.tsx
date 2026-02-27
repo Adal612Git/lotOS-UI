@@ -2,9 +2,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'LotOS UI Docs - AI-native Multi-runtime Platform',
+  title: 'LotOS UI Docs - React-first Multi-runtime Platform',
   description:
-    'Official docs portal for LotOS UI: premium multi-runtime UI contracts, desktop starters, stack generators, and AI-safe implementation guides.',
+    'Official docs portal for LotOS UI: a React-first, multi-runtime UI platform with AI-safe contracts, premium starters, and expansion-ready guides.',
 };
 
 const runtimeCards = [
@@ -65,9 +65,9 @@ const pillars = [
     title: 'One design system, many runtimes',
     titleEs: 'Un sistema visual, muchos runtimes',
     body:
-      'React today, Laravel tomorrow, desktop next month without rewriting your product language.',
+      'Start in React with the stable arm, then expand into backend and desktop tracks without rewriting your product language.',
     bodyEs:
-      'React hoy, Laravel manana, desktop el siguiente mes sin reescribir el lenguaje de tu producto.',
+      'Empieza en React con el brazo estable y luego expande a rutas backend y desktop sin reescribir el lenguaje de tu producto.',
   },
   {
     title: 'Starter velocity',
@@ -76,6 +76,14 @@ const pillars = [
       'Use stack-init and desktop-init to generate real foundations, not empty marketing promises.',
     bodyEs:
       'Usa stack-init y desktop-init para generar bases reales, no promesas vacias de marketing.',
+  },
+  {
+    title: 'Built with LotOS UI',
+    titleEs: 'Hecho con LotOS UI',
+    body:
+      'This docs home uses the same contract language, hierarchy, and visual discipline the platform ships to customers.',
+    bodyEs:
+      'Esta home de docs usa el mismo lenguaje de contratos, jerarquia y disciplina visual que la plataforma entrega a clientes.',
   },
 ];
 
@@ -89,18 +97,27 @@ export default function DocsHomePage() {
     <main className="lotos-docs-home">
       <section className="hero-shell">
         <div className="hero-copy">
-          <p className="eyebrow">LotOS UI Docs · English + Espanol</p>
+          <p className="eyebrow">LotOS UI Docs | English + Espanol</p>
+          <div className="hero-badges" aria-label="Product status">
+            <span className="hero-badge badge-stable">React Stable</span>
+            <span className="hero-badge badge-proof">Built with LotOS UI</span>
+            <span className="hero-badge badge-active">Expansion Active</span>
+          </div>
           <h1>
-            Multi-runtime UI
-            <span> for AI-native teams</span>
+            Ship premium UI in React today
+            <span>Expand across your stack tomorrow</span>
           </h1>
           <p className="lead">
-            Ship React today. Expand into Laravel, Django, Java, .NET, Go, and desktop runtimes
-            without rewriting your design system.
+            LotOS UI gives you a production-ready React entry point, then carries the same visual
+            language into Laravel, Django, Java, .NET, Go, and desktop runtimes.
           </p>
           <p className="lead lead-es">
-            Envia React hoy. Expande a Laravel, Django, Java, .NET, Go y runtimes desktop
-            sin reescribir tu sistema de diseno.
+            LotOS UI te da una entrada lista para produccion en React y luego lleva el mismo
+            lenguaje visual a Laravel, Django, Java, .NET, Go y runtimes desktop.
+          </p>
+          <p className="hero-proof">
+            This page is dogfooded on the same product discipline it sells: structured hierarchy,
+            contract-safe messaging, and reusable UI surfaces.
           </p>
           <div className="hero-actions">
             <Link href="/docs/installation" className="btn btn-primary">Get Started / Empezar</Link>
@@ -146,7 +163,7 @@ export default function DocsHomePage() {
                     <span className="pill stable">Stable</span>
                   </div>
                   <p>Generate a backend stack, then overlay premium UI contracts.</p>
-                  <div className="code-strip">stack-init · desktop-init · MCP render</div>
+                  <div className="code-strip">stack-init | desktop-init | MCP render</div>
                   <div className="action-row">
                     <button className="btn-mini primary">Deploy</button>
                     <button className="btn-mini ghost">Inspect</button>
@@ -169,15 +186,33 @@ export default function DocsHomePage() {
         <article><strong>80+</strong><span>Components / Componentes</span></article>
         <article><strong>10</strong><span>Stack templates</span></article>
         <article><strong>5</strong><span>Desktop starters</span></article>
-        <article><strong>MCP</strong><span>AI-native contract layer</span></article>
+        <article><strong>Dogfood</strong><span>Built with own contracts</span></article>
+      </section>
+
+      <section className="band proof-band">
+        <div className="proof-card">
+          <p className="eyebrow">Dogfooding / Credibilidad</p>
+          <h2>This docs portal is part of the product proof, not separate from it.</h2>
+          <p>
+            LotOS UI is not presenting a disconnected marketing shell. The docs are being used as a
+            live showcase for the same visual rules, hierarchy, and reusable surfaces the platform
+            exposes to teams.
+          </p>
+          <p className="es">
+            LotOS UI no esta mostrando una capa de marketing desconectada. Los docs funcionan como
+            una demostracion viva de las mismas reglas visuales, jerarquia y superficies reutilizables
+            que la plataforma expone a los equipos.
+          </p>
+        </div>
       </section>
 
       <section className="section dark">
         <div className="section-head">
           <p className="eyebrow">Why LotOS UI / Por que LotOS UI</p>
-          <h2>Not just a component kit. A delivery system.</h2>
+          <h2>React first. Contracts everywhere.</h2>
           <p>
-            This is where design, runtime contracts, AI safety, and starter velocity meet.
+            The stable entry point is React. The advantage is that your design language can keep
+            moving after React instead of getting trapped there.
           </p>
         </div>
         <div className="pillar-grid">
@@ -196,7 +231,8 @@ export default function DocsHomePage() {
           <p className="eyebrow">Runtime Matrix / Matriz</p>
           <h2>Cards, not spreadsheets.</h2>
           <p>
-            Your product should feel like a premium platform, so the docs should communicate that way too.
+            Your product already has range. The docs should frame that range like a premium system,
+            not like a gray internal spreadsheet.
           </p>
         </div>
         <div className="runtime-grid">
@@ -217,6 +253,10 @@ export default function DocsHomePage() {
         <div className="section-head">
           <p className="eyebrow">Quick Start / Inicio Rapido</p>
           <h2>Real commands. Real starters.</h2>
+          <p>
+            The surface looks premium, but the proof still lands in executable commands and starter
+            generators your team can run now.
+          </p>
         </div>
         <div className="terminal">
           <div className="terminal-top">
@@ -237,7 +277,8 @@ export default function DocsHomePage() {
             <p className="eyebrow">Next step / Siguiente paso</p>
             <h2>Use the docs as the command center, not just a reference page.</h2>
             <p>
-              Start free, validate your architecture, and move into premium templates when you need velocity.
+              Start free, validate your architecture, and move into premium templates when you need
+              more velocity without lowering your product bar.
             </p>
           </div>
           <div className="hero-actions">
@@ -255,8 +296,8 @@ export default function DocsHomePage() {
           min-height: 100vh;
           color: #ecf3ff;
           background:
-            radial-gradient(900px 460px at 12% 8%, rgba(15, 118, 110, 0.22), transparent 50%),
-            radial-gradient(800px 520px at 88% 0%, rgba(37, 99, 235, 0.22), transparent 50%),
+            radial-gradient(920px 480px at 12% 8%, rgba(15, 118, 110, 0.22), transparent 50%),
+            radial-gradient(860px 540px at 88% 0%, rgba(37, 99, 235, 0.22), transparent 50%),
             linear-gradient(160deg, #020617 0%, #09162a 42%, #0d1b31 100%);
           font-family: var(--font-inter), "Segoe UI", sans-serif;
         }
@@ -284,6 +325,39 @@ export default function DocsHomePage() {
           color: #67e8f9;
           font-weight: 800;
         }
+        .hero-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 18px;
+        }
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+          padding: 7px 10px;
+          border: 1px solid transparent;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: .08em;
+          text-transform: uppercase;
+        }
+        .badge-stable {
+          background: rgba(20,184,166,0.16);
+          border-color: rgba(45, 212, 191, 0.3);
+          color: #99f6e4;
+        }
+        .badge-proof {
+          background: rgba(129,140,248,0.16);
+          border-color: rgba(165, 180, 252, 0.3);
+          color: #dbeafe;
+        }
+        .badge-active {
+          background: rgba(244,114,182,0.14);
+          border-color: rgba(244,114,182,0.28);
+          color: #fbcfe8;
+        }
         .hero-copy h1 {
           margin: 0;
           font-family: var(--font-outfit), "Segoe UI", sans-serif;
@@ -309,6 +383,14 @@ export default function DocsHomePage() {
         .lead-es,
         .es {
           color: rgba(182, 205, 236, 0.85);
+        }
+        .hero-proof {
+          margin: 16px 0 0;
+          max-width: 650px;
+          color: rgba(191, 219, 254, 0.76);
+          font-size: 13px;
+          line-height: 1.7;
+          letter-spacing: .01em;
         }
         .hero-actions {
           display: flex;
@@ -547,6 +629,37 @@ export default function DocsHomePage() {
           text-transform: uppercase;
           letter-spacing: .06em;
         }
+        .proof-band {
+          padding-bottom: 12px;
+        }
+        .proof-card {
+          border-radius: 24px;
+          border: 1px solid rgba(103, 232, 249, 0.14);
+          background:
+            linear-gradient(135deg, rgba(14, 116, 144, 0.14), rgba(76, 29, 149, 0.14)),
+            rgba(255,255,255,0.035);
+          box-shadow:
+            0 20px 44px rgba(2, 6, 23, 0.18),
+            inset 0 1px 0 rgba(255,255,255,0.05);
+          padding: 20px;
+          backdrop-filter: blur(10px);
+        }
+        .proof-card h2 {
+          margin: 0;
+          font-family: var(--font-outfit), "Segoe UI", sans-serif;
+          font-size: clamp(24px, 4vw, 40px);
+          line-height: 1.06;
+          letter-spacing: -.02em;
+          color: #fff;
+          max-width: 820px;
+        }
+        .proof-card p {
+          margin: 12px 0 0;
+          max-width: 860px;
+          color: rgba(214, 228, 255, 0.82);
+          font-size: 15px;
+          line-height: 1.7;
+        }
         .section {
           padding-top: 34px;
           padding-bottom: 34px;
@@ -582,7 +695,7 @@ export default function DocsHomePage() {
         .pillar-grid {
           display: grid;
           gap: 12px;
-          grid-template-columns: repeat(3, minmax(220px, 1fr));
+          grid-template-columns: repeat(2, minmax(220px, 1fr));
           margin-top: 18px;
         }
         .pillar-card {
@@ -742,6 +855,9 @@ export default function DocsHomePage() {
           }
           .band.stats-band {
             grid-template-columns: 1fr 1fr;
+          }
+          .hero-badges {
+            gap: 6px;
           }
         }
       `}</style>
