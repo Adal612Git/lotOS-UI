@@ -25,7 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,18 +48,12 @@ jobs:
         env:
           NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
         run: |
-          if [ -n "$NPM_PUBLISH_TOKEN" ]; then
-            printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_PUBLISH_TOKEN" > ~/.npmrc
-            if npm whoami >/dev/null 2>&1; then
-              echo "PUBLISH_AUTH_MODE=token" >> "$GITHUB_ENV"
-            else
-              echo "Token auth failed, falling back to OIDC trusted publishing"
-              rm -f ~/.npmrc
-              echo "PUBLISH_AUTH_MODE=oidc" >> "$GITHUB_ENV"
-            fi
-          else
-            echo "PUBLISH_AUTH_MODE=oidc" >> "$GITHUB_ENV"
+          if [ -z "$NPM_PUBLISH_TOKEN" ]; then
+            echo "Missing NPM_PUBLISH_TOKEN secret"
+            exit 1
           fi
+          printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_PUBLISH_TOKEN" > ~/.npmrc
+          npm whoami
 
       - name: Build publishable packages
         run: |
@@ -74,7 +67,6 @@ jobs:
       - name: Publish selected packages
         env:
           NPM_CONFIG_PROVENANCE: "true"
-          PUBLISH_AUTH_MODE: ${{ env.PUBLISH_AUTH_MODE }}
           PUBLISH_CORE: ${{ inputs.publish_core }}
           PUBLISH_SENTINEL: ${{ inputs.publish_sentinel }}
           PUBLISH_CLI: ${{ inputs.publish_cli }}
