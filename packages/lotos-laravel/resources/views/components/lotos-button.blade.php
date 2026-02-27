@@ -12,12 +12,16 @@
         'secondary' => 'lotos-btn--secondary',
         'destructive' => 'lotos-btn--destructive',
         'ghost' => 'lotos-btn--ghost',
+        'outline' => 'lotos-btn--outline',
+        'link' => 'lotos-btn--link',
     ];
 
     $sizeClasses = [
+        'xs' => 'lotos-btn--xs',
         'sm' => 'lotos-btn--sm',
         'md' => 'lotos-btn--md',
         'lg' => 'lotos-btn--lg',
+        'xl' => 'lotos-btn--xl',
     ];
 
     $classes = trim(implode(' ', [

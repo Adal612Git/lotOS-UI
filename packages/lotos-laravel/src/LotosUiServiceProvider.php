@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Lotos\LotOSUi;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use Lotos\LotOSUi\Support\ComponentContractRegistry;
 
 final class LotosUiServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/lotos-ui.php', 'lotos-ui');
+        $this->app->singleton('lotos-ui.contracts', static fn (): ComponentContractRegistry => new ComponentContractRegistry());
     }
 
     public function boot(): void

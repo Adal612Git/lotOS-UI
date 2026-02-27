@@ -1,55 +1,25 @@
-# lotos-laravel (Skeleton)
+# lotos-laravel
 
-Laravel adapter skeleton for LotOS UI.
+Laravel Blade adapter for LotOS UI.
 
-Status: pre-release bridge package to prepare the Laravel integration track while React remains the production runtime.
+Status: adapter package with real Blade wrappers and a PHP contract mirror for runtime validation.
 
-## Goals
+## What exists now
 
-1. Provide a clean package entry for Laravel users.
-2. Define where Blade helpers and UI wrappers will live.
-3. Keep architecture aligned with `@lotosui/core` and MCP contracts.
+- Blade components for:
+  - `lotos-button`
+  - `lotos-badge`
+  - `lotos-card`
+  - `lotos-input`
+  - `lotos-form`
+  - `lotos-modal`
+  - `lotos-table`
+  - `lotos-theme`
+- PHP-side contract registry mirroring the shared component contracts
+- Basic prop validation utility for server-rendered integrations
+- Dashboard demo showing Button, Card, Form, Table, and Modal together
 
-## Planned features
-
-- Blade components mapped to LotOS UI contracts.
-- Optional web-component mode for framework-agnostic rendering.
-- MCP-assisted snippet generation for Blade.
-- Starter dashboard template.
-
-## Current contents
-
-- `composer.json`
-- `src/LotosUiServiceProvider.php`
-- `config/lotos-ui.php`
-- `resources/views/components/lotos-button.blade.php`
-- `resources/views/components/lotos-input.blade.php`
-- `examples/dashboard.blade.php`
-
-## Current usage (skeleton)
-
-```blade
-<x-lotos-ui::lotos-button variant="primary" size="md">
-    Save changes
-</x-lotos-ui::lotos-button>
-
-<x-lotos-ui::lotos-input
-    type="email"
-    label="Work email"
-    placeholder="you@company.com"
-    required
-/>
-```
-
-`variant`: `primary | secondary | destructive | ghost`  
-`size`: `sm | md | lg`
-
-For input:
-
-`type`: `text | email | password | number | tel | url | search | date | time`  
-`size`: `sm | md | lg`
-
-## Install (future)
+## Install
 
 ```bash
 composer require lotos/lotos-ui-laravel
@@ -57,7 +27,41 @@ php artisan vendor:publish --tag=lotos-ui-config
 php artisan vendor:publish --tag=lotos-ui-views
 ```
 
-## Notes
+## Usage
 
-- This package is intentionally a skeleton.
-- First production milestone: one real dashboard flow using `lotos-button` and tokenized styles.
+```blade
+<x-lotos-ui::lotos-theme />
+
+<x-lotos-ui::lotos-card padding="lg" shadow="md">
+    <x-lotos-ui::lotos-badge variant="info">Laravel</x-lotos-ui::lotos-badge>
+    <h2>Operations Console</h2>
+
+    <x-lotos-ui::lotos-form
+        title="Create deployment"
+        description="Server-rendered Blade UI with LotOS contracts."
+    >
+        <x-lotos-ui::lotos-input label="Service" name="service" required />
+        <x-lotos-ui::lotos-input label="Owner" name="owner" />
+    </x-lotos-ui::lotos-form>
+</x-lotos-ui::lotos-card>
+```
+
+## Contract validation
+
+```php
+use Lotos\LotOSUi\Support\ComponentPropValidator;
+
+$issues = ComponentPropValidator::validate('button', [
+    'variant' => 'primary',
+    'size' => 'md',
+    'loading' => false,
+]);
+```
+
+This package does not execute the Zod schemas directly. It publishes a PHP-side contract mirror so Laravel can enforce the same intent as the shared contracts.
+
+## Current scope
+
+- Production-usable for Blade-rendered dashboards and internal tools
+- Not yet a Livewire/Inertia-specific adapter
+- Not yet parity with the React arm on total component count
