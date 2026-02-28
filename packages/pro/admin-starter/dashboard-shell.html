@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LotOS Pro Admin Starter</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: #0f1c31;
+      --panel-strong: #132542;
+      --line: rgba(148, 163, 184, 0.16);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 480px at 0% 0%, rgba(14, 165, 233, 0.12), transparent 55%),
+        radial-gradient(900px 480px at 100% 0%, rgba(34, 197, 94, 0.1), transparent 50%),
+        var(--bg);
+      padding: 24px;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+      min-height: calc(100vh - 48px);
+    }
+    .nav, .panel {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(15, 28, 49, 0.94), rgba(9, 18, 33, 0.94));
+    }
+    .nav { padding: 22px; }
+    .nav h1 { margin: 0; font-size: 24px; }
+    .nav small { color: var(--muted); }
+    .nav ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+    .nav li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(148, 163, 184, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+    }
+    .content { display: grid; gap: 16px; }
+    .hero {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .hero .kpis { display: flex; gap: 12px; flex-wrap: wrap; }
+    .kpi {
+      min-width: 140px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(19, 37, 66, 0.86);
+      border: 1px solid var(--line);
+    }
+    .kpi strong { display: block; font-size: 24px; margin-top: 6px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 16px;
+    }
+    .panel { padding: 18px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 0; border-bottom: 1px solid var(--line); text-align: left; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="nav">
+      <small>LotOS Pro</small>
+      <h1>Admin Starter</h1>
+      <ul>
+        <li>Executive Overview</li>
+        <li>Deployment Queue</li>
+        <li>Approvals</li>
+        <li>Audit Trail</li>
+      </ul>
+    </aside>
+    <main class="content">
+      <section class="panel hero">
+        <div>
+          <small style="color: var(--accent); font-weight: 700; letter-spacing: .08em;">PRODUCTION SURFACE</small>
+          <h2 style="margin: 8px 0 0; font-size: 30px;">Executive Admin Control</h2>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><small>Queue Health</small><strong>98.4%</strong></div>
+          <div class="kpi"><small>Open Approvals</small><strong>12</strong></div>
+          <div class="kpi"><small>Release State</small><strong><span class="pill">Stable</span></strong></div>
+        </div>
+      </section>
+      <section class="grid">
+        <section class="panel">
+          <h3 style="margin-top: 0;">Deployment Queue</h3>
+          <table>
+            <thead>
+              <tr><th>Job</th><th>Owner</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>billing-api</td><td>Mia</td><td>Queued</td></tr>
+              <tr><td>auth-gateway</td><td>Luis</td><td>Review</td></tr>
+              <tr><td>ops-console</td><td>Iris</td><td>Approved</td></tr>
+            </tbody>
+          </table>
+        </section>
+        <section class="panel">
+          <h3 style="margin-top: 0;">Operator Notes</h3>
+          <p style="color: var(--muted); line-height: 1.6;">
+            This premium shell is designed for first-contact production demos and quick commercial onboarding.
+          </p>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

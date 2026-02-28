@@ -1,0 +1,10 @@
+{
+  "id": "pro-layouts",
+  "name": "LotOS Pro Layout Collection",
+  "tier": "pro",
+  "version": "0.1.0",
+  "entries": [
+    "executive-briefing-layout.html",
+    "operator-triad-layout.html"
+  ]
+}

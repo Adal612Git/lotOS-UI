@@ -1,0 +1,17 @@
+{
+  "id": "finance-ops",
+  "name": "Finance Ops Kit",
+  "recommendedComponents": [
+    "stat",
+    "table",
+    "alert",
+    "toast",
+    "breadcrumbs"
+  ],
+  "layout": "executive-briefing-layout.html",
+  "copyTone": "precise",
+  "notes": [
+    "Use high-trust neutral surfaces.",
+    "Reserve warning and error tones for material changes."
+  ]
+}

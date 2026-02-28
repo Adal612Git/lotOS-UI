@@ -1,0 +1,17 @@
+{
+  "id": "health-ops",
+  "name": "Health Ops Kit",
+  "recommendedComponents": [
+    "alert",
+    "stat",
+    "empty-state",
+    "spinner",
+    "table"
+  ],
+  "layout": "operator-triad-layout.html",
+  "copyTone": "calm",
+  "notes": [
+    "Prefer concise alerts with operator next steps.",
+    "Use state colors sparingly to avoid visual fatigue."
+  ]
+}

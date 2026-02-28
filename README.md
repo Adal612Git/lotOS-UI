@@ -21,6 +21,12 @@ Monorepo oficial de LotOS UI.
 
 - `apps/desktop-python-demo` (native tkinter demo, runnable now, PyInstaller-ready)
 
+## Pro packs (separated asset layer)
+
+- `packages/pro/admin-starter`
+- `packages/pro/layouts`
+- `packages/pro/industry-kits`
+
 ## Instalación rápida
 
 ```bash

@@ -1,0 +1,8 @@
+LotOS UI Pro Packs
+Copyright (c) 2026 LotOS Technologies
+
+All rights reserved.
+
+This material is not licensed under MIT.
+No copying, redistribution, sublicensing, resale, or public mirroring is permitted
+without explicit written authorization from LotOS Technologies.

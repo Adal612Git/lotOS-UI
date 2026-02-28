@@ -1,0 +1,10 @@
+{
+  "id": "pro-industry-kits",
+  "name": "LotOS Pro Industry Kits",
+  "tier": "pro",
+  "version": "0.1.0",
+  "kits": [
+    "finance-ops-kit.json",
+    "health-ops-kit.json"
+  ]
+}
