@@ -1,0 +1,84 @@
+{{ define "lotos_theme" }}
+<section style="background:#0f172a;color:#e2e8f0;padding:24px;border-radius:24px;border:1px solid #1e293b;font-family:Segoe UI, sans-serif;">
+  {{ .Content }}
+</section>
+{{ end }}
+
+{{ define "lotos_button" }}
+<button type="button" {{ if .disabled }}disabled{{ end }} style="padding:{{ if eq .size "lg" }}12px 18px{{ else }}10px 14px{{ end }};border-radius:14px;border:1px solid {{ if eq .variant "outline" }}#38bdf8{{ else }}#0ea5e9{{ end }};background:{{ if eq .variant "outline" }}transparent{{ else }}#0ea5e9{{ end }};color:{{ if eq .variant "outline" }}#38bdf8{{ else }}#08111f{{ end }};font-weight:700;">
+  {{ .label }}
+</button>
+{{ end }}
+
+{{ define "lotos_badge" }}
+<span style="display:inline-flex;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:{{ if eq .variant "success" }}#052e16{{ else }}#172554{{ end }};color:{{ if eq .variant "success" }}#86efac{{ else }}#93c5fd{{ end }};">
+  {{ .label }}
+</span>
+{{ end }}
+
+{{ define "lotos_card" }}
+<article style="padding:18px;border-radius:20px;background:#111c33;border:1px solid #22304b;">
+  <header style="margin-bottom:12px;">
+    <h3 style="margin:0;font-size:18px;">{{ .title }}</h3>
+    {{ if .subtitle }}<p style="margin:6px 0 0;color:#94a3b8;">{{ .subtitle }}</p>{{ end }}
+  </header>
+  {{ .body }}
+  {{ if .footer }}<footer style="margin-top:14px;">{{ .footer }}</footer>{{ end }}
+</article>
+{{ end }}
+
+{{ define "lotos_input" }}
+<label style="display:grid;gap:8px;">
+  <span style="font-size:13px;font-weight:700;">{{ .label }}</span>
+  <input type="text" placeholder="{{ .placeholder }}" style="padding:10px 12px;border-radius:12px;border:1px solid #334155;background:#020617;color:#e2e8f0;" />
+  {{ if .helperText }}<small style="color:#94a3b8;">{{ .helperText }}</small>{{ end }}
+  {{ if .errorText }}<small style="color:#fca5a5;">{{ .errorText }}</small>{{ end }}
+</label>
+{{ end }}
+
+{{ define "lotos_form" }}
+<form action="{{ .action }}" method="{{ .method }}" style="display:grid;gap:14px;padding:18px;border-radius:20px;background:#111c33;border:1px solid #22304b;">
+  <header>
+    <h3 style="margin:0;">{{ .title }}</h3>
+    {{ if .description }}<p style="margin:6px 0 0;color:#94a3b8;">{{ .description }}</p>{{ end }}
+  </header>
+  {{ .body }}
+  <div>
+    <button type="submit" style="padding:10px 14px;border-radius:14px;border:none;background:#22c55e;color:#052e16;font-weight:700;">{{ .submitLabel }}</button>
+  </div>
+</form>
+{{ end }}
+
+{{ define "lotos_modal" }}
+<section style="padding:18px;border-radius:22px;border:1px solid #334155;background:rgba(2,6,23,0.92);box-shadow:0 16px 40px rgba(2,6,23,0.45);">
+  <header style="margin-bottom:12px;">
+    <h3 style="margin:0;">{{ .title }}</h3>
+    {{ if .description }}<p style="margin:6px 0 0;color:#94a3b8;">{{ .description }}</p>{{ end }}
+  </header>
+  {{ .body }}
+  {{ if .footer }}<footer style="margin-top:14px;">{{ .footer }}</footer>{{ end }}
+</section>
+{{ end }}
+
+{{ define "lotos_table" }}
+<table style="width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;border:1px solid #22304b;">
+  {{ if .caption }}<caption style="caption-side:top;text-align:left;padding:0 0 10px;font-weight:700;">{{ .caption }}</caption>{{ end }}
+  <thead style="background:#111827;">
+    <tr>
+      {{ range .columns }}<th style="padding:10px;border-bottom:1px solid #22304b;text-align:left;">{{ .label }}</th>{{ end }}
+    </tr>
+  </thead>
+  <tbody>
+    {{ if eq (len .rows) 0 }}
+      <tr><td colspan="{{ len .columns }}" style="padding:14px;color:#94a3b8;">{{ .emptyState }}</td></tr>
+    {{ else }}
+      {{ range .rows }}
+        {{ $row := . }}
+        <tr style="background:#0f172a;">
+          {{ range $.columns }}<td style="padding:10px;border-top:1px solid #22304b;">{{ index $row .key }}</td>{{ end }}
+        </tr>
+      {{ end }}
+    {{ end }}
+  </tbody>
+</table>
+{{ end }}
