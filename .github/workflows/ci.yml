@@ -125,6 +125,9 @@ jobs:
       - name: Verify runtime adapter surface
         run: pnpm run verify:runtimes
 
+      - name: Verify runtime example coverage
+        run: pnpm run verify:runtime-examples
+
       - name: Verify private pro surface
         run: pnpm --filter @lotosui/pro-private run verify
 
