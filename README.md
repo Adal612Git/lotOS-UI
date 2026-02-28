@@ -17,6 +17,10 @@ Monorepo oficial de LotOS UI.
 - `packages/lotos-go` (html/template adapter usable)
 - `packages/lotos-dotnet` (Razor adapter usable)
 
+## Desktop demos
+
+- `apps/desktop-python-demo` (native tkinter demo, runnable now, PyInstaller-ready)
+
 ## Instalación rápida
 
 ```bash

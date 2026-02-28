@@ -68,6 +68,22 @@ jobs:
             packages/lotos-flask/lotos_flask/contracts.py \
             packages/lotos-flask/lotos_flask/validator.py
 
+      - name: Validate desktop python demo
+        run: |
+          python -m py_compile apps/desktop-python-demo/app.py
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          path = Path("apps/desktop-python-demo/app.py")
+          spec = importlib.util.spec_from_file_location("lotos_desktop_demo", path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          state = module.build_demo_state()
+          assert state["queue_total"] >= 1
+          assert state["high_priority"] >= 1
+          print(state["title"])
+          PY
+
       - name: Build Go runtime adapter
         working-directory: packages/lotos-go
         run: go build ./...
