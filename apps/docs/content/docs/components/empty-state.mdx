@@ -1,0 +1,20 @@
+# Empty State
+
+`EmptyState` handles no-data screens, first-run flows, and filtered empty results.
+
+## Example
+
+```tsx
+import { EmptyState, Button } from '@lotosui/claude-arm';
+
+<EmptyState
+  title="No deployments"
+  description="Create the first rollout to populate this view."
+  actions={<Button variant="primary">Create deployment</Button>}
+/>
+```
+
+## Notes
+
+- Always pair empty states with a recovery path when possible.
+- Keep the title short and the copy action-oriented.

@@ -190,6 +190,24 @@ const componentExamplesOverrides: Partial<Record<ComponentName, ComponentExample
             jsx: `<Avatar name="Mia Solis" size="lg" />`,
         },
     ],
+    divider: [
+        {
+            description: 'Labeled content divider',
+            jsx: `<Divider label="Incident timeline" />`,
+        },
+    ],
+    'empty-state': [
+        {
+            description: 'Fallback state when no records are available',
+            jsx: `<EmptyState title="No deployments" description="Create the first rollout to populate this view." />`,
+        },
+    ],
+    stat: [
+        {
+            description: 'Compact metric card for dashboards',
+            jsx: `<Stat label="Queue health" value="98.4%" change="+2.1%" tone="success" />`,
+        },
+    ],
 };
 
 function buildDefaultExample(component: ComponentName): ComponentExample[] {
@@ -951,6 +969,9 @@ function getComponentDescription(name: ComponentName): string {
         alert: 'Inline system message for warnings, errors, and operational state changes.',
         progress: 'Progress meter for deterministic task completion and batch operations.',
         avatar: 'Identity marker with image and initials fallback support.',
+        divider: 'Visual separator for grouped content with optional inline label.',
+        'empty-state': 'Fallback shell for no-data views, first-run flows, and filtered empty results.',
+        stat: 'Compact metric summary for dashboards, headers, and executive KPI rails.',
     };
     return descriptions[name] ?? `${toPascalCase(name)} component contract.`;
 }
@@ -1041,6 +1062,18 @@ function getComponentRestrictions(name: ComponentName): string[] {
         avatar: [
             'Provide alt text when rendering remote images.',
             'Use stable fallback initials for operator-heavy interfaces.',
+        ],
+        divider: [
+            'Use labels only when they improve scanability between sections.',
+            'Prefer decorative dividers for purely visual separation.',
+        ],
+        'empty-state': [
+            'Pair empty states with a recovery action whenever possible.',
+            'Keep the title concise and the description task-oriented.',
+        ],
+        stat: [
+            'Reserve stats for concise scalar metrics, not long-form narrative.',
+            'Use tone only when the semantic meaning is clear to the user.',
         ],
     };
 

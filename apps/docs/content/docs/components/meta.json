@@ -20,6 +20,9 @@
         "accordion",
         "alert",
         "progress",
-        "avatar"
+        "avatar",
+        "divider",
+        "empty-state",
+        "stat"
     ]
 }

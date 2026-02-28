@@ -1,0 +1,21 @@
+# Stat
+
+`Stat` is a compact metric tile for KPI rails, dashboards, and operator overviews.
+
+## Example
+
+```tsx
+import { Stat } from '@lotosui/claude-arm';
+
+<Stat
+  label="Queue health"
+  value="98.4%"
+  change="+2.1%"
+  tone="success"
+/>
+```
+
+## Notes
+
+- Use stats for concise scalar metrics.
+- Use tone only when the meaning is obvious.

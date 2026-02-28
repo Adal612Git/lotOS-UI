@@ -13,6 +13,9 @@ export { Modal } from './components/modal/modal.js';
 export { Alert } from './components/alert/alert.js';
 export { Avatar } from './components/avatar/avatar.js';
 export { Progress } from './components/progress/progress.js';
+export { Divider } from './components/divider/divider.js';
+export { EmptyState } from './components/empty-state/empty-state.js';
+export { Stat } from './components/stat/stat.js';
 
 // Sprint 3 Components
 export { Select } from './components/select/select.js';
@@ -30,7 +33,10 @@ export type {
     ModalProps,
     AlertProps,
     AvatarProps,
+    DividerProps,
+    EmptyStateProps,
     ProgressProps,
+    StatProps,
 } from '@lotosui/core';
 
 export type { SelectProps, SelectOption } from './components/select/select.js';

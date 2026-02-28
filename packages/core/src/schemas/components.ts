@@ -487,6 +487,47 @@ export const avatarPropsSchema = basePropsSchema.extend({
     shape: z.enum(['circle', 'square']).default('circle'),
 });
 
+// Divider
+
+export const dividerPropsSchema = basePropsSchema.extend({
+    /** Orientation of the divider */
+    orientation: z.enum(['horizontal', 'vertical']).default('horizontal'),
+    /** Optional inline label */
+    label: z.string().optional(),
+    /** Whether the divider is purely decorative */
+    decorative: z.boolean().default(true),
+});
+
+// Empty State
+
+export const emptyStatePropsSchema = basePropsSchema.extend({
+    /** Optional headline */
+    title: z.string().optional(),
+    /** Optional supporting copy */
+    description: z.string().optional(),
+    /** Optional icon element */
+    icon: z.any().optional(),
+    /** Optional actions area */
+    actions: z.any().optional(),
+    /** Whether to reduce vertical padding */
+    compact: z.boolean().optional(),
+});
+
+// Stat
+
+export const statPropsSchema = basePropsSchema.extend({
+    /** Label for the metric */
+    label: z.string(),
+    /** Main metric value */
+    value: z.union([z.string(), z.number()]),
+    /** Optional change indicator */
+    change: z.string().optional(),
+    /** Supporting copy */
+    helperText: z.string().optional(),
+    /** Visual tone */
+    tone: z.enum(['neutral', 'success', 'warning', 'danger', 'info']).default('neutral'),
+});
+
 // ─── Exports ──────────────────────────────────────────────────────────────
 
 export type ButtonProps = z.infer<typeof buttonPropsSchema>;
@@ -510,6 +551,9 @@ export type TableProps = z.infer<typeof tablePropsSchema>;
 export type AlertProps = z.infer<typeof alertPropsSchema>;
 export type ProgressProps = z.infer<typeof progressPropsSchema>;
 export type AvatarProps = z.infer<typeof avatarPropsSchema>;
+export type DividerProps = z.infer<typeof dividerPropsSchema>;
+export type EmptyStateProps = z.infer<typeof emptyStatePropsSchema>;
+export type StatProps = z.infer<typeof statPropsSchema>;
 export type BaseProps = z.infer<typeof basePropsSchema>;
 
 /** Registry of all component schemas — used by the MCP Server */
@@ -534,6 +578,9 @@ export const componentSchemas = {
     alert: alertPropsSchema,
     progress: progressPropsSchema,
     avatar: avatarPropsSchema,
+    divider: dividerPropsSchema,
+    'empty-state': emptyStatePropsSchema,
+    stat: statPropsSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;
