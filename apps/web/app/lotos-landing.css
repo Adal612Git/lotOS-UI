@@ -268,6 +268,13 @@ th {
   margin-bottom: 8px;
 }
 
+.luxury {
+  border-color: #c9b8ff;
+  background:
+    radial-gradient(circle at top right, rgba(129, 140, 248, 0.16), transparent 42%),
+    linear-gradient(180deg, #ffffff, #f5f2ff);
+}
+
 .highlight {
   border-color: #9ec4f8;
   background: linear-gradient(180deg, #f6fbff, #edf5ff);

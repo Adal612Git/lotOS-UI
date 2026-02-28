@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import { checkoutEnvKeys, freeSurface, paidSurface, salesLinks, salesPlans } from '../sales-config';
+import {
+  checkoutEnvKeys,
+  freeSurface,
+  paidSurface,
+  premiumPreviewSurface,
+  premiumReasonsToPay,
+  salesLinks,
+  salesPlans
+} from '../sales-config';
 import '../lotos-landing.css';
 
 export default function PricingPage() {
@@ -17,19 +25,49 @@ export default function PricingPage() {
 
       <section className="hero compact">
         <p className="kicker">Pricing and Delivery</p>
-        <h1>Sellable surfaces, clear tiers, and checkout-ready links.</h1>
+        <h1>Private acceleration, proof-before-purchase, and checkout-ready sales flow.</h1>
         <p className="lead">
-          LotOS UI now separates public adoption from proprietary delivery. Free drives trust.
-          Private bundles drive paid implementation and launch packs.
+          The public layer builds trust. The paid layer buys speed, premium assets, and private
+          delivery that never ships through the public MIT surface.
         </p>
         <div className="hero-actions">
           <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
             Contact Sales
           </a>
+          <a href={salesLinks.premiumPreview} className="btn ghost" target="_blank" rel="noreferrer">
+            Premium Preview
+          </a>
           <a href={salesLinks.demo} className="btn ghost" target="_blank" rel="noreferrer">
             Book Demo
           </a>
         </div>
+      </section>
+
+      <section className="grid two">
+        <article className="card luxury">
+          <p className="section-label">Why buyers pay</p>
+          <h2>What unlocks only after payment</h2>
+          <ul>
+            {premiumReasonsToPay.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="card luxury" id="premium-preview">
+          <p className="section-label">Proof before purchase</p>
+          <h2>Premium Preview for trust and QA</h2>
+          <ul>
+            {premiumPreviewSurface.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <pre><code>pnpm.cmd run prep:paid-preview</code></pre>
+          <div className="hero-actions">
+            <a href={salesLinks.premiumPreview} className="btn primary" target="_blank" rel="noreferrer">
+              Try Premium Preview
+            </a>
+          </div>
+        </article>
       </section>
 
       <section className="grid two">
@@ -106,17 +144,41 @@ export default function PricingPage() {
           <pre><code>{checkoutEnvKeys.join("\n")}</code></pre>
         </article>
         <article className="card">
-          <p className="section-label">First sale flow</p>
-          <h2>One command to prepare delivery</h2>
-          <pre><code>pnpm.cmd run prep:first-sale</code></pre>
+          <p className="section-label">Preview then deliver</p>
+          <h2>Two commands, two confidence levels</h2>
+          <pre><code>{`pnpm.cmd run prep:paid-preview
+pnpm.cmd run prep:first-sale`}</code></pre>
           <p>
-            This prepares the public bundle, private bundle, and final summary for the first
-            customer handoff.
+            First you generate the evaluation-only premium preview. After payment, you generate
+            the full private bundle and customer handoff summary.
           </p>
+        </article>
+      </section>
+
+      <section className="grid two">
+        <article className="card">
+          <p className="section-label">Your internal QA</p>
+          <h2>How you verify the paid deliverable</h2>
+          <ol>
+            <li>Run `prep:paid-preview` and inspect the preview package.</li>
+            <li>Validate manifests, previews, and proof copy before talking to the buyer.</li>
+            <li>Once the buyer pays, run `prep:first-sale` for the full private handoff.</li>
+          </ol>
+        </article>
+        <article className="card">
+          <p className="section-label">Close the deal</p>
+          <h2>What happens after the click</h2>
+          <ol>
+            <li>The buyer clicks a checkout link from this page.</li>
+            <li>Stripe or Lemon Squeezy charges the payment.</li>
+            <li>You prepare and deliver the private bundle through a private ZIP or repo.</li>
+          </ol>
           <div className="hero-actions">
-            <Link href="/docs" className="btn ghost">Open Docs</Link>
-            <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
-              Close a Deal
+            <a href={salesLinks.launchPack} className="btn primary" target="_blank" rel="noreferrer">
+              Close Launch Pack
+            </a>
+            <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer">
+              Contact Sales
             </a>
           </div>
         </article>

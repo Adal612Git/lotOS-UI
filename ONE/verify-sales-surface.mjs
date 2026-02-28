@@ -11,14 +11,25 @@ if (!packageJson.scripts?.["prep:first-sale"]) {
   failures.push("Missing root script: prep:first-sale");
 }
 
+if (!packageJson.scripts?.["prep:paid-preview"]) {
+  failures.push("Missing root script: prep:paid-preview");
+}
+
 if (!packageJson.scripts?.["verify:commercial"]) {
   failures.push("Missing root script: verify:commercial");
+}
+
+if (!packageJson.scripts?.["verify:paid-preview"]) {
+  failures.push("Missing root script: verify:paid-preview");
 }
 
 const requiredFiles = [
   "apps/web/app/sales-config.ts",
   "apps/web/app/pricing/page.tsx",
   "ONE/FIRST_REVENUE_RUNBOOK.md",
+  "ONE/PREMIUM_PREVIEW_RUNBOOK.md",
+  "ONE/prepare-paid-preview.mjs",
+  "ONE/verify-paid-preview.mjs",
   "ONE/prepare-first-sale.mjs",
   "ONE/verify-commercial-readiness.mjs",
 ];
@@ -37,13 +48,13 @@ if (!webHome.includes('href="/pricing"')) {
 const pricingPage = readFileSync(join(repoRoot, "apps", "web", "app", "pricing", "page.tsx"), "utf8");
 const salesConfig = readFileSync(join(repoRoot, "apps", "web", "app", "sales-config.ts"), "utf8");
 
-for (const marker of ["salesPlans", "checkoutEnvKeys", "prep:first-sale"]) {
+for (const marker of ["salesPlans", "checkoutEnvKeys", "prep:first-sale", "prep:paid-preview", "Premium Preview"]) {
   if (!pricingPage.includes(marker)) {
     failures.push(`Pricing page missing marker: ${marker}`);
   }
 }
 
-for (const marker of ["Buy Solo", "Buy Pro", "Book Launch Pack", "LOTOS_SOLO_CHECKOUT_URL"]) {
+for (const marker of ["Buy Solo", "Buy Pro", "Book Launch Pack", "LOTOS_SOLO_CHECKOUT_URL", "LOTOS_PREMIUM_PREVIEW_URL"]) {
   if (!salesConfig.includes(marker)) {
     failures.push(`Sales config missing marker: ${marker}`);
   }

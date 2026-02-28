@@ -19,6 +19,8 @@ const fallbackDemo =
   process.env.LOTOS_BOOKING_URL?.trim() ||
   fallbackContact;
 
+const fallbackPreview = "/pricing#premium-preview";
+
 const linkOrFallback = (value: string | undefined, fallback: string) => {
   const normalized = value?.trim();
   return normalized && normalized.length > 0 ? normalized : fallback;
@@ -29,6 +31,7 @@ export const salesLinks = {
   solo: linkOrFallback(process.env.LOTOS_SOLO_CHECKOUT_URL, fallbackContact),
   pro: linkOrFallback(process.env.LOTOS_PRO_CHECKOUT_URL, fallbackContact),
   launchPack: linkOrFallback(process.env.LOTOS_LAUNCH_PACK_URL, fallbackDemo),
+  premiumPreview: linkOrFallback(process.env.LOTOS_PREMIUM_PREVIEW_URL, fallbackPreview),
   contact: fallbackContact,
   demo: fallbackDemo,
 };
@@ -109,6 +112,21 @@ export const paidSurface = [
   "Private pro asset packs",
   "Launch Pack delivery flow",
   "Customer-specific starters and implementation acceleration",
+  "Premium Preview pack for pre-sale proof and internal QA",
+];
+
+export const premiumPreviewSurface = [
+  "Evaluation-only preview bundle from the private pro surface",
+  "Manifest, previews, and selected premium metadata without full private payload",
+  "Internal QA proof so you can inspect exactly what a paid buyer would see first",
+  "Useful as a pre-sale trust asset before delivering the full private ZIP",
+];
+
+export const premiumReasonsToPay = [
+  "Paid buyers get private assets that are not distributed through the public MIT layer.",
+  "The launch pack collapses time-to-delivery by bundling a curated private payload plus customer-specific starter output.",
+  "You can prove the premium surface before purchase with a controlled preview, then deliver the full private release after payment.",
+  "The free layer builds trust; the paid layer buys speed, polish, and private acceleration.",
 ];
 
 export const checkoutEnvKeys = [
@@ -117,4 +135,5 @@ export const checkoutEnvKeys = [
   "LOTOS_SOLO_CHECKOUT_URL",
   "LOTOS_PRO_CHECKOUT_URL",
   "LOTOS_LAUNCH_PACK_URL",
+  "LOTOS_PREMIUM_PREVIEW_URL",
 ];

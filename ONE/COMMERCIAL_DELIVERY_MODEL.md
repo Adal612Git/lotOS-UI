@@ -36,6 +36,7 @@ This layer is used for:
 - private repository delivery
 - premium customer onboarding
 - custom implementation accelerators
+- premium preview packs for pre-sale proof
 
 ## Delivery Rules
 
@@ -54,6 +55,34 @@ A paid customer can receive:
 - a private repository or ZIP archive
 - implementation notes and onboarding guidance
 
+## Suggested Sellable Products
+
+Start with four concrete offers:
+
+1. `Premium Preview`
+   - a controlled evaluation-only proof bundle
+   - used before payment to demonstrate premium value
+2. `Solo License`
+   - private pro access for one operator
+3. `Pro License`
+   - team-oriented premium layer
+4. `Launch Pack`
+   - private bundle plus customer-specific starter
+
+## How To Test What A Paid Buyer Would Receive
+
+Before selling:
+
+1. run `pnpm prep:paid-preview`
+2. inspect `.commercial-dist/pro-preview`
+3. validate manifests and preview HTML
+
+After payment:
+
+1. run `pnpm prep:first-sale`
+2. inspect `packages/pro/.private-dist`
+3. deliver the final private payload
+
 ## Free Offer Payload
 
 A free user can receive:
@@ -68,8 +97,9 @@ A free user can receive:
 If a customer wants to buy today:
 
 1. take payment outside the repo
-2. run `pnpm export:commercial`
-3. run `pnpm --filter @lotosui/pro-private run bundle`
-4. zip `packages/pro/.private-dist`
-5. add the customer-specific starter or custom files
-6. deliver through a private link or private repository
+2. optionally run `pnpm prep:paid-preview` to prove the premium surface
+3. run `pnpm export:commercial`
+4. run `pnpm --filter @lotosui/pro-private run bundle`
+5. zip `packages/pro/.private-dist`
+6. add the customer-specific starter or custom files
+7. deliver through a private link or private repository
