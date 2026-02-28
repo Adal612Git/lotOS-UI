@@ -128,6 +128,9 @@ jobs:
       - name: Verify runtime example coverage
         run: pnpm run verify:runtime-examples
 
+      - name: Verify runtime contract guards
+        run: pnpm run verify:runtime-contracts
+
       - name: Verify private pro surface
         run: pnpm --filter @lotosui/pro-private run verify
 

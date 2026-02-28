@@ -27,3 +27,4 @@ Comandos utiles:
 - `pnpm verify:degraded`
 - `pnpm verify:runtimes`
 - `pnpm verify:runtime-examples`
+- `pnpm verify:runtime-contracts`
