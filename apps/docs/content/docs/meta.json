@@ -5,6 +5,7 @@
         "installation",
         "multi-runtime",
         "architecture",
-        "ai-integration"
+        "ai-integration",
+        "mcp-spec"
     ]
 }

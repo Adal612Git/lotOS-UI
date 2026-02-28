@@ -35,6 +35,8 @@ dist
 **/*.tsbuildinfo
 **/bin/
 **/obj/
+**/showcase-dist/
+**/.visual-regression/
 *.timestamp-*.mjs
 packages/cli/stack/
 .commercial-dist/

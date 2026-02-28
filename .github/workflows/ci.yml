@@ -49,6 +49,12 @@ jobs:
       - name: Typecheck claude-arm
         run: pnpm --filter @lotosui/claude-arm run check-types
 
+      - name: Build claude-arm showcase
+        run: pnpm --filter @lotosui/claude-arm run showcase:build
+
+      - name: Check claude-arm visual baselines
+        run: pnpm --filter @lotosui/claude-arm run visual:check
+
       - name: Test claude-arm
         run: pnpm --filter @lotosui/claude-arm run test
 

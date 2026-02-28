@@ -59,11 +59,15 @@
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "dev": "tsc -p tsconfig.build.json --watch",
+        "showcase": "vite --config vite.showcase.config.ts",
+        "showcase:build": "vite build --config vite.showcase.config.ts",
         "test": "vitest run",
         "test:a11y": "vitest run --config vitest.a11y.config.ts",
         "test:mcp": "vitest run tests/mcp",
         "check-types": "tsc --noEmit -p tsconfig.build.json",
         "typecheck": "tsc --noEmit -p tsconfig.build.json",
+        "visual:baseline": "pnpm build && node scripts/visual-regression.mjs --write",
+        "visual:check": "pnpm build && node scripts/visual-regression.mjs",
         "prepublishOnly": "pnpm test && pnpm build"
     },
     "peerDependencies": {

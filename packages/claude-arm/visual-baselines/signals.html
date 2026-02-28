@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signals</title>
+  <style>/*
+ * @lotos/claude-arm — Global Styles v2
+ *
+ * AI-native component library. Dark-first. WCAG 2.2 AAA.
+ * Standalone CSS — works with or without Tailwind.
+ *
+ * Import once in your root layout:
+ *   import '@lotos/claude-arm/styles.css'
+ */
+
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: dark light;
+
+  /* ── Backgrounds — surface hierarchy ── */
+  --lotos-bg-primary:    #0D0F1E;
+  --lotos-bg-secondary:  #0F3460;
+  --lotos-bg-card:       #161829;
+  --lotos-bg-elevated:   #1C1F38;
+  --lotos-bg-overlay:    rgba(8, 9, 20, 0.88);
+
+  /* ── Foreground ── */
+  --lotos-fg-primary:    #F0F4FF;
+  --lotos-fg-secondary:  rgba(240, 244, 255, 0.72);
+  --lotos-fg-muted:      rgba(240, 244, 255, 0.42);
+  --lotos-fg-inverse:    #0D0F1E;
+
+  /* ── Accent — Electric Red system ── */
+  --lotos-accent:         #E94560;
+  --lotos-accent-hover:   #F05274;
+  --lotos-accent-active:  #CC3652;
+  --lotos-accent-fg:      #FFFFFF;
+  --lotos-accent-subtle:  rgba(233, 69, 96, 0.12);
+  --lotos-accent-glow:    rgba(233, 69, 96, 0.35);
+  --lotos-accent-glow-sm: rgba(233, 69, 96, 0.20);
+
+  /* ── Brand palette ── */
+  --lotos-deep-navy:    #0D0F1E;
+  --lotos-electric-red: #E94560;
+  --lotos-ocean-blue:   #0F3460;
+  --lotos-white:        #FFFFFF;
+  --lotos-lavender:     #F0F4FF;
+
+  /* ── Borders ── */
+  --lotos-border:        rgba(240, 244, 255, 0.10);
+  --lotos-border-strong: rgba(240, 244, 255, 0.18);
+  --lotos-border-focus:  #E94560;
+
+  /* ── Status colors ── */
+  --lotos-success:        #22C55E;
+  --lotos-success-subtle: rgba(34, 197, 94, 0.12);
+  --lotos-warning:        #F59E0B;
+  --lotos-warning-subtle: rgba(245, 158, 11, 0.12);
+  --lotos-error:          #E94560;
+  --lotos-error-subtle:   rgba(233, 69, 96, 0.12);
+  --lotos-info:           #3B82F6;
+  --lotos-info-subtle:    rgba(59, 130, 246, 0.12);
+
+  /* ── Typography ── */
+  --lotos-font-sans: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
+  --lotos-font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --lotos-text-xs:   0.75rem;
+  --lotos-text-sm:   0.875rem;
+  --lotos-text-base: 1rem;
+  --lotos-text-lg:   1.125rem;
+  --lotos-text-xl:   1.25rem;
+  --lotos-text-2xl:  1.5rem;
+
+  /* ── Spacing ── */
+  --lotos-space-1:  0.25rem;
+  --lotos-space-2:  0.5rem;
+  --lotos-space-3:  0.75rem;
+  --lotos-space-4:  1rem;
+  --lotos-space-5:  1.25rem;
+  --lotos-space-6:  1.5rem;
+  --lotos-space-8:  2rem;
+  --lotos-space-10: 2.5rem;
+  --lotos-space-12: 3rem;
+  --lotos-space-16: 4rem;
+
+  /* ── Border Radius ── */
+  --lotos-radius-sm:   0.25rem;
+  --lotos-radius:      0.375rem;
+  --lotos-radius-md:   0.5rem;
+  --lotos-radius-lg:   0.625rem;
+  --lotos-radius-xl:   0.875rem;
+  --lotos-radius-2xl:  1.25rem;
+  --lotos-radius-full: 9999px;
+
+  /* ── Shadows — tinted, layered ── */
+  --lotos-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.40);
+  --lotos-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.50),  0 1px 2px rgba(0, 0, 0, 0.30);
+  --lotos-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.50), 0 2px 4px rgba(0, 0, 0, 0.30);
+  --lotos-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.60), 0 4px 8px rgba(0, 0, 0, 0.30);
+  --lotos-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.70), 0 8px 16px rgba(0, 0, 0, 0.40);
+
+  /* ── Surfaces — subtle elevation layers ── */
+  --lotos-surface-1: rgba(240, 244, 255, 0.03);
+  --lotos-surface-2: rgba(240, 244, 255, 0.06);
+  --lotos-surface-3: rgba(240, 244, 255, 0.09);
+  --lotos-surface-4: rgba(240, 244, 255, 0.13);
+
+  /* ── Gradients ── */
+  --lotos-gradient-accent:  linear-gradient(135deg, #E94560 0%, #F05274 100%);
+  --lotos-gradient-surface: linear-gradient(160deg, rgba(240,244,255,0.04) 0%, transparent 100%);
+  --lotos-gradient-glass:   linear-gradient(135deg, rgba(240,244,255,0.10) 0%, rgba(240,244,255,0.03) 100%);
+
+  /* ── Animation ── */
+  --lotos-duration-fast:     100ms;
+  --lotos-duration-normal:   180ms;
+  --lotos-duration-slow:     300ms;
+  --lotos-ease-out:          cubic-bezier(0.0, 0.0, 0.2, 1);
+  --lotos-ease-in-out:       cubic-bezier(0.4, 0.0, 0.2, 1);
+  --lotos-ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --lotos-transition-fast:   100ms cubic-bezier(0.0, 0.0, 0.2, 1);
+  --lotos-transition-normal: 180ms cubic-bezier(0.0, 0.0, 0.2, 1);
+  --lotos-transition-slow:   300ms cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════
+   LIGHT MODE
+   ═══════════════════════════════════════════════════ */
+
+:root[data-theme="light"], .lotos-light {
+  color-scheme: light;
+  --lotos-bg-primary:    #F5F6FF;
+  --lotos-bg-secondary:  #ECEEFF;
+  --lotos-bg-card:       #FFFFFF;
+  --lotos-bg-elevated:   #FFFFFF;
+  --lotos-bg-overlay:    rgba(0, 0, 0, 0.50);
+  --lotos-fg-primary:    #0D0F1E;
+  --lotos-fg-secondary:  rgba(13, 15, 30, 0.70);
+  --lotos-fg-muted:      rgba(13, 15, 30, 0.42);
+  --lotos-fg-inverse:    #F5F6FF;
+  --lotos-border:        rgba(13, 15, 30, 0.10);
+  --lotos-border-strong: rgba(13, 15, 30, 0.18);
+  --lotos-surface-1: rgba(13, 15, 30, 0.03);
+  --lotos-surface-2: rgba(13, 15, 30, 0.05);
+  --lotos-surface-3: rgba(13, 15, 30, 0.08);
+  --lotos-surface-4: rgba(13, 15, 30, 0.12);
+  --lotos-shadow-xs: 0 1px 2px rgba(13, 15, 30, 0.08);
+  --lotos-shadow-sm: 0 1px 4px rgba(13, 15, 30, 0.10), 0 1px 2px rgba(13, 15, 30, 0.06);
+  --lotos-shadow-md: 0 4px 16px rgba(13, 15, 30, 0.12), 0 2px 4px rgba(13, 15, 30, 0.06);
+  --lotos-shadow-lg: 0 8px 32px rgba(13, 15, 30, 0.14), 0 4px 8px rgba(13, 15, 30, 0.08);
+  --lotos-shadow-xl: 0 16px 48px rgba(13, 15, 30, 0.16), 0 8px 16px rgba(13, 15, 30, 0.08);
+  --lotos-gradient-surface: linear-gradient(160deg, rgba(13,15,30,0.02) 0%, transparent 100%);
+  --lotos-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.60) 100%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --lotos-bg-primary:    #F5F6FF;
+    --lotos-bg-secondary:  #ECEEFF;
+    --lotos-bg-card:       #FFFFFF;
+    --lotos-bg-elevated:   #FFFFFF;
+    --lotos-bg-overlay:    rgba(0, 0, 0, 0.50);
+    --lotos-fg-primary:    #0D0F1E;
+    --lotos-fg-secondary:  rgba(13, 15, 30, 0.70);
+    --lotos-fg-muted:      rgba(13, 15, 30, 0.42);
+    --lotos-fg-inverse:    #F5F6FF;
+    --lotos-border:        rgba(13, 15, 30, 0.10);
+    --lotos-border-strong: rgba(13, 15, 30, 0.18);
+    --lotos-surface-1: rgba(13, 15, 30, 0.03);
+    --lotos-surface-2: rgba(13, 15, 30, 0.05);
+    --lotos-surface-3: rgba(13, 15, 30, 0.08);
+    --lotos-surface-4: rgba(13, 15, 30, 0.12);
+    --lotos-shadow-xs: 0 1px 2px rgba(13, 15, 30, 0.08);
+    --lotos-shadow-sm: 0 1px 4px rgba(13, 15, 30, 0.10), 0 1px 2px rgba(13, 15, 30, 0.06);
+    --lotos-shadow-md: 0 4px 16px rgba(13, 15, 30, 0.12), 0 2px 4px rgba(13, 15, 30, 0.06);
+    --lotos-shadow-lg: 0 8px 32px rgba(13, 15, 30, 0.14), 0 4px 8px rgba(13, 15, 30, 0.08);
+    --lotos-shadow-xl: 0 16px 48px rgba(13, 15, 30, 0.16), 0 8px 16px rgba(13, 15, 30, 0.08);
+    --lotos-gradient-surface: linear-gradient(160deg, rgba(13,15,30,0.02) 0%, transparent 100%);
+    --lotos-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.60) 100%);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   BASE RESET
+   ═══════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-base);
+  color: var(--lotos-fg-primary);
+  background-color: var(--lotos-bg-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ═══════════════════════════════════════════════════
+   FOCUS RING — WCAG 2.2 AAA with ambient glow
+   ═══════════════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--lotos-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--lotos-radius);
+  box-shadow: 0 0 0 5px var(--lotos-accent-glow-sm);
+}
+
+/* ═══════════════════════════════════════════════════
+   INTERACTIVE BASE
+   ═══════════════════════════════════════════════════ */
+
+.lotos-interactive {
+  cursor: pointer;
+  user-select: none;
+  transition: var(--lotos-transition-normal);
+}
+
+.lotos-interactive:disabled,
+.lotos-interactive[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.50;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   BUTTON COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.lotos-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--lotos-font-sans);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--lotos-transition-normal),
+    background var(--lotos-transition-normal),
+    transform 140ms var(--lotos-ease-spring),
+    box-shadow var(--lotos-transition-normal),
+    opacity var(--lotos-transition-fast),
+    border-color var(--lotos-transition-fast);
+}
+
+/* Shimmer sweep on hover — luxury feel */
+.lotos-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.09) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.50s var(--lotos-ease-out);
+  pointer-events: none;
+}
+
+.lotos-btn:not(:disabled):hover::after {
+  transform: translateX(120%);
+}
+
+/* ── Primary ── */
+.lotos-btn--primary {
+  background: var(--lotos-gradient-accent);
+  color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.lotos-btn--primary:not(:disabled):hover {
+  box-shadow:
+    0 4px 24px var(--lotos-accent-glow),
+    0 1px 4px rgba(0, 0, 0, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.lotos-btn--primary:not(:disabled):active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 1px 6px var(--lotos-accent-glow-sm);
+}
+
+.lotos-btn--primary:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--lotos-accent-glow),
+    0 0 0 1.5px var(--lotos-accent);
+}
+
+/* ── Secondary ── */
+.lotos-btn--secondary {
+  background: var(--lotos-surface-3);
+  color: var(--lotos-fg-primary);
+  border: 1px solid var(--lotos-border-strong);
+  box-shadow: var(--lotos-shadow-xs), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.lotos-btn--secondary:not(:disabled):hover {
+  background: var(--lotos-surface-4);
+  box-shadow: var(--lotos-shadow-sm);
+  transform: translateY(-0.5px);
+}
+
+.lotos-btn--secondary:not(:disabled):active {
+  transform: translateY(0) scale(0.985);
+  background: var(--lotos-surface-2);
+  box-shadow: var(--lotos-shadow-xs);
+}
+
+/* ── Ghost ── */
+.lotos-btn--ghost {
+  background: transparent;
+  color: var(--lotos-fg-secondary);
+}
+
+.lotos-btn--ghost:not(:disabled):hover {
+  background: var(--lotos-surface-2);
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-btn--ghost:not(:disabled):active {
+  background: var(--lotos-surface-3);
+}
+
+/* ── Destructive ── */
+.lotos-btn--destructive {
+  background: linear-gradient(135deg, #B02A3E 0%, var(--lotos-error) 100%);
+  color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.lotos-btn--destructive:not(:disabled):hover {
+  box-shadow:
+    0 4px 20px rgba(233, 69, 96, 0.30),
+    0 1px 4px rgba(0, 0, 0, 0.20);
+  transform: translateY(-1px);
+}
+
+.lotos-btn--destructive:not(:disabled):active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 1px 4px rgba(233, 69, 96, 0.20);
+}
+
+/* ── Outline ── */
+.lotos-btn--outline {
+  background: transparent;
+  color: var(--lotos-fg-primary);
+  border: 1px solid var(--lotos-border-strong);
+}
+
+.lotos-btn--outline:not(:disabled):hover {
+  background: var(--lotos-surface-1);
+  border-color: var(--lotos-border-focus);
+  color: var(--lotos-accent);
+}
+
+.lotos-btn--outline:not(:disabled):active {
+  background: var(--lotos-accent-subtle);
+}
+
+/* ── Link ── */
+.lotos-btn--link {
+  background: transparent;
+  color: var(--lotos-accent);
+  text-underline-offset: 4px;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+.lotos-btn--link:not(:disabled):hover {
+  text-decoration: underline;
+  opacity: 0.82;
+}
+
+/* ── Sizes ── */
+.lotos-btn--xs {
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  font-size: var(--lotos-text-xs);
+  gap: 0.25rem;
+  border-radius: var(--lotos-radius);
+}
+
+.lotos-btn--sm {
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: var(--lotos-text-sm);
+  gap: 0.375rem;
+  border-radius: var(--lotos-radius-md);
+}
+
+.lotos-btn--md {
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-size: var(--lotos-text-base);
+  gap: 0.5rem;
+  border-radius: var(--lotos-radius-lg);
+}
+
+.lotos-btn--lg {
+  height: 3rem;
+  padding: 0 1.5rem;
+  font-size: var(--lotos-text-lg);
+  gap: 0.5rem;
+  border-radius: var(--lotos-radius-lg);
+}
+
+.lotos-btn--xl {
+  height: 3.5rem;
+  padding: 0 2rem;
+  font-size: var(--lotos-text-xl);
+  gap: 0.75rem;
+  border-radius: var(--lotos-radius-xl);
+}
+
+.lotos-btn--icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0;
+  justify-content: center;
+  border-radius: var(--lotos-radius-lg);
+}
+
+.lotos-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.lotos-btn__label {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════
+   BADGE COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.lotos-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--lotos-font-sans);
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: var(--lotos-radius-full);
+}
+
+.lotos-badge--default {
+  background: var(--lotos-surface-3);
+  color: var(--lotos-fg-secondary);
+  border: 1px solid var(--lotos-border);
+}
+
+.lotos-badge--success {
+  background: var(--lotos-success-subtle);
+  color: var(--lotos-success);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  box-shadow: inset 0 1px 0 rgba(34, 197, 94, 0.10);
+}
+
+.lotos-badge--warning {
+  background: var(--lotos-warning-subtle);
+  color: var(--lotos-warning);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.10);
+}
+
+.lotos-badge--error {
+  background: var(--lotos-error-subtle);
+  color: var(--lotos-error);
+  border: 1px solid rgba(233, 69, 96, 0.22);
+  box-shadow: inset 0 1px 0 rgba(233, 69, 96, 0.10);
+}
+
+.lotos-badge--info {
+  background: var(--lotos-info-subtle);
+  color: var(--lotos-info);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  box-shadow: inset 0 1px 0 rgba(59, 130, 246, 0.10);
+}
+
+.lotos-badge--outline {
+  background: transparent;
+  color: var(--lotos-fg-secondary);
+  border: 1px solid var(--lotos-border-strong);
+}
+
+/* Sizes */
+.lotos-badge--sm { font-size: var(--lotos-text-xs); padding: 0.125rem 0.375rem; gap: 0.25rem; }
+.lotos-badge--md { font-size: var(--lotos-text-xs); padding: 0.25rem 0.625rem;  gap: 0.375rem; }
+.lotos-badge--lg { font-size: var(--lotos-text-sm); padding: 0.375rem 0.75rem;  gap: 0.5rem; }
+
+/* Dot pulse animation for live indicators */
+.lotos-badge--success .lotos-badge__dot {
+  animation: lotos-pulse 2.2s ease-in-out infinite;
+}
+
+.lotos-badge--error .lotos-badge__dot {
+  animation: lotos-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes lotos-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.50; transform: scale(0.80); }
+}
+
+/* ═══════════════════════════════════════════════════
+   CARD COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.lotos-card {
+  position: relative;
+  background-color: var(--lotos-bg-card);
+  border-radius: var(--lotos-radius-xl);
+  transition:
+    transform 200ms var(--lotos-ease-spring),
+    box-shadow var(--lotos-transition-normal);
+}
+
+/* Subtle ambient gradient overlay on every card */
+.lotos-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lotos-gradient-surface);
+  pointer-events: none;
+}
+
+/* Glass variant */
+.lotos-card--glass {
+  background: var(--lotos-gradient-glass) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(240, 244, 255, 0.12) !important;
+  box-shadow: var(--lotos-shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Interactive card */
+.lotos-card--interactive {
+  cursor: pointer;
+}
+
+.lotos-card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lotos-shadow-lg);
+}
+
+.lotos-card--interactive:active {
+  transform: translateY(0) scale(0.995);
+  box-shadow: var(--lotos-shadow-sm);
+}
+
+.lotos-card--interactive:focus-visible {
+  outline: 2px solid var(--lotos-border-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--lotos-accent-glow-sm), var(--lotos-shadow-md);
+}
+
+/* ═══════════════════════════════════════════════════
+   INPUT COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.lotos-input-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.lotos-input__label {
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-sm);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--lotos-fg-primary);
+  letter-spacing: 0.01em;
+}
+
+.lotos-input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--lotos-radius-lg);
+  border: 1px solid var(--lotos-border-strong);
+  background-color: var(--lotos-bg-card);
+  background-image: var(--lotos-gradient-surface);
+  transition:
+    border-color var(--lotos-transition-fast),
+    box-shadow var(--lotos-transition-normal);
+}
+
+.lotos-input__wrapper:focus-within {
+  border-color: var(--lotos-border-focus);
+  box-shadow:
+    0 0 0 3px var(--lotos-accent-glow-sm),
+    0 1px 3px rgba(0, 0, 0, 0.20);
+}
+
+/* Error state — uses :has for modern browsers, JS sets class as fallback */
+.lotos-input__wrapper:has(input[aria-invalid="true"]),
+.lotos-input__wrapper--error {
+  border-color: var(--lotos-error);
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+}
+
+.lotos-input__field {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-base);
+  color: var(--lotos-fg-primary);
+  caret-color: var(--lotos-accent);
+}
+
+.lotos-input__field::placeholder {
+  color: var(--lotos-fg-muted);
+}
+
+.lotos-input__field:disabled {
+  cursor: not-allowed;
+}
+
+.lotos-input__adornment {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--lotos-fg-muted);
+}
+
+.lotos-input__adornment--start { padding-left:  0.75rem; }
+.lotos-input__adornment--end   { padding-right: 0.75rem; }
+
+.lotos-input__error {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-xs);
+  font-weight: 500;
+  color: var(--lotos-error);
+}
+
+.lotos-input__helper {
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-xs);
+  color: var(--lotos-fg-muted);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════
+   MODAL COMPONENT
+   ═══════════════════════════════════════════════════ */
+
+.lotos-modal-portal {
+  position: relative;
+}
+
+.lotos-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--lotos-bg-overlay);
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  animation: lotos-backdrop-in var(--lotos-duration-normal) var(--lotos-ease-out) both;
+}
+
+.lotos-modal__positioner {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.lotos-modal__dialog {
+  position: relative;
+  width: 100%;
+  background-color: var(--lotos-bg-card);
+  background-image: linear-gradient(160deg, var(--lotos-surface-2) 0%, transparent 55%);
+  border: 1px solid var(--lotos-border-strong);
+  border-radius: var(--lotos-radius-2xl);
+  box-shadow:
+    var(--lotos-shadow-xl),
+    0 0 80px rgba(233, 69, 96, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  animation: lotos-dialog-in var(--lotos-duration-slow) var(--lotos-ease-spring) both;
+}
+
+.lotos-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.lotos-modal__title {
+  font-family: var(--lotos-font-sans);
+  font-size: var(--lotos-text-xl);
+  font-weight: 600;
+  color: var(--lotos-fg-primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.lotos-modal__description {
+  margin-top: 0.25rem;
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-muted);
+  line-height: 1.5;
+}
+
+.lotos-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.lotos-modal__footer {
+  border-top: 1px solid var(--lotos-border);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.lotos-modal__close-btn {
+  flex-shrink: 0;
+  margin-top: -0.25rem;
+  margin-right: -0.25rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: var(--lotos-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lotos-fg-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition:
+    color var(--lotos-transition-fast),
+    background-color var(--lotos-transition-fast);
+}
+
+.lotos-modal__close-btn:hover {
+  color: var(--lotos-fg-primary);
+  background: var(--lotos-surface-2);
+}
+
+/* ═══════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+
+@keyframes lotos-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lotos-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes lotos-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Used by the Button's loading spinner */
+.animate-spin {
+  animation: lotos-spin 0.75s linear infinite;
+}
+
+/* Form */
+.lotos-form {
+  display: grid;
+}
+
+.lotos-form--compact { gap: 0.75rem; }
+.lotos-form--comfortable { gap: 1rem; }
+.lotos-form--spacious { gap: 1.25rem; }
+
+.lotos-form__header {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.lotos-form__title {
+  margin: 0;
+  font-size: var(--lotos-text-lg);
+  font-weight: 600;
+  color: var(--lotos-fg-primary);
+  letter-spacing: -0.01em;
+}
+
+.lotos-form__description {
+  margin: 0;
+  font-size: var(--lotos-text-sm);
+  line-height: 1.5;
+  color: var(--lotos-fg-secondary);
+}
+
+.lotos-form__grid {
+  display: grid;
+  gap: 0.875rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.lotos-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Table */
+.lotos-table-shell {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.lotos-table-shell__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.lotos-table-shell__caption {
+  margin: 0;
+  font-size: var(--lotos-text-lg);
+  font-weight: 600;
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-table-shell__meta {
+  margin: 0.25rem 0 0;
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-secondary);
+}
+
+.lotos-table-shell__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+  padding: 0 0.625rem;
+  border-radius: var(--lotos-radius-full);
+  background: var(--lotos-info-subtle);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  color: var(--lotos-info);
+  font-size: var(--lotos-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.lotos-table-shell__frame {
+  overflow-x: auto;
+  border: 1px solid var(--lotos-border);
+  border-radius: var(--lotos-radius-xl);
+  background: var(--lotos-bg-card);
+  box-shadow: var(--lotos-shadow-sm);
+}
+
+.lotos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lotos-table th,
+.lotos-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--lotos-border);
+}
+
+.lotos-table th {
+  font-size: var(--lotos-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lotos-fg-secondary);
+  background: var(--lotos-surface-2);
+}
+
+.lotos-table td {
+  font-size: var(--lotos-text-sm);
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-table tbody tr:hover {
+  background: var(--lotos-surface-1);
+}
+
+.lotos-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.lotos-table__align-center { text-align: center; }
+.lotos-table__align-right { text-align: right; }
+
+.lotos-table__empty {
+  text-align: center;
+  color: var(--lotos-fg-muted);
+}
+
+.lotos-alert__icon {
+  color: currentColor;
+}
+
+.lotos-alert__dismiss:hover {
+  border-color: var(--lotos-border-strong);
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-progress__track {
+  box-shadow: inset 0 0 0 1px var(--lotos-border);
+}
+
+.lotos-avatar__image {
+  display: block;
+}
+
+.lotos-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.lotos-divider--vertical {
+  width: auto;
+  min-height: 100%;
+  justify-content: center;
+}
+
+.lotos-divider__line {
+  flex: 1 1 auto;
+  min-width: 1rem;
+  height: 1px;
+  background: var(--lotos-border);
+}
+
+.lotos-divider--vertical .lotos-divider__line {
+  width: 1px;
+  min-width: 1px;
+  min-height: 2rem;
+  height: auto;
+}
+
+.lotos-divider__label {
+  flex: 0 0 auto;
+  font-size: var(--lotos-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lotos-fg-muted);
+}
+
+.lotos-empty-state__icon {
+  color: var(--lotos-fg-muted);
+}
+
+.lotos-empty-state__actions {
+  flex-wrap: wrap;
+}
+
+.lotos-stat {
+  box-shadow: var(--lotos-shadow-sm);
+}
+
+.lotos-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.lotos-skeleton--animated::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: lotos-skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+@keyframes lotos-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.lotos-toast__dismiss:hover {
+  border-color: var(--lotos-border-strong);
+  color: var(--lotos-fg-primary);
+}
+
+
+body{margin:0;padding:24px;background:#091425;color:#e8eefc;font-family:Segoe UI,sans-serif}
+.vr-shell{display:grid;gap:20px;max-width:1100px;margin:0 auto}
+.vr-card{border:1px solid rgba(120,155,220,.18);border-radius:20px;padding:20px;background:rgba(7,17,31,.85)}
+.vr-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.vr-grid{display:grid;gap:16px}
+.vr-grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vr-grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+h1,h2{margin:0}
+p{margin:0;color:#9fb0d2;line-height:1.6}
+@media (max-width: 920px){.vr-grid-3,.vr-grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main class="vr-shell"><section class="vr-card"><div class="vr-row"><span class="lotos-badge inline-flex items-center font-medium rounded-[var(--lotos-radius-full)] leading-none whitespace-nowrap lotos-badge--success bg-[var(--lotos-success)]/20 text-[var(--lotos-success)] lotos-badge--md text-xs px-2.5 py-1 gap-1.5">React stable</span><span class="lotos-badge inline-flex items-center font-medium rounded-[var(--lotos-radius-full)] leading-none whitespace-nowrap lotos-badge--info bg-[var(--lotos-info)]/20 text-[var(--lotos-info)] lotos-badge--md text-xs px-2.5 py-1 gap-1.5">30 components</span><span class="lotos-badge inline-flex items-center font-medium rounded-[var(--lotos-radius-full)] leading-none whitespace-nowrap lotos-badge--warning bg-[var(--lotos-warning)]/20 text-[var(--lotos-warning)] lotos-badge--md text-xs px-2.5 py-1 gap-1.5">Visual checked</span></div><div class="vr-grid vr-grid-3" style="margin-top:16px"><section class="lotos-stat rounded-[var(--lotos-radius-xl)] border bg-[var(--lotos-bg-card)] px-4 py-4 lotos-stat--info border-[color:var(--lotos-info)]/35"><div class="flex items-start justify-between gap-3"><div class="min-w-0"><div class="lotos-stat__label text-xs font-semibold uppercase tracking-[0.08em] text-[var(--lotos-fg-muted)]">Queue</div><div class="lotos-stat__value mt-2 text-2xl font-semibold text-[var(--lotos-fg-primary)]">19</div></div><span class="lotos-stat__change text-sm font-semibold text-[var(--lotos-info)]">+3</span></div><p class="lotos-stat__helper mt-3 text-sm text-[var(--lotos-fg-secondary)]">Current work queue.</p></section><section class="lotos-stat rounded-[var(--lotos-radius-xl)] border bg-[var(--lotos-bg-card)] px-4 py-4 lotos-stat--success border-[color:var(--lotos-success)]/35"><div class="flex items-start justify-between gap-3"><div class="min-w-0"><div class="lotos-stat__label text-xs font-semibold uppercase tracking-[0.08em] text-[var(--lotos-fg-muted)]">Throughput</div><div class="lotos-stat__value mt-2 text-2xl font-semibold text-[var(--lotos-fg-primary)]">98.4%</div></div><span class="lotos-stat__change text-sm font-semibold text-[var(--lotos-success)]">+1.2%</span></div><p class="lotos-stat__helper mt-3 text-sm text-[var(--lotos-fg-secondary)]">Successful completion rate.</p></section><section class="lotos-stat rounded-[var(--lotos-radius-xl)] border bg-[var(--lotos-bg-card)] px-4 py-4 lotos-stat--warning border-[color:var(--lotos-warning)]/35"><div class="flex items-start justify-between gap-3"><div class="min-w-0"><div class="lotos-stat__label text-xs font-semibold uppercase tracking-[0.08em] text-[var(--lotos-fg-muted)]">Escalations</div><div class="lotos-stat__value mt-2 text-2xl font-semibold text-[var(--lotos-fg-primary)]">2</div></div><span class="lotos-stat__change text-sm font-semibold text-[var(--lotos-warning)]">-1</span></div><p class="lotos-stat__helper mt-3 text-sm text-[var(--lotos-fg-secondary)]">Manual reviews pending.</p></section></div></section></main></body>
+</html>

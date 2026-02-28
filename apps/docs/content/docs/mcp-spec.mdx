@@ -1,0 +1,62 @@
+---
+title: MCP Transport Spec
+description: Formal transport contract for the LotOS UI MCP layer.
+---
+
+# MCP Transport Spec
+
+LotOS UI exposes its AI contract layer through a concrete transport, not only an idea.
+
+## Current Transport
+
+- `Transport`: HTTP JSON
+- `Content-Type`: `application/json`
+- `Version`: `1.0.0`
+- `Base Path`: `/`
+
+The typed specification is exported from:
+
+- `@lotosui/core` -> `lotosMcpTransportSpec`
+
+Source:
+
+- [spec.ts](/C:/Users/Rick/Documents/LotosTechnologies/LotOS%20UI/lotos-ui/packages/core/src/mcp/spec.ts)
+
+## Endpoint Surface
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/health` | Health and version check |
+| `GET` | `/components` | Component catalog |
+| `GET` | `/components/:name` | Component schema and metadata |
+| `GET` | `/components/:name/examples` | Framework-specific examples |
+| `POST` | `/components/render` | Contract-safe snippet rendering |
+| `GET` | `/runtimes` | Runtime profiles and maturity |
+| `GET` | `/patterns` | Pattern catalog |
+| `GET` | `/patterns/:id` | Pattern details |
+| `GET` | `/desktop/templates` | Desktop template list |
+| `GET` | `/desktop/templates/:id` | Desktop template detail |
+| `GET` | `/stacks` | Stack starter list |
+| `GET` | `/stacks/:id` | Stack starter detail |
+
+## Intent
+
+This transport gives AI tooling a stable way to:
+
+1. discover available components
+2. fetch schemas and restrictions
+3. fetch examples by runtime
+4. render contract-safe starter snippets
+5. inspect runtime, desktop, and stack capability surfaces
+
+## Example Flow
+
+1. Call `/health`
+2. Call `/components/button`
+3. Call `/components/button/examples`
+4. Call `/components/render` with the target payload
+5. Use the returned snippet as the safe UI seed
+
+The repository already includes a working E2E example:
+
+- [mcp-render-demo.mjs](/C:/Users/Rick/Documents/LotosTechnologies/LotOS%20UI/lotos-ui/packages/core/examples/mcp-render-demo.mjs)
