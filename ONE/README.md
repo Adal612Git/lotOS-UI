@@ -9,11 +9,13 @@ Este directorio es el punto unico de referencia operativa para LotOS UI.
 3. `MANUAL_OPERATIVO_VICTOR.md`
 4. `LOTOS_DESIGN_PATTERNS_MULTI_RUNTIME.md`
 5. `ESTUDIO_estrategiafinalventas.txt`
-6. `TEMPLATE_*`
-7. `README_STRATEGY.md`
-8. `README_MARKET_INTEL.md`
-9. `check-structure.mjs`
-10. `degraded-mode.mjs`
+6. `COMMERCIAL_DELIVERY_MODEL.md`
+7. `TEMPLATE_*`
+8. `README_STRATEGY.md`
+9. `README_MARKET_INTEL.md`
+10. `check-structure.mjs`
+11. `degraded-mode.mjs`
+12. `export-commercial-bundles.mjs`
 
 ## Regla
 

@@ -13,6 +13,23 @@ Current pro packs:
 - `admin-starter`
 - `layouts`
 - `industry-kits`
+- `distribution`
+- `previews`
+
+## Technical Commercialization Layer
+
+This directory now also contains:
+
+- `distribution/free.manifest.json` for the open deliverable surface
+- `distribution/pro.manifest.json` for paid assets and delivery rules
+- `previews/*.html` visual previews you can show before purchase
+
+To stage deliverable bundles locally, run:
+
+`pnpm export:commercial`
+
+This generates `.commercial-dist/free` and `.commercial-dist/pro` with manifests,
+licenses, previews, and the selected file payloads ready to zip or move to a private channel.
 
 ## Distribution Note
 

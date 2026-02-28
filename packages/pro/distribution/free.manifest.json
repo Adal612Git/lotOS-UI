@@ -1,0 +1,53 @@
+{
+  "id": "lotos-free-surface",
+  "name": "LotOS UI Free Surface",
+  "tier": "free",
+  "version": "0.1.0",
+  "license": "MIT",
+  "distribution": "public",
+  "includes": [
+    {
+      "id": "@lotosui/core",
+      "path": "packages/core",
+      "type": "package",
+      "notes": "Contracts, schemas, runtimes, MCP server, MCP client."
+    },
+    {
+      "id": "@lotosui/claude-arm",
+      "path": "packages/claude-arm",
+      "type": "package",
+      "notes": "React component arm with 30 real components."
+    },
+    {
+      "id": "@lotosui/cli",
+      "path": "packages/cli",
+      "type": "package",
+      "notes": "Scaffolding commands for add, stack-init, desktop-init."
+    },
+    {
+      "id": "@lotosui/web-components",
+      "path": "packages/web-components",
+      "type": "package",
+      "notes": "Interop primitives for browser-native usage."
+    },
+    {
+      "id": "@lotosui/sentinel",
+      "path": "packages/sentinel",
+      "type": "package",
+      "notes": "Guardrails and runtime misuse detection."
+    },
+    {
+      "id": "public-docs",
+      "path": "apps/docs",
+      "type": "application",
+      "notes": "Public documentation and adoption entry point."
+    },
+    {
+      "id": "public-demos",
+      "path": "apps/desktop-python-demo",
+      "type": "demo",
+      "notes": "Runnable desktop demo for technical evaluation."
+    }
+  ],
+  "notForSaleAsExclusive": true
+}

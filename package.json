@@ -9,7 +9,8 @@
     "check-types": "turbo run check-types",
     "verify:structure": "node ONE/check-structure.mjs",
     "verify:degraded": "node ONE/degraded-mode.mjs",
-    "verify:100": "node ONE/verify-100.mjs"
+    "verify:100": "node ONE/verify-100.mjs",
+    "export:commercial": "node ONE/export-commercial-bundles.mjs"
   },
   "devDependencies": {
     "prettier": "^3.7.4",

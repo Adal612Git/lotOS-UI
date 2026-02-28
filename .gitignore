@@ -37,6 +37,7 @@ dist
 **/obj/
 *.timestamp-*.mjs
 packages/cli/stack/
+.commercial-dist/
 
 
 # Debug

@@ -1,0 +1,73 @@
+# Commercial Delivery Model
+
+This document defines what is free, what is paid, and how LotOS UI should be delivered.
+
+## Free Surface
+
+The free surface is the public, MIT-licensed layer:
+
+- `packages/core`
+- `packages/claude-arm`
+- `packages/cli`
+- `packages/web-components`
+- `packages/sentinel`
+- runtime adapters intended for public adoption
+- public docs and demos
+
+This layer is used for:
+
+- developer adoption
+- public npm distribution
+- technical evaluation
+- demo credibility
+
+## Paid Surface
+
+The paid surface is the proprietary asset layer:
+
+- `packages/pro/admin-starter`
+- `packages/pro/layouts`
+- `packages/pro/industry-kits`
+- private future exports of premium templates, industry packs, and guided starter bundles
+
+This layer is used for:
+
+- paid ZIP delivery
+- private repository delivery
+- premium customer onboarding
+- custom implementation accelerators
+
+## Delivery Rules
+
+1. Never sell the public MIT packages as exclusive assets.
+2. Sell implementation, guided setup, and proprietary packs.
+3. Move `packages/pro` to a private distribution channel before public commercial launch.
+4. Use `pnpm export:commercial` to stage deliverables for packaging.
+
+## Paid Offer Payload
+
+A paid customer can receive:
+
+- a curated `pro` bundle from `.commercial-dist/pro`
+- a customized generated starter
+- a private repository or ZIP archive
+- implementation notes and onboarding guidance
+
+## Free Offer Payload
+
+A free user can receive:
+
+- the public packages
+- public docs
+- public demos
+- starter generation from the CLI
+
+## Immediate Practical Model
+
+If a customer wants to buy today:
+
+1. take payment outside the repo
+2. run `pnpm export:commercial`
+3. zip `.commercial-dist/pro`
+4. add the customer-specific starter or custom files
+5. deliver through a private link or private repository
