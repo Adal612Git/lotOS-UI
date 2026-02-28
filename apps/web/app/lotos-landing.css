@@ -26,6 +26,7 @@
 .top nav {
   display: flex;
   gap: 14px;
+  flex-wrap: wrap;
 }
 
 .top a {
@@ -171,6 +172,12 @@
   margin: 0;
 }
 
+.card a,
+.pricing a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .card p {
   color: #4e6481;
   line-height: 1.6;
@@ -216,6 +223,49 @@ th {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(2, minmax(240px, 1fr));
+}
+
+.pricing.expanded {
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+}
+
+.pricing-card {
+  display: block;
+}
+
+.plan-tier,
+.section-label {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 800;
+  color: #0b7a60;
+}
+
+.price-label {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: #153553;
+}
+
+.price-label.compact {
+  font-size: 18px;
+}
+
+.audience {
+  font-size: 13px;
+  color: #516a88;
+}
+
+.button-like {
+  display: inline-flex;
+  margin-top: 14px;
+}
+
+.pricing-page .hero.compact {
+  margin-bottom: 8px;
 }
 
 .highlight {

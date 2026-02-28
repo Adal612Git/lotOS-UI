@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import './lotos-landing.css';
+import { salesLinks, salesPlans } from './sales-config';
 
 const runtimeRows = [
   ['React', 'Stable', 'Stable', 'Production arm'],
@@ -23,13 +24,14 @@ export default function HomePage() {
         <div className="brand">LotOS UI</div>
         <nav>
           <Link href="/docs">Docs</Link>
+          <Link href="/pricing">Pricing</Link>
           <Link href="/multi-framework">Runtime Matrix</Link>
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
       </header>
 
       <section className="hero">
-        <p className="kicker">Early access · Solo from $149</p>
+        <p className="kicker">Early access | Solo from $149</p>
         <h1>The UI platform your AI agent can actually execute without breaking.</h1>
         <p className="lead">
           MCP contracts + schema-safe components + desktop and backend stack starters for real delivery
@@ -37,6 +39,7 @@ export default function HomePage() {
         </p>
         <div className="hero-actions">
           <Link href="/docs/installation" className="btn primary">Get Started</Link>
+          <Link href="/pricing" className="btn ghost">Pricing</Link>
           <Link href="/docs/multi-runtime" className="btn ghost">View Runtime Guide</Link>
           <Link href="/design-lab" className="btn ghost">Open Design Lab</Link>
         </div>
@@ -128,23 +131,56 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
       </section>
 
       <section className="pricing">
+        {salesPlans.slice(0, 2).map((plan) => {
+          const classes = `card ${plan.kind === 'paid' ? 'highlight' : ''}`;
+          return plan.external ? (
+            <a key={plan.id} href={plan.href} target="_blank" rel="noreferrer" className={classes}>
+              <h3>{plan.name}</h3>
+              <p className="price-label compact">{plan.priceLabel}</p>
+              <p>{plan.summary}</p>
+            </a>
+          ) : (
+            <Link key={plan.id} href={plan.href} className={classes}>
+              <h3>{plan.name}</h3>
+              <p className="price-label compact">{plan.priceLabel}</p>
+              <p>{plan.summary}</p>
+            </Link>
+          );
+        })}
+      </section>
+
+      <section className="grid two">
         <article className="card">
-          <h3>Free</h3>
-          <p>Core components, docs, MCP basics, and starter workflows.</p>
+          <h2>Free vs Paid</h2>
+          <ul>
+            <li>Free surface stays public and MIT for trust and adoption.</li>
+            <li>Paid surface ships as private pro bundles, launch packs, and custom starters.</li>
+            <li>Open packages are not sold as exclusive assets.</li>
+          </ul>
         </article>
-        <article className="card highlight">
-          <h3>Pro</h3>
-          <p>Premium templates, advanced starter bundles, and higher velocity support.</p>
+        <article className="card">
+          <h2>Ready to Close</h2>
+          <p>
+            The repository already has a one-command preparation flow for the first paid delivery.
+          </p>
+          <pre><code>pnpm.cmd run prep:first-sale</code></pre>
+          <div className="hero-actions">
+            <Link href="/pricing" className="btn primary">Open Pricing</Link>
+            <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer">Contact Sales</a>
+          </div>
         </article>
       </section>
 
       <footer className="footer">
-        <p>LotOS UI · 2026 · Lotos Technologies</p>
+        <p>LotOS UI | 2026 | Lotos Technologies</p>
         <div>
           <Link href="/docs">Docs</Link>
+          <Link href="/pricing">Pricing</Link>
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </footer>
     </main>
   );
 }
+
+

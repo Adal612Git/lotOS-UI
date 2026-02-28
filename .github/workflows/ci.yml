@@ -137,6 +137,9 @@ jobs:
       - name: Verify runtime contract guards
         run: pnpm run verify:runtime-contracts
 
+      - name: Verify sales surface
+        run: pnpm run verify:sales
+
       - name: Export commercial bundles
         run: pnpm run export:commercial
 

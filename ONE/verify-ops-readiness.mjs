@@ -16,6 +16,7 @@ const requiredRootScripts = [
   "verify:runtime-examples",
   "verify:runtime-contracts",
   "verify:desktop",
+  "verify:sales",
   "verify:commercial",
   "verify:ops",
   "verify:release-readiness",
@@ -40,6 +41,7 @@ const requiredFiles = [
   "ONE/verify-runtime-examples.mjs",
   "ONE/verify-runtime-contracts.mjs",
   "ONE/verify-desktop-pipelines.mjs",
+  "ONE/verify-sales-surface.mjs",
   "ONE/verify-commercial-readiness.mjs",
   "ONE/verify-ops-readiness.mjs",
   "ONE/verify-release-readiness.mjs",
@@ -68,6 +70,7 @@ for (const relativePath of requiredFiles) {
 const requiredCiMarkers = [
   "Build Storybook",
   "Enforce execution coverage",
+  "Verify sales surface",
   "Export commercial bundles",
   "Verify commercial readiness",
   "Verify desktop delivery pipelines",

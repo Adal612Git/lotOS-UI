@@ -122,6 +122,7 @@ export default function DocsHomePage() {
           <div className="hero-actions">
             <Link href="/docs/installation" className="btn btn-primary">Get Started / Empezar</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Runtime Guide / Guia</Link>
+            <a href="https://lotos-ui.vercel.app/pricing" className="btn btn-ghost">Pricing / Precios</a>
             <Link href="/docs/components/button" className="btn btn-ghost">Components / Componentes</Link>
           </div>
         </div>
@@ -284,6 +285,7 @@ export default function DocsHomePage() {
           <div className="hero-actions">
             <Link href="/docs/installation" className="btn btn-primary">Installation</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Open Runtime Guide</Link>
+            <a href="https://lotos-ui.vercel.app/pricing" className="btn btn-ghost">Pricing</a>
             <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="btn btn-ghost">
               GitHub
             </a>
@@ -864,3 +866,5 @@ export default function DocsHomePage() {
     </main>
   );
 }
+
+
