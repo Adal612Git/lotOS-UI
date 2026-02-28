@@ -13,6 +13,7 @@ Monorepo oficial de LotOS UI.
 - `packages/lotos-laravel` (Blade adapter usable)
 - `packages/lotos-django` (template adapter usable)
 - `packages/lotos-flask` (Jinja adapter usable)
+- `packages/lotos-spring` (Thymeleaf adapter usable)
 
 ## Instalación rápida
 
@@ -82,6 +83,7 @@ pnpm --filter @lotosui/cli test
   - `packages/lotos-laravel`
   - `packages/lotos-django`
   - `packages/lotos-flask`
+  - `packages/lotos-spring`
 
 Objetivo: escalar de React-only a adapters para PHP, Python, Java, .NET, Go, C/C++, y Mojo con una base visual consistente.
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="lotosTheme(content)">
+  <section style="background:#0f172a;color:#e2e8f0;padding:24px;border-radius:24px;border:1px solid #1e293b;font-family:Segoe UI, sans-serif;">
+    <div th:utext="${content}"></div>
+  </section>
+</th:block>
+
+<button th:fragment="lotosButton(label, variant, size, disabled)"
+        type="button"
+        th:disabled="${disabled}"
+        th:text="${label}"
+        th:style="${'padding:' + (size == 'lg' ? '12px 18px' : '10px 14px') + ';border-radius:14px;border:1px solid ' + (variant == 'outline' ? '#38bdf8' : '#0ea5e9') + ';background:' + (variant == 'outline' ? 'transparent' : '#0ea5e9') + ';color:' + (variant == 'outline' ? '#38bdf8' : '#08111f') + ';font-weight:700;'}">
+</button>
+
+<span th:fragment="lotosBadge(label, variant)"
+      th:text="${label}"
+      th:style="${'display:inline-flex;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:' + (variant == 'success' ? '#052e16' : '#172554') + ';color:' + (variant == 'success' ? '#86efac' : '#93c5fd') + ';'}"></span>
+
+<article th:fragment="lotosCard(title, body, footer)"
+         style="padding:18px;border-radius:20px;background:#111c33;border:1px solid #22304b;">
+  <header style="margin-bottom:12px;">
+    <h3 th:text="${title}" style="margin:0;font-size:18px;"></h3>
+  </header>
+  <div th:utext="${body}"></div>
+  <footer th:if="${footer}" th:utext="${footer}" style="margin-top:14px;"></footer>
+</article>
+
+<div th:fragment="lotosInput(label, placeholder, helperText, errorText)">
+  <label style="display:grid;gap:8px;">
+    <span th:text="${label}" style="font-size:13px;font-weight:700;"></span>
+    <input type="text"
+           th:placeholder="${placeholder}"
+           style="padding:10px 12px;border-radius:12px;border:1px solid #334155;background:#020617;color:#e2e8f0;"/>
+    <small th:if="${helperText}" th:text="${helperText}" style="color:#94a3b8;"></small>
+    <small th:if="${errorText}" th:text="${errorText}" style="color:#fca5a5;"></small>
+  </label>
+</div>
+
+<form th:fragment="lotosForm(title, description, action, method, submitLabel, body)"
+      th:action="${action}"
+      th:method="${method}"
+      style="display:grid;gap:14px;padding:18px;border-radius:20px;background:#111c33;border:1px solid #22304b;">
+  <header>
+    <h3 th:text="${title}" style="margin:0;"></h3>
+    <p th:if="${description}" th:text="${description}" style="margin:6px 0 0;color:#94a3b8;"></p>
+  </header>
+  <div th:utext="${body}"></div>
+  <div>
+    <button type="submit" th:text="${submitLabel}" style="padding:10px 14px;border-radius:14px;border:none;background:#22c55e;color:#052e16;font-weight:700;"></button>
+  </div>
+</form>
+
+<section th:fragment="lotosModal(title, description, body, footer)"
+         style="padding:18px;border-radius:22px;border:1px solid #334155;background:rgba(2,6,23,0.92);box-shadow:0 16px 40px rgba(2,6,23,0.45);">
+  <header style="margin-bottom:12px;">
+    <h3 th:text="${title}" style="margin:0;"></h3>
+    <p th:if="${description}" th:text="${description}" style="margin:6px 0 0;color:#94a3b8;"></p>
+  </header>
+  <div th:utext="${body}"></div>
+  <footer th:if="${footer}" th:utext="${footer}" style="margin-top:14px;"></footer>
+</section>
+
+<div th:fragment="lotosTable(caption, columns, rows, emptyState)">
+  <table style="width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;border:1px solid #22304b;">
+    <caption th:if="${caption}" th:text="${caption}" style="caption-side:top;text-align:left;padding:0 0 10px;font-weight:700;"></caption>
+    <thead style="background:#111827;">
+      <tr>
+        <th th:each="column : ${columns}" th:text="${column['label']}" style="padding:10px;border-bottom:1px solid #22304b;text-align:left;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:if="${#lists.isEmpty(rows)}">
+        <td th:colspan="${#lists.size(columns)}" th:text="${emptyState}" style="padding:14px;color:#94a3b8;"></td>
+      </tr>
+      <tr th:each="row : ${rows}" style="background:#0f172a;">
+        <td th:each="column : ${columns}" th:text="${row[column['key']]}" style="padding:10px;border-top:1px solid #22304b;"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
