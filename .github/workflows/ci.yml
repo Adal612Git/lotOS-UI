@@ -43,6 +43,9 @@ jobs:
       - name: Build core
         run: pnpm --filter @lotosui/core run build
 
+      - name: Run MCP render demo
+        run: node packages/core/examples/mcp-render-demo.mjs
+
       - name: Typecheck claude-arm
         run: pnpm --filter @lotosui/claude-arm run check-types
 
