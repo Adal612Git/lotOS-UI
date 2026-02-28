@@ -27,6 +27,16 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -41,6 +51,26 @@ jobs:
 
       - name: Test cli
         run: pnpm --filter @lotosui/cli run test
+
+      - name: Validate Python runtime adapters
+        run: |
+          python -m py_compile \
+            packages/lotos-django/lotos_django/__init__.py \
+            packages/lotos-django/lotos_django/apps.py \
+            packages/lotos-django/lotos_django/contracts.py \
+            packages/lotos-django/lotos_django/validator.py \
+            packages/lotos-django/lotos_django/templatetags/lotos_ui.py \
+            packages/lotos-django/examples/views.py \
+            packages/lotos-flask/lotos_flask/__init__.py \
+            packages/lotos-flask/lotos_flask/contracts.py \
+            packages/lotos-flask/lotos_flask/validator.py
+
+      - name: Build Go runtime adapter
+        working-directory: packages/lotos-go
+        run: go build ./...
+
+      - name: Build .NET runtime adapter
+        run: dotnet build packages/lotos-dotnet/LotosUi.Dotnet.csproj
 
       - name: Verify contracts
         run: pnpm run verify:100
