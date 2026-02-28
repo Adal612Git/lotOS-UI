@@ -18,8 +18,9 @@ Without installing any extra Storybook packages, you can already run:
 
 1. `pnpm --filter @lotosui/claude-arm run showcase`
 2. `pnpm --filter @lotosui/claude-arm run showcase:build`
-3. `pnpm --filter @lotosui/claude-arm run visual:baseline`
-4. `pnpm --filter @lotosui/claude-arm run visual:check`
+3. `pnpm --filter @lotosui/claude-arm run coverage:components`
+4. `pnpm --filter @lotosui/claude-arm run visual:baseline`
+5. `pnpm --filter @lotosui/claude-arm run visual:check`
 
 ## Important
 

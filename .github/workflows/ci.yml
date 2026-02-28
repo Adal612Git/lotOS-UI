@@ -37,6 +37,15 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -48,6 +57,9 @@ jobs:
 
       - name: Typecheck claude-arm
         run: pnpm --filter @lotosui/claude-arm run check-types
+
+      - name: Check component test coverage surface
+        run: pnpm --filter @lotosui/claude-arm run coverage:components
 
       - name: Build claude-arm showcase
         run: pnpm --filter @lotosui/claude-arm run showcase:build
@@ -89,6 +101,16 @@ jobs:
           assert state["high_priority"] >= 1
           print(state["title"])
           PY
+
+      - name: Build desktop Java demo
+        working-directory: apps/desktop-java-demo
+        run: |
+          javac App.java
+          jar --create --file LotosDesktopJavaDemo.jar --main-class App App.class
+
+      - name: Build desktop Rust demo
+        working-directory: apps/desktop-rust-demo
+        run: cargo build --release
 
       - name: Build Go runtime adapter
         working-directory: packages/lotos-go

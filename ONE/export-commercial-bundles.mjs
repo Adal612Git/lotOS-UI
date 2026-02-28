@@ -17,7 +17,9 @@ const tiers = [
       "packages/web-components/README.md",
       "packages/sentinel/package.json",
       "apps/desktop-python-demo/README.md",
-      "apps/desktop-dotnet-demo/README.md"
+      "apps/desktop-dotnet-demo/README.md",
+      "apps/desktop-java-demo/README.md",
+      "apps/desktop-rust-demo/README.md"
     ]
   },
   {

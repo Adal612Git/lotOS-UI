@@ -1,7 +1,7 @@
 {
     "name": "@lotosui/claude-arm",
     "version": "1.0.1",
-    "description": "LotOS UI — Accessible React component library built for AI-first development. 30 components, WCAG 2.2 AAA, MCP Server integrated.",
+    "description": "LotOS UI — Accessible React component library built for AI-first development. 27 components, WCAG 2.2 AAA, MCP Server integrated.",
     "license": "MIT",
     "type": "module",
     "author": "Lotos Technologies <lotos@lotos.dev>",
@@ -66,6 +66,7 @@
         "test:mcp": "vitest run tests/mcp",
         "check-types": "tsc --noEmit -p tsconfig.build.json",
         "typecheck": "tsc --noEmit -p tsconfig.build.json",
+        "coverage:components": "node scripts/component-test-coverage.mjs",
         "visual:baseline": "pnpm build && node scripts/visual-regression.mjs --write",
         "visual:check": "pnpm build && node scripts/visual-regression.mjs",
         "prepublishOnly": "pnpm test && pnpm build"

@@ -45,7 +45,7 @@ const scenes = [
       React.createElement("section", { className: "vr-card" },
         React.createElement("div", { className: "vr-row" },
           React.createElement(Badge, { variant: "success" }, "React stable"),
-          React.createElement(Badge, { variant: "info" }, "30 components"),
+          React.createElement(Badge, { variant: "info" }, "27 components"),
           React.createElement(Badge, { variant: "warning" }, "Visual checked")
         ),
         React.createElement("div", { className: "vr-grid vr-grid-3", style: { marginTop: "16px" } },

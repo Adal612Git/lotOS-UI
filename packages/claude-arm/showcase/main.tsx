@@ -31,7 +31,7 @@ function ShowcaseApp() {
           </p>
           <div className="lotos-showcase__row">
             <Badge variant="success">React Stable</Badge>
-            <Badge variant="info">30 Components</Badge>
+            <Badge variant="info">27 Components</Badge>
             <Badge variant="warning">CI Checked</Badge>
           </div>
         </section>
