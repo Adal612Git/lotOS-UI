@@ -24,6 +24,12 @@ jar --create --file LotosDesktopJavaDemo.jar --main-class App App.class
 java -jar LotosDesktopJavaDemo.jar
 ```
 
+## Build script
+
+```powershell
+./build.ps1
+```
+
 Note:
 
 The simplest direct run is `java App`.

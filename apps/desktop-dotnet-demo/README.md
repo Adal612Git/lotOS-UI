@@ -20,3 +20,9 @@ dotnet build
 ```powershell
 dotnet publish -c Release -r win-x64 --self-contained false
 ```
+
+## Build script
+
+```powershell
+./build.ps1
+```

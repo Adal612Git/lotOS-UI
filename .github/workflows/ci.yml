@@ -137,6 +137,12 @@ jobs:
       - name: Verify runtime contract guards
         run: pnpm run verify:runtime-contracts
 
+      - name: Verify desktop delivery pipelines
+        run: pnpm run verify:desktop
+
+      - name: Verify release readiness
+        run: pnpm run verify:release-readiness
+
       - name: Verify private pro surface
         run: pnpm --filter @lotosui/pro-private run verify
 

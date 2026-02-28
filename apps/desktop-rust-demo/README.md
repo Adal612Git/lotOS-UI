@@ -21,6 +21,12 @@ cargo run
 cargo build --release
 ```
 
+## Build script
+
+```powershell
+./build.ps1
+```
+
 The release binary will be available under:
 
 - `target/release/lotos-desktop-rust-demo`
