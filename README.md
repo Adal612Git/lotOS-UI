@@ -20,12 +20,19 @@ Monorepo oficial de LotOS UI.
 ## Desktop demos
 
 - `apps/desktop-python-demo` (native tkinter demo, runnable now, PyInstaller-ready)
+- `apps/desktop-dotnet-demo` (WinForms demo, compilable now with `dotnet build`)
 
 ## Pro packs (separated asset layer)
 
 - `packages/pro/admin-starter`
 - `packages/pro/layouts`
 - `packages/pro/industry-kits`
+
+## Storybook scaffold
+
+- `packages/claude-arm/.storybook`
+- `packages/claude-arm/stories`
+- `packages/claude-arm/STORYBOOK.md`
 
 ## Instalación rápida
 

@@ -93,3 +93,39 @@ jobs:
 
       - name: Verify contracts
         run: pnpm run verify:100
+
+  desktop-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build .NET desktop demo
+        run: dotnet build apps/desktop-dotnet-demo/LotosDesktopDemo.csproj
+
+      - name: Validate Python desktop demo
+        run: |
+          python -m py_compile apps/desktop-python-demo/app.py
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          path = Path("apps/desktop-python-demo/app.py")
+          spec = importlib.util.spec_from_file_location("lotos_desktop_demo", path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          state = module.build_demo_state()
+          assert state["queue_total"] >= 1
+          print(state["title"])
+          PY
