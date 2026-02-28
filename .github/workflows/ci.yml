@@ -137,6 +137,12 @@ jobs:
       - name: Verify runtime contract guards
         run: pnpm run verify:runtime-contracts
 
+      - name: Export commercial bundles
+        run: pnpm run export:commercial
+
+      - name: Verify commercial readiness
+        run: pnpm run verify:commercial
+
       - name: Verify desktop delivery pipelines
         run: pnpm run verify:desktop
 

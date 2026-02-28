@@ -17,6 +17,7 @@ const rootScripts = [
   "verify:runtime-examples",
   "verify:runtime-contracts",
   "verify:desktop",
+  "verify:commercial",
   "verify:ops",
   "verify:release-readiness",
   "export:commercial"
@@ -69,6 +70,7 @@ const requiredFiles = [
   "ONE/verify-runtime-examples.mjs",
   "ONE/verify-runtime-contracts.mjs",
   "ONE/verify-desktop-pipelines.mjs",
+  "ONE/verify-commercial-readiness.mjs",
   "ONE/verify-ops-readiness.mjs",
   "packages/pro/scripts/verify-private-surface.mjs",
   "packages/pro/scripts/prepare-private-release.mjs",

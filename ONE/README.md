@@ -30,6 +30,7 @@ Comandos utiles:
 - `pnpm verify:runtime-examples`
 - `pnpm verify:runtime-contracts`
 - `pnpm verify:desktop`
+- `pnpm verify:commercial`
 - `pnpm verify:ops`
 - `pnpm verify:release-readiness`
 - `pnpm verify:100`
