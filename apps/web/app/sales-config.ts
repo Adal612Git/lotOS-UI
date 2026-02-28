@@ -113,6 +113,7 @@ export const paidSurface = [
   "Launch Pack delivery flow",
   "Customer-specific starters and implementation acceleration",
   "Premium Preview pack for pre-sale proof and internal QA",
+  "Excel and OpenOffice spreadsheet upgrade kits",
 ];
 
 export const premiumPreviewSurface = [
@@ -120,6 +121,7 @@ export const premiumPreviewSurface = [
   "Manifest, previews, and selected premium metadata without full private payload",
   "Internal QA proof so you can inspect exactly what a paid buyer would see first",
   "Useful as a pre-sale trust asset before delivering the full private ZIP",
+  "Includes premium spreadsheet UI previews for Excel and OpenOffice modernization pitches",
 ];
 
 export const premiumReasonsToPay = [

@@ -25,11 +25,17 @@ const requiredPaths = [
   ".commercial-dist/pro/packages/pro/admin-starter/manifest.json",
   ".commercial-dist/pro/packages/pro/layouts/manifest.json",
   ".commercial-dist/pro/packages/pro/industry-kits/manifest.json",
+  ".commercial-dist/pro/packages/pro/industry-kits/excel-lotus-grid-kit.json",
+  ".commercial-dist/pro/packages/pro/industry-kits/openoffice-calc-command-kit.json",
   ".commercial-dist/pro/packages/pro/previews/sales-preview.html",
   ".commercial-dist/pro/packages/pro/previews/license-matrix.html",
+  ".commercial-dist/pro/packages/pro/previews/excel-lotus-grid-preview.html",
+  ".commercial-dist/pro/packages/pro/previews/openoffice-calc-command-preview.html",
   "ONE/COMMERCIAL_DELIVERY_MODEL.md",
   "packages/pro/previews/sales-preview.html",
-  "packages/pro/previews/license-matrix.html"
+  "packages/pro/previews/license-matrix.html",
+  "packages/pro/previews/excel-lotus-grid-preview.html",
+  "packages/pro/previews/openoffice-calc-command-preview.html"
 ];
 
 for (const relativePath of requiredPaths) {

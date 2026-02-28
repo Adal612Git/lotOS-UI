@@ -62,6 +62,7 @@ Start with four concrete offers:
 1. `Premium Preview`
    - a controlled evaluation-only proof bundle
    - used before payment to demonstrate premium value
+   - can include spreadsheet upgrade previews for Excel and OpenOffice
 2. `Solo License`
    - private pro access for one operator
 3. `Pro License`
@@ -76,6 +77,9 @@ Before selling:
 1. run `pnpm prep:paid-preview`
 2. inspect `.commercial-dist/pro-preview`
 3. validate manifests and preview HTML
+4. use the spreadsheet previews when selling spreadsheet modernization work:
+   - `excel-lotus-grid-preview.html`
+   - `openoffice-calc-command-preview.html`
 
 After payment:
 

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LotOS UI | Excel Lotus Grid Preview</title>
+  <style>
+    :root {
+      --bg: #08111c;
+      --bg2: #132338;
+      --line: #29456b;
+      --text: #e8f1ff;
+      --muted: #9cb6d6;
+      --accent: #22d3ee;
+      --accent2: #8b5cf6;
+      --good: #34d399;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(34,211,238,.16), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(139,92,246,.18), transparent 24%),
+        linear-gradient(160deg, #07111c, #0c1a2a 42%, #11263c);
+    }
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(9, 20, 34, .84);
+      box-shadow: 0 22px 60px rgba(1, 8, 18, .45);
+      padding: 18px;
+      backdrop-filter: blur(12px);
+    }
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -.03em;
+    }
+    .lead {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 52ch;
+    }
+    .chip-row, .kpis {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .chip, .kpi {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(19, 35, 56, .78);
+      font-size: 12px;
+    }
+    .kpi {
+      border-radius: 16px;
+      padding: 12px 14px;
+      min-width: 120px;
+    }
+    .kpi strong {
+      display: block;
+      font-size: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .tool {
+      border: 1px solid rgba(41, 69, 107, .9);
+      border-radius: 14px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(20,40,62,.9), rgba(14,25,39,.9));
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(80, 112, 152, .22);
+      text-align: left;
+    }
+    th {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .ok { background: rgba(52,211,153,.14); color: #b8ffe6; }
+    .warn { background: rgba(245,158,11,.14); color: #ffe5a8; }
+    .rail {
+      display: grid;
+      gap: 12px;
+    }
+    .task {
+      border: 1px solid rgba(41,69,107,.8);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(18, 31, 48, .8);
+    }
+    .task h3 { margin: 0 0 6px; font-size: 15px; }
+    .task p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 900px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="panel">
+        <p class="kicker">Premium Spreadsheet UI</p>
+        <h1>Excel can look like a command center, not a punishment.</h1>
+        <p class="lead">
+          The Excel Lotus Grid Kit turns legacy workbook operations into a premium cockpit with KPI ribbons,
+          filter rails, action tiles, and a cleaner control flow that still maps naturally to VBA and named ranges.
+        </p>
+        <div class="chip-row">
+          <div class="chip">Easy to implement</div>
+          <div class="chip">VBA-friendly</div>
+          <div class="chip">Shape + range based</div>
+          <div class="chip">Sellable internal upgrade</div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="kicker">KPI Ribbon</p>
+        <div class="kpis">
+          <div class="kpi"><strong>$1.8M</strong>Net Revenue</div>
+          <div class="kpi"><strong>14</strong>Escalations</div>
+          <div class="kpi"><strong>93%</strong>SLA Health</div>
+          <div class="kpi"><strong>08</strong>Pending Reviews</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="toolbar">
+          <div class="tool">Refresh Grid</div>
+          <div class="tool">Apply Region</div>
+          <div class="tool">Open Detail</div>
+          <div class="tool">Escalate Row</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Owner</th>
+              <th>Region</th>
+              <th>Queue</th>
+              <th>Risk</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monica</td>
+              <td>North</td>
+              <td>Receivables</td>
+              <td>High</td>
+              <td><span class="pill warn">Needs Review</span></td>
+            </tr>
+            <tr>
+              <td>Alberto</td>
+              <td>West</td>
+              <td>Renewals</td>
+              <td>Low</td>
+              <td><span class="pill ok">Healthy</span></td>
+            </tr>
+            <tr>
+              <td>Priya</td>
+              <td>LATAM</td>
+              <td>Collections</td>
+              <td>Medium</td>
+              <td><span class="pill warn">Watch</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rail">
+        <div class="task">
+          <h3>Detail Side Panel</h3>
+          <p>Use a frozen side zone with named ranges for row summary, owner actions, and audit comments.</p>
+        </div>
+        <div class="task">
+          <h3>Implementation Map</h3>
+          <p>Attach actions to `RefreshDashboard`, `OpenDetailPanel`, and `ApplyStatusTheme` for fast adoption.</p>
+        </div>
+        <div class="task">
+          <h3>Sales Value</h3>
+          <p>This is the kind of upgrade teams will pay for because it improves perception and usability without replacing Excel.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Premium preview only. This is a visual proof surface, not the full paid delivery.</p>
+  </div>
+</body>
+</html>

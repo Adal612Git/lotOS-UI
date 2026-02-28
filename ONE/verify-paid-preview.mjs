@@ -11,9 +11,13 @@ const requiredPaths = [
   ".commercial-dist/pro-preview/preview-manifest.json",
   ".commercial-dist/pro-preview/previews/sales-preview.html",
   ".commercial-dist/pro-preview/previews/license-matrix.html",
+  ".commercial-dist/pro-preview/previews/excel-lotus-grid-preview.html",
+  ".commercial-dist/pro-preview/previews/openoffice-calc-command-preview.html",
   ".commercial-dist/pro-preview/admin-starter/manifest.json",
   ".commercial-dist/pro-preview/layouts/manifest.json",
-  ".commercial-dist/pro-preview/industry-kits/manifest.json"
+  ".commercial-dist/pro-preview/industry-kits/manifest.json",
+  ".commercial-dist/pro-preview/industry-kits/excel-lotus-grid-kit.json",
+  ".commercial-dist/pro-preview/industry-kits/openoffice-calc-command-kit.json"
 ];
 
 for (const relativePath of requiredPaths) {

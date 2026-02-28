@@ -24,7 +24,7 @@ const previewPaths = [
   "distribution/pro.manifest.json",
   "admin-starter/manifest.json",
   "layouts/manifest.json",
-  "industry-kits/manifest.json"
+  "industry-kits"
 ];
 
 rmSync(outputRoot, { recursive: true, force: true });

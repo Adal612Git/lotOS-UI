@@ -1,0 +1,42 @@
+{
+  "id": "excel-lotus-grid-kit",
+  "name": "Excel Lotus Grid Kit",
+  "platform": "Microsoft Excel",
+  "tier": "pro",
+  "purpose": "Transform Excel into a polished operator cockpit without requiring a full add-in rewrite.",
+  "implementationEase": "high",
+  "deliveryMode": [
+    "worksheet theme guide",
+    "shape-based dashboard shell",
+    "conditional formatting rules",
+    "VBA-friendly interaction map"
+  ],
+  "uiPatterns": [
+    "hero KPI ribbon",
+    "filter strip",
+    "status pills",
+    "action rail",
+    "operations table",
+    "detail side panel"
+  ],
+  "buildHints": {
+    "recommendedSheets": [
+      "Dashboard",
+      "RawData",
+      "Filters",
+      "Audit"
+    ],
+    "macroHooks": [
+      "RefreshDashboard",
+      "OpenDetailPanel",
+      "ApplyStatusTheme"
+    ],
+    "namedRanges": [
+      "LOTOS_KPI_REVENUE",
+      "LOTOS_KPI_RISK",
+      "LOTOS_FILTER_REGION",
+      "LOTOS_GRID_SOURCE"
+    ]
+  },
+  "value": "Makes legacy Excel workflows feel premium and easier to sell internally."
+}
