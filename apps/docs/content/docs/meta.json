@@ -3,6 +3,8 @@
     "pages": [
         "index",
         "installation",
-        "multi-runtime"
+        "multi-runtime",
+        "architecture",
+        "ai-integration"
     ]
 }

@@ -1,0 +1,41 @@
+# Architecture
+
+LotOS UI is structured as a contract-first monorepo.
+
+## Core Layers
+
+1. `@lotosui/core`
+   - design tokens
+   - component schemas
+   - runtime catalog
+   - MCP server + official JS client
+2. `@lotosui/claude-arm`
+   - React implementation of shared contracts
+3. Runtime adapters
+   - Laravel
+   - Django
+   - Flask
+   - Spring
+   - Go
+   - .NET
+4. Desktop demos and starters
+   - Python desktop demo (native tkinter)
+   - desktop scaffolding for Python, Rust, Java, C, C++
+
+## Contract Flow
+
+```txt
+Design tokens -> Zod schema -> Runtime adapter -> MCP contract -> Generated usage
+```
+
+## Delivery Model
+
+- `core` defines what is valid.
+- each runtime adapter renders the same conceptual contract in its own environment.
+- MCP exposes the contract so human teams and agents can query, validate, and render safely.
+
+## Current Production Truth
+
+- React is the most mature delivery surface.
+- server-side adapters are now real packages, not only generators.
+- desktop is partially productized and now includes a runnable Python demo.

@@ -211,10 +211,10 @@ const runtimeCatalog: Record<RuntimeId, RuntimeProfile> = {
     },
     'dotnet-razor': {
         id: 'dotnet-razor',
-        label: '.NET Razor/Blazor',
+        label: '.NET Razor',
         language: '.NET',
         category: 'web-template',
-        adapterPackage: 'lotos-blazor',
+        adapterPackage: 'lotos-dotnet',
         supportsWebComponents: true,
         supportsSSR: true,
         notes: [

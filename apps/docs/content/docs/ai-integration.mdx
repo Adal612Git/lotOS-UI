@@ -1,0 +1,55 @@
+# AI Integration
+
+LotOS UI exposes contracts through the MCP layer so agents can work against real component rules.
+
+## What the MCP Layer Provides
+
+- `GET /health`
+- `GET /components`
+- `GET /components/:name`
+- `GET /components/:name/examples`
+- `POST /components/render`
+- runtime, pattern, stack, and desktop template endpoints
+
+## Official JS Client
+
+`@lotosui/core` now exports an official client:
+
+```ts
+import { LotosMCPClient } from '@lotosui/core';
+
+const client = new LotosMCPClient({
+  baseUrl: 'http://127.0.0.1:3100',
+});
+
+const schema = await client.component('button');
+const render = await client.renderComponent({
+  framework: 'react',
+  component: 'button',
+  props: { variant: 'primary', size: 'md' },
+  children: 'Launch sequence',
+});
+```
+
+## Local End-to-End Demo
+
+Run:
+
+```powershell
+pnpm --filter @lotosui/core build
+node packages/core/examples/mcp-render-demo.mjs
+```
+
+That demo:
+
+1. starts the MCP server
+2. queries health
+3. fetches the `button` contract
+4. requests a real render snippet
+5. shuts down the server
+
+## Guidance
+
+- use MCP contracts before generating UI code
+- use `POST /components/render` when you need a safe starting snippet
+- treat runtime adapters as target surfaces, not separate design systems
