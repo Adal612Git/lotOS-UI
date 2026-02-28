@@ -35,8 +35,12 @@ dist
 **/*.tsbuildinfo
 **/bin/
 **/obj/
+**/publish/
+**/target/
 **/showcase-dist/
 **/.visual-regression/
+**/*.class
+**/*.jar
 packages/pro/.private-dist/
 *.timestamp-*.mjs
 packages/cli/stack/

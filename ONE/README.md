@@ -23,6 +23,7 @@ No crear nuevos documentos de estrategia fuera de `ONE/`.
 
 Comandos utiles:
 
+- `pnpm diagnose:local-env`
 - `pnpm verify:structure`
 - `pnpm verify:degraded`
 - `pnpm verify:runtimes`
