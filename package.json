@@ -14,6 +14,7 @@
     "verify:runtime-examples": "node ONE/verify-runtime-examples.mjs",
     "verify:runtime-contracts": "node ONE/verify-runtime-contracts.mjs",
     "verify:desktop": "node ONE/verify-desktop-pipelines.mjs",
+    "verify:ops": "node ONE/verify-ops-readiness.mjs",
     "verify:release-readiness": "node ONE/verify-release-readiness.mjs",
     "verify:100": "node ONE/verify-100.mjs",
     "export:commercial": "node ONE/export-commercial-bundles.mjs"
