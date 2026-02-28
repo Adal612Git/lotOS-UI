@@ -1,0 +1,21 @@
+@model IDictionary<string, object?>
+@{
+    var title = Model.TryGetValue("title", out var titleValue) ? titleValue?.ToString() ?? "Modal" : "Modal";
+    var description = Model.TryGetValue("description", out var descriptionValue) ? descriptionValue?.ToString() : null;
+    var body = Model.TryGetValue("body", out var bodyValue) ? bodyValue?.ToString() ?? string.Empty : string.Empty;
+    var footer = Model.TryGetValue("footer", out var footerValue) ? footerValue?.ToString() : null;
+}
+<section style="padding:18px;border-radius:22px;border:1px solid #334155;background:rgba(2,6,23,0.92);box-shadow:0 16px 40px rgba(2,6,23,0.45);">
+    <header style="margin-bottom:12px;">
+        <h3 style="margin:0;">@title</h3>
+        @if (!string.IsNullOrWhiteSpace(description))
+        {
+            <p style="margin:6px 0 0;color:#94a3b8;">@description</p>
+        }
+    </header>
+    @Html.Raw(body)
+    @if (!string.IsNullOrWhiteSpace(footer))
+    {
+        <footer style="margin-top:14px;">@Html.Raw(footer)</footer>
+    }
+</section>

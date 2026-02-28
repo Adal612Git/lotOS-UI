@@ -1,0 +1,21 @@
+@model IDictionary<string, object?>
+@{
+    var label = Model.TryGetValue("label", out var labelValue) ? labelValue?.ToString() ?? "Label" : "Label";
+    var placeholder = Model.TryGetValue("placeholder", out var placeholderValue) ? placeholderValue?.ToString() ?? string.Empty : string.Empty;
+    var helperText = Model.TryGetValue("helperText", out var helperTextValue) ? helperTextValue?.ToString() : null;
+    var errorText = Model.TryGetValue("errorText", out var errorTextValue) ? errorTextValue?.ToString() : null;
+}
+<label style="display:grid;gap:8px;">
+    <span style="font-size:13px;font-weight:700;">@label</span>
+    <input type="text"
+           placeholder="@placeholder"
+           style="padding:10px 12px;border-radius:12px;border:1px solid #334155;background:#020617;color:#e2e8f0;" />
+    @if (!string.IsNullOrWhiteSpace(helperText))
+    {
+        <small style="color:#94a3b8;">@helperText</small>
+    }
+    @if (!string.IsNullOrWhiteSpace(errorText))
+    {
+        <small style="color:#fca5a5;">@errorText</small>
+    }
+</label>

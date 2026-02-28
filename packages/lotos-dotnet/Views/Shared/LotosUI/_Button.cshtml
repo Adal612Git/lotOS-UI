@@ -1,0 +1,16 @@
+@model IDictionary<string, object?>
+@{
+    var label = Model.TryGetValue("label", out var labelValue) ? labelValue?.ToString() ?? "Action" : "Action";
+    var variant = Model.TryGetValue("variant", out var variantValue) ? variantValue?.ToString() ?? "primary" : "primary";
+    var size = Model.TryGetValue("size", out var sizeValue) ? sizeValue?.ToString() ?? "md" : "md";
+    var disabled = Model.TryGetValue("disabled", out var disabledValue) && disabledValue is bool isDisabled && isDisabled;
+    var padding = size == "lg" ? "12px 18px" : "10px 14px";
+    var border = variant == "outline" ? "#38bdf8" : "#0ea5e9";
+    var background = variant == "outline" ? "transparent" : "#0ea5e9";
+    var color = variant == "outline" ? "#38bdf8" : "#08111f";
+}
+<button type="button"
+        disabled="@disabled"
+        style="padding:@padding;border-radius:14px;border:1px solid @border;background:@background;color:@color;font-weight:700;">
+    @label
+</button>

@@ -1,0 +1,48 @@
+@model IDictionary<string, object?>
+@{
+    var caption = Model.TryGetValue("caption", out var captionValue) ? captionValue?.ToString() : null;
+    var columns = Model.TryGetValue("columns", out var columnsValue) && columnsValue is IEnumerable<IDictionary<string, object?>> typedColumns
+        ? typedColumns
+        : Array.Empty<IDictionary<string, object?>>();
+    var rows = Model.TryGetValue("rows", out var rowsValue) && rowsValue is IEnumerable<IDictionary<string, object?>> typedRows
+        ? typedRows
+        : Array.Empty<IDictionary<string, object?>>();
+    var emptyState = Model.TryGetValue("emptyState", out var emptyStateValue) ? emptyStateValue?.ToString() ?? "No rows" : "No rows";
+}
+<table style="width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;border:1px solid #22304b;">
+    @if (!string.IsNullOrWhiteSpace(caption))
+    {
+        <caption style="caption-side:top;text-align:left;padding:0 0 10px;font-weight:700;">@caption</caption>
+    }
+    <thead style="background:#111827;">
+        <tr>
+            @foreach (var column in columns)
+            {
+                var label = column.TryGetValue("label", out var labelValue) ? labelValue?.ToString() ?? string.Empty : string.Empty;
+                <th style="padding:10px;border-bottom:1px solid #22304b;text-align:left;">@label</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (!rows.Any())
+        {
+            <tr>
+                <td colspan="@columns.Count()" style="padding:14px;color:#94a3b8;">@emptyState</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var row in rows)
+            {
+                <tr style="background:#0f172a;">
+                    @foreach (var column in columns)
+                    {
+                        var key = column.TryGetValue("key", out var keyValue) ? keyValue?.ToString() ?? string.Empty : string.Empty;
+                        var cell = row.TryGetValue(key, out var cellValue) ? cellValue?.ToString() ?? string.Empty : string.Empty;
+                        <td style="padding:10px;border-top:1px solid #22304b;">@cell</td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

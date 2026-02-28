@@ -33,6 +33,8 @@ dist
 **/coverage/
 **/.turbo/
 **/*.tsbuildinfo
+**/bin/
+**/obj/
 *.timestamp-*.mjs
 packages/cli/stack/
 

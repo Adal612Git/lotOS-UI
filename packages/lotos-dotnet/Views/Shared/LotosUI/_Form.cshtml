@@ -1,0 +1,27 @@
+@model IDictionary<string, object?>
+@{
+    var title = Model.TryGetValue("title", out var titleValue) ? titleValue?.ToString() ?? "Form" : "Form";
+    var description = Model.TryGetValue("description", out var descriptionValue) ? descriptionValue?.ToString() : null;
+    var action = Model.TryGetValue("action", out var actionValue) ? actionValue?.ToString() ?? "#" : "#";
+    var method = Model.TryGetValue("method", out var methodValue) ? methodValue?.ToString() ?? "post" : "post";
+    var submitLabel = Model.TryGetValue("submitLabel", out var submitLabelValue) ? submitLabelValue?.ToString() ?? "Submit" : "Submit";
+    var body = Model.TryGetValue("body", out var bodyValue) ? bodyValue?.ToString() ?? string.Empty : string.Empty;
+}
+<form action="@action"
+      method="@method"
+      style="display:grid;gap:14px;padding:18px;border-radius:20px;background:#111c33;border:1px solid #22304b;">
+    <header>
+        <h3 style="margin:0;">@title</h3>
+        @if (!string.IsNullOrWhiteSpace(description))
+        {
+            <p style="margin:6px 0 0;color:#94a3b8;">@description</p>
+        }
+    </header>
+    @Html.Raw(body)
+    <div>
+        <button type="submit"
+                style="padding:10px 14px;border-radius:14px;border:none;background:#22c55e;color:#052e16;font-weight:700;">
+            @submitLabel
+        </button>
+    </div>
+</form>

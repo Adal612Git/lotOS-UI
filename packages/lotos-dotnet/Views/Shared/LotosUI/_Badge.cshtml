@@ -1,0 +1,10 @@
+@model IDictionary<string, object?>
+@{
+    var label = Model.TryGetValue("label", out var labelValue) ? labelValue?.ToString() ?? "Status" : "Status";
+    var variant = Model.TryGetValue("variant", out var variantValue) ? variantValue?.ToString() ?? "info" : "info";
+    var background = variant == "success" ? "#052e16" : "#172554";
+    var color = variant == "success" ? "#86efac" : "#93c5fd";
+}
+<span style="display:inline-flex;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:@background;color:@color;">
+    @label
+</span>
