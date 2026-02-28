@@ -28,6 +28,9 @@ import { Button, Card, Table } from "@lotosui/claude-arm";
 ## Local Review Surface
 
 ```bash
+pnpm --filter @lotosui/claude-arm run verify:storybook
+pnpm --filter @lotosui/claude-arm run storybook
+pnpm --filter @lotosui/claude-arm run build-storybook
 pnpm --filter @lotosui/claude-arm run showcase
 pnpm --filter @lotosui/claude-arm run showcase:build
 pnpm --filter @lotosui/claude-arm run test:coverage

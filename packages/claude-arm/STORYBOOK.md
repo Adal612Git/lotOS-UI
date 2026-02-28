@@ -1,6 +1,6 @@
 # Storybook Base
 
-This package now includes a Storybook scaffold plus an executable showcase layer.
+This package now includes a real Storybook package surface plus an executable showcase layer.
 
 Current assets:
 
@@ -16,24 +16,21 @@ Current assets:
 
 Without installing any extra Storybook packages, you can already run:
 
-1. `pnpm --filter @lotosui/claude-arm run showcase`
-2. `pnpm --filter @lotosui/claude-arm run showcase:build`
-3. `pnpm --filter @lotosui/claude-arm run test:coverage`
-4. `pnpm --filter @lotosui/claude-arm run coverage:components`
-5. `pnpm --filter @lotosui/claude-arm run visual:baseline`
-6. `pnpm --filter @lotosui/claude-arm run visual:check`
+1. `pnpm --filter @lotosui/claude-arm run verify:storybook`
+2. `pnpm --filter @lotosui/claude-arm run storybook`
+3. `pnpm --filter @lotosui/claude-arm run build-storybook`
+4. `pnpm --filter @lotosui/claude-arm run showcase`
+5. `pnpm --filter @lotosui/claude-arm run showcase:build`
+6. `pnpm --filter @lotosui/claude-arm run test:coverage`
+7. `pnpm --filter @lotosui/claude-arm run coverage:components`
+8. `pnpm --filter @lotosui/claude-arm run visual:baseline`
+9. `pnpm --filter @lotosui/claude-arm run visual:check`
 
 ## Important
 
-Full Storybook dependencies are still not added to the lockfile in this layer.
-That is intentional to avoid breaking workspace installs in environments where
-package resolution is restricted.
-
-To activate the full Storybook runtime later:
-
-1. install Storybook packages for React + Vite
-2. add scripts such as `storybook` and `build-storybook`
-3. run Storybook from `packages/claude-arm`
+Storybook dependencies are now declared in the workspace and the lockfile.
+If your local `node_modules` predates that lockfile, run `pnpm install` before using
+the Storybook commands.
 
 The stories are already written and aligned with current components.
 The executable showcase and HTML baselines give us a real review surface and a

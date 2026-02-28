@@ -61,6 +61,8 @@
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "dev": "tsc -p tsconfig.build.json --watch",
+        "storybook": "storybook dev -p 6006 --ci",
+        "build-storybook": "storybook build",
         "showcase": "vite --config vite.showcase.config.ts",
         "showcase:build": "vite build --config vite.showcase.config.ts",
         "test": "vitest run",
@@ -69,6 +71,7 @@
         "test:mcp": "vitest run tests/mcp",
         "check-types": "tsc --noEmit -p tsconfig.build.json",
         "typecheck": "tsc --noEmit -p tsconfig.build.json",
+        "verify:storybook": "node scripts/verify-storybook-surface.mjs",
         "coverage:components": "node scripts/component-test-coverage.mjs",
         "visual:baseline": "pnpm build && node scripts/visual-regression.mjs --write",
         "visual:check": "pnpm build && node scripts/visual-regression.mjs",
@@ -80,6 +83,10 @@
     },
     "devDependencies": {
         "@repo/typescript-config": "workspace:*",
+        "@storybook/addon-a11y": "8.6.14",
+        "@storybook/addon-essentials": "8.6.14",
+        "@storybook/addon-interactions": "8.6.14",
+        "@storybook/react-vite": "8.6.14",
         "@testing-library/jest-dom": "^6.6.0",
         "@testing-library/react": "^16.0.0",
         "@testing-library/user-event": "^14.5.0",
@@ -91,6 +98,7 @@
         "jsdom": "^25.0.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "storybook": "8.6.14",
         "typescript": "^5.7.2",
         "vite": "^6.0.0",
         "vitest": "^2.1.9"

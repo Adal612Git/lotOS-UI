@@ -58,6 +58,12 @@ jobs:
       - name: Typecheck claude-arm
         run: pnpm --filter @lotosui/claude-arm run check-types
 
+      - name: Verify Storybook surface
+        run: pnpm --filter @lotosui/claude-arm run verify:storybook
+
+      - name: Build Storybook
+        run: pnpm --filter @lotosui/claude-arm run build-storybook
+
       - name: Check component test coverage surface
         run: pnpm --filter @lotosui/claude-arm run coverage:components
 
