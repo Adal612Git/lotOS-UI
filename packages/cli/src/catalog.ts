@@ -1,5 +1,7 @@
 export const SUPPORTED_COMPONENTS = [
     'accordion',
+    'alert',
+    'avatar',
     'badge',
     'button',
     'card',
@@ -9,6 +11,7 @@ export const SUPPORTED_COMPONENTS = [
     'form',
     'input',
     'modal',
+    'progress',
     'radio-group',
     'select',
     'switch',

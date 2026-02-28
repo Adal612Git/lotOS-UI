@@ -1,4 +1,6 @@
+export { Alert } from './alert/alert.js';
 export { Accordion } from './accordion/accordion.js';
+export { Avatar } from './avatar/avatar.js';
 export { Badge } from './badge/badge.js';
 export { Button } from './button/button.js';
 export { Card } from './card/card.js';
@@ -8,6 +10,7 @@ export { Dropdown } from './dropdown/dropdown.js';
 export { Form } from './form/form.js';
 export { Input } from './input/input.js';
 export { Modal } from './modal/modal.js';
+export { Progress } from './progress/progress.js';
 export { RadioGroup } from './radio-group/radio-group.js';
 export { Select } from './select/select.js';
 export { Switch } from './switch/switch.js';
@@ -17,6 +20,7 @@ export { Textarea } from './textarea/textarea.js';
 export { Tooltip } from './tooltip/tooltip.js';
 
 export type { AccordionProps, AccordionItem } from './accordion/accordion.js';
+export type { AlertProps, AvatarProps, ProgressProps } from '@lotosui/core';
 export type { CheckboxProps } from './checkbox/checkbox.js';
 export type { ComboboxProps, ComboboxOption } from './combobox/combobox.js';
 export type { DropdownProps, DropdownItem } from './dropdown/dropdown.js';

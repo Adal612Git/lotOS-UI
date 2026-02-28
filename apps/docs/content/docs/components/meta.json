@@ -17,6 +17,9 @@
         "combobox",
         "tabs",
         "table",
-        "accordion"
+        "accordion",
+        "alert",
+        "progress",
+        "avatar"
     ]
 }

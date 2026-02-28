@@ -10,6 +10,9 @@ export { Badge } from './components/badge/badge.js';
 export { Card } from './components/card/card.js';
 export { Input } from './components/input/input.js';
 export { Modal } from './components/modal/modal.js';
+export { Alert } from './components/alert/alert.js';
+export { Avatar } from './components/avatar/avatar.js';
+export { Progress } from './components/progress/progress.js';
 
 // Sprint 3 Components
 export { Select } from './components/select/select.js';
@@ -25,6 +28,9 @@ export type {
     CardProps,
     InputProps,
     ModalProps,
+    AlertProps,
+    AvatarProps,
+    ProgressProps,
 } from '@lotosui/core';
 
 export type { SelectProps, SelectOption } from './components/select/select.js';

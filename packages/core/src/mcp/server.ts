@@ -172,6 +172,24 @@ const componentExamplesOverrides: Partial<Record<ComponentName, ComponentExample
 />`,
         },
     ],
+    alert: [
+        {
+            description: 'Inline warning message for degraded system state',
+            jsx: `<Alert variant="warning" title="Delayed sync" description="The reporting queue is 4 minutes behind." />`,
+        },
+    ],
+    progress: [
+        {
+            description: 'Deterministic progress indicator for long-running work',
+            jsx: `<Progress value={72} max={100} label="Deployment progress" />`,
+        },
+    ],
+    avatar: [
+        {
+            description: 'User identity marker with stable initials fallback',
+            jsx: `<Avatar name="Mia Solis" size="lg" />`,
+        },
+    ],
 };
 
 function buildDefaultExample(component: ComponentName): ComponentExample[] {
@@ -930,6 +948,9 @@ function getComponentDescription(name: ComponentName): string {
         combobox: 'Searchable select input with text filtering and option picking.',
         tabs: 'Segmented content navigation with focus and arrow key support.',
         accordion: 'Expandable disclosure content with controlled and uncontrolled modes.',
+        alert: 'Inline system message for warnings, errors, and operational state changes.',
+        progress: 'Progress meter for deterministic task completion and batch operations.',
+        avatar: 'Identity marker with image and initials fallback support.',
     };
     return descriptions[name] ?? `${toPascalCase(name)} component contract.`;
 }
@@ -1008,6 +1029,18 @@ function getComponentRestrictions(name: ComponentName): string[] {
         accordion: [
             'Use concise titles and chunked content inside each panel.',
             'Avoid deep nesting of accordions in the same viewport region.',
+        ],
+        alert: [
+            'Use alerts for inline state communication, not blocking confirmations.',
+            'Prefer concise titles and actionable descriptions.',
+        ],
+        progress: [
+            'Use determinate progress whenever a real value is available.',
+            'Keep labels task-specific so the current operation is obvious.',
+        ],
+        avatar: [
+            'Provide alt text when rendering remote images.',
+            'Use stable fallback initials for operator-heavy interfaces.',
         ],
     };
 

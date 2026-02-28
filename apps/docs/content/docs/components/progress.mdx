@@ -1,0 +1,21 @@
+# Progress
+
+`Progress` communicates completion state for uploads, deploys, imports, and batch operations.
+
+## Example
+
+```tsx
+import { Progress } from '@lotosui/claude-arm';
+
+<Progress
+  value={72}
+  max={100}
+  variant="info"
+  label="Deployment progress"
+/>
+```
+
+## Notes
+
+- Keep progress labels task-specific.
+- Prefer determinate progress whenever the backend can estimate completion.

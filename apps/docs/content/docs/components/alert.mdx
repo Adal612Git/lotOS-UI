@@ -1,0 +1,21 @@
+# Alert
+
+`Alert` surfaces system state, warnings, and operational feedback without forcing a modal interruption.
+
+## Example
+
+```tsx
+import { Alert } from '@lotosui/claude-arm';
+
+<Alert
+  variant="warning"
+  title="Delayed sync"
+  description="The reporting queue is 4 minutes behind the source system."
+/>
+```
+
+## Notes
+
+- Use `error` for blocking or risky conditions.
+- Prefer `warning` for degraded but recoverable states.
+- Use `dismissible` only when the user can safely defer the message.

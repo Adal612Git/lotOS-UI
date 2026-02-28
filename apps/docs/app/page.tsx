@@ -145,7 +145,7 @@ export default function DocsHomePage() {
               <section className="preview-main">
                 <div className="stats-row">
                   <article>
-                    <strong>80+</strong>
+                    <strong>20+</strong>
                     <span>Components</span>
                   </article>
                   <article>
@@ -183,7 +183,7 @@ export default function DocsHomePage() {
       </section>
 
       <section className="band stats-band">
-        <article><strong>80+</strong><span>Components / Componentes</span></article>
+        <article><strong>20+</strong><span>Components / Componentes</span></article>
         <article><strong>10</strong><span>Stack templates</span></article>
         <article><strong>5</strong><span>Desktop starters</span></article>
         <article><strong>Dogfood</strong><span>Built with own contracts</span></article>

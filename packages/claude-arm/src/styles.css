@@ -952,3 +952,20 @@ body {
   text-align: center;
   color: var(--lotos-fg-muted);
 }
+
+.lotos-alert__icon {
+  color: currentColor;
+}
+
+.lotos-alert__dismiss:hover {
+  border-color: var(--lotos-border-strong);
+  color: var(--lotos-fg-primary);
+}
+
+.lotos-progress__track {
+  box-shadow: inset 0 0 0 1px var(--lotos-border);
+}
+
+.lotos-avatar__image {
+  display: block;
+}

@@ -57,7 +57,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
       </section>
 
       <section className="stats">
-        <article><strong>80+</strong><span>Components</span></article>
+        <article><strong>20+</strong><span>Components</span></article>
         <article><strong>WCAG AAA</strong><span>Accessibility Baseline</span></article>
         <article><strong>MCP</strong><span>AI-native contract layer</span></article>
         <article><strong>10</strong><span>Generated stack templates</span></article>

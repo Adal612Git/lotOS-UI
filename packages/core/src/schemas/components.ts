@@ -436,6 +436,57 @@ export const tablePropsSchema = basePropsSchema.extend({
     emptyMessage: z.string().optional(),
 });
 
+// Alert
+
+export const alertPropsSchema = basePropsSchema.extend({
+    /** Visual severity */
+    variant: z.enum(['info', 'success', 'warning', 'error']).default('info'),
+    /** Optional headline */
+    title: z.string().optional(),
+    /** Supporting description */
+    description: z.string().optional(),
+    /** Inline icon */
+    icon: z.any().optional(),
+    /** Whether the alert can be dismissed */
+    dismissible: z.boolean().optional(),
+    /** Dismiss handler */
+    onDismiss: z.function().args().returns(z.void()).optional(),
+    /** Extra content */
+    children: z.any().optional(),
+});
+
+// Progress
+
+export const progressPropsSchema = basePropsSchema.extend({
+    /** Current value */
+    value: z.number().min(0),
+    /** Maximum value */
+    max: z.number().positive().default(100),
+    /** Visual tone */
+    variant: z.enum(['info', 'success', 'warning', 'error']).default('info'),
+    /** Whether to show label text */
+    showLabel: z.boolean().default(true),
+    /** Accessible label */
+    label: z.string().optional(),
+});
+
+// Avatar
+
+export const avatarPropsSchema = basePropsSchema.extend({
+    /** Image source */
+    src: z.string().url().optional(),
+    /** Alternate text */
+    alt: z.string().optional(),
+    /** Human-readable name used for fallback initials */
+    name: z.string().optional(),
+    /** Explicit fallback text */
+    fallback: z.string().optional(),
+    /** Size variant */
+    size: z.enum(['sm', 'md', 'lg', 'xl']).default('md'),
+    /** Shape variant */
+    shape: z.enum(['circle', 'square']).default('circle'),
+});
+
 // ─── Exports ──────────────────────────────────────────────────────────────
 
 export type ButtonProps = z.infer<typeof buttonPropsSchema>;
@@ -456,6 +507,9 @@ export type AccordionProps = z.infer<typeof accordionPropsSchema>;
 export type FormProps = z.infer<typeof formPropsSchema>;
 export type TableColumn = z.infer<typeof tableColumnSchema>;
 export type TableProps = z.infer<typeof tablePropsSchema>;
+export type AlertProps = z.infer<typeof alertPropsSchema>;
+export type ProgressProps = z.infer<typeof progressPropsSchema>;
+export type AvatarProps = z.infer<typeof avatarPropsSchema>;
 export type BaseProps = z.infer<typeof basePropsSchema>;
 
 /** Registry of all component schemas — used by the MCP Server */
@@ -477,6 +531,9 @@ export const componentSchemas = {
     accordion: accordionPropsSchema,
     form: formPropsSchema,
     table: tablePropsSchema,
+    alert: alertPropsSchema,
+    progress: progressPropsSchema,
+    avatar: avatarPropsSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;
