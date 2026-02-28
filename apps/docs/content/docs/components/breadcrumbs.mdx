@@ -1,0 +1,21 @@
+# Breadcrumbs
+
+`Breadcrumbs` shows the route path for nested surfaces and deep operator views.
+
+## Example
+
+```tsx
+import { Breadcrumbs } from '@lotosui/claude-arm';
+
+<Breadcrumbs
+  items={[
+    { label: 'Ops', href: '/ops' },
+    { label: 'Incidents', current: true },
+  ]}
+/>
+```
+
+## Notes
+
+- Keep labels short.
+- Mark only the final item as current.

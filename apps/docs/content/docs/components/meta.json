@@ -23,6 +23,10 @@
         "avatar",
         "divider",
         "empty-state",
-        "stat"
+        "stat",
+        "spinner",
+        "skeleton",
+        "breadcrumbs",
+        "toast"
     ]
 }

@@ -208,6 +208,30 @@ const componentExamplesOverrides: Partial<Record<ComponentName, ComponentExample
             jsx: `<Stat label="Queue health" value="98.4%" change="+2.1%" tone="success" />`,
         },
     ],
+    spinner: [
+        {
+            description: 'Compact loading indicator',
+            jsx: `<Spinner size="md" label="Loading incidents" />`,
+        },
+    ],
+    skeleton: [
+        {
+            description: 'Loading placeholder for deferred content',
+            jsx: `<Skeleton width="100%" height="1rem" shape="line" />`,
+        },
+    ],
+    breadcrumbs: [
+        {
+            description: 'Navigation trail for nested surfaces',
+            jsx: `<Breadcrumbs items={[{ label: 'Ops' }, { label: 'Incidents', current: true }]} />`,
+        },
+    ],
+    toast: [
+        {
+            description: 'Ephemeral notification surface',
+            jsx: `<Toast variant="success" title="Deployment created" description="The rollout was queued successfully." />`,
+        },
+    ],
 };
 
 function buildDefaultExample(component: ComponentName): ComponentExample[] {
@@ -972,6 +996,10 @@ function getComponentDescription(name: ComponentName): string {
         divider: 'Visual separator for grouped content with optional inline label.',
         'empty-state': 'Fallback shell for no-data views, first-run flows, and filtered empty results.',
         stat: 'Compact metric summary for dashboards, headers, and executive KPI rails.',
+        spinner: 'Loading indicator for short waits, async actions, and deferred sections.',
+        skeleton: 'Placeholder surface for content that is still loading.',
+        breadcrumbs: 'Navigation trail for nested views and deep dashboard routes.',
+        toast: 'Ephemeral notification for success, warning, error, or info feedback.',
     };
     return descriptions[name] ?? `${toPascalCase(name)} component contract.`;
 }
@@ -1074,6 +1102,22 @@ function getComponentRestrictions(name: ComponentName): string[] {
         stat: [
             'Reserve stats for concise scalar metrics, not long-form narrative.',
             'Use tone only when the semantic meaning is clear to the user.',
+        ],
+        spinner: [
+            'Always provide a meaningful accessible label when used standalone.',
+            'Use compact sizes inside buttons and larger sizes for panels.',
+        ],
+        skeleton: [
+            'Match the approximate size of the content being loaded.',
+            'Avoid excessive placeholder density in small surfaces.',
+        ],
+        breadcrumbs: [
+            'Keep breadcrumb labels short and ordered from broad to specific.',
+            'Mark the current item clearly and avoid making it interactive.',
+        ],
+        toast: [
+            'Use concise copy; toasts should confirm state, not explain workflows.',
+            'Do not rely on toasts alone for critical blocking errors.',
         ],
     };
 

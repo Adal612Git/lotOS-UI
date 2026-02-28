@@ -1017,3 +1017,28 @@ body {
 .lotos-stat {
   box-shadow: var(--lotos-shadow-sm);
 }
+
+.lotos-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.lotos-skeleton--animated::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: lotos-skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+@keyframes lotos-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.lotos-toast__dismiss:hover {
+  border-color: var(--lotos-border-strong);
+  color: var(--lotos-fg-primary);
+}

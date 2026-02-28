@@ -15,12 +15,16 @@ export const SUPPORTED_COMPONENTS = [
     'modal',
     'progress',
     'radio-group',
+    'breadcrumbs',
     'select',
+    'skeleton',
+    'spinner',
     'stat',
     'switch',
     'table',
     'tabs',
     'textarea',
+    'toast',
     'tooltip',
 ] as const;
 

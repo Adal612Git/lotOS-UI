@@ -528,6 +528,62 @@ export const statPropsSchema = basePropsSchema.extend({
     tone: z.enum(['neutral', 'success', 'warning', 'danger', 'info']).default('neutral'),
 });
 
+// Spinner
+
+export const spinnerPropsSchema = basePropsSchema.extend({
+    /** Size variant */
+    size: z.enum(['sm', 'md', 'lg']).default('md'),
+    /** Accessible label */
+    label: z.string().optional(),
+    /** Visual tone */
+    tone: z.enum(['neutral', 'info', 'success']).default('neutral'),
+});
+
+// Skeleton
+
+export const skeletonPropsSchema = basePropsSchema.extend({
+    /** Width token or literal CSS width */
+    width: z.string().optional(),
+    /** Height token or literal CSS height */
+    height: z.string().optional(),
+    /** Shape of the placeholder */
+    shape: z.enum(['line', 'block', 'circle']).default('line'),
+    /** Whether shimmer animation is active */
+    animated: z.boolean().default(true),
+});
+
+// Breadcrumbs
+
+export const breadcrumbItemSchema = z.object({
+    label: z.string(),
+    href: z.string().optional(),
+    current: z.boolean().optional(),
+});
+
+export const breadcrumbsPropsSchema = basePropsSchema.extend({
+    /** Ordered breadcrumb items */
+    items: z.array(breadcrumbItemSchema),
+    /** Separator copy */
+    separator: z.string().default('/'),
+});
+
+// Toast
+
+export const toastPropsSchema = basePropsSchema.extend({
+    /** Visual tone */
+    variant: z.enum(['info', 'success', 'warning', 'error']).default('info'),
+    /** Optional title */
+    title: z.string().optional(),
+    /** Optional body text */
+    description: z.string().optional(),
+    /** Whether the toast can be dismissed */
+    dismissible: z.boolean().optional(),
+    /** Dismiss handler */
+    onDismiss: z.function().args().returns(z.void()).optional(),
+    /** Optional action area */
+    action: z.any().optional(),
+});
+
 // ─── Exports ──────────────────────────────────────────────────────────────
 
 export type ButtonProps = z.infer<typeof buttonPropsSchema>;
@@ -554,6 +610,11 @@ export type AvatarProps = z.infer<typeof avatarPropsSchema>;
 export type DividerProps = z.infer<typeof dividerPropsSchema>;
 export type EmptyStateProps = z.infer<typeof emptyStatePropsSchema>;
 export type StatProps = z.infer<typeof statPropsSchema>;
+export type SpinnerProps = z.infer<typeof spinnerPropsSchema>;
+export type SkeletonProps = z.infer<typeof skeletonPropsSchema>;
+export type BreadcrumbItem = z.infer<typeof breadcrumbItemSchema>;
+export type BreadcrumbsProps = z.infer<typeof breadcrumbsPropsSchema>;
+export type ToastProps = z.infer<typeof toastPropsSchema>;
 export type BaseProps = z.infer<typeof basePropsSchema>;
 
 /** Registry of all component schemas — used by the MCP Server */
@@ -581,6 +642,10 @@ export const componentSchemas = {
     divider: dividerPropsSchema,
     'empty-state': emptyStatePropsSchema,
     stat: statPropsSchema,
+    spinner: spinnerPropsSchema,
+    skeleton: skeletonPropsSchema,
+    breadcrumbs: breadcrumbsPropsSchema,
+    toast: toastPropsSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;

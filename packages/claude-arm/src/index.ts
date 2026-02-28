@@ -12,10 +12,14 @@ export { Input } from './components/input/input.js';
 export { Modal } from './components/modal/modal.js';
 export { Alert } from './components/alert/alert.js';
 export { Avatar } from './components/avatar/avatar.js';
+export { Breadcrumbs } from './components/breadcrumbs/breadcrumbs.js';
 export { Progress } from './components/progress/progress.js';
 export { Divider } from './components/divider/divider.js';
 export { EmptyState } from './components/empty-state/empty-state.js';
+export { Skeleton } from './components/skeleton/skeleton.js';
+export { Spinner } from './components/spinner/spinner.js';
 export { Stat } from './components/stat/stat.js';
+export { Toast } from './components/toast/toast.js';
 
 // Sprint 3 Components
 export { Select } from './components/select/select.js';
@@ -33,10 +37,15 @@ export type {
     ModalProps,
     AlertProps,
     AvatarProps,
+    BreadcrumbItem,
+    BreadcrumbsProps,
     DividerProps,
     EmptyStateProps,
     ProgressProps,
+    SkeletonProps,
+    SpinnerProps,
     StatProps,
+    ToastProps,
 } from '@lotosui/core';
 
 export type { SelectProps, SelectOption } from './components/select/select.js';
