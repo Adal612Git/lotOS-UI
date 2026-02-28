@@ -25,7 +25,9 @@
         "mcp",
         "ai"
     ],
-    "sideEffects": ["./src/styles.css"],
+    "sideEffects": [
+        "./src/styles.css"
+    ],
     "engines": {
         "node": ">=18.0.0"
     },
@@ -62,6 +64,7 @@
         "showcase": "vite --config vite.showcase.config.ts",
         "showcase:build": "vite build --config vite.showcase.config.ts",
         "test": "vitest run",
+        "test:coverage": "vitest run --coverage.enabled",
         "test:a11y": "vitest run --config vitest.a11y.config.ts",
         "test:mcp": "vitest run tests/mcp",
         "check-types": "tsc --noEmit -p tsconfig.build.json",
@@ -83,6 +86,7 @@
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
         "@vitejs/plugin-react": "^4.3.0",
+        "@vitest/coverage-v8": "2.1.9",
         "axe-core": "^4.10.0",
         "jsdom": "^25.0.0",
         "react": "^19.0.0",
@@ -96,6 +100,3 @@
         "zod": "^3.24.0"
     }
 }
-
-
-

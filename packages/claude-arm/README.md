@@ -30,6 +30,7 @@ import { Button, Card, Table } from "@lotosui/claude-arm";
 ```bash
 pnpm --filter @lotosui/claude-arm run showcase
 pnpm --filter @lotosui/claude-arm run showcase:build
+pnpm --filter @lotosui/claude-arm run test:coverage
 pnpm --filter @lotosui/claude-arm run coverage:components
 pnpm --filter @lotosui/claude-arm run visual:baseline
 pnpm --filter @lotosui/claude-arm run visual:check

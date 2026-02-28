@@ -61,14 +61,14 @@ jobs:
       - name: Check component test coverage surface
         run: pnpm --filter @lotosui/claude-arm run coverage:components
 
+      - name: Enforce execution coverage
+        run: pnpm --filter @lotosui/claude-arm run test:coverage
+
       - name: Build claude-arm showcase
         run: pnpm --filter @lotosui/claude-arm run showcase:build
 
       - name: Check claude-arm visual baselines
         run: pnpm --filter @lotosui/claude-arm run visual:check
-
-      - name: Test claude-arm
-        run: pnpm --filter @lotosui/claude-arm run test
 
       - name: Test cli
         run: pnpm --filter @lotosui/cli run test
