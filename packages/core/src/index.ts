@@ -22,5 +22,8 @@ export * from './schemas/index.js';
 // Runtime Contracts + Design Patterns
 export * from './runtime/index.js';
 
+// MCP Server + Client
+export * from './mcp/index.js';
+
 // Re-export Zod for consumers who need it
 export { z } from 'zod';

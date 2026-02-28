@@ -70,6 +70,7 @@ pnpm --filter @lotosui/cli test
 `@lotosui/core` ahora expone contratos para runtimes y patrones de diseno:
 
 - `@lotosui/core/runtime`
+- `@lotosui/core/mcp` (server + cliente JS oficial)
 - `@lotosui/web-components` (prototipos activos: `lotos-button`, `lotos-input`)
 - MCP endpoints nuevos:
   - `GET /frameworks`
@@ -81,6 +82,7 @@ pnpm --filter @lotosui/cli test
   - `GET /stacks?runtime=<runtime>&database=<none|mongodb>`
   - `GET /stacks/:id`
   - `POST /components/render` (react, web-component, laravel-blade preview)
+  - demo local: `packages/core/examples/mcp-render-demo.mjs`
 - Adapter packages iniciales:
   - `packages/lotos-laravel`
   - `packages/lotos-django`
