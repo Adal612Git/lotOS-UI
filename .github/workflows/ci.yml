@@ -110,13 +110,13 @@ jobs:
 
       - name: Build desktop Java demo
         working-directory: apps/desktop-java-demo
-        run: |
-          javac App.java
-          jar --create --file LotosDesktopJavaDemo.jar --main-class App App.class
+        shell: pwsh
+        run: ./build.ps1
 
       - name: Build desktop Rust demo
         working-directory: apps/desktop-rust-demo
-        run: cargo build --release
+        shell: pwsh
+        run: ./build.ps1
 
       - name: Build Go runtime adapter
         working-directory: packages/lotos-go
@@ -165,7 +165,9 @@ jobs:
           python-version: '3.12'
 
       - name: Build .NET desktop demo
-        run: dotnet build apps/desktop-dotnet-demo/LotosDesktopDemo.csproj
+        shell: pwsh
+        working-directory: apps/desktop-dotnet-demo
+        run: ./build.ps1
 
       - name: Validate Python desktop demo
         run: |
