@@ -37,6 +37,7 @@ dist
 **/obj/
 **/showcase-dist/
 **/.visual-regression/
+packages/pro/.private-dist/
 *.timestamp-*.mjs
 packages/cli/stack/
 .commercial-dist/

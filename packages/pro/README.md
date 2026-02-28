@@ -31,6 +31,20 @@ To stage deliverable bundles locally, run:
 This generates `.commercial-dist/free` and `.commercial-dist/pro` with manifests,
 licenses, previews, and the selected file payloads ready to zip or move to a private channel.
 
+## Private Workspace Release
+
+`packages/pro` is now also a private workspace package:
+
+- package: `@lotosui/pro-private`
+- `pnpm --filter @lotosui/pro-private run verify`
+- `pnpm --filter @lotosui/pro-private run bundle`
+
+The private bundle command stages a release under:
+
+- `packages/pro/.private-dist`
+
+That output is the proprietary payload intended for customer delivery.
+
 ## Distribution Note
 
 The repository structure is now separated, but if this monorepo stays public, these assets remain visible.

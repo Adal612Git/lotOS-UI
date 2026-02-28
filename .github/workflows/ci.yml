@@ -122,6 +122,9 @@ jobs:
       - name: Verify contracts
         run: pnpm run verify:100
 
+      - name: Verify private pro surface
+        run: pnpm --filter @lotosui/pro-private run verify
+
   desktop-windows:
     runs-on: windows-latest
     permissions:

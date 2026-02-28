@@ -43,6 +43,7 @@ This layer is used for:
 2. Sell implementation, guided setup, and proprietary packs.
 3. Move `packages/pro` to a private distribution channel before public commercial launch.
 4. Use `pnpm export:commercial` to stage deliverables for packaging.
+5. Use `pnpm --filter @lotosui/pro-private run bundle` to stage the proprietary payload in its private workspace format.
 
 ## Paid Offer Payload
 
@@ -68,6 +69,7 @@ If a customer wants to buy today:
 
 1. take payment outside the repo
 2. run `pnpm export:commercial`
-3. zip `.commercial-dist/pro`
-4. add the customer-specific starter or custom files
-5. deliver through a private link or private repository
+3. run `pnpm --filter @lotosui/pro-private run bundle`
+4. zip `packages/pro/.private-dist`
+5. add the customer-specific starter or custom files
+6. deliver through a private link or private repository
