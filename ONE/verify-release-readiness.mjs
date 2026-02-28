@@ -20,7 +20,8 @@ const rootScripts = [
   "verify:commercial",
   "verify:ops",
   "verify:release-readiness",
-  "export:commercial"
+  "export:commercial",
+  "prep:first-sale"
 ];
 
 for (const scriptName of rootScripts) {
@@ -72,6 +73,8 @@ const requiredFiles = [
   "ONE/verify-desktop-pipelines.mjs",
   "ONE/verify-commercial-readiness.mjs",
   "ONE/verify-ops-readiness.mjs",
+  "ONE/prepare-first-sale.mjs",
+  "ONE/FIRST_REVENUE_RUNBOOK.md",
   "packages/pro/scripts/verify-private-surface.mjs",
   "packages/pro/scripts/prepare-private-release.mjs",
   "packages/pro/scripts/verify-private-bundle.mjs",

@@ -10,12 +10,13 @@ Este directorio es el punto unico de referencia operativa para LotOS UI.
 4. `LOTOS_DESIGN_PATTERNS_MULTI_RUNTIME.md`
 5. `ESTUDIO_estrategiafinalventas.txt`
 6. `COMMERCIAL_DELIVERY_MODEL.md`
-7. `TEMPLATE_*`
-8. `README_STRATEGY.md`
-9. `README_MARKET_INTEL.md`
-10. `check-structure.mjs`
-11. `degraded-mode.mjs`
-12. `export-commercial-bundles.mjs`
+7. `FIRST_REVENUE_RUNBOOK.md`
+8. `TEMPLATE_*`
+9. `README_STRATEGY.md`
+10. `README_MARKET_INTEL.md`
+11. `check-structure.mjs`
+12. `degraded-mode.mjs`
+13. `export-commercial-bundles.mjs`
 
 ## Regla
 
@@ -35,3 +36,4 @@ Comandos utiles:
 - `pnpm verify:release-readiness`
 - `pnpm verify:100`
 - `pnpm export:commercial`
+- `pnpm prep:first-sale`

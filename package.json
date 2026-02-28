@@ -18,7 +18,8 @@
     "verify:ops": "node ONE/verify-ops-readiness.mjs",
     "verify:release-readiness": "node ONE/verify-release-readiness.mjs",
     "verify:100": "node ONE/verify-100.mjs",
-    "export:commercial": "node ONE/export-commercial-bundles.mjs"
+    "export:commercial": "node ONE/export-commercial-bundles.mjs",
+    "prep:first-sale": "node ONE/prepare-first-sale.mjs"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
