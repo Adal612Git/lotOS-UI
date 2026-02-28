@@ -1,0 +1,104 @@
+{% macro lotos_theme() -%}
+<style>
+:root {
+  --lotos-bg: radial-gradient(circle at 15% 10%, #13203a, #081225 55%, #050a14 100%);
+  --lotos-surface: rgba(12, 22, 41, 0.74);
+  --lotos-surface-strong: rgba(8, 16, 31, 0.86);
+  --lotos-border: rgba(141, 199, 255, 0.28);
+  --lotos-border-strong: rgba(141, 199, 255, 0.4);
+  --lotos-text: #e6f3ff;
+  --lotos-subtext: rgba(206, 230, 252, 0.72);
+  --lotos-primary-a: #43c1ff;
+  --lotos-primary-b: #3f7aff;
+  --lotos-danger-a: #ff6969;
+  --lotos-danger-b: #ff3e7f;
+}
+.lotos-btn{border:0;border-radius:12px;color:#f6fbff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;letter-spacing:.02em;padding:0 18px;min-height:44px;text-decoration:none}.lotos-btn--primary{background:linear-gradient(120deg,var(--lotos-primary-a),var(--lotos-primary-b))}.lotos-btn--secondary{background:rgba(167,211,255,.16);border:1px solid rgba(167,211,255,.3)}.lotos-btn--destructive{background:linear-gradient(120deg,var(--lotos-danger-a),var(--lotos-danger-b))}.lotos-btn--ghost{background:transparent;border:1px solid rgba(167,211,255,.3);color:var(--lotos-subtext)}.lotos-btn--outline{background:transparent;border:1px solid var(--lotos-border-strong);color:var(--lotos-text)}.lotos-btn--link{background:transparent;color:#9dd7ff;padding:0;min-height:auto}.lotos-btn--xs{min-height:32px;padding:0 12px;font-size:.82rem}.lotos-btn--sm{min-height:36px;padding:0 14px;font-size:.9rem}.lotos-btn--lg{min-height:50px;padding:0 22px;font-size:1rem}.lotos-btn--xl{min-height:56px;padding:0 26px;font-size:1.04rem}.lotos-btn--full{width:100%}
+.lotos-card{border-radius:16px;background:var(--lotos-surface);color:var(--lotos-text);backdrop-filter:blur(10px)}.lotos-card--p-none{padding:0}.lotos-card--p-sm{padding:12px}.lotos-card--p-md{padding:16px}.lotos-card--p-lg{padding:22px}.lotos-card--border-none{border:0}.lotos-card--border-default{border:1px solid var(--lotos-border)}.lotos-card--border-strong{border:1px solid var(--lotos-border-strong)}.lotos-card--glass{background:rgba(255,255,255,.08)}
+.lotos-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid transparent;padding:0 10px;min-height:24px;font-size:.72rem}.lotos-badge--default{background:rgba(191,219,254,.14);border-color:rgba(191,219,254,.24);color:var(--lotos-text)}.lotos-badge--success{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.28);color:#9cf6b8}.lotos-badge--warning{background:rgba(251,191,36,.14);border-color:rgba(251,191,36,.26);color:#ffe08f}.lotos-badge--error{background:rgba(255,105,105,.14);border-color:rgba(255,105,105,.28);color:#ffb3c1}.lotos-badge--info{background:rgba(67,193,255,.14);border-color:rgba(67,193,255,.26);color:#b4e6ff}.lotos-badge--outline{background:transparent;border-color:var(--lotos-border);color:var(--lotos-subtext)}
+.lotos-input-field{display:flex;flex-direction:column;gap:6px}.lotos-input-field__label{color:var(--lotos-subtext);font-size:.84rem;font-weight:600}.lotos-input-field__helper{color:var(--lotos-subtext);font-size:.76rem}.lotos-input-field__helper--error{color:#ff9dad}.lotos-input{width:100%;border-radius:12px;border:1px solid rgba(167,211,255,.28);color:#eff8ff;background:rgba(4,11,23,.62);outline:none;min-height:42px;padding:0 13px}.lotos-input--sm{min-height:36px;padding:0 11px;font-size:.88rem}.lotos-input--lg{min-height:48px;padding:0 14px;font-size:1rem}.lotos-input--error{border-color:rgba(255,105,105,.82)}
+.lotos-form{display:grid;gap:16px}.lotos-form--compact{gap:12px}.lotos-form--comfortable{gap:18px}.lotos-form--spacious{gap:22px}.lotos-form__grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.lotos-form__actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.lotos-modal{border-radius:20px;border:1px solid var(--lotos-border);background:var(--lotos-surface-strong);color:var(--lotos-text);padding:18px}.lotos-modal__header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px}.lotos-modal__description{margin:6px 0 0;color:var(--lotos-subtext);line-height:1.55}.lotos-modal__footer{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.lotos-table-shell{display:grid;gap:12px}.lotos-table-shell__toolbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.lotos-table-shell__meta{margin:0;color:var(--lotos-subtext);font-size:.84rem}.lotos-table{width:100%;border-collapse:collapse;border:1px solid var(--lotos-border);border-radius:16px;overflow:hidden}.lotos-table th,.lotos-table td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(141,199,255,.12)}.lotos-table th{color:var(--lotos-subtext);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.04)}
+</style>
+{%- endmacro %}
+
+{% macro button(text='Action', variant='primary', size='md', full_width=False, loading=False, disabled=False, type='button') -%}
+<button class="lotos-btn lotos-btn--{{ variant }} lotos-btn--{{ size }}{% if full_width %} lotos-btn--full{% endif %}" type="{{ type }}" {% if disabled or loading %}disabled{% endif %}>{% if loading %}<span aria-hidden="true">...</span>{% endif %}{{ text }}</button>
+{%- endmacro %}
+
+{% macro badge(text='Status', variant='default', size='md', dot=False) -%}
+<span class="lotos-badge lotos-badge--{{ variant }} lotos-badge--{{ size }}{% if dot %} lotos-badge--dot{% endif %}">{{ text }}</span>
+{%- endmacro %}
+
+{% macro card(title=None, description=None, body=None, padding='md', border='default', glass=False) -%}
+<section class="lotos-card lotos-card--p-{{ padding }} lotos-card--border-{{ border }}{% if glass %} lotos-card--glass{% endif %}">
+  {% if title %}<h3 style="margin-top:0;">{{ title }}</h3>{% endif %}
+  {% if description %}<p style="margin:6px 0 0;color:var(--lotos-subtext);line-height:1.55;">{{ description }}</p>{% endif %}
+  {% if body %}<div style="margin-top:12px;">{{ body|safe }}</div>{% endif %}
+</section>
+{%- endmacro %}
+
+{% macro input(label=None, name='', value='', placeholder='', type='text', size='md', error=None, helper_text=None, required=False, disabled=False, readonly=False) -%}
+<label class="lotos-input-field">
+  {% if label %}<span class="lotos-input-field__label">{{ label }}</span>{% endif %}
+  <input class="lotos-input lotos-input--{{ size }}{% if error %} lotos-input--error{% endif %}" type="{{ type }}" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}" {% if required %}required{% endif %} {% if disabled %}disabled{% endif %} {% if readonly %}readonly{% endif %}>
+  {% if error %}<span class="lotos-input-field__helper lotos-input-field__helper--error">{{ error }}</span>{% elif helper_text %}<span class="lotos-input-field__helper">{{ helper_text }}</span>{% endif %}
+</label>
+{%- endmacro %}
+
+{% macro form(title=None, description=None, body=None, spacing='comfortable') -%}
+<section class="lotos-form lotos-form--{{ spacing }}">
+  {% if title or description %}
+    <header>
+      {% if title %}<h3 style="margin:0;">{{ title }}</h3>{% endif %}
+      {% if description %}<p style="margin:6px 0 0;color:var(--lotos-subtext);line-height:1.55;">{{ description }}</p>{% endif %}
+    </header>
+  {% endif %}
+  {% if body %}<div class="lotos-form__grid">{{ body|safe }}</div>{% endif %}
+</section>
+{%- endmacro %}
+
+{% macro modal(title=None, description=None, body=None, footer=None, open=True) -%}
+{% if open %}
+<section class="lotos-modal">
+  {% if title or description %}
+  <header class="lotos-modal__header">
+    <div>
+      {% if title %}<h3 style="margin:0;">{{ title }}</h3>{% endif %}
+      {% if description %}<p class="lotos-modal__description">{{ description }}</p>{% endif %}
+    </div>
+    <span class="lotos-badge lotos-badge--outline">Modal</span>
+  </header>
+  {% endif %}
+  {% if body %}<div>{{ body|safe }}</div>{% endif %}
+  {% if footer %}<footer class="lotos-modal__footer">{{ footer|safe }}</footer>{% endif %}
+</section>
+{% endif %}
+{%- endmacro %}
+
+{% macro table(columns, rows, caption=None, meta=None, empty_message='No rows available.') -%}
+<section class="lotos-table-shell">
+  {% if caption or meta %}
+    <header class="lotos-table-shell__toolbar">
+      <div>
+        {% if caption %}<h3 style="margin:0;">{{ caption }}</h3>{% endif %}
+        {% if meta %}<p class="lotos-table-shell__meta">{{ meta }}</p>{% endif %}
+      </div>
+      <span class="lotos-badge lotos-badge--info">{{ rows|length }} rows</span>
+    </header>
+  {% endif %}
+  <table class="lotos-table">
+    <thead><tr>{% for column in columns %}<th>{{ column.label }}</th>{% endfor %}</tr></thead>
+    <tbody>
+      {% if rows %}
+        {% for row in rows %}
+          <tr>{% for column in columns %}<td>{{ row[column.key] }}</td>{% endfor %}</tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="{{ columns|length if columns else 1 }}">{{ empty_message }}</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</section>
+{%- endmacro %}

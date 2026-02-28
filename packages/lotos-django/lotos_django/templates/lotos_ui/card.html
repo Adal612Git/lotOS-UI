@@ -1,0 +1,7 @@
+{% with padding=padding|default:"md" shadow=shadow|default:"sm" border=border|default:"default" %}
+<section class="lotos-card lotos-card--p-{{ padding }} lotos-card--border-{{ border }}{% if glass %} lotos-card--glass{% endif %}">
+  {% if title %}<h3 style="margin-top:0;">{{ title }}</h3>{% endif %}
+  {% if description %}<p style="margin:6px 0 0;color:var(--lotos-subtext);line-height:1.55;">{{ description }}</p>{% endif %}
+  {% if body %}<div style="margin-top:12px;">{{ body|safe }}</div>{% endif %}
+</section>
+{% endwith %}

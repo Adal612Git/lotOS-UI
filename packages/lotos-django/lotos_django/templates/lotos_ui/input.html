@@ -1,0 +1,7 @@
+{% with input_type=type|default:"text" input_size=size|default:"md" %}
+<label class="lotos-input-field">
+  {% if label %}<span class="lotos-input-field__label">{{ label }}</span>{% endif %}
+  <input class="lotos-input lotos-input--{{ input_size }}{% if error %} lotos-input--error{% endif %}" type="{{ input_type }}" name="{{ name|default:'' }}" value="{{ value|default:'' }}" placeholder="{{ placeholder|default:'' }}" {% if required %}required{% endif %} {% if disabled %}disabled{% endif %} {% if readonly %}readonly{% endif %}>
+  {% if error %}<span class="lotos-input-field__helper lotos-input-field__helper--error">{{ error }}</span>{% elif helper_text %}<span class="lotos-input-field__helper">{{ helper_text }}</span>{% endif %}
+</label>
+{% endwith %}

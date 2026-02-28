@@ -1,0 +1,30 @@
+{% load lotos_ui %}
+<section class="lotos-table-shell">
+    {% if caption or meta %}
+        <header class="lotos-table-shell__toolbar">
+            <div>
+                {% if caption %}<h3 style="margin:0;">{{ caption }}</h3>{% endif %}
+                {% if meta %}<p class="lotos-table-shell__meta">{{ meta }}</p>{% endif %}
+            </div>
+            <span class="lotos-badge lotos-badge--info lotos-badge--sm">{{ rows|length }} rows</span>
+        </header>
+    {% endif %}
+    <table class="lotos-table">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                    <th>{{ column.label }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if rows %}
+                {% for row in rows %}
+                    <tr>{% for column in columns %}<td>{{ row|get_item:column.key }}</td>{% endfor %}</tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="{{ columns|length|default:1 }}">{{ empty_message|default:"No rows available." }}</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</section>

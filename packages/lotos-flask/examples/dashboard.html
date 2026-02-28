@@ -1,0 +1,32 @@
+{% from "lotos_ui/macros.html" import lotos_theme, button, badge, card, input, form, modal, table %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LotOS Flask Demo</title>
+  {{ lotos_theme() }}
+</head>
+<body style="margin:0;min-height:100vh;font-family:'Segoe UI',sans-serif;background:var(--lotos-bg);color:var(--lotos-text);padding:24px;">
+  <main style="max-width:1120px;margin:0 auto;display:grid;gap:18px;">
+    {{ card(title="LotOS UI for Flask", description="Server-rendered adapter using Jinja macros.") }}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">{{ button(text="Create deployment", variant="primary") }}{{ button(text="Inspect", variant="outline") }}</div>
+    {{ form(title="Launch deployment", description="Flask adapter can render operational forms.", body='''
+      <label class="lotos-input-field"><span class="lotos-input-field__label">Service</span><input class="lotos-input" type="text" placeholder="billing-api"></label>
+      <label class="lotos-input-field"><span class="lotos-input-field__label">Owner</span><input class="lotos-input" type="email" placeholder="ops@company.com"></label>
+    ''') }}
+    {{ table(
+      columns=[{'key': 'job', 'label': 'Job'}, {'key': 'state', 'label': 'State'}],
+      rows=[{'job': 'Deploy billing-api', 'state': 'Queued'}, {'job': 'Rotate secrets', 'state': 'Pending'}],
+      caption='Operations queue',
+      meta='Shared visual grammar applied to backend workflows'
+    ) }}
+    {{ modal(
+      title='Deployment review',
+      description='Modal review surface before final server action.',
+      body='<div class="lotos-card lotos-card--p-md lotos-card--border-strong"><strong>billing-api</strong><p style="margin:6px 0 0;color:var(--lotos-subtext);">Owner: ops@company.com</p></div>',
+      footer='<button class="lotos-btn lotos-btn--ghost" type="button">Back</button><button class="lotos-btn lotos-btn--primary" type="button">Confirm</button>'
+    ) }}
+  </main>
+</body>
+</html>

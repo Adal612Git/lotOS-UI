@@ -1,0 +1,15 @@
+{% if open is not False %}
+<section class="lotos-modal">
+  {% if title or description %}
+    <header class="lotos-modal__header">
+      <div>
+        {% if title %}<h3 style="margin:0;">{{ title }}</h3>{% endif %}
+        {% if description %}<p class="lotos-modal__description">{{ description }}</p>{% endif %}
+      </div>
+      <span class="lotos-badge lotos-badge--outline">Modal</span>
+    </header>
+  {% endif %}
+  {% if body %}<div>{{ body|safe }}</div>{% endif %}
+  {% if footer %}<footer class="lotos-modal__footer">{{ footer|safe }}</footer>{% endif %}
+</section>
+{% endif %}

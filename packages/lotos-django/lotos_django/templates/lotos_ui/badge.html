@@ -1,0 +1,3 @@
+{% with variant=variant|default:"default" size=size|default:"md" %}
+<span class="lotos-badge lotos-badge--{{ variant }} lotos-badge--{{ size }}{% if dot %} lotos-badge--dot{% endif %}">{{ text|default:label|default:"Status" }}</span>
+{% endwith %}

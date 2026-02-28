@@ -1,0 +1,11 @@
+{% with form_spacing=spacing|default:"comfortable" %}
+<section class="lotos-form lotos-form--{{ form_spacing }}">
+  {% if title or description %}
+    <header>
+      {% if title %}<h3 style="margin:0;">{{ title }}</h3>{% endif %}
+      {% if description %}<p style="margin:6px 0 0;color:var(--lotos-subtext);line-height:1.55;">{{ description }}</p>{% endif %}
+    </header>
+  {% endif %}
+  {% if body %}<div class="lotos-form__grid">{{ body|safe }}</div>{% endif %}
+</section>
+{% endwith %}

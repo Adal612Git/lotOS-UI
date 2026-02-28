@@ -1,0 +1,22 @@
+{% load lotos_ui %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LotOS Django Demo</title>
+  {% lotos_theme %}
+</head>
+<body style="margin:0;min-height:100vh;font-family:'Segoe UI',sans-serif;background:var(--lotos-bg);color:var(--lotos-text);padding:24px;">
+  <main style="max-width:1120px;margin:0 auto;display:grid;gap:18px;">
+    {% include "lotos_ui/card.html" with title="LotOS UI for Django" description="Server-rendered adapter using Django templates and tags." %}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      {% lotos_component "button" text="Create deployment" variant="primary" %}
+      {% lotos_component "button" text="Inspect" variant="outline" %}
+    </div>
+    {% include "lotos_ui/form.html" with title="Launch deployment" description="Django adapter can render operational forms." body=form_body %}
+    {% include "lotos_ui/table.html" with caption="Operations queue" meta="Shared visual grammar applied to backend workflows" columns=queue_columns rows=queue_rows %}
+    {% include "lotos_ui/modal.html" with title="Deployment review" description="Modal review surface before final server action." body=modal_body footer=modal_footer %}
+  </main>
+</body>
+</html>

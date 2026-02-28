@@ -8,6 +8,12 @@ Monorepo oficial de LotOS UI.
 - `@lotosui/core` (publicado)
 - `@lotosui/cli` (paquete CLI del monorepo)
 
+## Adapters backend/server-side (runtime packages)
+
+- `packages/lotos-laravel` (Blade adapter usable)
+- `packages/lotos-django` (template adapter usable)
+- `packages/lotos-flask` (Jinja adapter usable)
+
 ## Instalación rápida
 
 ```bash
@@ -72,8 +78,10 @@ pnpm --filter @lotosui/cli test
   - `GET /stacks?runtime=<runtime>&database=<none|mongodb>`
   - `GET /stacks/:id`
   - `POST /components/render` (react, web-component, laravel-blade preview)
-- Adapter skeleton inicial:
+- Adapter packages iniciales:
   - `packages/lotos-laravel`
+  - `packages/lotos-django`
+  - `packages/lotos-flask`
 
 Objetivo: escalar de React-only a adapters para PHP, Python, Java, .NET, Go, C/C++, y Mojo con una base visual consistente.
 
@@ -157,3 +165,4 @@ Publica en orden:
 2. `@lotosui/sentinel`
 3. `@lotosui/cli`
 4. `@lotosui/web-components`
+

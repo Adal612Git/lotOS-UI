@@ -1,0 +1,6 @@
+{% with variant=variant|default:"primary" size=size|default:"md" %}
+<button class="lotos-btn lotos-btn--{{ variant }} lotos-btn--{{ size }}{% if full_width %} lotos-btn--full{% endif %}" type="{{ type|default:'button' }}" {% if disabled or loading %}disabled{% endif %}>
+  {% if loading %}<span aria-hidden="true">...</span>{% endif %}
+  {{ text|default:label|default:"Action" }}
+</button>
+{% endwith %}
