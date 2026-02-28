@@ -70,6 +70,7 @@ const requiredFiles = [
   "ONE/verify-desktop-pipelines.mjs",
   "packages/pro/scripts/verify-private-surface.mjs",
   "packages/pro/scripts/prepare-private-release.mjs",
+  "packages/pro/scripts/verify-private-bundle.mjs",
   "apps/desktop-python-demo/build.ps1",
   "apps/desktop-dotnet-demo/build.ps1",
   "apps/desktop-java-demo/App.java",
@@ -95,7 +96,8 @@ const requiredCiMarkers = [
   "Verify runtime contract guards",
   "Verify desktop delivery pipelines",
   "Verify release readiness",
-  "Verify private pro surface"
+  "Verify private pro surface",
+  "Verify private pro bundle"
 ];
 
 for (const marker of requiredCiMarkers) {

@@ -146,6 +146,12 @@ jobs:
       - name: Verify private pro surface
         run: pnpm --filter @lotosui/pro-private run verify
 
+      - name: Build private pro bundle
+        run: pnpm --filter @lotosui/pro-private run bundle
+
+      - name: Verify private pro bundle
+        run: pnpm --filter @lotosui/pro-private run verify:bundle
+
   desktop-windows:
     runs-on: windows-latest
     permissions:
