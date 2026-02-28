@@ -25,3 +25,4 @@ Comandos utiles:
 
 - `pnpm verify:structure`
 - `pnpm verify:degraded`
+- `pnpm verify:runtimes`

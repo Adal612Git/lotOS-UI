@@ -9,6 +9,7 @@
     "check-types": "turbo run check-types",
     "verify:structure": "node ONE/check-structure.mjs",
     "verify:degraded": "node ONE/degraded-mode.mjs",
+    "verify:runtimes": "node ONE/verify-runtime-surface.mjs",
     "verify:100": "node ONE/verify-100.mjs",
     "export:commercial": "node ONE/export-commercial-bundles.mjs"
   },
