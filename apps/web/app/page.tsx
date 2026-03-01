@@ -3,12 +3,12 @@ import './lotos-landing.css';
 import { salesLinks, salesPlans } from './sales-config';
 
 const runtimeRows = [
-  ['React', 'Stable', 'Stable', 'Production arm'],
-  ['Web Components', 'Prototype', 'Prototype', 'Cross-framework primitives'],
-  ['Laravel / Django / Flask', 'Alpha', 'Alpha', 'stack-init starters + adapter track'],
-  ['Spring / .NET / Go', 'Alpha', 'Alpha', 'stack-init starters + adapter track'],
-  ['Python / Java Desktop', 'Alpha', 'Alpha', 'desktop-init + stack-init'],
-  ['C / C++ Desktop', 'Prototype', 'Alpha', 'WebView starters'],
+  ['React', 'Stable', 'Stable', '27 shipped components in the public package'],
+  ['Web Components', 'Prototype', 'Prototype', '4 published primitives'],
+  ['Laravel / Django / Flask', 'Alpha', 'Alpha', '5 shared adapter primitives + web starters'],
+  ['Spring / .NET / Go', 'Alpha', 'Alpha', '5 shared adapter primitives + web starters'],
+  ['Python / .NET / Java / Rust Desktop', 'Alpha', 'Alpha', '4 demo apps plus 8 desktop templates'],
+  ['C / C++ Desktop', 'Prototype', 'Prototype', 'Template metadata and WebView starters'],
 ];
 
 const commandBlock = `pnpm --filter @lotosui/cli exec lotos-ui stacks
@@ -32,10 +32,11 @@ export default function HomePage() {
 
       <section className="hero">
         <p className="kicker">Early access | Solo from $149</p>
-        <h1>The UI platform your AI agent can actually execute without breaking.</h1>
+        <h1>Schema-backed UI your AI agent can use with fewer blind guesses.</h1>
         <p className="lead">
-          MCP contracts + schema-safe components + desktop and backend stack starters for real delivery
-          in React, PHP, Python, Java, .NET, Go, C and C++.
+          27 React components, 4 web components, MCP contracts, and starter tracks for PHP, Python,
+          Java, .NET, Go, C, and C++. React is the stable surface; the rest ship as adapter or
+          template tracks with alpha/prototype status.
         </p>
         <div className="hero-actions">
           <Link href="/docs/installation" className="btn primary">Get Started</Link>
@@ -60,9 +61,9 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
       </section>
 
       <section className="stats">
-        <article><strong>20+</strong><span>Components</span></article>
-        <article><strong>WCAG AAA</strong><span>Accessibility Baseline</span></article>
-        <article><strong>MCP</strong><span>AI-native contract layer</span></article>
+        <article><strong>27</strong><span>React Components</span></article>
+        <article><strong>4</strong><span>Web Components</span></article>
+        <article><strong>8</strong><span>Desktop Templates</span></article>
         <article><strong>10</strong><span>Generated stack templates</span></article>
       </section>
 

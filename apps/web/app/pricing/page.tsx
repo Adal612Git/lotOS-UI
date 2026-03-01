@@ -25,7 +25,7 @@ export default function PricingPage() {
 
       <section className="hero compact">
         <p className="kicker">Pricing and Delivery</p>
-        <h1>Private acceleration, proof-before-purchase, and checkout-ready sales flow.</h1>
+        <h1>Private acceleration, proof-before-purchase, and configurable sales handoff.</h1>
         <p className="lead">
           The public layer builds trust. The paid layer buys speed, premium assets, and private
           delivery that never ships through the public MIT surface.
@@ -169,8 +169,8 @@ pnpm.cmd run prep:first-sale`}</code></pre>
           <p className="section-label">Close the deal</p>
           <h2>What happens after the click</h2>
           <ol>
-            <li>The buyer clicks a checkout link from this page.</li>
-            <li>Stripe or Lemon Squeezy charges the payment.</li>
+            <li>The buyer clicks the configured checkout, booking, or contact link from this page.</li>
+            <li>Your configured provider handles payment or qualification.</li>
             <li>You prepare and deliver the private bundle through a private ZIP or repo.</li>
           </ol>
           <div className="hero-actions">
