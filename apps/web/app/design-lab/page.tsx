@@ -59,6 +59,8 @@ const presets: LabPreset[] = [
   },
 ];
 
+const defaultPreset = presets[0]!;
+
 const uiBlocks = [
   { title: 'Hero direction', detail: 'Primary intent and brand motion' },
   { title: 'Data rhythm', detail: 'Table, chart, and signal density' },
@@ -68,7 +70,7 @@ const uiBlocks = [
 
 export default function DesignLabPage() {
   const [mode, setMode] = useState<LabMode>('dashboard');
-  const active = useMemo(() => presets.find((item) => item.id === mode) ?? presets[0], [mode]);
+  const active = useMemo(() => presets.find((item) => item.id === mode) ?? defaultPreset, [mode]);
 
   return (
     <main className="lab-page">

@@ -34,11 +34,14 @@ export default function PricingPage() {
           <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
             Contact Sales
           </a>
+          <Link href="/login" className="btn ghost">
+            Sign In
+          </Link>
+          <Link href="/vault" className="btn ghost">
+            Open Vault
+          </Link>
           <a href={salesLinks.premiumPreview} className="btn ghost" target="_blank" rel="noreferrer">
             Premium Preview
-          </a>
-          <a href={salesLinks.demo} className="btn ghost" target="_blank" rel="noreferrer">
-            Book Demo
           </a>
         </div>
       </section>
@@ -138,8 +141,8 @@ export default function PricingPage() {
           <p className="section-label">Checkout wiring</p>
           <h2>Environment keys</h2>
           <p>
-            Wire your Stripe, Lemon Squeezy, or booking links by setting these environment variables
-            in Vercel.
+            Wire Google OAuth, Supabase entitlements, Lemon Squeezy webhooks, and commercial links
+            by setting these environment variables in Vercel.
           </p>
           <pre><code>{checkoutEnvKeys.join("\n")}</code></pre>
         </article>
@@ -169,9 +172,9 @@ pnpm.cmd run prep:first-sale`}</code></pre>
           <p className="section-label">Close the deal</p>
           <h2>What happens after the click</h2>
           <ol>
-            <li>The buyer clicks the configured checkout, booking, or contact link from this page.</li>
-            <li>Your configured provider handles payment or qualification.</li>
-            <li>You prepare and deliver the private bundle through a private ZIP or repo.</li>
+            <li>The buyer signs in with Google and clicks the configured Lemon checkout or contact path.</li>
+            <li>Lemon confirms payment and the webhook creates the entitlement in Supabase.</li>
+            <li>The buyer opens the protected vault and downloads the paid payload through guarded routes.</li>
           </ol>
           <div className="hero-actions">
             <a href={salesLinks.launchPack} className="btn primary" target="_blank" rel="noreferrer">

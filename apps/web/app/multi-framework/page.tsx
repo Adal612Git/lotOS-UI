@@ -205,6 +205,8 @@ const designDirections: DesignDirection[] = [
   },
 ];
 
+const defaultDirection = designDirections[0]!;
+
 const statusLabel: Record<TrackStatus, string> = {
   stable: 'Stable',
   prototype: 'Prototype',
@@ -234,10 +236,10 @@ export default function MultiFrameworkPage() {
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [viewMode, setViewMode] = useState<ViewMode>('table');
-  const [activeDirectionId, setActiveDirectionId] = useState(designDirections[0].id);
+  const [activeDirectionId, setActiveDirectionId] = useState(defaultDirection.id);
 
   const activeDirection = useMemo(
-    () => designDirections.find((item) => item.id === activeDirectionId) ?? designDirections[0],
+    () => designDirections.find((item) => item.id === activeDirectionId) ?? defaultDirection,
     [activeDirectionId],
   );
 
