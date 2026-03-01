@@ -17,7 +17,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: 'LotOS UI — Docs',
+    default: 'LotOS UI Docs',
     template: '%s | LotOS UI',
   },
   description:
@@ -46,7 +46,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${outfit.variable}`}
+      className={`dark ${inter.variable} ${outfit.variable}`}
     >
       <body>
         <RootProvider>{children}</RootProvider>

@@ -146,16 +146,16 @@ export default function DocsHomePage() {
               <section className="preview-main">
                 <div className="stats-row">
                   <article>
-                    <strong>20+</strong>
-                    <span>Components</span>
+                    <strong>27</strong>
+                    <span>React</span>
                   </article>
                   <article>
                     <strong>10</strong>
                     <span>Stacks</span>
                   </article>
                   <article>
-                    <strong>MCP</strong>
-                    <span>Active</span>
+                    <strong>4</strong>
+                    <span>Web</span>
                   </article>
                 </div>
                 <div className="surface-card">
@@ -184,10 +184,10 @@ export default function DocsHomePage() {
       </section>
 
       <section className="band stats-band">
-        <article><strong>20+</strong><span>Components / Componentes</span></article>
+        <article><strong>27</strong><span>React components</span></article>
+        <article><strong>4</strong><span>Web primitives</span></article>
         <article><strong>10</strong><span>Stack templates</span></article>
-        <article><strong>5</strong><span>Desktop starters</span></article>
-        <article><strong>Dogfood</strong><span>Built with own contracts</span></article>
+        <article><strong>8</strong><span>Desktop templates</span></article>
       </section>
 
       <section className="band proof-band">
