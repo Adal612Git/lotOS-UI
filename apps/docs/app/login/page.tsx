@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { AuthAction } from '../auth-action';
+import styles from '../commercial-shell.module.css';
+import { docsSalesPlans } from '../../lib/sales';
 
 export default function DocsLoginPage() {
   const authReady = Boolean(
@@ -7,13 +9,13 @@ export default function DocsLoginPage() {
   );
 
   return (
-    <main className="lotos-docs-home">
-      <section className="hero-shell">
-        <div className="hero-copy">
-          <p className="eyebrow">Commercial Access</p>
-          <div className="hero-badges" aria-label="Auth status">
-            <span className="hero-badge badge-proof">Docs Project</span>
-            <span className="hero-badge badge-active">
+    <main className={styles.page}>
+      <section className={styles.heroShell}>
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>Commercial Access</p>
+          <div className={styles.heroBadges} aria-label="Auth status">
+            <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Docs Project</span>
+            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>
               {authReady ? 'Google OAuth Ready' : 'OAuth Incomplete'}
             </span>
           </div>
@@ -21,26 +23,45 @@ export default function DocsLoginPage() {
             Sign in with Google
             <span>to open the commercial vault</span>
           </h1>
-          <p className="lead">
+          <p className={styles.lead}>
             This docs deployment is the public front door right now, so the auth entrypoint lives
             here. Once you sign in, you can move into the protected commercial surface.
           </p>
-          <div className="hero-actions">
+          <p className={styles.heroProof}>
+            The login surface should sell confidence, not just prove wiring. This is now a branded
+            access gate into the paid system.
+          </p>
+          <div className={styles.heroActions}>
             {authReady ? (
-              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-google">
+              <AuthAction mode="signin" callbackUrl="/vault" className={`${styles.btn} ${styles.btnGoogle}`}>
                 Sign In With Google
               </AuthAction>
             ) : (
-              <span className="btn btn-ghost">Missing Auth Variables</span>
+              <span className={`${styles.btn} ${styles.btnGhost}`}>Missing Auth Variables</span>
             )}
-            <Link href="/vault" className="btn btn-ghost">
+            <Link href="/pricing" className={`${styles.btn} ${styles.btnGhost}`}>
+              Pricing
+            </Link>
+            <Link href="/vault" className={`${styles.btn} ${styles.btnGhost}`}>
               Open Vault
             </Link>
-            <Link href="/" className="btn btn-ghost">
+            <Link href="/" className={`${styles.btn} ${styles.btnGhost}`}>
               Back Home
             </Link>
           </div>
         </div>
+
+        <aside className={styles.sidePanel}>
+          <p className={styles.eyebrow}>Access Ladder</p>
+          <h3>Start trusted, then move into paid access.</h3>
+          <ul>
+            {docsSalesPlans.map((plan) => (
+              <li key={plan.id}>
+                <strong>{plan.name}</strong> {plan.priceLabel}: {plan.summary}
+              </li>
+            ))}
+          </ul>
+        </aside>
       </section>
     </main>
   );
