@@ -55,5 +55,6 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+client_secret_*.json
 
 .vercel

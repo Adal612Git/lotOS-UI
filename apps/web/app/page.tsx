@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
+import { authOptions } from '../auth-options';
 import { salesLinks, salesPlans } from './sales-config';
 
 const runtimeRows = [
@@ -17,7 +19,10 @@ pnpm --filter @lotosui/cli exec lotos-ui stack-init -s java-spring-starter -d mo
 pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
 pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center`;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+  const signedInEmail = session?.user?.email ?? null;
+
   return (
     <main className="landing">
       <header className="top">
@@ -26,6 +31,14 @@ export default function HomePage() {
           <Link href="/docs">Docs</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/multi-framework">Runtime Matrix</Link>
+          {signedInEmail ? (
+            <>
+              <Link href="/vault">Vault</Link>
+              <a href="/api/auth/signout?callbackUrl=/">Sign Out</a>
+            </>
+          ) : (
+            <Link href="/login">Sign In</Link>
+          )}
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
       </header>
@@ -38,9 +51,17 @@ export default function HomePage() {
           Java, .NET, Go, C, and C++. React is the stable surface; the rest ship as adapter or
           template tracks with alpha/prototype status.
         </p>
+        {signedInEmail ? (
+          <p className="lead">Signed in as {signedInEmail}. Your paid surface is available in the vault.</p>
+        ) : null}
         <div className="hero-actions">
           <Link href="/docs/installation" className="btn primary">Get Started</Link>
           <Link href="/pricing" className="btn ghost">Pricing</Link>
+          {signedInEmail ? (
+            <Link href="/vault" className="btn ghost">Open Vault</Link>
+          ) : (
+            <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn ghost">Sign In With Google</a>
+          )}
           <Link href="/docs/multi-runtime" className="btn ghost">View Runtime Guide</Link>
           <Link href="/design-lab" className="btn ghost">Open Design Lab</Link>
         </div>

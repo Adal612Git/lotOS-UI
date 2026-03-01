@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth-options';
 import {
   checkoutEnvKeys,
   freeSurface,
@@ -10,7 +12,10 @@ import {
 } from '../sales-config';
 import '../lotos-landing.css';
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const session = await getServerSession(authOptions);
+  const signedInEmail = session?.user?.email ?? null;
+
   return (
     <main className="landing pricing-page">
       <header className="top">
@@ -19,6 +24,14 @@ export default function PricingPage() {
           <Link href="/">Home</Link>
           <Link href="/docs">Docs</Link>
           <Link href="/multi-framework">Runtime Matrix</Link>
+          {signedInEmail ? (
+            <>
+              <Link href="/vault">Vault</Link>
+              <a href="/api/auth/signout?callbackUrl=/pricing">Sign Out</a>
+            </>
+          ) : (
+            <Link href="/login">Sign In</Link>
+          )}
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
       </header>
@@ -30,16 +43,22 @@ export default function PricingPage() {
           The public layer builds trust. The paid layer buys speed, premium assets, and private
           delivery that never ships through the public MIT surface.
         </p>
+        {signedInEmail ? (
+          <p className="lead">Signed in as {signedInEmail}. You can open the protected vault directly.</p>
+        ) : null}
         <div className="hero-actions">
           <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
             Contact Sales
           </a>
-          <Link href="/login" className="btn ghost">
-            Sign In
-          </Link>
-          <Link href="/vault" className="btn ghost">
-            Open Vault
-          </Link>
+          {signedInEmail ? (
+            <Link href="/vault" className="btn ghost">
+              Open Vault
+            </Link>
+          ) : (
+            <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn ghost">
+              Sign In With Google
+            </a>
+          )}
           <a href={salesLinks.premiumPreview} className="btn ghost" target="_blank" rel="noreferrer">
             Premium Preview
           </a>
