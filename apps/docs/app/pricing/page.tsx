@@ -31,7 +31,7 @@ export default async function DocsPricingPage() {
                 Open Vault
               </Link>
             ) : (
-              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-primary">
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-google">
                 Sign In With Google
               </AuthAction>
             )}

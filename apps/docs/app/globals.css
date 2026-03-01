@@ -85,6 +85,30 @@ a {
   color: inherit;
 }
 
+.lotos-auth-action {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-google {
+  position: relative;
+  color: #f8fbff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(#07111f, #07111f) padding-box,
+    linear-gradient(120deg, #4285f4 0%, #34a853 35%, #fbbc05 68%, #ea4335 100%) border-box;
+  box-shadow:
+    0 10px 26px rgba(2, 6, 23, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.btn-google:hover {
+  background:
+    linear-gradient(#0b1830, #0b1830) padding-box,
+    linear-gradient(120deg, #4285f4 0%, #34a853 35%, #fbbc05 68%, #ea4335 100%) border-box;
+}
+
 :focus-visible {
   outline: 2px solid var(--color-fd-ring);
   outline-offset: 2px;

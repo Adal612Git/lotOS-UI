@@ -20,7 +20,7 @@ export function AuthAction({ mode, callbackUrl, className, children }: AuthActio
   };
 
   return (
-    <button type="button" className={className} onClick={handleClick}>
+    <button type="button" className={`lotos-auth-action ${className}`} onClick={handleClick}>
       {children}
     </button>
   );

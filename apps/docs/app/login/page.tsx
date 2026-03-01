@@ -27,7 +27,7 @@ export default function DocsLoginPage() {
           </p>
           <div className="hero-actions">
             {authReady ? (
-              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-primary">
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-google">
                 Sign In With Google
               </AuthAction>
             ) : (

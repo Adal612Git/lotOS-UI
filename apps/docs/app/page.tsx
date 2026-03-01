@@ -135,7 +135,7 @@ export default async function DocsHomePage() {
             {signedInEmail ? (
               <Link href="/vault" className="btn btn-ghost">Open Vault</Link>
             ) : (
-              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-ghost">Sign In With Google</AuthAction>
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-google">Sign In With Google</AuthAction>
             )}
             <Link href="/docs/components/button" className="btn btn-ghost">Components / Componentes</Link>
           </div>
