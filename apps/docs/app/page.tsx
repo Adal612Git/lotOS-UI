@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth-options';
 
 export const metadata: Metadata = {
   title: 'LotOS UI Docs - React-first Multi-runtime Platform',
@@ -92,7 +94,10 @@ pnpm --filter @lotosui/cli exec lotos-ui stack-init -s php-laravel-starter -d mo
 pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
 pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center`;
 
-export default function DocsHomePage() {
+export default async function DocsHomePage() {
+  const session = await getServerSession(authOptions);
+  const signedInEmail = session?.user?.email ?? null;
+
   return (
     <main className="lotos-docs-home">
       <section className="hero-shell">
@@ -119,10 +124,18 @@ export default function DocsHomePage() {
             This page is dogfooded on the same product discipline it sells: structured hierarchy,
             contract-safe messaging, and reusable UI surfaces.
           </p>
+          {signedInEmail ? (
+            <p className="hero-proof">Signed in as {signedInEmail}. The docs domain can now open the commercial vault directly.</p>
+          ) : null}
           <div className="hero-actions">
             <Link href="/docs/installation" className="btn btn-primary">Get Started / Empezar</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Runtime Guide / Guia</Link>
-            <a href="https://lotos-ui.vercel.app/pricing" className="btn btn-ghost">Pricing / Precios</a>
+            <Link href="/pricing" className="btn btn-ghost">Pricing / Precios</Link>
+            {signedInEmail ? (
+              <Link href="/vault" className="btn btn-ghost">Open Vault</Link>
+            ) : (
+              <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn btn-ghost">Sign In With Google</a>
+            )}
             <Link href="/docs/components/button" className="btn btn-ghost">Components / Componentes</Link>
           </div>
         </div>
@@ -285,7 +298,12 @@ export default function DocsHomePage() {
           <div className="hero-actions">
             <Link href="/docs/installation" className="btn btn-primary">Installation</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Open Runtime Guide</Link>
-            <a href="https://lotos-ui.vercel.app/pricing" className="btn btn-ghost">Pricing</a>
+            <Link href="/pricing" className="btn btn-ghost">Pricing</Link>
+            {signedInEmail ? (
+              <Link href="/vault" className="btn btn-ghost">Vault</Link>
+            ) : (
+              <Link href="/login" className="btn btn-ghost">Login</Link>
+            )}
             <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="btn btn-ghost">
               GitHub
             </a>

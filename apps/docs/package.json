@@ -17,6 +17,7 @@
     "fumadocs-mdx": "^14.2.8",
     "fumadocs-ui": "^16.6.5",
     "next": "16.1.5",
+    "next-auth": "^4.24.13",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
