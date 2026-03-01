@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../../auth-options';
+import { AuthAction } from '../auth-action';
 
 export default async function DocsVaultPage() {
   const session = await getServerSession(authOptions);
@@ -29,9 +30,9 @@ export default async function DocsVaultPage() {
             wiring, and session persistence are working from the public front door.
           </p>
           <div className="hero-actions">
-            <a href="/api/auth/signout?callbackUrl=/" className="btn btn-primary">
+            <AuthAction mode="signout" callbackUrl="/" className="btn btn-primary">
               Sign Out
-            </a>
+            </AuthAction>
             <Link href="/pricing" className="btn btn-ghost">
               Pricing
             </Link>

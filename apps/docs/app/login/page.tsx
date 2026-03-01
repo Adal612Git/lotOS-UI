@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { AuthAction } from '../auth-action';
 
 export default function DocsLoginPage() {
   const authReady = Boolean(
@@ -26,9 +27,9 @@ export default function DocsLoginPage() {
           </p>
           <div className="hero-actions">
             {authReady ? (
-              <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn btn-primary">
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-primary">
                 Sign In With Google
-              </a>
+              </AuthAction>
             ) : (
               <span className="btn btn-ghost">Missing Auth Variables</span>
             )}

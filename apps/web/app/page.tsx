@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
 import { authOptions } from '../auth-options';
+import { AuthAction } from './auth-action';
 import { salesLinks, salesPlans } from './sales-config';
 
 const runtimeRows = [
@@ -60,7 +61,7 @@ export default async function HomePage() {
           {signedInEmail ? (
             <Link href="/vault" className="btn ghost">Open Vault</Link>
           ) : (
-            <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn ghost">Sign In With Google</a>
+            <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">Sign In With Google</AuthAction>
           )}
           <Link href="/docs/multi-runtime" className="btn ghost">View Runtime Guide</Link>
           <Link href="/design-lab" className="btn ghost">Open Design Lab</Link>

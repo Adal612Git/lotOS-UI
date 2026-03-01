@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth-options';
+import { AuthAction } from './auth-action';
 
 export const metadata: Metadata = {
   title: 'LotOS UI Docs - React-first Multi-runtime Platform',
@@ -134,7 +135,7 @@ export default async function DocsHomePage() {
             {signedInEmail ? (
               <Link href="/vault" className="btn btn-ghost">Open Vault</Link>
             ) : (
-              <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn btn-ghost">Sign In With Google</a>
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-ghost">Sign In With Google</AuthAction>
             )}
             <Link href="/docs/components/button" className="btn btn-ghost">Components / Componentes</Link>
           </div>

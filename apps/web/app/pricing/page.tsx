@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth-options';
+import { AuthAction } from '../auth-action';
 import {
   checkoutEnvKeys,
   freeSurface,
@@ -55,9 +56,9 @@ export default async function PricingPage() {
               Open Vault
             </Link>
           ) : (
-            <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn ghost">
+            <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">
               Sign In With Google
-            </a>
+            </AuthAction>
           )}
           <a href={salesLinks.premiumPreview} className="btn ghost" target="_blank" rel="noreferrer">
             Premium Preview

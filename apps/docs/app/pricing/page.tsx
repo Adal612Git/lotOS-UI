@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth-options';
+import { AuthAction } from '../auth-action';
 
 export default async function DocsPricingPage() {
   const session = await getServerSession(authOptions);
@@ -30,9 +31,9 @@ export default async function DocsPricingPage() {
                 Open Vault
               </Link>
             ) : (
-              <a href="/api/auth/signin/google?callbackUrl=/vault" className="btn btn-primary">
+              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-primary">
                 Sign In With Google
-              </a>
+              </AuthAction>
             )}
             <Link href="/" className="btn btn-ghost">
               Back Home
