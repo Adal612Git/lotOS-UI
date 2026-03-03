@@ -23,6 +23,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const signedInEmail = session?.user?.email ?? null;
+  const paidPlans = salesPlans.filter((plan) => plan.kind === 'paid');
 
   return (
     <main className="landing">
@@ -45,15 +46,16 @@ export default async function HomePage() {
       </header>
 
       <section className="hero">
-        <p className="kicker">Early access | Solo from $149</p>
+        <p className="kicker">Subscriptions from MX$29 / mes | premium vault tiers</p>
         <h1>Schema-backed UI your AI agent can use with fewer blind guesses.</h1>
         <p className="lead">
           27 React components, 4 web components, MCP contracts, and starter tracks for PHP, Python,
           Java, .NET, Go, C, and C++. React is the stable surface; the rest ship as adapter or
-          template tracks with alpha/prototype status.
+          template tracks with alpha/prototype status. The commercial surface now scales in three
+          tiers: proof, production assets, and signature launch polish.
         </p>
         {signedInEmail ? (
-          <p className="lead">Signed in as {signedInEmail}. Your paid surface is available in the vault.</p>
+          <p className="lead">Signed in as {signedInEmail}. You can check free and paid access status in the vault.</p>
         ) : null}
         <div className="hero-actions">
           <Link href="/docs/installation" className="btn primary">Get Started</Link>
@@ -153,20 +155,51 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
         </article>
       </section>
 
-      <section className="pricing">
-        {salesPlans.slice(0, 2).map((plan) => {
+      <section className="tier-grid">
+        {paidPlans.map((plan, index) => {
           const classes = `card ${plan.kind === 'paid' ? 'highlight' : ''}`;
-          return plan.external ? (
-            <a key={plan.id} href={plan.href} target="_blank" rel="noreferrer" className={classes}>
-              <h3>{plan.name}</h3>
+          const hasDirectCheckout = plan.paymentActions.some((action) => action.tone !== 'ghost');
+          const ribbon =
+            index === 0 ? 'Premium Entry' : index === 1 ? 'Best Balance' : 'Signature Tier';
+
+          const content = (
+            <>
+              <div className="tier-head">
+                <div className="tier-title-block">
+                  <p className="plan-tier">Paid Subscription</p>
+                  <h3>{plan.name}</h3>
+                  <p>{plan.audience}</p>
+                </div>
+                <span className="tier-badge">{ribbon}</span>
+              </div>
               <p className="price-label compact">{plan.priceLabel}</p>
               <p>{plan.summary}</p>
+              <div className="payment-meta" aria-label={`Summary checkout for ${plan.name}`}>
+                <span
+                  className={`payment-chip ${hasDirectCheckout ? 'ready' : 'manual'}`}
+                >
+                  {hasDirectCheckout ? 'Checkout ready' : 'Manual checkout'}
+                </span>
+                {plan.paymentActions.some((action) => action.tone === 'paypal') ? (
+                  <span className="payment-chip alt">PayPal backup</span>
+                ) : null}
+              </div>
+              <p className="plan-note">{plan.checkoutHint}</p>
+              <span
+                className={`btn ${plan.paymentActions[0]?.tone === 'paypal' ? 'paypal' : plan.kind === 'paid' ? 'primary' : 'ghost'} button-like`}
+              >
+                {plan.paymentActions[0]?.label ?? plan.ctaLabel}
+              </span>
+            </>
+          );
+
+          return plan.external ? (
+            <a key={plan.id} href={plan.href} target="_blank" rel="noreferrer" className={`${classes} tier-card ${plan.id}`}>
+              {content}
             </a>
           ) : (
-            <Link key={plan.id} href={plan.href} className={classes}>
-              <h3>{plan.name}</h3>
-              <p className="price-label compact">{plan.priceLabel}</p>
-              <p>{plan.summary}</p>
+            <Link key={plan.id} href={plan.href} className={`${classes} tier-card ${plan.id}`}>
+              {content}
             </Link>
           );
         })}
@@ -177,7 +210,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
           <h2>Free vs Paid</h2>
           <ul>
             <li>Free surface stays public and MIT for trust and adoption.</li>
-            <li>Paid surface ships as private pro bundles, launch packs, and custom starters.</li>
+            <li>Paid surface now ladders from Solo proof into Pro assets and Launch Signature polish.</li>
             <li>Open packages are not sold as exclusive assets.</li>
           </ul>
         </article>

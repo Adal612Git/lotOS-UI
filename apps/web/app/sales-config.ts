@@ -9,6 +9,15 @@ export type SalesPlan = {
   ctaLabel: string;
   href: string;
   external?: boolean;
+  checkoutHint: string;
+  paymentActions: PaymentAction[];
+};
+
+export type PaymentAction = {
+  label: string;
+  href: string;
+  external: boolean;
+  tone: "primary" | "ghost" | "paypal";
 };
 
 const fallbackContact =
@@ -26,11 +35,85 @@ const linkOrFallback = (value: string | undefined, fallback: string) => {
   return normalized && normalized.length > 0 ? normalized : fallback;
 };
 
+function buildPaidActions(input: {
+  checkoutUrl?: string;
+  paypalUrl?: string;
+  fallbackUrl: string;
+  fallbackLabel: string;
+}) {
+  const checkoutUrl = input.checkoutUrl?.trim();
+  const paypalUrl = input.paypalUrl?.trim();
+  const paymentActions: PaymentAction[] = [];
+
+  if (checkoutUrl) {
+    paymentActions.push({
+      label: "Activar acceso ahora",
+      href: checkoutUrl,
+      external: true,
+      tone: "primary",
+    });
+  }
+
+  if (paypalUrl) {
+    paymentActions.push({
+      label: "Pagar con PayPal",
+      href: paypalUrl,
+      external: true,
+      tone: "paypal",
+    });
+  }
+
+  if (paymentActions.length === 0) {
+    paymentActions.push({
+      label: input.fallbackLabel,
+      href: input.fallbackUrl,
+      external: true,
+      tone: "ghost",
+    });
+  }
+
+  const primaryAction = paymentActions[0]!;
+
+  return {
+    href: primaryAction.href,
+    external: primaryAction.external,
+    paymentActions,
+    checkoutHint: checkoutUrl
+      ? paypalUrl
+        ? "Checkout principal listo para activar acceso. PayPal queda como respaldo."
+        : "Checkout principal listo para activar acceso mensual."
+      : paypalUrl
+        ? "PayPal listo como via de cobro. Agrega un checkout principal cuando quieras."
+        : "Sin checkout directo configurado. El flujo cae a contacto manual.",
+  };
+}
+
+const soloCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_SOLO_CHECKOUT_URL,
+  paypalUrl: process.env.LOTOS_SOLO_PAYPAL_URL,
+  fallbackUrl: fallbackContact,
+  fallbackLabel: "Contactar para cobrar Solo",
+});
+
+const proCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_PRO_CHECKOUT_URL,
+  paypalUrl: process.env.LOTOS_PRO_PAYPAL_URL,
+  fallbackUrl: fallbackContact,
+  fallbackLabel: "Contactar para cobrar Pro",
+});
+
+const launchCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_LAUNCH_PACK_URL,
+  paypalUrl: process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL,
+  fallbackUrl: fallbackDemo,
+  fallbackLabel: "Agendar cierre manual",
+});
+
 export const salesLinks = {
   free: "/docs/installation",
-  solo: linkOrFallback(process.env.LOTOS_SOLO_CHECKOUT_URL, fallbackContact),
-  pro: linkOrFallback(process.env.LOTOS_PRO_CHECKOUT_URL, fallbackContact),
-  launchPack: linkOrFallback(process.env.LOTOS_LAUNCH_PACK_URL, fallbackDemo),
+  solo: soloCheckout.href,
+  pro: proCheckout.href,
+  launchPack: launchCheckout.href,
   premiumPreview: linkOrFallback(process.env.LOTOS_PREMIUM_PREVIEW_URL, fallbackPreview),
   contact: fallbackContact,
   demo: fallbackDemo,
@@ -41,64 +124,80 @@ export const salesPlans: SalesPlan[] = [
     id: "free",
     name: "Free Surface",
     priceLabel: "$0",
-    summary: "Public MIT layer for evaluation, adoption, and technical validation.",
-    audience: "Engineers testing the platform before buying implementation velocity.",
+    summary: "Public MIT layer for evaluation, trust-building, and technical validation.",
+    audience: "Engineers validating the platform before moving into a paid acceleration tier.",
     features: [
       "@lotosui/core, claude-arm, cli, sentinel, and web-components",
-      "Public docs and desktop demos",
-      "CLI scaffolding and contract validation",
+      "Public docs, runtime guides, and desktop demos",
+      "CLI scaffolding, contracts, and adoption-safe trust surface",
     ],
     kind: "free",
     ctaLabel: "Start Free",
     href: salesLinks.free,
+    external: false,
+    checkoutHint: "Free access. No payment required.",
+    paymentActions: [
+      {
+        label: "Abrir gratis",
+        href: salesLinks.free,
+        external: false,
+        tone: "ghost",
+      },
+    ],
   },
   {
     id: "solo",
-    name: "Solo License",
-    priceLabel: "$29",
-    summary: "Commercial previews and light private access for a single operator.",
-    audience: "Freelancers, indie builders, and solo technical founders.",
+    name: "Solo Access",
+    priceLabel: "MX$29 / mes",
+    summary: "A premium monthly entry tier for one operator who wants private proof, not just public docs.",
+    audience: "Freelancers, indie builders, and solo founders who need fast premium validation assets.",
     features: [
-      "Protected preview downloads",
-      "Solo access to controlled evaluation assets",
-      "Upgrade path into Pro and Launch",
+      "Buyer-only vault access for one operator",
+      "Premium previews, sales proof decks, and controlled evaluation assets",
+      "Monthly access to private trust materials without opening the full Pro payload",
     ],
     kind: "paid",
-    ctaLabel: "Buy Solo",
-    href: salesLinks.solo,
-    external: true,
+    ctaLabel: "Start Solo",
+    href: soloCheckout.href,
+    external: soloCheckout.external,
+    checkoutHint: soloCheckout.checkoutHint,
+    paymentActions: soloCheckout.paymentActions,
   },
   {
     id: "pro",
-    name: "Pro License",
-    priceLabel: "$79",
-    summary: "Team-focused bundle with protected packs, layouts, and spreadsheet kits.",
-    audience: "Agencies, startups, and internal platform teams.",
+    name: "Pro Studio",
+    priceLabel: "MX$79 / mes",
+    summary: "The core paid tier for teams that want the real private bundle, premium kits, and production-facing assets.",
+    audience: "Agencies, startups, and internal platform teams that need reusable premium delivery assets.",
     features: [
-      "Protected `packages/pro` delivery surface",
-      "Industry kits, layouts, and Pro manifests",
-      "Desktop template Pro surface and spreadsheet kits",
+      "Everything in Solo plus the real protected Pro asset surface",
+      "Industry kits, signature layouts, Pro manifests, and spreadsheet modernization kits",
+      "Pro-only desktop template catalog and higher-value private bundle unlocks",
     ],
     kind: "paid",
-    ctaLabel: "Buy Pro",
-    href: salesLinks.pro,
-    external: true,
+    ctaLabel: "Upgrade to Pro",
+    href: proCheckout.href,
+    external: proCheckout.external,
+    checkoutHint: proCheckout.checkoutHint,
+    paymentActions: proCheckout.paymentActions,
   },
   {
     id: "launch-pack",
-    name: "Launch Pack",
-    priceLabel: "$149",
-    summary: "Fastest path from payment to a private deliverable you can hand off to a client.",
-    audience: "Customers who want a starter, not just access.",
+    name: "Launch Signature",
+    priceLabel: "MX$149 / mes",
+    summary: "The top tier: a premium launch command room with founder-grade assets, handoff intelligence, and exclusive release polish.",
+    audience: "Buyers who want the strongest private surface, launch-ready polish, and premium operator confidence.",
     features: [
-      "Everything in Pro",
-      "Customer-specific starter or handoff packaging",
-      "Private ZIP or private repository delivery",
+      "Everything in Pro plus the private launch control surface",
+      "Signature handoff playbooks, launch-room assets, and premium rollout materials",
+      "Highest-priority commercial polish designed to feel exclusive from day one",
     ],
     kind: "paid",
-    ctaLabel: "Book Launch Pack",
-    href: salesLinks.launchPack,
-    external: true,
+    ctaLabel: "Enter Launch Signature",
+    href: launchCheckout.href,
+    external: launchCheckout.external,
+    checkoutHint: launchCheckout.checkoutHint,
+    paymentActions: launchCheckout.paymentActions,
   },
 ];
 
@@ -109,11 +208,10 @@ export const freeSurface = [
 ];
 
 export const paidSurface = [
-  "Private pro asset packs",
-  "Launch Pack delivery flow",
-  "Customer-specific starters and implementation acceleration",
+  "Private premium asset packs served behind authenticated vault access",
+  "Three paid tiers with escalating monthly value from proof to production to launch polish",
   "Premium Preview pack for pre-sale proof and internal QA",
-  "Excel and OpenOffice spreadsheet upgrade kits",
+  "Exclusive layouts, industry kits, spreadsheet upgrades, and launch-grade control assets",
 ];
 
 export const premiumPreviewSurface = [
@@ -125,10 +223,10 @@ export const premiumPreviewSurface = [
 ];
 
 export const premiumReasonsToPay = [
-  "Paid buyers get private assets that are not distributed through the public MIT layer.",
-  "The launch pack collapses time-to-delivery by bundling a curated private payload plus customer-specific starter output.",
-  "You can prove the premium surface before purchase with a controlled preview, then deliver the full private release after payment.",
-  "The free layer builds trust; the paid layer buys speed, polish, and private acceleration.",
+  "Paid buyers unlock a private vault surface that does not ship through the public MIT layer.",
+  "Solo buys confidence, Pro buys execution speed, and Launch Signature buys the highest commercial polish.",
+  "You can show controlled proof before purchase, then unlock progressively richer premium surfaces after payment.",
+  "The free layer earns trust; the paid tiers sell exclusivity, speed, presentation quality, and protected access.",
 ];
 
 export const checkoutEnvKeys = [
@@ -136,17 +234,18 @@ export const checkoutEnvKeys = [
   "GOOGLE_CLIENT_SECRET",
   "AUTH_SECRET",
   "SUPABASE_URL",
+  "SUPABASE_PUBLISHABLE_KEY",
+  "SUPABASE_SECRET_KEY",
   "SUPABASE_ANON_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
-  "LEMON_WEBHOOK_SECRET",
-  "LEMON_SOLO_VARIANT_ID",
-  "LEMON_PRO_VARIANT_ID",
-  "LEMON_LAUNCH_VARIANT_ID",
   "LOTOS_OWNER_EMAILS",
   "LOTOS_CONTACT_SALES_URL",
   "LOTOS_BOOKING_URL",
   "LOTOS_SOLO_CHECKOUT_URL",
+  "LOTOS_SOLO_PAYPAL_URL",
   "LOTOS_PRO_CHECKOUT_URL",
+  "LOTOS_PRO_PAYPAL_URL",
   "LOTOS_LAUNCH_PACK_URL",
+  "LOTOS_LAUNCH_PACK_PAYPAL_URL",
   "LOTOS_PREMIUM_PREVIEW_URL",
 ];

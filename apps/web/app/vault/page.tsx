@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getViewerContext } from '../../lib/auth-server';
 import '../lotos-landing.css';
+import { GrantAccessForm } from '../grant-access-form';
 
 export default async function VaultPage() {
   const viewer = await getViewerContext();
@@ -58,6 +59,19 @@ export default async function VaultPage() {
           </ul>
         </article>
       </section>
+
+      {viewer.isOwner ? (
+        <section className="card owner-panel">
+          <p className="section-label">Owner tools</p>
+          <h2>Confirm payment, then unlock the buyer</h2>
+          <p>
+            Use this when you need an operator override: confirm the Lemon Squeezy subscription,
+            Mercado Pago receipt, or fallback payment, then grant the matching plan to the buyer
+            email from here.
+          </p>
+          <GrantAccessForm />
+        </section>
+      ) : null}
     </main>
   );
 }

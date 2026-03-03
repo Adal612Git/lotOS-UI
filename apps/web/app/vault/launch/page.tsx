@@ -17,30 +17,32 @@ export default async function LaunchVaultPage() {
       </header>
 
       <section className="hero compact">
-        <p className="kicker">Launch Pack</p>
-        <h1>Private delivery and customer-specific handoff readiness.</h1>
+        <p className="kicker">Launch Signature</p>
+        <h1>Top-tier launch polish, private control assets, and the most premium vault surface.</h1>
         <p className="lead">
-          Launch Pack sits above Pro. It covers the protected asset surface plus private delivery and
-          custom starter output for a paying client handoff.
+          Launch Signature sits above Pro. It is the commercial control room for buyers who want the
+          strongest presentation quality, the richest premium surface, and the most exclusive-feeling
+          launch-ready materials you offer.
         </p>
       </section>
 
       <section className="grid two">
         <article className="card luxury">
           <p className="section-label">Included</p>
-          <h2>What Launch adds on top of Pro</h2>
+          <h2>What Launch Signature adds on top of Pro</h2>
           <ul>
-            <li>Customer-specific starter generation and handoff packaging.</li>
-            <li>Private ZIP or private repo delivery after payment clears.</li>
-            <li>Commercial readiness flow for first-sale execution.</li>
+            <li>Signature handoff decks, launch-room proof assets, and premium rollout framing.</li>
+            <li>Highest-tier positioning for buyers who want the strongest commercial polish.</li>
+            <li>Exclusive launch-facing materials designed to make the product feel elite.</li>
           </ul>
         </article>
         <article className="card">
           <p className="section-label">Delivery note</p>
-          <h2>Current repo-safe implementation</h2>
+          <h2>Current implementation scope</h2>
           <p>
-            This route protects the commercial control surface inside `apps/web`. It does not move the
-            underlying package out of the monorepo yet, which matches the current rollout scope.
+            This route protects the commercial control surface inside `apps/web`. It is the highest
+            entitlement tier in the current rollout and is meant to feel richer, more curated, and
+            more exclusive than the Pro surface.
           </p>
         </article>
       </section>

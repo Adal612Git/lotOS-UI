@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LotOS UI | Mockups para imagenes de Lemon Squeezy</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0f1c30;
+      --panel: rgba(15, 28, 48, 0.86);
+      --line: rgba(148, 163, 184, 0.2);
+      --text: #e5eefc;
+      --muted: #94a3b8;
+      --solo-a: #22d3ee;
+      --solo-b: #3b82f6;
+      --pro-a: #f97316;
+      --pro-b: #ef4444;
+      --launch-a: #fb7185;
+      --launch-b: #a855f7;
+      --ok: #34d399;
+      --warn: #fbbf24;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font: 15px/1.5 "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(34, 211, 238, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(244, 63, 94, 0.08), transparent 26%),
+        linear-gradient(180deg, #030712, #09111f 38%, #08101d);
+    }
+
+    .page {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero,
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 18px 60px rgba(2, 6, 23, 0.28);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--solo-a);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 880px;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(148, 163, 184, 0.08);
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .section {
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      align-items: end;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .shot {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    .shot-frame {
+      aspect-ratio: 4 / 3;
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      position: relative;
+    }
+
+    .shot-label {
+      padding: 14px 16px;
+      border-top: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.5);
+    }
+
+    .shot-label strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .shot-label span {
+      color: var(--muted);
+      font-size: 12px;
+      display: block;
+    }
+
+    .solo-cover {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(34, 211, 238, 0.26), transparent 26%),
+        radial-gradient(circle at 82% 20%, rgba(59, 130, 246, 0.24), transparent 24%),
+        linear-gradient(145deg, #071827, #0a2742 52%, #0c1d36);
+    }
+
+    .pro-cover {
+      background:
+        radial-gradient(circle at 16% 16%, rgba(249, 115, 22, 0.26), transparent 24%),
+        radial-gradient(circle at 82% 20%, rgba(239, 68, 68, 0.2), transparent 24%),
+        linear-gradient(145deg, #1d0f0a, #34140c 50%, #271219);
+    }
+
+    .launch-cover {
+      background:
+        radial-gradient(circle at 18% 16%, rgba(251, 113, 133, 0.24), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(168, 85, 247, 0.22), transparent 24%),
+        linear-gradient(145deg, #1f0d18, #30102a 52%, #1a1236);
+    }
+
+    .brand {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(229, 238, 252, 0.9);
+    }
+
+    .headline {
+      align-self: end;
+    }
+
+    .headline h3 {
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .headline p {
+      font-size: 14px;
+      max-width: 320px;
+      color: rgba(229, 238, 252, 0.82);
+    }
+
+    .cover-footer {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-self: end;
+    }
+
+    .tag {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(229, 238, 252, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      color: rgba(229, 238, 252, 0.95);
+    }
+
+    .vault {
+      background:
+        linear-gradient(180deg, rgba(8, 17, 30, 0.95), rgba(8, 17, 30, 0.9)),
+        linear-gradient(145deg, #06111c, #102036);
+      grid-template-rows: auto auto 1fr auto;
+    }
+
+    .mini-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 12px;
+    }
+
+    .mini-pill {
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(52, 211, 153, 0.22);
+      background: rgba(52, 211, 153, 0.08);
+      color: #bbf7d0;
+    }
+
+    .mini-hero {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(34, 211, 238, 0.05);
+    }
+
+    .mini-hero strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .mini-hero span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mini-card {
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .mini-card ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .cta-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cta {
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .cta.primary { background: rgba(34, 211, 238, 0.12); }
+    .cta.alt { background: rgba(249, 115, 22, 0.1); }
+    .cta.warn { background: rgba(251, 113, 133, 0.1); }
+
+    .matrix {
+      background: linear-gradient(180deg, rgba(8, 17, 30, 0.95), rgba(8, 17, 30, 0.92));
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .matrix-head {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .cell {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 11px;
+    }
+
+    .cell strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .matrix-rows {
+      display: grid;
+      gap: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .yes {
+      color: #bbf7d0;
+      font-weight: 700;
+    }
+
+    .no {
+      color: #fecaca;
+      font-weight: 700;
+    }
+
+    .note {
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px dashed rgba(251, 191, 36, 0.22);
+      background: rgba(251, 191, 36, 0.06);
+      color: #fde68a;
+      font-size: 12px;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Guia visual</p>
+      <h1>Mockups practicos para las imagenes de Lemon Squeezy</h1>
+      <p>
+        Este archivo te muestra como deberian verse, en la practica, las imagenes del checkout para
+        `Solo`, `Pro` y `Launch Pack`. No son los artes finales; son una referencia visual clara para
+        que el cliente entienda el formato, el contenido y el nivel de claridad que debe ver.
+      </p>
+      <div class="meta">
+        <span class="chip">Formato recomendado: 1600 x 1200</span>
+        <span class="chip">Relacion: 4:3</span>
+        <span class="chip">Usa 1 a 3 imagenes por producto</span>
+        <span class="chip">No prometas trabajo manual post-pago</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Producto 1</p>
+          <h2>Solo</h2>
+        </div>
+        <p>El mas simple para arrancar. Debe verse como acceso privado para una sola persona, con entrega inmediata.</p>
+      </div>
+      <div class="grid">
+        <article class="shot">
+          <div class="shot-frame solo-cover">
+            <div class="brand">LotOS UI</div>
+            <div class="headline">
+              <h3>Solo License</h3>
+              <p>Private buyer access for one operator with protected previews and quick-start vault entry.</p>
+            </div>
+            <div class="cover-footer">
+              <span class="tag">1 operator</span>
+              <span class="tag">Immediate access</span>
+              <span class="tag">Private assets</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-solo-cover-1600x1200.png`</strong>
+            <span>Portada comercial. Debe dejar claro el plan, el valor y que es acceso privado instantaneo.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame vault">
+            <div class="mini-top">
+              <span>LotOS UI Vault</span>
+              <span class="mini-pill">Solo active</span>
+            </div>
+            <div class="mini-hero">
+              <strong>Protected Solo Surface</strong>
+              <span>Signed in as buyer@correo.com with ready access to preview-only files.</span>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>Unlocked</strong>
+                <ul>
+                  <li>Premium preview files</li>
+                  <li>Protected downloads</li>
+                  <li>Quick-start docs</li>
+                </ul>
+              </div>
+              <div class="mini-card">
+                <strong>Not included</strong>
+                <ul>
+                  <li>Full Pro bundle</li>
+                  <li>Team distribution</li>
+                  <li>Custom starter work</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cta-bar">
+              <span class="cta primary">Open Vault</span>
+              <span class="cta">Download Pack</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-solo-vault-1600x1200.png`</strong>
+            <span>Captura del producto. Muestra el tipo de acceso que el comprador vera al entrar.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame matrix">
+            <div class="matrix-head">
+              <div class="cell"><strong>Solo License</strong>Resumen rapido para checkout</div>
+              <div class="cell"><strong>Entrega</strong>Inmediata</div>
+              <div class="cell"><strong>Acceso</strong>1 operador</div>
+            </div>
+            <div class="matrix-rows">
+              <div class="row">
+                <div class="cell">Premium preview files</div>
+                <div class="cell yes">Si</div>
+                <div class="cell">Descarga protegida</div>
+              </div>
+              <div class="row">
+                <div class="cell">Vault buyer access</div>
+                <div class="cell yes">Si</div>
+                <div class="cell">Correo comprador</div>
+              </div>
+              <div class="row">
+                <div class="cell">Custom handoff work</div>
+                <div class="cell no">No</div>
+                <div class="cell">No prometerlo aqui</div>
+              </div>
+            </div>
+            <div class="note">Esta imagen debe responder en 3 segundos: que incluye, como se entrega y que no incluye.</div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-solo-includes-1600x1200.png`</strong>
+            <span>Matriz de incluidos. Sirve para reducir dudas y evitar reclamos por expectativas difusas.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" style="color: var(--pro-a);">Producto 2</p>
+          <h2>Pro</h2>
+        </div>
+        <p>Debe sentirse mas robusto que Solo. Visualmente tiene que comunicar activos premium y uso para equipos.</p>
+      </div>
+      <div class="grid">
+        <article class="shot">
+          <div class="shot-frame pro-cover">
+            <div class="brand">LotOS UI</div>
+            <div class="headline">
+              <h3>Pro License</h3>
+              <p>Protected premium assets, team-ready bundles, and faster implementation for agencies and startups.</p>
+            </div>
+            <div class="cover-footer">
+              <span class="tag">Team-ready</span>
+              <span class="tag">Premium bundle</span>
+              <span class="tag">Private access</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-pro-cover-1600x1200.png`</strong>
+            <span>Portada Pro. Debe marcar mas valor, mas superficie premium y una compra orientada a equipo.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame vault">
+            <div class="mini-top">
+              <span>LotOS UI Vault</span>
+              <span class="mini-pill">Pro active</span>
+            </div>
+            <div class="mini-hero" style="background: rgba(249, 115, 22, 0.05);">
+              <strong>Protected Pro Surface</strong>
+              <span>Premium layouts, manifests, previews and delivery assets available after payment.</span>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>Unlocked</strong>
+                <ul>
+                  <li>Pro bundle manifests</li>
+                  <li>Layouts and kits</li>
+                  <li>Protected previews</li>
+                </ul>
+              </div>
+              <div class="mini-card">
+                <strong>Use case</strong>
+                <ul>
+                  <li>Agencies</li>
+                  <li>Startups</li>
+                  <li>Internal platform teams</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cta-bar">
+              <span class="cta alt">Open Pro Vault</span>
+              <span class="cta">Download Bundle</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-pro-vault-1600x1200.png`</strong>
+            <span>Captura del producto Pro. Muestra con claridad el salto de valor frente a Solo.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame matrix">
+            <div class="matrix-head">
+              <div class="cell"><strong>Pro License</strong>Resumen rapido para equipos</div>
+              <div class="cell"><strong>Entrega</strong>Inmediata</div>
+              <div class="cell"><strong>Acceso</strong>Premium</div>
+            </div>
+            <div class="matrix-rows">
+              <div class="row">
+                <div class="cell">Protected Pro assets</div>
+                <div class="cell yes">Si</div>
+                <div class="cell">Bundle privado</div>
+              </div>
+              <div class="row">
+                <div class="cell">Layouts and kits</div>
+                <div class="cell yes">Si</div>
+                <div class="cell">Listo para descarga</div>
+              </div>
+              <div class="row">
+                <div class="cell">Manual implementation by founder</div>
+                <div class="cell no">No</div>
+                <div class="cell">No lo prometas en checkout</div>
+              </div>
+            </div>
+            <div class="note">Aqui el comprador debe entender que compra un bundle premium, no horas tuyas de trabajo.</div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-pro-includes-1600x1200.png`</strong>
+            <span>Matriz Pro. Debe enfocarse en bundle privado, valor premium y entrega automatica.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" style="color: var(--launch-a);">Producto 3</p>
+          <h2>Launch Pack</h2>
+        </div>
+        <p>Solo usalo en Lemon Squeezy si lo que vendes esta completamente listo en el instante del pago.</p>
+      </div>
+      <div class="grid">
+        <article class="shot">
+          <div class="shot-frame launch-cover">
+            <div class="brand">LotOS UI</div>
+            <div class="headline">
+              <h3>Launch Pack</h3>
+              <p>Fast private delivery starter for buyers who need a ready package, not a consulting engagement.</p>
+            </div>
+            <div class="cover-footer">
+              <span class="tag">Fast-start</span>
+              <span class="tag">Protected starter</span>
+              <span class="tag">Only if instant</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-launch-cover-1600x1200.png`</strong>
+            <span>Portada Launch. Si la usas, debe comunicar un starter listo, no una promesa de trabajo posterior.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame vault">
+            <div class="mini-top">
+              <span>LotOS UI Vault</span>
+              <span class="mini-pill">Launch active</span>
+            </div>
+            <div class="mini-hero" style="background: rgba(251, 113, 133, 0.05);">
+              <strong>Launch Delivery Surface</strong>
+              <span>Protected starter, handoff notes and ready-to-download private assets.</span>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>Allowed</strong>
+                <ul>
+                  <li>Ready private starter</li>
+                  <li>Prebuilt handoff files</li>
+                  <li>Immediate download</li>
+                </ul>
+              </div>
+              <div class="mini-card">
+                <strong>Not allowed</strong>
+                <ul>
+                  <li>Custom coding after payment</li>
+                  <li>Manual packaging after purchase</li>
+                  <li>Delayed fulfillment promises</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cta-bar">
+              <span class="cta warn">Open Launch Surface</span>
+              <span class="cta">Download Starter</span>
+            </div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-launch-flow-1600x1200.png`</strong>
+            <span>Captura Launch. Solo es valida si lo que muestras ya existe y se entrega automaticamente.</span>
+          </div>
+        </article>
+
+        <article class="shot">
+          <div class="shot-frame matrix">
+            <div class="matrix-head">
+              <div class="cell"><strong>Launch Pack</strong>Validacion comercial</div>
+              <div class="cell"><strong>Entrega</strong>Debe ser inmediata</div>
+              <div class="cell"><strong>Riesgo</strong>Alto si es manual</div>
+            </div>
+            <div class="matrix-rows">
+              <div class="row">
+                <div class="cell">Ready private starter ZIP</div>
+                <div class="cell yes">Si</div>
+                <div class="cell">Apto para Lemon</div>
+              </div>
+              <div class="row">
+                <div class="cell">Manual customization after payment</div>
+                <div class="cell no">No</div>
+                <div class="cell">Saca esto de Lemon</div>
+              </div>
+              <div class="row">
+                <div class="cell">Consulting-style fulfillment</div>
+                <div class="cell no">No</div>
+                <div class="cell">Usa Contact Sales</div>
+              </div>
+            </div>
+            <div class="note">Si esta imagen no puede sostenerse con verdad, no publiques Launch Pack en checkout directo.</div>
+          </div>
+          <div class="shot-label">
+            <strong>`lemon-launch-includes-1600x1200.png`</strong>
+            <span>Matriz Launch. Sirve como filtro interno para no vender algo que Lemon no permite.</span>
+          </div>
+        </article>
+      </div>
+      <p class="footer-note">
+        Si `Launch Pack` depende de trabajo manual posterior, deja este plan fuera de Lemon Squeezy y mantenlo como cierre manual o `Contact Sales`.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
