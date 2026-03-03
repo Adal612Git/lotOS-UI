@@ -23,6 +23,18 @@ __pycache__/
 # Vercel
 .vercel
 
+# Local planning / manuals / scratch assets (do not deploy or commit)
+ONE/.claude/
+ONE/COMMERCIAL_CATALOG_SOURCE_OF_TRUTH_2026-03-01.md
+ONE/COMMERCIAL_COMPONENT_CATALOG_VISUAL_2026-03-01.html
+ONE/LOTOS_MANUAL_2026.html
+ONE/LOTOS_MANUAL_FINAL_VERSION2026.pdf
+ONE/LOTOS_MASTER_HANDBOOK_AND_GTM_2026.md
+ONE/generate-pdf.js
+ONE/lotos_ui_tesina_notebooklm.html
+ONE/lotos_ui_tesina_notebooklmFINALVERSION.pdf
+Plandeventa.html
+
 # Build Outputs
 .next/
 out/
