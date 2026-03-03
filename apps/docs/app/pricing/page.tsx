@@ -15,26 +15,28 @@ export default async function DocsPricingPage() {
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Pricing / Precios</p>
           <div className={styles.heroBadges} aria-label="Commercial plans">
-            <span className={`${styles.heroBadge} ${styles.badgeStable}`}>Solo MX$29 / mes</span>
-            <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Pro MX$79 / mes</span>
-            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Launch MX$149 / mes</span>
+            <span className={`${styles.heroBadge} ${styles.badgeStable}`}>Solo MX$59 / mes</span>
+            <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Pro MX$129 / mes</span>
+            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Launch MX$249 / mes</span>
           </div>
           <h1>
             Commercial access starts here
             <span>without leaving the docs domain</span>
           </h1>
           <p className={styles.lead}>
-            Free docs remain public. Paid access now climbs through three monthly tiers: premium
-            proof, real private assets, and a top-tier signature launch surface.
+            Free docs remain public. Phase 1 paid access now climbs through three founders-price
+            monthly tiers, reserved only for the first 20 customers.
           </p>
           <div className={styles.paymentMeta} aria-label="Accepted payment methods">
+            <span className={`${styles.paymentChip} ${styles.paymentChipAlt}`}>Founders price</span>
+            <span className={`${styles.paymentChip} ${styles.paymentChipManual}`}>First 20 customers</span>
             <span className={`${styles.paymentChip} ${styles.paymentChipReady}`}>Lemon-ready subscriptions</span>
             <span className={`${styles.paymentChip} ${styles.paymentChipAlt}`}>Mercado Pago fallback</span>
             <span className={`${styles.paymentChip} ${styles.paymentChipManual}`}>Google vault access</span>
           </div>
           <p className={styles.heroProof}>
-            This page should convert, not just explain. Every plan below is a deliberate recurring
-            buying path with a stronger premium feeling than the tier before it.
+            This page should convert, not just explain. Every plan below is part of the founders
+            window, and each one should feel more premium than the tier before it.
           </p>
           <div className={styles.heroActions}>
             {signedIn ? (
@@ -59,15 +61,16 @@ export default async function DocsPricingPage() {
             <li>Solo opens the premium proof layer for one operator.</li>
             <li>Pro unlocks the actual protected kits and monthly execution value.</li>
             <li>Launch Signature is the highest-polish commercial tier in the stack.</li>
+            <li>Founders pricing stays only for the first 20 customers who move early.</li>
           </ul>
         </aside>
       </section>
 
       <section className={`${styles.band} ${styles.statsBand}`}>
         <article><strong>$0</strong><span>Free docs</span></article>
-        <article><strong>MX$29</strong><span>Solo proof</span></article>
-        <article><strong>MX$79</strong><span>Pro assets</span></article>
-        <article><strong>MX$149</strong><span>Launch polish</span></article>
+        <article><strong>MX$59</strong><span>Solo proof</span></article>
+        <article><strong>MX$129</strong><span>Pro assets</span></article>
+        <article><strong>MX$249</strong><span>Launch polish</span></article>
       </section>
 
       <section className={`${styles.band} ${styles.plansGrid}`}>

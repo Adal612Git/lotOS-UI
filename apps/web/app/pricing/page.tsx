@@ -4,6 +4,7 @@ import { authOptions } from '../../auth-options';
 import { AuthAction } from '../auth-action';
 import {
   checkoutEnvKeys,
+  foundersOffer,
   freeSurface,
   paidSurface,
   premiumPreviewSurface,
@@ -41,13 +42,15 @@ export default async function PricingPage() {
 
       <section className="hero compact">
         <p className="kicker">Pricing and Delivery</p>
-        <h1>Three paid tiers built to feel progressively more exclusive, polished, and worth it.</h1>
+        <h1>Phase 1 founders pricing is live for the first 20 customers, with three tiers that scale in polish.</h1>
         <p className="lead">
           The public layer builds trust. `Solo` gives a premium first step, `Pro` unlocks the real
           private bundle, and `Launch Signature` turns the experience into a top-tier commercial
-          surface your best buyers can feel immediately.
+          surface. This founders window stays available only while the first 20 customers are still open.
         </p>
         <div className="payment-meta" aria-label="Accepted payment methods">
+          <span className="payment-chip alt">{foundersOffer.label}</span>
+          <span className="payment-chip manual">{foundersOffer.limitLabel}</span>
           <span className="payment-chip ready">Lemon-ready subscriptions</span>
           <span className="payment-chip alt">Mercado Pago fallback</span>
           <span className="payment-chip manual">Google vault access</span>
@@ -166,7 +169,7 @@ export default async function PricingPage() {
             <article key={plan.id} className={`tier-card ${plan.id}`}>
               <div className="tier-head">
                 <div className="tier-title-block">
-                  <p className="plan-tier">{plan.kind === 'paid' ? 'Paid Subscription' : 'Free'}</p>
+                  <p className="plan-tier">{plan.kind === 'paid' ? 'Founders Launch' : 'Free'}</p>
                   <h3>{plan.name}</h3>
                   <p>{plan.audience}</p>
                 </div>
@@ -275,7 +278,7 @@ pnpm.cmd run prep:first-sale`}</code></pre>
           <p className="section-label">Close the deal</p>
           <h2>What happens after the click</h2>
           <ol>
-            <li>The buyer chooses the tier that matches their monthly value target.</li>
+            <li>The buyer chooses the tier and locks founders pricing if they are still inside the first 20 customers.</li>
             <li>The checkout flow clears payment and your entitlement path unlocks the matching plan.</li>
             <li>The buyer signs in and experiences a clearly richer vault surface at every paid tier.</li>
           </ol>

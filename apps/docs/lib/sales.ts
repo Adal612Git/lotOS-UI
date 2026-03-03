@@ -104,9 +104,10 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'solo',
     name: 'Solo Access',
-    priceLabel: 'MX$29 / mes',
-    summary: 'Premium entry tier for private proof, evaluation assets, and buyer-only monthly access.',
+    priceLabel: 'MX$59 / mes',
+    summary: 'Founders launch entry tier for private proof, evaluation assets, and buyer-only monthly access.',
     features: [
+      'Founders launch pricing locked for one of the first 20 customers',
       'Buyer-only vault access for one operator',
       'Commercial preview downloads and evaluation-only protected materials',
       'The lightest paid tier before stepping into Pro',
@@ -118,9 +119,10 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'pro',
     name: 'Pro Studio',
-    priceLabel: 'MX$79 / mes',
-    summary: 'The main premium tier: protected kits, layouts, and private production-facing assets.',
+    priceLabel: 'MX$129 / mes',
+    summary: 'The main founders tier: protected kits, layouts, and private production-facing assets.',
     features: [
+      'Founders launch pricing locked for one of the first 20 customers',
       'Protected kits, layouts, and the real premium asset surface',
       'Excel and OpenOffice Pro kits',
       'Desktop template Pro access and richer monthly value',
@@ -132,9 +134,10 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'launch_pack',
     name: 'Launch Signature',
-    priceLabel: 'MX$149 / mes',
-    summary: 'Top-tier commercial polish with elite-feeling launch assets and the strongest private positioning.',
+    priceLabel: 'MX$249 / mes',
+    summary: 'Top-tier founders pricing with elite-feeling launch assets and the strongest private positioning.',
     features: [
+      'Founders launch pricing locked for one of the first 20 customers',
       'Everything in Pro plus signature launch-room materials',
       'Highest-polish commercial positioning and premium rollout framing',
       'The most exclusive-feeling recurring tier in the current ladder',

@@ -72,9 +72,9 @@ export default async function ProVaultPage() {
           <p>Extra operator-facing catalog depth that expands the sense of value beyond raw files.</p>
         </article>
         <article className="vault-kpi">
-          <strong>MX$79</strong>
+          <strong>MX$129</strong>
           <span>Core premium tier</span>
-          <p>The strongest balance tier for recurring value, reusable assets, and real private leverage.</p>
+          <p>Phase 1 founders pricing for the first 20 customers positions Pro as the value center of the ladder.</p>
         </article>
       </section>
 

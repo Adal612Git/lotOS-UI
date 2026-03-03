@@ -72,9 +72,9 @@ export default async function SoloVaultPage() {
           <p>Solo is intentionally focused: one buyer, one recurring path, one clean upgrade ladder.</p>
         </article>
         <article className="vault-kpi">
-          <strong>MX$29</strong>
+          <strong>MX$59</strong>
           <span>Monthly entry point</span>
-          <p>A compact price designed to lower resistance while still feeling meaningfully premium.</p>
+          <p>Phase 1 founders pricing for the first 20 customers keeps this tier accessible but still premium.</p>
         </article>
       </section>
 

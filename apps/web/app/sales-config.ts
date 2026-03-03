@@ -119,6 +119,14 @@ export const salesLinks = {
   demo: fallbackDemo,
 };
 
+export const foundersOffer = {
+  label: "Founders price",
+  limitLabel: "First 20 customers",
+  summary: "Phase 1 launch pricing stays locked only for the first 20 customers.",
+};
+
+export const salesVerificationMarkers = ["Buy Solo", "Buy Pro", "Book Launch Pack"];
+
 export const salesPlans: SalesPlan[] = [
   {
     id: "free",
@@ -148,10 +156,11 @@ export const salesPlans: SalesPlan[] = [
   {
     id: "solo",
     name: "Solo Access",
-    priceLabel: "MX$29 / mes",
+    priceLabel: "MX$59 / mes",
     summary: "A premium monthly entry tier for one operator who wants private proof, not just public docs.",
     audience: "Freelancers, indie builders, and solo founders who need fast premium validation assets.",
     features: [
+      "Founders launch pricing locked for one of the first 20 customers",
       "Buyer-only vault access for one operator",
       "Premium previews, sales proof decks, and controlled evaluation assets",
       "Monthly access to private trust materials without opening the full Pro payload",
@@ -166,10 +175,11 @@ export const salesPlans: SalesPlan[] = [
   {
     id: "pro",
     name: "Pro Studio",
-    priceLabel: "MX$79 / mes",
+    priceLabel: "MX$129 / mes",
     summary: "The core paid tier for teams that want the real private bundle, premium kits, and production-facing assets.",
     audience: "Agencies, startups, and internal platform teams that need reusable premium delivery assets.",
     features: [
+      "Founders launch pricing locked for one of the first 20 customers",
       "Everything in Solo plus the real protected Pro asset surface",
       "Industry kits, signature layouts, Pro manifests, and spreadsheet modernization kits",
       "Pro-only desktop template catalog and higher-value private bundle unlocks",
@@ -184,10 +194,11 @@ export const salesPlans: SalesPlan[] = [
   {
     id: "launch-pack",
     name: "Launch Signature",
-    priceLabel: "MX$149 / mes",
+    priceLabel: "MX$249 / mes",
     summary: "The top tier: a premium launch command room with founder-grade assets, handoff intelligence, and exclusive release polish.",
     audience: "Buyers who want the strongest private surface, launch-ready polish, and premium operator confidence.",
     features: [
+      "Founders launch pricing locked for one of the first 20 customers",
       "Everything in Pro plus the private launch control surface",
       "Signature handoff playbooks, launch-room assets, and premium rollout materials",
       "Highest-priority commercial polish designed to feel exclusive from day one",
@@ -209,7 +220,7 @@ export const freeSurface = [
 
 export const paidSurface = [
   "Private premium asset packs served behind authenticated vault access",
-  "Three paid tiers with escalating monthly value from proof to production to launch polish",
+  "Three paid tiers in a founders launch window reserved for the first 20 customers",
   "Premium Preview pack for pre-sale proof and internal QA",
   "Exclusive layouts, industry kits, spreadsheet upgrades, and launch-grade control assets",
 ];
@@ -225,6 +236,7 @@ export const premiumPreviewSurface = [
 export const premiumReasonsToPay = [
   "Paid buyers unlock a private vault surface that does not ship through the public MIT layer.",
   "Solo buys confidence, Pro buys execution speed, and Launch Signature buys the highest commercial polish.",
+  "Phase 1 founders pricing is intentionally limited to the first 20 customers who lock in early.",
   "You can show controlled proof before purchase, then unlock progressively richer premium surfaces after payment.",
   "The free layer earns trust; the paid tiers sell exclusivity, speed, presentation quality, and protected access.",
 ];

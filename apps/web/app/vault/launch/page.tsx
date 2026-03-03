@@ -57,9 +57,9 @@ export default async function LaunchVaultPage() {
           <p>The top rung in the current ladder, positioned to feel elite from the first screen.</p>
         </article>
         <article className="vault-kpi">
-          <strong>MX$149</strong>
+          <strong>MX$249</strong>
           <span>Prestige subscription</span>
-          <p>Your strongest recurring price should come with stronger curation, not just more noise.</p>
+          <p>Phase 1 founders pricing for the first 20 customers still preserves this tier as the prestige ceiling.</p>
         </article>
         <article className="vault-kpi">
           <strong>Top</strong>

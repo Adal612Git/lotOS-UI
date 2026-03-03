@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
 import { authOptions } from '../auth-options';
 import { AuthAction } from './auth-action';
-import { salesLinks, salesPlans } from './sales-config';
+import { foundersOffer, salesLinks, salesPlans } from './sales-config';
 
 const runtimeRows = [
   ['React', 'Stable', 'Stable', '27 shipped components in the public package'],
@@ -46,13 +46,13 @@ export default async function HomePage() {
       </header>
 
       <section className="hero">
-        <p className="kicker">Subscriptions from MX$29 / mes | premium vault tiers</p>
+        <p className="kicker">Founders pricing from MX$59 / mes | first 20 customers</p>
         <h1>Schema-backed UI your AI agent can use with fewer blind guesses.</h1>
         <p className="lead">
           27 React components, 4 web components, MCP contracts, and starter tracks for PHP, Python,
           Java, .NET, Go, C, and C++. React is the stable surface; the rest ship as adapter or
           template tracks with alpha/prototype status. The commercial surface now scales in three
-          tiers: proof, production assets, and signature launch polish.
+          tiers: proof, production assets, and signature launch polish during the current founders window.
         </p>
         {signedInEmail ? (
           <p className="lead">Signed in as {signedInEmail}. You can check free and paid access status in the vault.</p>
@@ -166,7 +166,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
             <>
               <div className="tier-head">
                 <div className="tier-title-block">
-                  <p className="plan-tier">Paid Subscription</p>
+                  <p className="plan-tier">{foundersOffer.label}</p>
                   <h3>{plan.name}</h3>
                   <p>{plan.audience}</p>
                 </div>
@@ -211,6 +211,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
           <ul>
             <li>Free surface stays public and MIT for trust and adoption.</li>
             <li>Paid surface now ladders from Solo proof into Pro assets and Launch Signature polish.</li>
+            <li>The current founders price is reserved for the first 20 customers only.</li>
             <li>Open packages are not sold as exclusive assets.</li>
           </ul>
         </article>
