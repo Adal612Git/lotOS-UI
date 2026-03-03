@@ -39,7 +39,8 @@ export default async function DocsVaultPage() {
           </h1>
           <p className={styles.lead}>
             The login loop is now alive on the docs domain. This confirms Google OAuth, callback
-            wiring, and session persistence are working from the public front door.
+            wiring, and session persistence are working from the public front door. It also means
+            the paid ladder can feel real the moment a subscription is attached.
           </p>
           <p className={styles.heroProof}>
             {owner
@@ -63,16 +64,35 @@ export default async function DocsVaultPage() {
 
         <aside className={styles.sidePanel}>
           <p className={styles.eyebrow}>Commercial status</p>
-          <h3>{hasPro ? 'This account is near the premium path.' : 'This account is authenticated, not monetized yet.'}</h3>
+          <h3>{hasPro ? 'This account is inside the premium path.' : 'This account is authenticated, not monetized yet.'}</h3>
           <ul>
             <li>Login is real and session-backed.</li>
             <li>Entitlements are read live from Supabase.</li>
-            <li>Paid access appears only after Lemon writes a row for this email.</li>
+            <li>Paid access appears only after checkout clears and this email gets a plan row.</li>
           </ul>
           {nextPlan ? (
-            <a href={nextPlan.href} target="_blank" rel="noreferrer" className={`${styles.btn} ${styles.btnPrimary}`}>
-              {nextPlan.id === 'launch_pack' ? 'Buy Launch Pack' : `Buy ${nextPlan.name}`}
-            </a>
+            <>
+              <p className={styles.checkoutHint}>{nextPlan.checkoutHint}</p>
+              <div className={styles.paymentActions} role="group" aria-label={`Payment options for ${nextPlan.name}`}>
+                {nextPlan.paymentActions.map((action) => (
+                  <a
+                    key={action.label}
+                    href={action.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${styles.btn} ${
+                      action.tone === 'primary'
+                        ? styles.btnPrimary
+                        : action.tone === 'paypal'
+                          ? styles.btnPayPal
+                          : styles.btnGhost
+                    }`}
+                  >
+                    {action.label}
+                  </a>
+                ))}
+              </div>
+            </>
           ) : null}
         </aside>
       </section>
@@ -83,8 +103,8 @@ export default async function DocsVaultPage() {
           <h2>The auth layer is alive on the actual production domain.</h2>
           <p>
             This route confirms the critical path is working: user hits docs, clicks sign in, returns
-            through Google, and lands in a session-backed page. Next we can extend the same session
-            into entitlement-aware premium routes if needed.
+            through Google, and lands in a session-backed page. From there, the same session can
+            step into a progressively richer premium route as subscriptions unlock higher tiers.
           </p>
         </div>
       </section>
@@ -102,8 +122,8 @@ export default async function DocsVaultPage() {
           <h2>{hasPro ? 'This account is ready for premium delivery.' : 'This account still needs a paid plan.'}</h2>
           <p>
             {hasPro
-              ? 'The session is live and a premium plan is present. The remaining step is to connect this docs-side vault to the exact premium assets or redirects you want to expose.'
-              : 'Right now, this page proves login works. A paid plan appears here only after the Lemon webhook writes an entitlement row for this email in Supabase.'}
+              ? 'The session is live and a premium plan is present. The remaining step is to keep enriching the protected assets or redirects so the buyer feels a clear jump in value at each tier.'
+              : 'Right now, this page proves login works. A paid plan appears here only after checkout clears and an entitlement row is attached for this email in Supabase.'}
           </p>
           {!hasPro ? (
             <div className={styles.heroActions}>
@@ -134,9 +154,26 @@ export default async function DocsVaultPage() {
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
-              <a href={plan.href} target="_blank" rel="noreferrer" className={`${styles.btn} ${styles.btnPrimary}`}>
-                {plan.id === 'launch_pack' ? 'Book Launch Pack' : `Buy ${plan.name}`}
-              </a>
+              <p className={styles.checkoutHint}>{plan.checkoutHint}</p>
+              <div className={styles.paymentActions} role="group" aria-label={`Payment options for ${plan.name}`}>
+                {plan.paymentActions.map((action) => (
+                  <a
+                    key={action.label}
+                    href={action.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${styles.btn} ${
+                      action.tone === 'primary'
+                        ? styles.btnPrimary
+                        : action.tone === 'paypal'
+                          ? styles.btnPayPal
+                          : styles.btnGhost
+                    }`}
+                  >
+                    {action.label}
+                  </a>
+                ))}
+              </div>
             </article>
           ))}
         </section>

@@ -5,6 +5,14 @@ export interface SalesPlan {
   summary: string;
   features: string[];
   href: string;
+  checkoutHint: string;
+  paymentActions: PaymentAction[];
+}
+
+export interface PaymentAction {
+  label: string;
+  href: string;
+  tone: 'primary' | 'ghost' | 'paypal';
 }
 
 const fallbackContact =
@@ -15,53 +23,124 @@ const fallbackDemo =
   process.env.LOTOS_BOOKING_URL?.trim() ||
   fallbackContact;
 
-const normalizeLink = (value: string | undefined, fallback: string) => {
-  const normalized = value?.trim();
-  return normalized && normalized.length > 0 ? normalized : fallback;
-};
+function buildPaidActions(input: {
+  checkoutUrl?: string;
+  paypalUrl?: string;
+  fallbackUrl: string;
+  fallbackLabel: string;
+}) {
+  const checkoutUrl = input.checkoutUrl?.trim();
+  const paypalUrl = input.paypalUrl?.trim();
+  const paymentActions: PaymentAction[] = [];
+
+  if (checkoutUrl) {
+    paymentActions.push({
+      label: 'Activar acceso ahora',
+      href: checkoutUrl,
+      tone: 'primary',
+    });
+  }
+
+  if (paypalUrl) {
+    paymentActions.push({
+      label: 'Pagar con PayPal',
+      href: paypalUrl,
+      tone: 'paypal',
+    });
+  }
+
+  if (paymentActions.length === 0) {
+    paymentActions.push({
+      label: input.fallbackLabel,
+      href: input.fallbackUrl,
+      tone: 'ghost',
+    });
+  }
+
+  const primaryAction = paymentActions[0]!;
+
+  return {
+    href: primaryAction.href,
+    paymentActions,
+    checkoutHint: checkoutUrl
+      ? paypalUrl
+        ? 'Checkout principal listo para activar acceso. PayPal queda como respaldo.'
+        : 'Checkout principal listo para activar acceso mensual.'
+      : paypalUrl
+        ? 'PayPal listo como via de cobro. El checkout principal sigue opcional.'
+        : 'Sin checkout directo configurado. El flujo cae a contacto manual.',
+  };
+}
+
+const soloCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_SOLO_CHECKOUT_URL,
+  paypalUrl: process.env.LOTOS_SOLO_PAYPAL_URL,
+  fallbackUrl: fallbackContact,
+  fallbackLabel: 'Contactar para cobrar Solo',
+});
+
+const proCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_PRO_CHECKOUT_URL,
+  paypalUrl: process.env.LOTOS_PRO_PAYPAL_URL,
+  fallbackUrl: fallbackContact,
+  fallbackLabel: 'Contactar para cobrar Pro',
+});
+
+const launchCheckout = buildPaidActions({
+  checkoutUrl: process.env.LOTOS_LAUNCH_PACK_URL,
+  paypalUrl: process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL,
+  fallbackUrl: fallbackDemo,
+  fallbackLabel: 'Agendar cierre manual',
+});
 
 export const salesLinks = {
-  solo: normalizeLink(process.env.LOTOS_SOLO_CHECKOUT_URL, fallbackContact),
-  pro: normalizeLink(process.env.LOTOS_PRO_CHECKOUT_URL, fallbackContact),
-  launchPack: normalizeLink(process.env.LOTOS_LAUNCH_PACK_URL, fallbackDemo),
+  solo: soloCheckout.href,
+  pro: proCheckout.href,
+  launchPack: launchCheckout.href,
   contact: fallbackContact,
 };
 
 export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'solo',
-    name: 'Solo',
-    priceLabel: '$29',
-    summary: 'For previews, evaluation assets, and first paid access.',
+    name: 'Solo Access',
+    priceLabel: 'MX$29 / mes',
+    summary: 'Premium entry tier for private proof, evaluation assets, and buyer-only monthly access.',
     features: [
-      'Commercial preview downloads',
-      'Evaluation-only protected materials',
-      'Upgrade path into Pro',
+      'Buyer-only vault access for one operator',
+      'Commercial preview downloads and evaluation-only protected materials',
+      'The lightest paid tier before stepping into Pro',
     ],
-    href: salesLinks.solo,
+    href: soloCheckout.href,
+    checkoutHint: soloCheckout.checkoutHint,
+    paymentActions: soloCheckout.paymentActions,
   },
   {
     id: 'pro',
-    name: 'Pro',
-    priceLabel: '$79',
-    summary: 'For the real protected surface: kits, layouts, and premium delivery prep.',
+    name: 'Pro Studio',
+    priceLabel: 'MX$79 / mes',
+    summary: 'The main premium tier: protected kits, layouts, and private production-facing assets.',
     features: [
-      'Protected kits and premium assets',
-      'Excel and OpenOffice pro kits',
-      'Desktop template pro access',
+      'Protected kits, layouts, and the real premium asset surface',
+      'Excel and OpenOffice Pro kits',
+      'Desktop template Pro access and richer monthly value',
     ],
-    href: salesLinks.pro,
+    href: proCheckout.href,
+    checkoutHint: proCheckout.checkoutHint,
+    paymentActions: proCheckout.paymentActions,
   },
   {
     id: 'launch_pack',
-    name: 'Launch Pack',
-    priceLabel: '$149',
-    summary: 'For the fastest client-ready handoff with curated premium delivery.',
+    name: 'Launch Signature',
+    priceLabel: 'MX$149 / mes',
+    summary: 'Top-tier commercial polish with elite-feeling launch assets and the strongest private positioning.',
     features: [
-      'Everything in Pro',
-      'Launch-ready handoff path',
-      'Private delivery and starter packaging',
+      'Everything in Pro plus signature launch-room materials',
+      'Highest-polish commercial positioning and premium rollout framing',
+      'The most exclusive-feeling recurring tier in the current ladder',
     ],
-    href: salesLinks.launchPack,
+    href: launchCheckout.href,
+    checkoutHint: launchCheckout.checkoutHint,
+    paymentActions: launchCheckout.paymentActions,
   },
 ];

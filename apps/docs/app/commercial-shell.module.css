@@ -88,6 +88,37 @@
   color: #fbcfe8;
 }
 
+.paymentChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.paymentChipReady {
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(45, 212, 191, 0.3);
+  color: #99f6e4;
+}
+
+.paymentChipAlt {
+  background: rgba(0, 156, 222, 0.14);
+  border-color: rgba(56, 189, 248, 0.28);
+  color: #bae6fd;
+}
+
+.paymentChipManual {
+  background: rgba(165, 180, 252, 0.14);
+  border-color: rgba(165, 180, 252, 0.26);
+  color: #e0e7ff;
+}
+
 .lead {
   margin: 18px 0 0;
   max-width: 650px;
@@ -112,24 +143,56 @@
   margin-top: 24px;
 }
 
+.paymentMeta,
+.paymentActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.paymentMeta {
+  margin-top: 18px;
+}
+
+.paymentActions {
+  margin-top: 4px;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
   text-decoration: none;
-  padding: 11px 16px;
+  padding: 12px 18px;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 800;
-  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.18);
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(2, 6, 23, 0.26);
 }
 
 .btnPrimary {
-  background: linear-gradient(120deg, #14b8a6, #2563eb);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 48%),
+    linear-gradient(120deg, #14b8a6, #2563eb 56%, #7c3aed);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.btnPayPal {
+  background: linear-gradient(120deg, #003087, #009cde);
   color: #fff;
   border: 1px solid transparent;
 }
@@ -275,6 +338,31 @@
   gap: 12px;
 }
 
+.solo {
+  background:
+    radial-gradient(circle at top right, rgba(34, 211, 238, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(9, 24, 45, 0.96), rgba(9, 20, 37, 0.88));
+  border-color: rgba(56, 189, 248, 0.18);
+}
+
+.pro {
+  background:
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(9, 24, 45, 0.96), rgba(9, 20, 37, 0.88));
+  border-color: rgba(251, 146, 60, 0.18);
+}
+
+.launch_pack {
+  background:
+    radial-gradient(circle at top right, rgba(244, 114, 182, 0.08), transparent 38%),
+    radial-gradient(circle at top left, rgba(168, 85, 247, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(9, 24, 45, 0.96), rgba(9, 20, 37, 0.88));
+  border-color: rgba(216, 180, 254, 0.2);
+  box-shadow:
+    0 22px 46px rgba(76, 29, 149, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
 .planCardHighlight {
   border-color: rgba(103, 232, 249, 0.2);
   background:
@@ -308,6 +396,13 @@
   color: rgba(214, 228, 255, 0.8);
   font-size: 14px;
   line-height: 1.6;
+}
+
+.checkoutHint {
+  margin: 0;
+  color: rgba(191, 219, 254, 0.8);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 .planCard ul {

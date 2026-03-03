@@ -5,6 +5,9 @@ import { GrantAccessForm } from '../grant-access-form';
 
 export default async function VaultPage() {
   const viewer = await getViewerContext();
+  const hasSolo = viewer.isOwner || viewer.plans.includes('solo') || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
+  const hasPro = viewer.isOwner || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
+  const hasLaunch = viewer.isOwner || viewer.plans.includes('launch_pack');
 
   return (
     <main className="landing pricing-page">
@@ -19,7 +22,7 @@ export default async function VaultPage() {
 
       <section className="hero compact">
         <p className="kicker">Commercial Vault</p>
-        <h1>Protected delivery for Solo, Pro, and Launch buyers.</h1>
+        <h1>Protected delivery with a three-tier premium ladder that should feel richer at every step.</h1>
         <p className="lead">
           Signed in as <strong>{viewer.email}</strong>. Free assets stay public; protected assets
           unlock here based on entitlement or owner status.
@@ -35,6 +38,24 @@ export default async function VaultPage() {
             Launch Surface
           </Link>
         </div>
+      </section>
+
+      <section className="vault-strip">
+        <article className="vault-kpi">
+          <strong>{hasSolo ? 'Yes' : 'No'}</strong>
+          <span>Solo access</span>
+          <p>Premium proof assets and the first private layer above the public trust surface.</p>
+        </article>
+        <article className="vault-kpi">
+          <strong>{hasPro ? 'Yes' : 'No'}</strong>
+          <span>Pro access</span>
+          <p>The real premium bundle tier with protected assets, templates, and stronger monthly value.</p>
+        </article>
+        <article className="vault-kpi">
+          <strong>{hasLaunch ? 'Yes' : 'No'}</strong>
+          <span>Launch access</span>
+          <p>The prestige layer with the highest commercial polish and most exclusive premium framing.</p>
+        </article>
       </section>
 
       <section className="grid two">
@@ -57,6 +78,21 @@ export default async function VaultPage() {
             <li>Protected `packages/pro` delivery assets and manifests.</li>
             <li>Desktop template Pro catalog surfaces and kit downloads.</li>
           </ul>
+        </article>
+      </section>
+
+      <section className="value-grid">
+        <article className="value-card">
+          <h3>Solo Access</h3>
+          <p>For premium proof, controlled previews, and a buyer-only entry point that feels private without giving away the strongest assets.</p>
+        </article>
+        <article className="value-card">
+          <h3>Pro Studio</h3>
+          <p>For buyers who want the real protected product surface: reusable kits, layouts, manifests, and stronger production leverage.</p>
+        </article>
+        <article className="value-card">
+          <h3>Launch Signature</h3>
+          <p>For buyers who want the highest-polish experience, the strongest premium framing, and the most exclusive-feeling tier in the stack.</p>
         </article>
       </section>
 

@@ -1,12 +1,20 @@
 import { z } from 'zod';
 
-const optionalString = z.string().trim().min(1).optional();
+const optionalString = z.preprocess((value) => {
+  if (typeof value !== 'string') {
+    return value;
+  }
+
+  return value.trim().length === 0 ? undefined : value;
+}, z.string().trim().min(1).optional());
 
 const envSchema = z.object({
   GOOGLE_CLIENT_ID: optionalString,
   GOOGLE_CLIENT_SECRET: optionalString,
   AUTH_SECRET: optionalString,
   SUPABASE_URL: optionalString,
+  SUPABASE_PUBLISHABLE_KEY: optionalString,
+  SUPABASE_SECRET_KEY: optionalString,
   SUPABASE_ANON_KEY: optionalString,
   SUPABASE_SERVICE_ROLE_KEY: optionalString,
   LEMON_WEBHOOK_SECRET: optionalString,
@@ -27,6 +35,8 @@ const parsed = envSchema.parse({
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   AUTH_SECRET: process.env.AUTH_SECRET,
   SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY,
+  SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY,
   SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
   SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   LEMON_WEBHOOK_SECRET: process.env.LEMON_WEBHOOK_SECRET,
@@ -47,11 +57,18 @@ const ownerEmails = (parsed.LOTOS_OWNER_EMAILS ?? '')
   .map((email) => email.trim().toLowerCase())
   .filter(Boolean);
 
+const supabasePublishableKey = parsed.SUPABASE_PUBLISHABLE_KEY ?? parsed.SUPABASE_ANON_KEY;
+const supabaseServerKey = parsed.SUPABASE_SECRET_KEY ?? parsed.SUPABASE_SERVICE_ROLE_KEY;
+
 export const env = {
   ...parsed,
+  SUPABASE_PUBLISHABLE_KEY: supabasePublishableKey,
+  SUPABASE_SECRET_KEY: supabaseServerKey,
+  SUPABASE_ANON_KEY: supabasePublishableKey,
+  SUPABASE_SERVICE_ROLE_KEY: supabaseServerKey,
   ownerEmails,
   googleConfigured: Boolean(parsed.GOOGLE_CLIENT_ID && parsed.GOOGLE_CLIENT_SECRET),
-  supabaseConfigured: Boolean(parsed.SUPABASE_URL && parsed.SUPABASE_SERVICE_ROLE_KEY),
+  supabaseConfigured: Boolean(parsed.SUPABASE_URL && supabaseServerKey),
   lemonConfigured: Boolean(
     parsed.LEMON_WEBHOOK_SECRET &&
     parsed.LEMON_SOLO_VARIANT_ID &&
