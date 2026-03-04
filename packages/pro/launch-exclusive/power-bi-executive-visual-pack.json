@@ -1,0 +1,21 @@
+{
+  "id": "power-bi-executive-visual-pack",
+  "name": "Power BI Executive Visual Pack",
+  "tier": "launch_pack",
+  "platform": "Power BI",
+  "runtime": "typescript",
+  "purpose": "Package executive-grade visual patterns for board dashboards, operator summaries, and narrative analytics surfaces.",
+  "deliveryMode": [
+    "visual spec pack",
+    "executive theme tokens",
+    "annotation guidance",
+    "visual hierarchy presets"
+  ],
+  "includes": [
+    "board KPI cluster",
+    "narrative trend panel",
+    "priority variance strip",
+    "executive filter rail"
+  ],
+  "commercialAngle": "Enterprise analytics polish for customers who need dashboards to look high-trust and expensive."
+}

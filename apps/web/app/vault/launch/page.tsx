@@ -1,29 +1,30 @@
 import Link from 'next/link';
 import { requirePlanAccess } from '../../../lib/auth-server';
+import { launchAssets } from '../../../lib/commercial-assets';
 import '../../lotos-landing.css';
 
 const launchSignatureLayers = [
   {
-    title: 'Prestige tier',
+    title: 'Integrated premium tier',
     summary:
-      'This is the highest entitlement tier in the current product. It should feel like the buyer entered an operator lounge, not just another downloads page.',
+      'This is the highest entitlement tier in the current product. It should now feel like a distinct product line, not just a prettier version of Pro.',
   },
   {
-    title: 'Launch-room framing',
+    title: 'Launch-only surfaces',
     summary:
-      'The purpose of this tier is not only more access. It is a stronger sense of polish, confidence, and premium control around the launch story.',
+      'The purpose of this tier is not only more polish. It now reserves integrated work surfaces that do not ship in Pro.',
   },
   {
-    title: 'Exclusive by contrast',
+    title: 'Exclusive by ecosystem',
     summary:
-      'Launch Signature becomes valuable when it is visibly more curated, more deliberate, and more elite-feeling than Pro.',
+      'Launch Signature becomes valuable when it opens new ecosystems: Sheets, Microsoft 365, Outlook, Power BI, Figma, and executive command surfaces.',
   },
 ];
 
 const launchUseCases = [
-  'Use this surface to house the most polished commercial proof and launch-facing materials you own.',
-  'Reserve the strongest narrative assets, signature decks, and prestige framing for this tier.',
-  'Make this feel like a premium command room for buyers who want the best version of the product story.',
+  'Use this tier for premium modernization offers inside tools buyers already live in every day.',
+  'Reserve integrated surfaces here so Launch is a new category of delivery, not just more framing.',
+  'Sell this as the command-room tier for spreadsheet, inbox, analytics, and executive workflows.',
 ];
 
 export default async function LaunchVaultPage() {
@@ -42,29 +43,29 @@ export default async function LaunchVaultPage() {
 
       <section className="hero compact">
         <p className="kicker">Launch Signature</p>
-        <h1>The prestige layer: top-tier polish, launch-room framing, and your most exclusive premium surface.</h1>
+        <h1>The prestige layer now carries launch-only operator surfaces, not just higher polish.</h1>
         <p className="lead">
-          Launch Signature sits above Pro. It is the commercial control room for buyers who want the
-          strongest presentation quality, the richest premium surface, and the most exclusive-feeling
-          launch-ready materials you offer.
+          Launch Signature sits above Pro. It now reserves six launch-only surfaces for Google
+          Sheets, Microsoft 365 Excel Web, Outlook, Power BI, Figma, and executive boardroom
+          delivery. This is the tier for buyers who want a category jump, not just a nicer wrapper.
         </p>
       </section>
 
       <section className="vault-strip">
         <article className="vault-kpi">
-          <strong>Tier 3</strong>
-          <span>Highest entitlement</span>
-          <p>The top rung in the current ladder, positioned to feel elite from the first screen.</p>
+          <strong>{launchAssets.length}</strong>
+          <span>Launch-only assets</span>
+          <p>Exclusive manifests and premium surfaces that do not ship in Pro.</p>
         </article>
         <article className="vault-kpi">
           <strong>MX$249</strong>
           <span>Prestige subscription</span>
-          <p>Phase 1 founders pricing for the first 20 customers still preserves this tier as the prestige ceiling.</p>
+          <p>Phase 1 founders pricing for the first 20 customers, now tied to a truly distinct top tier.</p>
         </article>
         <article className="vault-kpi">
-          <strong>Top</strong>
-          <span>Commercial polish</span>
-          <p>This is the place for the best narrative, the best framing, and the most premium perception.</p>
+          <strong>6</strong>
+          <span>New ecosystems</span>
+          <p>Sheets, Microsoft 365, Outlook, Power BI, Figma, and executive boardroom delivery.</p>
         </article>
       </section>
 
@@ -80,11 +81,11 @@ export default async function LaunchVaultPage() {
       <section className="grid two">
         <article className="card luxury">
           <p className="section-label">Included</p>
-          <h2>What Launch Signature adds on top of Pro</h2>
+          <h2>What Launch Signature now adds on top of Pro</h2>
           <ul>
-            <li>Signature handoff decks, launch-room proof assets, and premium rollout framing.</li>
-            <li>Highest-tier positioning for buyers who want the strongest commercial polish.</li>
-            <li>Exclusive launch-facing materials designed to make the product feel elite.</li>
+            <li>Six launch-only manifests that do not exist in the Pro entitlement.</li>
+            <li>Integrated surfaces for spreadsheet, inbox, analytics, design-token, and executive workflows.</li>
+            <li>Highest-tier positioning for buyers who want premium delivery plus category expansion.</li>
           </ul>
         </article>
         <article className="card">
@@ -98,21 +99,44 @@ export default async function LaunchVaultPage() {
         </article>
       </section>
 
+      <section className="vault-assets-grid">
+        {launchAssets.map((asset) => (
+          <article key={asset.id} className="asset-card launch">
+            <div className="asset-top">
+              <div>
+                <p className="plan-tier">Launch Exclusive Surface</p>
+                <h3>{asset.name}</h3>
+                <p>{asset.description}</p>
+              </div>
+              <span className="asset-file">{asset.fileName}</span>
+            </div>
+            <div className="asset-meta" aria-label={`Asset metadata for ${asset.name}`}>
+              <span className="payment-chip ready">Launch-only</span>
+              <span className="payment-chip alt">Integrated surface</span>
+              <span className="payment-chip manual">Top-tier delivery</span>
+            </div>
+            <a className="btn primary full" href={`/api/download/${asset.id}`}>
+              Unlock {asset.name}
+            </a>
+          </article>
+        ))}
+      </section>
+
       <section className="tier-upgrade-panel">
         <p className="section-label">Current implementation scope</p>
-        <h2>This route is already the premium ceiling. Now the job is to make it feel unmistakably special.</h2>
+        <h2>This route is still the premium ceiling, but now it has its own launch-exclusive payload to defend that claim.</h2>
         <div className="tier-upgrade-grid">
           <article className="value-card">
-            <h3>Richer curation</h3>
-            <p>Keep the strongest assets, cleanest proof, and most polished positioning here.</p>
+            <h3>Integrated modernization</h3>
+            <p>Use Launch for premium workflow upgrades inside spreadsheet, inbox, and analytics environments.</p>
           </article>
           <article className="value-card">
             <h3>Sharper separation</h3>
-            <p>The more distinct this feels from Pro, the more believable your highest tier becomes.</p>
+            <p>Launch now differentiates itself by ecosystem and delivery type, not only by visual polish.</p>
           </article>
           <article className="value-card">
             <h3>Premium retention</h3>
-            <p>Recurring buyers stay longer when the top tier feels curated, intentional, and status-bearing.</p>
+            <p>Recurring buyers stay longer when the top tier unlocks assets they cannot already get in Pro.</p>
           </article>
         </div>
         <div className="tier-foot-strip">
@@ -127,17 +151,17 @@ export default async function LaunchVaultPage() {
           <h2>Current implementation scope</h2>
           <p>
             This route protects the commercial control surface inside `apps/web`. It is the highest
-            entitlement tier in the current rollout and is meant to feel richer, more curated, and
-            more exclusive than the Pro surface.
+            entitlement tier in the current rollout and now includes a dedicated launch-exclusive
+            manifest set inside `packages/pro/launch-exclusive`.
           </p>
         </article>
         <article className="card">
           <p className="section-label">Founder standard</p>
           <h2>What belongs here</h2>
           <p>
-            If an asset, narrative, or premium surface does not noticeably raise the sense of
-            exclusivity, it probably belongs in Pro. Launch Signature should carry the pieces that
-            make the product feel elite.
+            If an asset does not open a new paid ecosystem, it probably belongs in Pro. Launch
+            Signature should carry the pieces that make the product feel like a new tier category,
+            not just a prettier package.
           </p>
         </article>
       </section>

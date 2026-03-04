@@ -195,12 +195,13 @@ export const salesPlans: SalesPlan[] = [
     id: "launch-pack",
     name: "Launch Signature",
     priceLabel: "MX$249 / mes",
-    summary: "The top tier: a premium launch command room with founder-grade assets, handoff intelligence, and exclusive release polish.",
-    audience: "Buyers who want the strongest private surface, launch-ready polish, and premium operator confidence.",
+    summary: "The top tier: a premium launch suite with launch-only operator surfaces, handoff intelligence, and exclusive release polish.",
+    audience: "Buyers who want integrated premium surfaces, launch-only assets, and the strongest operator-grade commercial package.",
     features: [
       "Founders launch pricing locked for one of the first 20 customers",
-      "Everything in Pro plus the private launch control surface",
-      "Signature handoff playbooks, launch-room assets, and premium rollout materials",
+      "Everything in Pro plus six launch-only surfaces that do not exist in the Pro tier",
+      "Google Sheets, Microsoft 365 Excel Web, and Outlook command surfaces for premium modernization offers",
+      "Executive boardroom, Power BI visual pack, and Figma token sync assets reserved for the top tier",
       "Highest-priority commercial polish designed to feel exclusive from day one",
     ],
     kind: "paid",
@@ -222,7 +223,7 @@ export const paidSurface = [
   "Private premium asset packs served behind authenticated vault access",
   "Three paid tiers in a founders launch window reserved for the first 20 customers",
   "Premium Preview pack for pre-sale proof and internal QA",
-  "Exclusive layouts, industry kits, spreadsheet upgrades, and launch-grade control assets",
+  "Exclusive layouts, industry kits, spreadsheet upgrades, and launch-only integrated operator surfaces",
 ];
 
 export const premiumPreviewSurface = [
@@ -237,6 +238,7 @@ export const premiumReasonsToPay = [
   "Paid buyers unlock a private vault surface that does not ship through the public MIT layer.",
   "Solo buys confidence, Pro buys execution speed, and Launch Signature buys the highest commercial polish.",
   "Phase 1 founders pricing is intentionally limited to the first 20 customers who lock in early.",
+  "Launch now reserves integrated premium surfaces for Sheets, Microsoft 365, Outlook, Power BI, and Figma that are not included in Pro.",
   "You can show controlled proof before purchase, then unlock progressively richer premium surfaces after payment.",
   "The free layer earns trust; the paid tiers sell exclusivity, speed, presentation quality, and protected access.",
 ];

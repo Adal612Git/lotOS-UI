@@ -1,0 +1,21 @@
+{
+  "id": "executive-boardroom-surface",
+  "name": "Executive Boardroom Surface",
+  "tier": "launch_pack",
+  "platform": "Web / Desktop Handoff",
+  "runtime": "typescript",
+  "purpose": "Deliver a board-ready command layer for executive reporting, narrative KPIs, and decision framing.",
+  "deliveryMode": [
+    "boardroom layout pack",
+    "decision review flow",
+    "narrative KPI shell",
+    "presentation handoff notes"
+  ],
+  "includes": [
+    "headline metric wall",
+    "strategic risk rail",
+    "decision log panel",
+    "board-ready summary strip"
+  ],
+  "commercialAngle": "Premium executive presentation for buyers who want a visibly stronger top-tier deliverable."
+}

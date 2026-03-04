@@ -134,11 +134,61 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     fileName: 'openoffice-calc-command-kit.json',
     sourceCandidates: ['packages/pro/industry-kits/openoffice-calc-command-kit.json'],
   },
+  {
+    id: 'google-sheets-command-kit',
+    name: 'Google Sheets Command Kit',
+    description: 'Launch-only premium spreadsheet shell for Google Sheets operator workflows.',
+    plan: 'launch_pack',
+    fileName: 'google-sheets-command-kit.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/google-sheets-command-kit.json'],
+  },
+  {
+    id: 'm365-excel-web-kit',
+    name: 'Microsoft 365 Excel Web Kit',
+    description: 'Launch-only browser-first Excel operator surface for Microsoft 365 teams.',
+    plan: 'launch_pack',
+    fileName: 'microsoft-365-excel-web-kit.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/microsoft-365-excel-web-kit.json'],
+  },
+  {
+    id: 'outlook-approval-console',
+    name: 'Outlook Approval Console',
+    description: 'Launch-only approval and triage surface built for email-driven workflows.',
+    plan: 'launch_pack',
+    fileName: 'outlook-approval-console.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/outlook-approval-console.json'],
+  },
+  {
+    id: 'executive-boardroom-surface',
+    name: 'Executive Boardroom Surface',
+    description: 'Launch-only executive command layer for board-ready decisions and reporting.',
+    plan: 'launch_pack',
+    fileName: 'executive-boardroom-surface.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/executive-boardroom-surface.json'],
+  },
+  {
+    id: 'power-bi-executive-visual-pack',
+    name: 'Power BI Executive Visual Pack',
+    description: 'Launch-only visual pack for premium executive analytics and reporting surfaces.',
+    plan: 'launch_pack',
+    fileName: 'power-bi-executive-visual-pack.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/power-bi-executive-visual-pack.json'],
+  },
+  {
+    id: 'figma-token-sync-plugin',
+    name: 'Figma Token Sync Plugin',
+    description: 'Launch-only design handoff bridge for premium theme and token alignment.',
+    plan: 'launch_pack',
+    fileName: 'figma-token-sync-plugin.json',
+    sourceCandidates: ['packages/pro/launch-exclusive/figma-token-sync-plugin.json'],
+  },
 ];
 
 export const soloAssets = protectedAssets.filter((asset) => asset.plan === 'solo');
 
 export const proAssets = protectedAssets.filter((asset) => asset.plan === 'pro');
+
+export const launchAssets = protectedAssets.filter((asset) => asset.plan === 'launch_pack');
 
 export const proDesktopTemplates: readonly DesktopTemplateSummary[] = [
   {

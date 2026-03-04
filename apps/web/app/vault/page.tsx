@@ -54,7 +54,7 @@ export default async function VaultPage() {
         <article className="vault-kpi">
           <strong>{hasLaunch ? 'Yes' : 'No'}</strong>
           <span>Launch access</span>
-          <p>The prestige layer with the highest commercial polish and most exclusive premium framing.</p>
+          <p>The prestige layer with launch-only integrated surfaces for premium operator workflows.</p>
         </article>
       </section>
 
@@ -92,7 +92,7 @@ export default async function VaultPage() {
         </article>
         <article className="value-card">
           <h3>Launch Signature</h3>
-          <p>For buyers who want the highest-polish experience, the strongest premium framing, and the most exclusive-feeling tier in the stack.</p>
+          <p>For buyers who want launch-only Sheets, Outlook, analytics, Figma, and executive command surfaces on top of the Pro bundle.</p>
         </article>
       </section>
 

@@ -1,0 +1,21 @@
+{
+  "id": "figma-token-sync-plugin",
+  "name": "Figma Token Sync Plugin",
+  "tier": "launch_pack",
+  "platform": "Figma",
+  "runtime": "typescript",
+  "purpose": "Bridge design tokens, palette packs, and premium launch themes between Figma and delivery-ready LotOS surfaces.",
+  "deliveryMode": [
+    "token sync manifest",
+    "theme export rules",
+    "brand palette map",
+    "handoff checklist"
+  ],
+  "includes": [
+    "brand slot mapping",
+    "palette presets",
+    "theme validation states",
+    "handoff export flow"
+  ],
+  "commercialAngle": "Lets buyers keep design and premium delivery visually aligned without a manual token mess."
+}
