@@ -1,6 +1,6 @@
 {
   "id": "launch-exclusive-surfaces",
-  "name": "LotOS Launch Exclusive Surfaces",
+  "name": "LotOS Full Exclusive Surfaces",
   "tier": "launch_pack",
   "version": "0.1.0",
   "entries": [
@@ -11,7 +11,7 @@
     "power-bi-executive-visual-pack.json",
     "figma-token-sync-plugin.json"
   ],
-  "positioning": "Launch-only surfaces for integrated operator workflows and premium commercial delivery.",
+  "positioning": "Full-only surfaces for integrated operator workflows and premium commercial delivery.",
   "delivery": [
     "private-zip",
     "private-repository",

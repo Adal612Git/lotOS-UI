@@ -132,12 +132,13 @@ export const salesPlans: SalesPlan[] = [
     id: "free",
     name: "Free Surface",
     priceLabel: "$0",
-    summary: "Public MIT layer for evaluation, trust-building, and technical validation.",
-    audience: "Engineers validating the platform before moving into a paid acceleration tier.",
+    summary: "A richer public foundation for serious evaluation, trust-building, and adoption before buyers move into the private tiers.",
+    audience: "Engineers, founders, and technical evaluators who need real public value before they commit to a paid acceleration tier.",
     features: [
-      "@lotosui/core, claude-arm, cli, sentinel, and web-components",
-      "Public docs, runtime guides, and desktop demos",
-      "CLI scaffolding, contracts, and adoption-safe trust surface",
+      "@lotosui/core, claude-arm, cli, sentinel, and web-components in the public MIT layer",
+      "Public docs, runtime guides, design references, and desktop demos for broader technical validation",
+      "CLI scaffolding, contracts, and adoption-safe trust surface for serious first evaluation",
+      "A complete no-payment entry point that still feels like a real product surface instead of a teaser only",
     ],
     kind: "free",
     ctaLabel: "Start Free",
@@ -176,13 +177,14 @@ export const salesPlans: SalesPlan[] = [
     id: "pro",
     name: "Pro Studio",
     priceLabel: "MX$129 / mes",
-    summary: "The core paid tier for teams that want the real private bundle, premium kits, and production-facing assets.",
-    audience: "Agencies, startups, and internal platform teams that need reusable premium delivery assets.",
+    summary: "The serious operating tier for teams that need a private product surface they can actually deploy, present, and reuse.",
+    audience: "Agencies, startups, and internal platform teams that need premium assets with real implementation weight.",
     features: [
       "Founders launch pricing locked for one of the first 20 customers",
-      "Everything in Solo plus the real protected Pro asset surface",
-      "Industry kits, signature layouts, Pro manifests, and spreadsheet modernization kits",
-      "Pro-only desktop template catalog and higher-value private bundle unlocks",
+      "Everything in Solo plus the real protected Pro bundle instead of preview-only proof",
+      "Industry kits, signature layouts, Pro manifests, and spreadsheet modernization kits for recurring delivery",
+      "Pro-only desktop template catalog, reusable implementation packs, and stronger private vault unlocks",
+      "Built to feel like a complete paid product instead of a simple gated add-on",
     ],
     kind: "paid",
     ctaLabel: "Upgrade to Pro",
@@ -193,19 +195,19 @@ export const salesPlans: SalesPlan[] = [
   },
   {
     id: "launch-pack",
-    name: "Launch Signature",
+    name: "Full Signature",
     priceLabel: "MX$249 / mes",
-    summary: "The top tier: a premium launch suite with launch-only operator surfaces, handoff intelligence, and exclusive release polish.",
-    audience: "Buyers who want integrated premium surfaces, launch-only assets, and the strongest operator-grade commercial package.",
+    summary: "The complete premium suite: an executive-grade operator package with the richest launch surfaces, delivery polish, and commercial presence.",
+    audience: "Buyers who want the most complete end-to-end product feeling, with exclusive surfaces that go beyond the Pro layer.",
     features: [
       "Founders launch pricing locked for one of the first 20 customers",
-      "Everything in Pro plus six launch-only surfaces that do not exist in the Pro tier",
+      "Everything in Pro plus six full-suite-only surfaces that do not exist in the Pro tier",
       "Google Sheets, Microsoft 365 Excel Web, and Outlook command surfaces for premium modernization offers",
-      "Executive boardroom, Power BI visual pack, and Figma token sync assets reserved for the top tier",
-      "Highest-priority commercial polish designed to feel exclusive from day one",
+      "Executive boardroom, Power BI visual pack, and Figma token sync assets reserved for the highest tier",
+      "Highest-priority commercial polish designed to feel complete, exclusive, and boardroom-ready from day one",
     ],
     kind: "paid",
-    ctaLabel: "Enter Launch Signature",
+    ctaLabel: "Enter Full Signature",
     href: launchCheckout.href,
     external: launchCheckout.external,
     checkoutHint: launchCheckout.checkoutHint,
@@ -214,16 +216,18 @@ export const salesPlans: SalesPlan[] = [
 ];
 
 export const freeSurface = [
-  "Public MIT packages for adoption and trust",
-  "Docs, runtime guides, and public demos",
-  "No exclusivity claim on open packages",
+  "Public MIT packages for adoption and trust, with enough real utility to validate fit before buying",
+  "Docs, runtime guides, design references, and public demos that make the platform easier to understand quickly",
+  "CLI scaffolding and schema-backed contracts available in the public layer for serious technical evaluation",
+  "A richer trust layer that helps paid tiers feel more credible because the buyer can clearly inspect the public baseline first",
+  "No exclusivity claim on open packages, keeping the line between public value and premium delivery clear",
 ];
 
 export const paidSurface = [
   "Private premium asset packs served behind authenticated vault access",
   "Three paid tiers in a founders launch window reserved for the first 20 customers",
   "Premium Preview pack for pre-sale proof and internal QA",
-  "Exclusive layouts, industry kits, spreadsheet upgrades, and launch-only integrated operator surfaces",
+  "Exclusive layouts, industry kits, spreadsheet upgrades, and Full Signature operator surfaces",
 ];
 
 export const premiumPreviewSurface = [
@@ -236,9 +240,9 @@ export const premiumPreviewSurface = [
 
 export const premiumReasonsToPay = [
   "Paid buyers unlock a private vault surface that does not ship through the public MIT layer.",
-  "Solo buys confidence, Pro buys execution speed, and Launch Signature buys the highest commercial polish.",
+  "Solo buys confidence, Pro buys implementation speed, and Full Signature buys the most complete premium experience.",
   "Phase 1 founders pricing is intentionally limited to the first 20 customers who lock in early.",
-  "Launch now reserves integrated premium surfaces for Sheets, Microsoft 365, Outlook, Power BI, and Figma that are not included in Pro.",
+  "Full Signature reserves integrated premium surfaces for Sheets, Microsoft 365, Outlook, Power BI, and Figma that are not included in Pro.",
   "You can show controlled proof before purchase, then unlock progressively richer premium surfaces after payment.",
   "The free layer earns trust; the paid tiers sell exclusivity, speed, presentation quality, and protected access.",
 ];

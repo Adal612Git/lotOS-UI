@@ -246,6 +246,36 @@ a.tier-card {
   line-height: 1.6;
 }
 
+.card.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.9));
+}
+
+.card.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 253, 244, 0.96), rgba(220, 252, 231, 0.9));
+}
+
+.card.accent-amber {
+  border-color: rgba(245, 158, 11, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.9));
+}
+
+.card.accent-violet {
+  border-color: rgba(139, 92, 246, 0.16);
+  background:
+    linear-gradient(135deg, rgba(245, 243, 255, 0.96), rgba(237, 233, 254, 0.9));
+}
+
+.card.accent-rose {
+  border-color: rgba(244, 63, 94, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(255, 228, 230, 0.9));
+}
+
 .table-wrap {
   margin-top: 10px;
   overflow: auto;
@@ -294,22 +324,174 @@ th {
 
 .free-entry {
   display: grid;
-  gap: 12px;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 24px;
+  border-color: #bed7f2;
+  background:
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.1), transparent 34%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 38%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(240, 248, 255, 0.9));
+  box-shadow: 0 24px 42px rgba(20, 44, 71, 0.08);
 }
 
 .free-entry .plan-note {
   max-width: 56ch;
 }
 
-.tier-card {
+.vault-free-panel {
+  border-color: #b7d4f1;
+  background:
+    radial-gradient(circle at top left, rgba(34, 211, 238, 0.12), transparent 34%),
+    radial-gradient(circle at top right, rgba(74, 222, 128, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(238, 247, 255, 0.92));
+}
+
+.vault-free-panel .free-side-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(239, 249, 255, 0.92));
+}
+
+.solo-proof-panel {
+  border-color: #f1d4b9;
+  background:
+    radial-gradient(circle at top left, rgba(251, 191, 36, 0.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(255, 247, 237, 0.92));
+}
+
+.solo-proof-panel .free-side-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 247, 237, 0.9));
+}
+
+.pro-command-panel {
+  border-color: #f0d5be;
+  background:
+    radial-gradient(circle at top left, rgba(251, 146, 60, 0.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(255, 244, 235, 0.92));
+}
+
+.pro-command-panel .free-side-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 244, 235, 0.9));
+}
+
+.full-command-panel {
+  border-color: #d8c8fb;
+  background:
+    radial-gradient(circle at top left, rgba(167, 139, 250, 0.14), transparent 32%),
+    radial-gradient(circle at top right, rgba(244, 63, 94, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 242, 255, 0.92));
+}
+
+.full-command-panel .free-side-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.9));
+}
+
+.free-rich-panel {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(245, 251, 255, 0.88));
+}
+
+.free-rich-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.free-rich-copy h4,
+.free-side-card h4 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.14;
+  color: #153553;
+}
+
+.free-rich-copy p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #56708d;
+  max-width: 54ch;
+}
+
+.free-signal-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.free-signal {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.free-signal strong {
+  font-size: 18px;
+  line-height: 1;
+  color: #153553;
+}
+
+.free-signal span {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5b7492;
+}
+
+.free-entry-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.95fr);
+  align-items: start;
+}
+
+.free-main-stack {
   display: grid;
   gap: 12px;
-  padding: 18px;
+}
+
+.free-side-card {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 255, 0.9));
+}
+
+.free-proof-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: #365470;
+}
+
+.tier-card {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
   border-radius: 22px;
   border-width: 1px;
   border-style: solid;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 24px 44px rgba(20, 44, 71, 0.08);
 }
 
 .tier-card::before {
@@ -319,6 +501,16 @@ th {
   pointer-events: none;
   background: linear-gradient(150deg, rgba(255, 255, 255, 0.32), transparent 38%);
   opacity: 0.8;
+}
+
+.tier-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 21px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .tier-card > * {
@@ -334,19 +526,22 @@ th {
 }
 
 .tier-card.pro {
-  border-color: rgba(249, 115, 22, 0.2);
+  border-color: rgba(249, 115, 22, 0.24);
   background:
-    radial-gradient(circle at top right, rgba(249, 115, 22, 0.12), transparent 42%),
-    linear-gradient(180deg, #fff8f1, #fff1e6);
+    radial-gradient(circle at top right, rgba(251, 146, 60, 0.18), transparent 42%),
+    radial-gradient(circle at bottom left, rgba(251, 113, 133, 0.08), transparent 36%),
+    linear-gradient(180deg, #fffaf4, #fff1e3);
+  box-shadow: 0 28px 48px rgba(234, 88, 12, 0.12);
 }
 
 .tier-card.launch-pack {
-  border-color: rgba(168, 85, 247, 0.22);
+  border-color: rgba(124, 58, 237, 0.22);
   background:
-    radial-gradient(circle at top right, rgba(251, 113, 133, 0.12), transparent 36%),
-    radial-gradient(circle at top left, rgba(168, 85, 247, 0.12), transparent 34%),
-    linear-gradient(180deg, #fff8fd, #f7f0ff);
-  box-shadow: 0 24px 44px rgba(124, 58, 237, 0.12);
+    radial-gradient(circle at top right, rgba(236, 72, 153, 0.16), transparent 36%),
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(251, 191, 36, 0.12), transparent 30%),
+    linear-gradient(180deg, #fff9ff, #f6efff);
+  box-shadow: 0 30px 52px rgba(124, 58, 237, 0.16);
 }
 
 .tier-head {
@@ -417,10 +612,177 @@ th {
   gap: 8px;
 }
 
+.tier-luxe-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 251, 255, 0.84));
+}
+
+.tier-story {
+  display: grid;
+  gap: 8px;
+}
+
+.tier-story h4 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #173653;
+}
+
+.tier-story p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #58708e;
+}
+
+.tier-mini-label {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4f46e5;
+}
+
+.tier-stat-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tier-stat {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.tier-stat strong {
+  font-size: 16px;
+  line-height: 1;
+  color: #163452;
+}
+
+.tier-stat span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5d7592;
+}
+
+.tier-pill.accent-cyan,
+.tier-badge.accent-cyan,
+.tier-stat.accent-cyan,
+.payment-chip.accent-cyan,
+.free-signal.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.18);
+  background: rgba(224, 242, 254, 0.9);
+  color: #075985;
+}
+
+.tier-pill.accent-emerald,
+.tier-badge.accent-emerald,
+.tier-stat.accent-emerald,
+.payment-chip.accent-emerald,
+.free-signal.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.18);
+  background: rgba(220, 252, 231, 0.9);
+  color: #065f46;
+}
+
+.tier-pill.accent-amber,
+.tier-badge.accent-amber,
+.tier-stat.accent-amber,
+.payment-chip.accent-amber,
+.free-signal.accent-amber {
+  border-color: rgba(245, 158, 11, 0.18);
+  background: rgba(254, 243, 199, 0.92);
+  color: #92400e;
+}
+
+.tier-pill.accent-violet,
+.tier-badge.accent-violet,
+.tier-stat.accent-violet,
+.payment-chip.accent-violet,
+.free-signal.accent-violet {
+  border-color: rgba(139, 92, 246, 0.18);
+  background: rgba(237, 233, 254, 0.92);
+  color: #5b21b6;
+}
+
+.tier-pill.accent-rose,
+.tier-badge.accent-rose,
+.tier-stat.accent-rose,
+.payment-chip.accent-rose,
+.free-signal.accent-rose {
+  border-color: rgba(244, 63, 94, 0.18);
+  background: rgba(255, 228, 230, 0.92);
+  color: #9f1239;
+}
+
+.tier-stat.accent-cyan strong,
+.tier-stat.accent-emerald strong,
+.tier-stat.accent-amber strong,
+.tier-stat.accent-violet strong,
+.tier-stat.accent-rose strong,
+.free-signal.accent-cyan strong,
+.free-signal.accent-emerald strong,
+.free-signal.accent-amber strong,
+.free-signal.accent-violet strong,
+.free-signal.accent-rose strong {
+  color: inherit;
+}
+
+.tier-stat.accent-cyan span,
+.tier-stat.accent-emerald span,
+.tier-stat.accent-amber span,
+.tier-stat.accent-violet span,
+.tier-stat.accent-rose span,
+.free-signal.accent-cyan span,
+.free-signal.accent-emerald span,
+.free-signal.accent-amber span,
+.free-signal.accent-violet span,
+.free-signal.accent-rose span {
+  color: inherit;
+}
+
 .tier-promise {
   margin: 0;
   color: #274766;
   line-height: 1.65;
+}
+
+.tier-pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tier-pill-grid.compact {
+  margin-top: 2px;
+}
+
+.tier-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #274666;
 }
 
 .tier-card ul {
@@ -435,6 +797,17 @@ th {
 
 .tier-card .payment-meta {
   margin-top: 2px;
+}
+
+.tier-compare-note {
+  margin: 0;
+  padding: 11px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  font-size: 12px;
+  line-height: 1.55;
+  color: #506886;
 }
 
 .tier-cta-stack {
@@ -468,6 +841,16 @@ th {
   color: #c2410c;
 }
 
+.tier-card.pro .tier-luxe-panel {
+  border-color: rgba(249, 115, 22, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(255, 243, 228, 0.88));
+}
+
+.tier-card.pro .tier-mini-label {
+  color: #c2410c;
+}
+
 .tier-card.pro .btn.primary {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 50%),
@@ -477,6 +860,21 @@ th {
 
 .tier-card.launch-pack .tier-badge {
   color: #7c3aed;
+}
+
+.tier-card.launch-pack .tier-luxe-panel {
+  border-color: rgba(124, 58, 237, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 242, 255, 0.9));
+}
+
+.tier-card.launch-pack .tier-mini-label {
+  color: #6d28d9;
+}
+
+.tier-card.launch-pack .tier-pill {
+  border-color: rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.86);
 }
 
 .tier-card.launch-pack .btn.primary {
@@ -537,6 +935,45 @@ th {
   line-height: 1.65;
 }
 
+.vault-kpi.accent-cyan,
+.vault-kpi.accent-emerald,
+.vault-kpi.accent-amber,
+.vault-kpi.accent-violet,
+.vault-kpi.accent-rose {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.vault-kpi.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.9));
+}
+
+.vault-kpi.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 253, 244, 0.96), rgba(220, 252, 231, 0.9));
+}
+
+.vault-kpi.accent-amber {
+  border-color: rgba(245, 158, 11, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.9));
+}
+
+.vault-kpi.accent-violet {
+  border-color: rgba(139, 92, 246, 0.16);
+  background:
+    linear-gradient(135deg, rgba(245, 243, 255, 0.96), rgba(237, 233, 254, 0.9));
+}
+
+.vault-kpi.accent-rose {
+  border-color: rgba(244, 63, 94, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(255, 228, 230, 0.9));
+}
+
 .value-grid {
   max-width: 1120px;
   margin: 14px auto 0;
@@ -567,6 +1004,36 @@ th {
   font-size: 14px;
   line-height: 1.65;
   color: #516a88;
+}
+
+.value-card.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.9));
+}
+
+.value-card.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.16);
+  background:
+    linear-gradient(135deg, rgba(240, 253, 244, 0.96), rgba(220, 252, 231, 0.9));
+}
+
+.value-card.accent-amber {
+  border-color: rgba(245, 158, 11, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.9));
+}
+
+.value-card.accent-violet {
+  border-color: rgba(139, 92, 246, 0.16);
+  background:
+    linear-gradient(135deg, rgba(245, 243, 255, 0.96), rgba(237, 233, 254, 0.9));
+}
+
+.value-card.accent-rose {
+  border-color: rgba(244, 63, 94, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(255, 228, 230, 0.9));
 }
 
 .value-list {
@@ -604,6 +1071,113 @@ th {
     radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 38%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 241, 0.93));
   border-color: #f1d7bf;
+}
+
+.asset-card.pro.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.93));
+}
+
+.asset-card.pro.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(52, 211, 153, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 253, 244, 0.93));
+}
+
+.asset-card.pro.accent-amber {
+  border-color: rgba(245, 158, 11, 0.18);
+}
+
+.asset-card.pro.accent-violet {
+  border-color: rgba(139, 92, 246, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(167, 139, 250, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 243, 255, 0.93));
+}
+
+.asset-card.pro.accent-rose {
+  border-color: rgba(244, 63, 94, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(251, 113, 133, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 241, 242, 0.93));
+}
+
+.asset-card.solo {
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 248, 255, 0.93));
+  border-color: #cde3f6;
+}
+
+.asset-card.solo.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.18);
+}
+
+.asset-card.solo.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.18);
+}
+
+.asset-card.solo.accent-amber {
+  border-color: rgba(245, 158, 11, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 250, 235, 0.93));
+}
+
+.asset-card.solo.accent-violet {
+  border-color: rgba(139, 92, 246, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(167, 139, 250, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 243, 255, 0.93));
+}
+
+.asset-card.solo.accent-rose {
+  border-color: rgba(244, 63, 94, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(251, 113, 133, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 241, 242, 0.93));
+}
+
+.asset-card.launch {
+  background:
+    radial-gradient(circle at top right, rgba(167, 139, 250, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.93));
+  border-color: #decffa;
+}
+
+.asset-card.launch.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.93));
+}
+
+.asset-card.launch.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(52, 211, 153, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 253, 244, 0.93));
+}
+
+.asset-card.launch.accent-amber {
+  border-color: rgba(245, 158, 11, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 251, 235, 0.93));
+}
+
+.asset-card.launch.accent-violet {
+  border-color: rgba(139, 92, 246, 0.18);
+}
+
+.asset-card.launch.accent-rose {
+  border-color: rgba(244, 63, 94, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(251, 113, 133, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 241, 242, 0.93));
 }
 
 .asset-top {
@@ -659,6 +1233,56 @@ th {
   padding: 20px;
   display: grid;
   gap: 14px;
+}
+
+.premium-stage {
+  max-width: 1120px;
+  margin: 14px auto 0;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+}
+
+.premium-stage-card {
+  border: 1px solid #cfdcf1;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 24px 42px rgba(20, 44, 71, 0.08);
+  display: grid;
+  gap: 12px;
+}
+
+.premium-stage-card.pro {
+  background:
+    radial-gradient(circle at top right, rgba(251, 146, 60, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(255, 252, 244, 0.98), rgba(255, 243, 228, 0.9));
+  border-color: rgba(249, 115, 22, 0.2);
+}
+
+.premium-stage-card.full {
+  background:
+    radial-gradient(circle at top right, rgba(236, 72, 153, 0.18), transparent 34%),
+    radial-gradient(circle at top left, rgba(129, 140, 248, 0.18), transparent 32%),
+    linear-gradient(135deg, rgba(255, 250, 255, 0.98), rgba(246, 239, 255, 0.9));
+  border-color: rgba(124, 58, 237, 0.18);
+}
+
+.premium-stage-card h2 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.08;
+  color: #153553;
+  max-width: 14ch;
+}
+
+.premium-stage-card .section-label {
+  margin-bottom: 0;
+}
+
+.premium-stage-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .tier-upgrade-panel h2 {
@@ -767,6 +1391,51 @@ th {
   color: #1d4ed8;
 }
 
+.payment-chip.ready.accent-cyan,
+.payment-chip.alt.accent-cyan,
+.payment-chip.manual.accent-cyan,
+.payment-chip.free.accent-cyan {
+  border-color: rgba(14, 165, 233, 0.18);
+  background: rgba(224, 242, 254, 0.9);
+  color: #075985;
+}
+
+.payment-chip.ready.accent-emerald,
+.payment-chip.alt.accent-emerald,
+.payment-chip.manual.accent-emerald,
+.payment-chip.free.accent-emerald {
+  border-color: rgba(16, 185, 129, 0.18);
+  background: rgba(220, 252, 231, 0.9);
+  color: #065f46;
+}
+
+.payment-chip.ready.accent-amber,
+.payment-chip.alt.accent-amber,
+.payment-chip.manual.accent-amber,
+.payment-chip.free.accent-amber {
+  border-color: rgba(245, 158, 11, 0.18);
+  background: rgba(254, 243, 199, 0.92);
+  color: #92400e;
+}
+
+.payment-chip.ready.accent-violet,
+.payment-chip.alt.accent-violet,
+.payment-chip.manual.accent-violet,
+.payment-chip.free.accent-violet {
+  border-color: rgba(139, 92, 246, 0.18);
+  background: rgba(237, 233, 254, 0.92);
+  color: #5b21b6;
+}
+
+.payment-chip.ready.accent-rose,
+.payment-chip.alt.accent-rose,
+.payment-chip.manual.accent-rose,
+.payment-chip.free.accent-rose {
+  border-color: rgba(244, 63, 94, 0.18);
+  background: rgba(255, 228, 230, 0.92);
+  color: #9f1239;
+}
+
 .plan-note {
   margin: 0;
   font-size: 13px;
@@ -867,6 +1536,7 @@ th {
 
   .grid.two,
   .pricing,
+  .premium-stage,
   .field-grid,
   .tier-grid,
   .vault-strip,
@@ -878,5 +1548,15 @@ th {
 
   .footer {
     flex-direction: column;
+  }
+
+  .tier-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .free-rich-panel,
+  .free-entry-grid,
+  .free-signal-grid {
+    grid-template-columns: 1fr;
   }
 }

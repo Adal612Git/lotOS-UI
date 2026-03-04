@@ -67,7 +67,7 @@ Start with four concrete offers:
    - private pro access for one operator
 3. `Pro License`
    - team-oriented premium layer
-4. `Launch Pack`
+4. `Full Signature`
    - private bundle plus customer-specific starter
 
 ## How To Test What A Paid Buyer Would Receive

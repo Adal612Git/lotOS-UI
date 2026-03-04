@@ -20,6 +20,14 @@ pnpm --filter @lotosui/cli exec lotos-ui stack-init -s java-spring-starter -d mo
 pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
 pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center`;
 
+const homepageTierFocus: Record<string, string[]> = {
+  solo: ['Private proof', 'Fast paid entry'],
+  pro: ['Reusable premium assets', 'Team-ready delivery'],
+  'launch-pack': ['Full-suite exclusives', 'Highest polish handoff'],
+};
+
+const homepageAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet', 'accent-rose'] as const;
+
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const signedInEmail = session?.user?.email ?? null;
@@ -52,7 +60,7 @@ export default async function HomePage() {
           27 React components, 4 web components, MCP contracts, and starter tracks for PHP, Python,
           Java, .NET, Go, C, and C++. React is the stable surface; the rest ship as adapter or
           template tracks with alpha/prototype status. The commercial surface now scales in three
-          tiers: proof, production assets, and signature launch polish during the current founders window.
+          tiers: proof, production assets, and full-suite premium polish during the current founders window.
         </p>
         {signedInEmail ? (
           <p className="lead">Signed in as {signedInEmail}. You can check free and paid access status in the vault.</p>
@@ -159,8 +167,9 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
         {paidPlans.map((plan, index) => {
           const classes = `card ${plan.kind === 'paid' ? 'highlight' : ''}`;
           const hasDirectCheckout = plan.paymentActions.some((action) => action.tone !== 'ghost');
+          const tierHighlights = homepageTierFocus[plan.id] ?? [];
           const ribbon =
-            index === 0 ? 'Premium Entry' : index === 1 ? 'Best Balance' : 'Signature Tier';
+            index === 0 ? 'Premium Entry' : index === 1 ? 'Best Balance' : 'Full Suite';
 
           const content = (
             <>
@@ -174,6 +183,18 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
               </div>
               <p className="price-label compact">{plan.priceLabel}</p>
               <p>{plan.summary}</p>
+              {tierHighlights.length > 0 ? (
+                <div className="tier-pill-grid compact" aria-label={`Highlights for ${plan.name}`}>
+                  {tierHighlights.map((item, itemIndex) => (
+                    <span
+                      key={`${plan.id}-${item}`}
+                      className={`tier-pill ${homepageAccentCycle[(itemIndex + index) % homepageAccentCycle.length]}`}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
               <div className="payment-meta" aria-label={`Summary checkout for ${plan.name}`}>
                 <span
                   className={`payment-chip ${hasDirectCheckout ? 'ready' : 'manual'}`}
@@ -210,7 +231,7 @@ pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-cente
           <h2>Free vs Paid</h2>
           <ul>
             <li>Free surface stays public and MIT for trust and adoption.</li>
-            <li>Paid surface now ladders from Solo proof into Pro assets and Launch Signature polish.</li>
+            <li>Paid surface now ladders from Solo proof into Pro assets and Full Signature polish.</li>
             <li>The current founders price is reserved for the first 20 customers only.</li>
             <li>Open packages are not sold as exclusive assets.</li>
           </ul>

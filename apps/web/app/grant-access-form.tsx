@@ -9,7 +9,7 @@ type PaymentProvider = 'lemon_squeezy' | 'mercado_pago' | 'paypal' | 'manual';
 const plans: Array<{ value: GrantPlan; label: string }> = [
   { value: 'solo', label: 'Solo' },
   { value: 'pro', label: 'Pro' },
-  { value: 'launch_pack', label: 'Launch Pack' },
+  { value: 'launch_pack', label: 'Full Signature' },
 ];
 
 const providers: Array<{ value: PaymentProvider; label: string }> = [
@@ -18,6 +18,12 @@ const providers: Array<{ value: PaymentProvider; label: string }> = [
   { value: 'paypal', label: 'PayPal' },
   { value: 'manual', label: 'Manual / efectivo' },
 ];
+
+const planLabels: Record<GrantPlan, string> = {
+  solo: 'Solo',
+  pro: 'Pro',
+  launch_pack: 'Full Signature',
+};
 
 export function GrantAccessForm() {
   const [email, setEmail] = useState('');
@@ -52,7 +58,7 @@ export function GrantAccessForm() {
         return;
       }
 
-      setStatus(`Acceso ${result.entitlement.plan} activado para ${result.entitlement.user_email}.`);
+      setStatus(`Acceso ${planLabels[result.entitlement.plan as GrantPlan] ?? result.entitlement.plan} activado para ${result.entitlement.user_email}.`);
       setEmail('');
       setPaymentReference('');
       setPlan('solo');

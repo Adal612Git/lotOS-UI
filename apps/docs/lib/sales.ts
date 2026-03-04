@@ -133,12 +133,12 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   },
   {
     id: 'launch_pack',
-    name: 'Launch Signature',
+    name: 'Full Signature',
     priceLabel: 'MX$249 / mes',
-    summary: 'Top-tier founders pricing with launch-only operator surfaces and the strongest private positioning.',
+    summary: 'Top-tier founders pricing with full-only operator surfaces and the strongest private positioning.',
     features: [
       'Founders launch pricing locked for one of the first 20 customers',
-      'Everything in Pro plus six launch-only surfaces that do not ship in Pro',
+      'Everything in Pro plus six full-only surfaces that do not ship in Pro',
       'Google Sheets, Microsoft 365 Excel Web, and Outlook premium command surfaces',
       'Executive boardroom, Power BI visual pack, and Figma token sync reserved for the top tier',
       'The most exclusive-feeling recurring tier in the current ladder',

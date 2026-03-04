@@ -5,6 +5,12 @@ import { AuthAction } from '../auth-action';
 import styles from '../commercial-shell.module.css';
 import { docsSalesPlans } from '../../lib/sales';
 
+const planEyebrowLabels: Record<string, string> = {
+  solo: 'solo',
+  pro: 'pro',
+  launch_pack: 'full signature',
+};
+
 export default async function DocsPricingPage() {
   const session = await getServerSession(authOptions);
   const signedIn = Boolean(session?.user?.email);
@@ -17,7 +23,7 @@ export default async function DocsPricingPage() {
           <div className={styles.heroBadges} aria-label="Commercial plans">
             <span className={`${styles.heroBadge} ${styles.badgeStable}`}>Solo MX$59 / mes</span>
             <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Pro MX$129 / mes</span>
-            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Launch MX$249 / mes</span>
+            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Full MX$249 / mes</span>
           </div>
           <h1>
             Commercial access starts here
@@ -60,7 +66,7 @@ export default async function DocsPricingPage() {
           <ul>
             <li>Solo opens the premium proof layer for one operator.</li>
             <li>Pro unlocks the actual protected kits and monthly execution value.</li>
-            <li>Launch Signature is the highest-polish commercial tier in the stack.</li>
+            <li>Full Signature is the highest-polish commercial tier in the stack.</li>
             <li>Founders pricing stays only for the first 20 customers who move early.</li>
           </ul>
         </aside>
@@ -70,7 +76,7 @@ export default async function DocsPricingPage() {
         <article><strong>$0</strong><span>Free docs</span></article>
         <article><strong>MX$59</strong><span>Solo proof</span></article>
         <article><strong>MX$129</strong><span>Pro assets</span></article>
-        <article><strong>MX$249</strong><span>Launch polish</span></article>
+        <article><strong>MX$249</strong><span>Full polish</span></article>
       </section>
 
       <section className={`${styles.band} ${styles.plansGrid}`}>
@@ -79,11 +85,11 @@ export default async function DocsPricingPage() {
             key={plan.id}
             className={`${styles.planCard} ${styles[plan.id]} ${index === 1 ? styles.planCardHighlight : ''}`}
           >
-            <div className={styles.planTop}>
-              <div>
-                <p className={styles.eyebrow}>{plan.id.replace('_', ' ')}</p>
-                <h3>{plan.name}</h3>
-              </div>
+              <div className={styles.planTop}>
+                <div>
+                  <p className={styles.eyebrow}>{planEyebrowLabels[plan.id] ?? plan.id.replace('_', ' ')}</p>
+                  <h3>{plan.name}</h3>
+                </div>
               <span className={styles.planPrice}>{plan.priceLabel}</span>
             </div>
             <p>{plan.summary}</p>

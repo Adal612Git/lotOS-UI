@@ -27,7 +27,7 @@ export default async function LoginPage({
         <p className="kicker">Protected Access</p>
         <h1>Sign in before opening the commercial surface.</h1>
         <p className="lead">
-          Free content remains public. Solo, Pro, and Launch routes require Google sign-in and
+          Free content remains public. Solo, Pro, and Full routes require Google sign-in and
           entitlement checks before protected assets can be delivered.
         </p>
         <div className="hero-actions">

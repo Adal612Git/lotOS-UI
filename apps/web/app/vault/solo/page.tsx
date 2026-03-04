@@ -3,6 +3,28 @@ import { requirePlanAccess } from '../../../lib/auth-server';
 import { soloAssets } from '../../../lib/commercial-assets';
 import '../../lotos-landing.css';
 
+const soloAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet'] as const;
+
+const soloSignals = [
+  { value: '1', label: 'Operator' },
+  { value: 'MX$59', label: 'Entry tier' },
+  { value: 'Private', label: 'Proof layer' },
+  { value: 'Fast', label: 'Upgrade path' },
+];
+
+const soloHighlights = [
+  'Private proof with real perceived value',
+  'A compact first paid experience',
+  'Controlled previews without full payload',
+  'Clean bridge from free into premium',
+];
+
+const soloProofNotes = [
+  'Solo should feel clearly better than free, but still intentionally lighter than Pro.',
+  'Its job is to create recurring confidence and premium momentum without giving away the strongest execution assets.',
+  'That makes Solo easier to buy first and makes the Pro upgrade easier to justify later.',
+];
+
 const soloBenefits = [
   {
     title: 'Premium proof layer',
@@ -58,20 +80,82 @@ export default async function SoloVaultPage() {
           visual proof assets without exposing the full private payload, while still making the buyer
           feel they crossed into a more exclusive layer of the product.
         </p>
+        <div className="payment-meta" aria-label="Solo tier state">
+          <span className="payment-chip ready accent-cyan">Buyer-only layer</span>
+          <span className="payment-chip alt accent-amber">Above free, below Pro</span>
+          <span className="payment-chip manual accent-violet">Proof-first premium</span>
+        </div>
+      </section>
+
+      <section className="card free-entry solo-proof-panel">
+        <div className="tier-head">
+          <div className="tier-title-block">
+            <p className="plan-tier">From Free To Solo</p>
+            <h3>The first paid step should feel noticeably richer without collapsing the upgrade ladder.</h3>
+            <p>
+              Solo is where the buyer first feels exclusivity. It should be more valuable than the
+              public layer, but still preserve the bigger jump into Pro.
+            </p>
+          </div>
+          <span className="tier-badge accent-amber">Proof Upgrade</span>
+        </div>
+        <div className="free-rich-panel">
+          <div className="free-rich-copy">
+            <p className="tier-mini-label">Premium entry design</p>
+            <h4>Solo now reads as a deliberate bridge between trust and stronger paid utility.</h4>
+            <p>
+              It gives the buyer enough private value to stay subscribed, while keeping the heavier
+              implementation payload protected for the higher tier.
+            </p>
+          </div>
+          <div className="free-signal-grid" aria-label="Solo signals">
+            {soloSignals.map((signal, index) => (
+              <div key={signal.label} className={`free-signal ${soloAccentCycle[index % soloAccentCycle.length]}`}>
+                <strong>{signal.value}</strong>
+                <span>{signal.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="free-entry-grid">
+          <div className="free-main-stack">
+            <div className="tier-pill-grid" aria-label="Solo highlights">
+              {soloHighlights.map((item, index) => (
+                <span key={item} className={`tier-pill ${soloAccentCycle[index % soloAccentCycle.length]}`}>
+                  {item}
+                </span>
+              ))}
+            </div>
+            <ul>
+              <li>Free proves the platform is real; Solo proves the commercial layer is worth paying for.</li>
+              <li>It introduces private access, curated proof assets, and a stronger sense of product ownership.</li>
+              <li>It stays intentionally compact so the recurring upgrade path remains clean and believable.</li>
+            </ul>
+          </div>
+          <aside className="free-side-card">
+            <p className="tier-mini-label">Why Solo works</p>
+            <h4>It creates premium momentum without burning the Pro value proposition too early.</h4>
+            <ul className="free-proof-list">
+              {soloProofNotes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
+        </div>
       </section>
 
       <section className="vault-strip">
-        <article className="vault-kpi">
+        <article className="vault-kpi accent-cyan">
           <strong>{soloAssets.length}</strong>
           <span>Private proof assets</span>
           <p>Enough premium material to create a real monthly step above free without exposing Pro.</p>
         </article>
-        <article className="vault-kpi">
+        <article className="vault-kpi accent-amber">
           <strong>1</strong>
           <span>Operator-first tier</span>
           <p>Solo is intentionally focused: one buyer, one recurring path, one clean upgrade ladder.</p>
         </article>
-        <article className="vault-kpi">
+        <article className="vault-kpi accent-violet">
           <strong>MX$59</strong>
           <span>Monthly entry point</span>
           <p>Phase 1 founders pricing for the first 20 customers keeps this tier accessible but still premium.</p>
@@ -79,8 +163,8 @@ export default async function SoloVaultPage() {
       </section>
 
       <section className="value-grid">
-        {soloBenefits.map((item) => (
-          <article key={item.title} className="value-card">
+        {soloBenefits.map((item, index) => (
+          <article key={item.title} className={`value-card ${soloAccentCycle[index % soloAccentCycle.length]}`}>
             <h3>{item.title}</h3>
             <p>{item.summary}</p>
             <ul className="value-list">
@@ -93,8 +177,8 @@ export default async function SoloVaultPage() {
       </section>
 
       <section className="vault-assets-grid">
-        {soloAssets.map((asset) => (
-          <article key={asset.id} className="asset-card">
+        {soloAssets.map((asset, index) => (
+          <article key={asset.id} className={`asset-card solo ${soloAccentCycle[index % soloAccentCycle.length]}`}>
             <div className="asset-top">
               <div>
                 <p className="plan-tier">Solo Premium Asset</p>
@@ -104,9 +188,9 @@ export default async function SoloVaultPage() {
               <span className="asset-file">{asset.fileName}</span>
             </div>
             <div className="asset-meta" aria-label={`Asset metadata for ${asset.name}`}>
-              <span className="payment-chip ready">Buyer-only</span>
-              <span className="payment-chip free">Proof layer</span>
-              <span className="payment-chip manual">Controlled preview</span>
+              <span className="payment-chip ready accent-cyan">Buyer-only</span>
+              <span className="payment-chip free accent-amber">Proof layer</span>
+              <span className="payment-chip manual accent-violet">Controlled preview</span>
             </div>
             <a className="btn primary full" href={`/api/download/${asset.id}`}>
               Unlock {asset.name}
@@ -119,15 +203,15 @@ export default async function SoloVaultPage() {
         <p className="section-label">What unlocks next</p>
         <h2>Pro Studio is where the recurring value gets serious.</h2>
         <div className="tier-upgrade-grid">
-          <article className="value-card">
+          <article className="value-card accent-cyan">
             <h3>From proof to production</h3>
             <p>Solo proves the product is real. Pro is where buyers start collecting reusable private assets.</p>
           </article>
-          <article className="value-card">
+          <article className="value-card accent-amber">
             <h3>Protected kits and layouts</h3>
             <p>Industry kits, signature layouts, and spreadsheet modernization assets sit one level above this tier.</p>
           </article>
-          <article className="value-card">
+          <article className="value-card accent-violet">
             <h3>Clear upgrade logic</h3>
             <p>Solo stays light on purpose so the jump into Pro always feels like a meaningful gain.</p>
           </article>

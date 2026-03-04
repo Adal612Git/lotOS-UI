@@ -10,9 +10,9 @@ Lemon Squeezy ya aprobo la cuenta, pero mantiene esta condicion:
 - Todo producto vendido debe quedar disponible inmediatamente despues del pago.
 - No prometas un producto que dependa de trabajo manual tuyo posterior.
 
-Esto afecta directamente a `Launch Pack`.
+Esto afecta directamente a `Full Signature`.
 
-- Si `Launch Pack` requiere personalizacion manual despues de la compra, no lo publiques como producto directo en Lemon Squeezy.
+- Si `Full Signature` requiere personalizacion manual despues de la compra, no lo publiques como producto directo en Lemon Squeezy.
 - En ese caso, dejalo como `Contact Sales` o cierre manual fuera de checkout.
 
 ## Que debes preparar antes de abrir Lemon Squeezy
@@ -23,7 +23,7 @@ Tus precios actuales en la app son:
 
 - Solo: `$29`
 - Pro: `$79`
-- Launch Pack: `$149`
+- Full Signature: `$149`
 
 Decide una sola cosa antes de cargar productos:
 
@@ -73,7 +73,7 @@ Texto sugerido:
 
 - Solo: `Private buyer access for one operator`
 - Pro: `Protected premium assets for teams`
-- Launch: `Fast private delivery starter`
+- Full: `Fast private delivery starter`
 
 ### Imagen 2: captura de producto
 
@@ -190,7 +190,7 @@ Sube:
 - Button text: `Open LotOS UI Vault`
 - Button link: `https://lotos-ui.vercel.app/vault`
 
-## Producto 3: Launch Pack
+## Producto 3: Full Signature
 
 No publiques este producto en Lemon Squeezy hasta validar esto:
 
@@ -201,23 +201,23 @@ Si SI es instantaneo:
 
 ### General
 
-- Name: `LotOS UI Launch Pack`
+- Name: `LotOS UI Full Signature`
 - Description: `Fast-start private LotOS UI delivery pack with a ready-to-use premium starter and protected handoff assets.`
 
 ### Pricing
 
 - Tipo: `Single payment`
 - Pricing model: `Standard pricing`
-- Price: tu precio real de `Launch Pack`
+- Price: tu precio real de `Full Signature`
 - Tax category: `Software`
 
 ### Media
 
 Sube:
 
-- portada Launch
+- portada Full
 - captura del flujo o starter
-- matriz de incluidos Launch
+- matriz de incluidos Full
 
 ### Files
 
@@ -227,7 +227,7 @@ Sube:
 
 ### Confirmation / post-purchase
 
-- Confirmation title: `Your Launch Pack is ready`
+- Confirmation title: `Your Full Signature access is ready`
 - Confirmation message: `Your protected starter is ready for download and vault access.`
 - Button text: `Open LotOS UI Vault`
 - Button link: `https://lotos-ui.vercel.app/vault`
@@ -252,10 +252,10 @@ Necesitas al menos:
 
 - `LOTOS_SOLO_CHECKOUT_URL`
 - `LOTOS_PRO_CHECKOUT_URL`
-- `LOTOS_LAUNCH_PACK_URL` (solo si Launch vive en Lemon)
+- `LOTOS_LAUNCH_PACK_URL` (solo si Full vive en Lemon)
 - `LEMON_SOLO_VARIANT_ID`
 - `LEMON_PRO_VARIANT_ID`
-- `LEMON_LAUNCH_VARIANT_ID` (solo si Launch vive en Lemon)
+- `LEMON_LAUNCH_VARIANT_ID` (solo si Full vive en Lemon)
 
 ## Webhook de Lemon Squeezy
 
@@ -315,11 +315,11 @@ Cuando acabes la carga en Lemon Squeezy, mandame esto:
 
 - checkout URL de `Solo`
 - checkout URL de `Pro`
-- checkout URL de `Launch Pack` o confirmacion de que quedara fuera
+- checkout URL de `Full Signature` o confirmacion de que quedara fuera
 - `LEMON_SOLO_VARIANT_ID`
 - `LEMON_PRO_VARIANT_ID`
 - `LEMON_LAUNCH_VARIANT_ID` o confirmacion de que no aplica
-- confirmacion de si `Launch Pack` es instantaneo o manual
+- confirmacion de si `Full Signature` es instantaneo o manual
 - confirmacion de si usaras USD o MXN
 
 Con eso yo puedo proceder a alinear el repo para que:
@@ -333,7 +333,7 @@ Con eso yo puedo proceder a alinear el repo para que:
 
 1. Crear `Solo`
 2. Crear `Pro`
-3. Definir si `Launch Pack` entra o se queda fuera
+3. Definir si `Full Signature` entra o se queda fuera
 4. Configurar webhook
 5. Cargar variables en Vercel
 6. Hacer prueba en `Test mode`

@@ -8,6 +8,12 @@ import { isOwnerEmail } from '../../lib/owner';
 import { docsSalesPlans } from '../../lib/sales';
 import styles from '../commercial-shell.module.css';
 
+const planLabels: Record<string, string> = {
+  solo: 'Solo',
+  pro: 'Pro',
+  launch_pack: 'Full Signature',
+};
+
 export default async function DocsVaultPage() {
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ?? null;
@@ -46,7 +52,7 @@ export default async function DocsVaultPage() {
             {owner
               ? 'Owner bypass is active. This account can see the full premium surface without payment checks.'
               : plans.length > 0
-                ? `Active commercial plans: ${plans.join(', ')}`
+                ? `Active commercial plans: ${plans.map((plan) => planLabels[plan] ?? plan).join(', ')}`
                 : 'Session works, but no paid entitlement is attached to this account yet.'}
           </p>
           <div className={styles.heroActions}>
@@ -112,7 +118,7 @@ export default async function DocsVaultPage() {
       <section className={`${styles.band} ${styles.statsBand}`}>
         <article><strong>{hasSolo ? 'Yes' : 'No'}</strong><span>Solo access</span></article>
         <article><strong>{hasPro ? 'Yes' : 'No'}</strong><span>Pro access</span></article>
-        <article><strong>{hasLaunch ? 'Yes' : 'No'}</strong><span>Launch access</span></article>
+        <article><strong>{hasLaunch ? 'Yes' : 'No'}</strong><span>Full access</span></article>
         <article><strong>{owner ? 'Owner' : plans.length}</strong><span>{owner ? 'Bypass' : 'Entitlements'}</span></article>
       </section>
 

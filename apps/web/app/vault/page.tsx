@@ -3,6 +3,34 @@ import { getViewerContext } from '../../lib/auth-server';
 import '../lotos-landing.css';
 import { GrantAccessForm } from '../grant-access-form';
 
+const vaultAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet'] as const;
+
+const freeVaultSignals = [
+  { value: 'Open', label: 'Public docs' },
+  { value: 'MIT', label: 'Core layer' },
+  { value: 'CLI', label: 'Scaffolding' },
+  { value: 'Live', label: 'Design refs' },
+];
+
+const freeVaultHighlights = [
+  'Public docs and runtime guides',
+  'Open MIT packages for real evaluation',
+  'CLI access before payment',
+  'A stronger trust layer before checkout',
+];
+
+const freeVaultProof = [
+  'The free layer should already help a buyer understand the platform, test the fit, and trust the product direction.',
+  'That makes the vault feel more legitimate because premium access now clearly sits on top of a useful public foundation.',
+  'The paid ladder then feels like a real expansion of capability instead of the first moment the product becomes valuable.',
+];
+
+const planLabels: Record<string, string> = {
+  solo: 'Solo',
+  pro: 'Pro',
+  launch_pack: 'Full Signature',
+};
+
 export default async function VaultPage() {
   const viewer = await getViewerContext();
   const hasSolo = viewer.isOwner || viewer.plans.includes('solo') || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
@@ -27,7 +55,15 @@ export default async function VaultPage() {
           Signed in as <strong>{viewer.email}</strong>. Free assets stay public; protected assets
           unlock here based on entitlement or owner status.
         </p>
+        <div className="payment-meta" aria-label="Vault state">
+          <span className="payment-chip free accent-cyan">Free foundation stays open</span>
+          <span className="payment-chip alt accent-amber">Public first, premium after</span>
+          <span className="payment-chip manual accent-violet">Protected routes use entitlements</span>
+        </div>
         <div className="hero-actions">
+          <a href="#free-foundation" className="btn ghost">
+            Free Foundation
+          </a>
           <Link href="/vault/solo" className="btn primary">
             Solo Surface
           </Link>
@@ -35,8 +71,76 @@ export default async function VaultPage() {
             Pro Surface
           </Link>
           <Link href="/vault/launch" className="btn ghost">
-            Launch Surface
+            Full Surface
           </Link>
+        </div>
+      </section>
+
+      <section id="free-foundation" className="card free-entry vault-free-panel">
+        <div className="tier-head">
+          <div className="tier-title-block">
+            <p className="plan-tier">Free Foundation</p>
+            <h3>Public value now carries real weight before any premium unlock.</h3>
+            <p>
+              The free layer should already feel like a credible product surface. The vault exists to
+              show where protected value begins, not to be the first place the product feels useful.
+            </p>
+          </div>
+          <span className="tier-badge accent-cyan">Open Layer</span>
+        </div>
+        <div className="free-rich-panel">
+          <div className="free-rich-copy">
+            <p className="tier-mini-label">Public trust surface</p>
+            <h4>A stronger free experience makes the premium ladder easier to believe.</h4>
+            <p>
+              Buyers can inspect the public system first, validate the quality, and understand the
+              difference between open utility and protected commercial delivery.
+            </p>
+          </div>
+          <div className="free-signal-grid" aria-label="Free vault signals">
+            {freeVaultSignals.map((signal, index) => (
+              <div key={signal.label} className={`free-signal ${vaultAccentCycle[index % vaultAccentCycle.length]}`}>
+                <strong>{signal.value}</strong>
+                <span>{signal.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="free-entry-grid">
+          <div className="free-main-stack">
+            <div className="tier-pill-grid" aria-label="Free foundation highlights">
+              {freeVaultHighlights.map((item, index) => (
+                <span key={item} className={`tier-pill ${vaultAccentCycle[index % vaultAccentCycle.length]}`}>
+                  {item}
+                </span>
+              ))}
+            </div>
+            <ul>
+              <li>The free layer remains the best place to explore docs, installation, and runtime adoption paths.</li>
+              <li>Open packages stay visible and useful without claiming private exclusivity.</li>
+              <li>The vault protects premium delivery, but the public foundation still carries real technical value.</li>
+            </ul>
+            <div className="payment-actions" role="group" aria-label="Free foundation routes">
+              <Link href="/docs/installation" className="btn ghost">
+                Open Docs
+              </Link>
+              <Link href="/multi-framework" className="btn ghost">
+                Runtime Matrix
+              </Link>
+              <Link href="/design-lab" className="btn ghost">
+                Design Lab
+              </Link>
+            </div>
+          </div>
+          <aside className="free-side-card">
+            <p className="tier-mini-label">Why this matters</p>
+            <h4>The free foundation now supports the commercial story instead of weakening it.</h4>
+            <ul className="free-proof-list">
+              {freeVaultProof.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </section>
 
@@ -53,8 +157,8 @@ export default async function VaultPage() {
         </article>
         <article className="vault-kpi">
           <strong>{hasLaunch ? 'Yes' : 'No'}</strong>
-          <span>Launch access</span>
-          <p>The prestige layer with launch-only integrated surfaces for premium operator workflows.</p>
+          <span>Full access</span>
+          <p>The flagship layer with full-only integrated surfaces for premium operator workflows.</p>
         </article>
       </section>
 
@@ -65,9 +169,9 @@ export default async function VaultPage() {
           <ul>
             <li>Owner: {viewer.isOwner ? 'Yes' : 'No'}</li>
             <li>
-              Active plans: {viewer.isOwner ? 'owner bypass (all premium)' : viewer.plans.join(', ') || 'none'}
+              Active plans: {viewer.isOwner ? 'owner bypass (all premium)' : viewer.plans.map((plan) => planLabels[plan] ?? plan).join(', ') || 'none'}
             </li>
-            <li>Free docs and public MIT packages remain open without this vault.</li>
+            <li>Free docs, design references, CLI entry points, and public MIT packages remain open without this vault.</li>
           </ul>
         </article>
         <article className="card">
@@ -91,8 +195,8 @@ export default async function VaultPage() {
           <p>For buyers who want the real protected product surface: reusable kits, layouts, manifests, and stronger production leverage.</p>
         </article>
         <article className="value-card">
-          <h3>Launch Signature</h3>
-          <p>For buyers who want launch-only Sheets, Outlook, analytics, Figma, and executive command surfaces on top of the Pro bundle.</p>
+          <h3>Full Signature</h3>
+          <p>For buyers who want full-only Sheets, Outlook, analytics, Figma, and executive command surfaces on top of the Pro bundle.</p>
         </article>
       </section>
 
