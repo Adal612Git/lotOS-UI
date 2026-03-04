@@ -41,6 +41,27 @@ const freeLayerProof = [
   'That stronger free experience makes the paid ladder feel more legitimate because buyers can clearly see what is public and what becomes premium.',
 ];
 
+const pricingSignaturePrinciples = [
+  {
+    label: 'Signal',
+    title: 'Pricing should sell a system, not just a checkout.',
+    titleEs: 'Pricing debe vender un sistema, no solo un checkout.',
+    body: 'The strongest pricing page makes the buyer feel the product hierarchy before they ever click a payment button.',
+  },
+  {
+    label: 'Pro',
+    title: 'Pro is where the offer starts to feel operationally real.',
+    titleEs: 'Pro es donde la oferta empieza a sentirse operativamente real.',
+    body: 'It carries delivery weight, reusable assets, and enough protected surface to justify recurring value.',
+  },
+  {
+    label: 'Full',
+    title: 'Full Signature should close like a flagship package.',
+    titleEs: 'Full Signature debe cerrar como un paquete insignia.',
+    body: 'This is the top-tier commercial handoff: broader, richer, and visibly more complete than the layers below it.',
+  },
+];
+
 type TierPresentation = {
   eyebrow: string;
   headline: string;
@@ -124,11 +145,20 @@ export default async function PricingPage() {
 
       <section className="hero compact">
         <p className="kicker">Pricing and Delivery</p>
-        <h1>Phase 1 founders pricing is live for the first 20 customers, with three tiers that scale in polish.</h1>
+        <div className="hero-pill-row" aria-label="Pricing signals">
+          <span className="tier-pill accent-cyan">Founders Window</span>
+          <span className="tier-pill accent-emerald">Public trust layer</span>
+          <span className="tier-pill accent-amber">Pro carries delivery weight</span>
+          <span className="tier-pill accent-violet">Full closes at flagship level</span>
+        </div>
+        <h1>
+          Founders pricing now reads like a complete commercial system.
+          <span className="hero-subline">Clear entry, credible escalation, and a flagship close at the top tier.</span>
+        </h1>
         <p className="lead">
-          The public layer builds trust. `Solo` gives a premium first step, `Pro` unlocks the real
-          private bundle, and `Full Signature` turns the experience into a top-tier commercial
-          surface. This founders window stays available only while the first 20 customers are still open.
+          The public layer builds trust. `Solo` creates a fast premium first step, `Pro` unlocks
+          the real private delivery bundle, and `Full Signature` closes as the strongest commercial
+          package in the stack. This founders window stays open only while the first 20 customers remain available.
         </p>
         <div className="payment-meta" aria-label="Accepted payment methods">
           <span className="payment-chip alt accent-cyan">{foundersOffer.label}</span>
@@ -140,6 +170,24 @@ export default async function PricingPage() {
         {signedInEmail ? (
           <p className="lead">Signed in as {signedInEmail}. You can open the protected vault directly.</p>
         ) : null}
+        <div className="hero-language-grid">
+          <article className="language-panel">
+            <p className="section-label">English</p>
+            <h2>Buyers should understand the ladder in seconds.</h2>
+            <p>
+              This page now frames pricing as product architecture: free builds trust, paid adds
+              protected value, and the top tier clearly earns its higher position.
+            </p>
+          </article>
+          <article className="language-panel es">
+            <p className="section-label">Espanol</p>
+            <h2>El comprador debe entender la escalera en segundos.</h2>
+            <p>
+              Esta pagina ahora presenta pricing como arquitectura de producto: lo gratis genera
+              confianza, lo pagado agrega valor protegido y la capa alta justifica con claridad su posicion.
+            </p>
+          </article>
+        </div>
         <div className="hero-actions">
           <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
             Talk to Sales
@@ -156,6 +204,27 @@ export default async function PricingPage() {
           <a href={salesLinks.premiumPreview} className="btn ghost" target="_blank" rel="noreferrer">
             Premium Preview
           </a>
+        </div>
+      </section>
+
+      <section className="card landing-section signature-band">
+        <div className="signature-band-copy">
+          <p className="section-label">Commercial Signal / Senal Comercial</p>
+          <h2>This pricing surface should feel like premium product strategy, not a plain rate card.</h2>
+          <p className="micro-note">
+            The visual hierarchy needs to make one thing obvious: buyers are not choosing between
+            random prices, they are choosing how much of the LotOS UI system they want to unlock.
+          </p>
+        </div>
+        <div className="signature-grid">
+          {pricingSignaturePrinciples.map((item, index) => (
+            <article key={item.label} className={`signature-card ${accentCycle[index % accentCycle.length]}`}>
+              <p className="signature-label">{item.label}</p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <p className="lane-es">{item.titleEs}</p>
+            </article>
+          ))}
         </div>
       </section>
 
