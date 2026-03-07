@@ -36,6 +36,38 @@ export default async function VaultPage() {
   const hasSolo = viewer.isOwner || viewer.plans.includes('solo') || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
   const hasPro = viewer.isOwner || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
   const hasLaunch = viewer.isOwner || viewer.plans.includes('launch_pack');
+  const vaultExperienceCards = [
+    {
+      label: 'Access state',
+      value: viewer.isOwner ? 'Owner' : viewer.plans.length > 0 ? 'Entitled' : 'Public-only',
+      body: viewer.isOwner
+        ? 'Owner bypass is active, so every paid surface is reachable from this session.'
+        : viewer.plans.length > 0
+          ? 'The vault can route directly into the tiers the buyer already paid for.'
+          : 'The account is signed in but does not currently hold a paid entitlement.',
+      tone: viewer.isOwner || viewer.plans.length > 0 ? 'accent-emerald' : 'accent-amber',
+    },
+    {
+      label: 'Entitlements',
+      value: viewer.degraded ? 'Degraded' : 'Resolved',
+      body: viewer.degraded
+        ? 'Entitlement lookup failed safely. The user can still understand the ladder instead of hitting a dead-end.'
+        : 'Entitlement state resolved normally and drives the vault tier logic.',
+      tone: viewer.degraded ? 'accent-rose' : 'accent-cyan',
+    },
+    {
+      label: 'Flow',
+      value: hasLaunch ? 'Full' : hasPro ? 'Pro' : hasSolo ? 'Solo' : 'Upgrade',
+      body: hasLaunch
+        ? 'This session can open the flagship premium layer.'
+        : hasPro
+          ? 'This session can open the real protected Pro surface.'
+          : hasSolo
+            ? 'This session can access the proof-first Solo tier.'
+            : 'The current session should be guided back to pricing or public docs.',
+      tone: hasLaunch ? 'accent-violet' : hasPro ? 'accent-amber' : hasSolo ? 'accent-cyan' : 'accent-rose',
+    },
+  ];
 
   return (
     <main className="landing pricing-page">
@@ -55,6 +87,12 @@ export default async function VaultPage() {
           Signed in as <strong>{viewer.email}</strong>. Free assets stay public; protected assets
           unlock here based on entitlement or owner status.
         </p>
+        {viewer.warnings.length > 0 ? (
+          <div className="pricing-state-banner warning">
+            <strong>Vault recovered with fallback.</strong>
+            <span>{viewer.warnings.join(' | ')}</span>
+          </div>
+        ) : null}
         <div className="payment-meta" aria-label="Vault state">
           <span className="payment-chip free accent-cyan">Free foundation stays open</span>
           <span className="payment-chip alt accent-amber">Public first, premium after</span>
@@ -74,6 +112,16 @@ export default async function VaultPage() {
             Full Surface
           </Link>
         </div>
+      </section>
+
+      <section className="value-grid">
+        {vaultExperienceCards.map((card) => (
+          <article key={card.label} className={`value-card ${card.tone}`}>
+            <p className="plan-tier">{card.label}</p>
+            <h3>{card.value}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))}
       </section>
 
       <section id="free-foundation" className="card free-entry vault-free-panel">
@@ -181,6 +229,7 @@ export default async function VaultPage() {
             <li>Commercial previews and evaluation-only sales assets.</li>
             <li>Protected `packages/pro` delivery assets and manifests.</li>
             <li>Desktop template Pro catalog surfaces and kit downloads.</li>
+            <li>Tier routing that should match what the buyer actually paid for, not what the UI merely promises.</li>
           </ul>
         </article>
       </section>

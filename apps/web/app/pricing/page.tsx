@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth-options';
 import { AuthAction } from '../auth-action';
 import {
+  commercialReadiness,
   checkoutEnvKeys,
   foundersOffer,
   freeSurface,
@@ -13,6 +14,7 @@ import {
   salesPlans
 } from '../sales-config';
 import '../lotos-landing.css';
+import type { PaymentAction, SalesPlan } from '../sales-config';
 
 type TierSignal = {
   value: string;
@@ -115,13 +117,112 @@ const tierPresentation: Record<string, TierPresentation> = {
   },
 };
 
-export default async function PricingPage() {
-  const session = await getServerSession(authOptions);
+function ensurePlan(plan: SalesPlan | undefined, fallback: {
+  id: string;
+  name: string;
+  priceLabel: string;
+  summary: string;
+  audience: string;
+  features: string[];
+  paymentActions: PaymentAction[];
+  checkoutHint: string;
+}): SalesPlan {
+  if (plan) {
+    return plan;
+  }
+
+  return {
+    ...fallback,
+    kind: 'paid',
+    ctaLabel: fallback.paymentActions[0]?.label ?? 'Contact sales',
+    href: fallback.paymentActions[0]?.href ?? '/pricing',
+    external: fallback.paymentActions[0]?.external ?? false,
+  };
+}
+
+function safePaymentActions(actions: PaymentAction[] | undefined): PaymentAction[] {
+  if (actions && actions.length > 0) {
+    return actions;
+  }
+
+  return [
+    {
+      label: 'Contact sales',
+      href: salesLinks.contact,
+      external: true,
+      tone: 'ghost',
+    },
+  ];
+}
+
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  let session = null;
+  let authWarning: string | null = null;
+
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    authWarning =
+      error instanceof Error ? error.message : 'Authentication state is temporarily unavailable.';
+  }
+
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const pricingState = Array.isArray(resolvedSearchParams?.state)
+    ? resolvedSearchParams?.state[0]
+    : resolvedSearchParams?.state;
   const signedInEmail = session?.user?.email ?? null;
   const freePlan = salesPlans.find((plan) => plan.id === 'free');
   const paidPlans = salesPlans.filter((plan) => plan.kind === 'paid');
-  const proPlan = paidPlans.find((plan) => plan.id === 'pro');
-  const fullPlan = paidPlans.find((plan) => plan.id === 'launch-pack');
+  const proPlan = ensurePlan(paidPlans.find((plan) => plan.id === 'pro'), {
+    id: 'pro',
+    name: 'Pro Studio',
+    priceLabel: 'MX$129 / mes',
+    summary: 'Reusable premium delivery for teams that need real protected assets.',
+    audience: 'Teams that need Pro access without ambiguity.',
+    features: ['Protected kits', 'Reusable delivery assets', 'Private vault value'],
+    paymentActions: safePaymentActions(undefined),
+    checkoutHint: 'If checkout is unavailable, use the contact route.',
+  });
+  const fullPlan = ensurePlan(paidPlans.find((plan) => plan.id === 'launch-pack'), {
+    id: 'launch-pack',
+    name: 'Full Signature',
+    priceLabel: 'MX$249 / mes',
+    summary: 'The fullest premium package with exclusive surfaces and the strongest handoff.',
+    audience: 'Buyers that want the highest-finish version of the product.',
+    features: ['Everything in Pro', 'Executive surfaces', 'Highest-finish handoff'],
+    paymentActions: safePaymentActions(undefined),
+    checkoutHint: 'If checkout is unavailable, use the contact route.',
+  });
+  const readinessCards = [
+    {
+      label: 'Checkout',
+      value: commercialReadiness.directCheckoutReady ? 'Ready' : 'Fallback',
+      body: commercialReadiness.directCheckoutReady
+        ? 'At least one direct checkout path is active.'
+        : 'Sales can still close through manual contact while checkout is configured.',
+      tone: commercialReadiness.directCheckoutReady ? 'accent-emerald' : 'accent-amber',
+    },
+    {
+      label: 'Unlock',
+      value: commercialReadiness.automaticUnlockReady ? 'Automatic' : 'Manual',
+      body: commercialReadiness.automaticUnlockReady
+        ? 'Paid users can be unlocked automatically through the configured entitlement path.'
+        : 'Use owner grant flow until automatic unlock is fully wired.',
+      tone: commercialReadiness.automaticUnlockReady ? 'accent-cyan' : 'accent-violet',
+    },
+    {
+      label: 'Auth',
+      value: authWarning ? 'Retry-safe' : 'Healthy',
+      body: authWarning
+        ? 'The page degraded safely and still shows pricing while auth stabilizes.'
+        : 'Google sign-in path is available for vault access and entitlement checks.',
+      tone: authWarning ? 'accent-rose' : 'accent-cyan',
+    },
+  ];
 
   return (
     <main className="landing pricing-page">
@@ -163,10 +264,36 @@ export default async function PricingPage() {
         <div className="payment-meta" aria-label="Accepted payment methods">
           <span className="payment-chip alt accent-cyan">{foundersOffer.label}</span>
           <span className="payment-chip manual accent-violet">{foundersOffer.limitLabel}</span>
-          <span className="payment-chip ready accent-emerald">Lemon-ready subscriptions</span>
-          <span className="payment-chip alt accent-amber">Mercado Pago fallback</span>
-          <span className="payment-chip manual accent-rose">Google vault access</span>
+          <span className={`payment-chip ${commercialReadiness.directCheckoutReady ? 'ready' : 'manual'} accent-emerald`}>
+            {commercialReadiness.directCheckoutReady ? 'Checkout directo activo' : 'Checkout directo pendiente'}
+          </span>
+          <span className={`payment-chip ${commercialReadiness.fallbackPaymentReady ? 'alt' : 'manual'} accent-amber`}>
+            {commercialReadiness.fallbackPaymentReady ? 'Fallback payment activo' : 'Fallback payment pendiente'}
+          </span>
+          <span className={`payment-chip ${commercialReadiness.automaticUnlockReady ? 'ready' : 'manual'} accent-rose`}>
+            {commercialReadiness.automaticUnlockReady ? 'Unlock automatico activo' : 'Unlock automatico pendiente'}
+          </span>
         </div>
+        {pricingState ? (
+          <div className="pricing-state-banner">
+            <strong>
+              {pricingState === 'entitlement-check-failed'
+                ? 'Entitlement check temporarily unavailable.'
+                : 'Upgrade required for that surface.'}
+            </strong>
+            <span>
+              {pricingState === 'entitlement-check-failed'
+                ? 'The product degraded safely. You can still review pricing and contact sales while unlock checks recover.'
+                : 'That route needs a higher paid tier. Use the ladder below to choose the right access level.'}
+            </span>
+          </div>
+        ) : null}
+        {authWarning ? (
+          <div className="pricing-state-banner warning">
+            <strong>Auth state recovered with fallback.</strong>
+            <span>{authWarning}</span>
+          </div>
+        ) : null}
         {signedInEmail ? (
           <p className="lead">Signed in as {signedInEmail}. You can open the protected vault directly.</p>
         ) : null}
@@ -205,6 +332,16 @@ export default async function PricingPage() {
             Premium Preview
           </a>
         </div>
+      </section>
+
+      <section className="value-grid">
+        {readinessCards.map((card) => (
+          <article key={card.label} className={`value-card ${card.tone}`}>
+            <p className="plan-tier">{card.label}</p>
+            <h3>{card.value}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))}
       </section>
 
       <section className="card landing-section signature-band">
@@ -474,7 +611,7 @@ export default async function PricingPage() {
               <div className="tier-cta-stack">
                 <p className="tier-footnote">{plan.checkoutHint}</p>
                 <div className="payment-actions" role="group" aria-label={`Actions for ${plan.name}`}>
-                  {plan.paymentActions.map((action) =>
+                  {safePaymentActions(plan.paymentActions).map((action) =>
                     action.external ? (
                       <a
                         key={action.label}

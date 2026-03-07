@@ -1857,6 +1857,35 @@ th {
   gap: 8px;
 }
 
+.pricing-state-banner {
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(16, 185, 129, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 253, 244, 0.9));
+  box-shadow: 0 18px 30px rgba(20, 44, 71, 0.08);
+}
+
+.pricing-state-banner.warning {
+  border-color: rgba(244, 63, 94, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 241, 242, 0.92));
+}
+
+.pricing-state-banner strong {
+  color: #153553;
+  font-size: 14px;
+}
+
+.pricing-state-banner span {
+  color: #516a88;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .payment-actions {
   margin-top: 4px;
 }

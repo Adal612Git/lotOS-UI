@@ -5,9 +5,21 @@ import { hasEntitlement, listUserPlans } from './entitlements';
 import { isOwnerEmail, normalizeEmail } from './owner';
 import type { CommercialPlan } from './plans';
 
+export type ViewerContext = {
+  email: string;
+  isOwner: boolean;
+  plans: CommercialPlan[];
+  degraded: boolean;
+  warnings: string[];
+};
+
 export async function getSignedInEmail() {
-  const session = await getServerSession(authOptions);
-  return normalizeEmail(session?.user?.email);
+  try {
+    const session = await getServerSession(authOptions);
+    return normalizeEmail(session?.user?.email);
+  } catch {
+    return null;
+  }
 }
 
 export async function requireSignedInEmail() {
@@ -23,12 +35,44 @@ export async function requireSignedInEmail() {
 export async function getViewerContext() {
   const email = await requireSignedInEmail();
   const owner = isOwnerEmail(email);
+  const warnings: string[] = [];
 
-  return {
-    email,
-    isOwner: owner,
-    plans: owner ? (['launch_pack'] as CommercialPlan[]) : await listUserPlans(email),
-  };
+  if (owner) {
+    return {
+      email,
+      isOwner: true,
+      plans: ['launch_pack'] as CommercialPlan[],
+      degraded: false,
+      warnings,
+    } satisfies ViewerContext;
+  }
+
+  try {
+    const plans = await listUserPlans(email);
+
+    return {
+      email,
+      isOwner: false,
+      plans,
+      degraded: false,
+      warnings,
+    } satisfies ViewerContext;
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Unable to resolve entitlements right now.';
+
+    warnings.push(message);
+
+    return {
+      email,
+      isOwner: false,
+      plans: [],
+      degraded: true,
+      warnings,
+    } satisfies ViewerContext;
+  }
 }
 
 export async function requirePlanAccess(requiredPlan: CommercialPlan) {
@@ -41,10 +85,16 @@ export async function requirePlanAccess(requiredPlan: CommercialPlan) {
     };
   }
 
-  const allowed = await hasEntitlement(email, requiredPlan);
+  let allowed = false;
+
+  try {
+    allowed = await hasEntitlement(email, requiredPlan);
+  } catch {
+    redirect('/pricing?state=entitlement-check-failed');
+  }
 
   if (!allowed) {
-    redirect('/pricing');
+    redirect('/pricing?state=upgrade-required');
   }
 
   return {
