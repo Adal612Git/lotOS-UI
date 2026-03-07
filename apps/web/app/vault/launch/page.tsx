@@ -3,6 +3,15 @@ import { requirePlanAccess } from '../../../lib/auth-server';
 import { launchAssets } from '../../../lib/commercial-assets';
 import '../../lotos-landing.css';
 
+const fallbackLaunchAssets = [
+  {
+    id: 'launch-signature-fallback',
+    name: 'Full Signature Command Pack',
+    description: 'Fallback summary of the flagship tier while the launch-exclusive asset catalog is being refreshed.',
+    fileName: 'full-signature-command-pack',
+  },
+];
+
 const fullAccentCycle = ['accent-violet', 'accent-rose', 'accent-amber', 'accent-cyan'] as const;
 
 const fullSignals = [
@@ -51,6 +60,8 @@ const launchUseCases = [
 
 export default async function LaunchVaultPage() {
   await requirePlanAccess('launch_pack');
+  const assets = launchAssets.length > 0 ? launchAssets : fallbackLaunchAssets;
+  const degradedAssets = launchAssets.length === 0;
 
   return (
     <main className="landing pricing-page">
@@ -75,6 +86,17 @@ export default async function LaunchVaultPage() {
           <span className="payment-chip ready accent-violet">Flagship premium layer</span>
           <span className="payment-chip alt accent-rose">New ecosystem access</span>
           <span className="payment-chip manual accent-amber">Above Pro by scope</span>
+        </div>
+        {degradedAssets ? (
+          <div className="pricing-state-banner warning">
+            <strong>Full catalog in fallback mode.</strong>
+            <span>The top tier remains understandable and navigable while launch-exclusive assets finish syncing.</span>
+          </div>
+        ) : null}
+        <div className="hero-actions compact">
+          <Link href="/vault" className="btn ghost">Vault Home</Link>
+          <Link href="/vault/pro" className="btn ghost">Compare With Pro</Link>
+          <Link href="/pricing" className="btn primary">Review Pricing</Link>
         </div>
       </section>
 
@@ -137,7 +159,7 @@ export default async function LaunchVaultPage() {
 
       <section className="vault-strip">
         <article className="vault-kpi accent-violet">
-          <strong>{launchAssets.length}</strong>
+          <strong>{assets.length}</strong>
           <span>Full-only assets</span>
           <p>Exclusive manifests and premium surfaces that do not ship in Pro.</p>
         </article>
@@ -184,7 +206,7 @@ export default async function LaunchVaultPage() {
       </section>
 
       <section className="vault-assets-grid">
-        {launchAssets.map((asset, index) => (
+        {assets.map((asset, index) => (
           <article key={asset.id} className={`asset-card launch ${fullAccentCycle[index % fullAccentCycle.length]}`}>
             <div className="asset-top">
               <div>
@@ -199,9 +221,15 @@ export default async function LaunchVaultPage() {
               <span className="payment-chip alt accent-rose">Integrated surface</span>
               <span className="payment-chip manual accent-amber">Top-tier delivery</span>
             </div>
-            <a className="btn primary full" href={`/api/download/${asset.id}`}>
-              Unlock {asset.name}
-            </a>
+            {degradedAssets ? (
+              <Link className="btn primary full" href="/pricing">
+                Review Full Signature
+              </Link>
+            ) : (
+              <a className="btn primary full" href={`/api/download/${asset.id}`}>
+                Unlock {asset.name}
+              </a>
+            )}
           </article>
         ))}
       </section>

@@ -3,6 +3,15 @@ import { requirePlanAccess } from '../../../lib/auth-server';
 import { soloAssets } from '../../../lib/commercial-assets';
 import '../../lotos-landing.css';
 
+const fallbackSoloAssets = [
+  {
+    id: 'solo-proof-fallback',
+    name: 'Solo Proof Pack',
+    description: 'Fallback summary of the private proof layer while the protected asset catalog stabilizes.',
+    fileName: 'solo-proof-pack',
+  },
+];
+
 const soloAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet'] as const;
 
 const soloSignals = [
@@ -60,6 +69,8 @@ const soloBenefits = [
 
 export default async function SoloVaultPage() {
   await requirePlanAccess('solo');
+  const assets = soloAssets.length > 0 ? soloAssets : fallbackSoloAssets;
+  const degradedAssets = soloAssets.length === 0;
 
   return (
     <main className="landing pricing-page">
@@ -84,6 +95,17 @@ export default async function SoloVaultPage() {
           <span className="payment-chip ready accent-cyan">Buyer-only layer</span>
           <span className="payment-chip alt accent-amber">Above free, below Pro</span>
           <span className="payment-chip manual accent-violet">Proof-first premium</span>
+        </div>
+        {degradedAssets ? (
+          <div className="pricing-state-banner warning">
+            <strong>Solo catalog in fallback mode.</strong>
+            <span>The tier stays usable and explainable while the protected asset list is being refreshed.</span>
+          </div>
+        ) : null}
+        <div className="hero-actions compact">
+          <Link href="/vault" className="btn ghost">Vault Home</Link>
+          <Link href="/vault/pro" className="btn ghost">Compare With Pro</Link>
+          <Link href="/pricing" className="btn primary">Review Pricing</Link>
         </div>
       </section>
 
@@ -146,7 +168,7 @@ export default async function SoloVaultPage() {
 
       <section className="vault-strip">
         <article className="vault-kpi accent-cyan">
-          <strong>{soloAssets.length}</strong>
+          <strong>{assets.length}</strong>
           <span>Private proof assets</span>
           <p>Enough premium material to create a real monthly step above free without exposing Pro.</p>
         </article>
@@ -177,7 +199,7 @@ export default async function SoloVaultPage() {
       </section>
 
       <section className="vault-assets-grid">
-        {soloAssets.map((asset, index) => (
+        {assets.map((asset, index) => (
           <article key={asset.id} className={`asset-card solo ${soloAccentCycle[index % soloAccentCycle.length]}`}>
             <div className="asset-top">
               <div>
@@ -192,9 +214,15 @@ export default async function SoloVaultPage() {
               <span className="payment-chip free accent-amber">Proof layer</span>
               <span className="payment-chip manual accent-violet">Controlled preview</span>
             </div>
-            <a className="btn primary full" href={`/api/download/${asset.id}`}>
-              Unlock {asset.name}
-            </a>
+            {degradedAssets ? (
+              <Link className="btn primary full" href="/pricing">
+                Review Solo Access
+              </Link>
+            ) : (
+              <a className="btn primary full" href={`/api/download/${asset.id}`}>
+                Unlock {asset.name}
+              </a>
+            )}
           </article>
         ))}
       </section>

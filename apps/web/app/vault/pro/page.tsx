@@ -3,6 +3,15 @@ import { requirePlanAccess } from '../../../lib/auth-server';
 import { proAssets, proDesktopTemplates } from '../../../lib/commercial-assets';
 import '../../lotos-landing.css';
 
+const fallbackProAssets = [
+  {
+    id: 'pro-core-fallback',
+    name: 'Pro Core Bundle',
+    description: 'Fallback summary of the reusable protected Pro layer while the private catalog refresh completes.',
+    fileName: 'pro-core-bundle',
+  },
+];
+
 const proAccentCycle = ['accent-amber', 'accent-cyan', 'accent-violet', 'accent-emerald'] as const;
 
 const proSignals = [
@@ -60,6 +69,16 @@ const proPrograms = [
 
 export default async function ProVaultPage() {
   await requirePlanAccess('pro');
+  const assets = proAssets.length > 0 ? proAssets : fallbackProAssets;
+  const desktopTemplates = proDesktopTemplates.length > 0 ? proDesktopTemplates : [
+    {
+      id: 'desktop-fallback',
+      name: 'Premium Desktop Catalog',
+      summary: 'Pro keeps the desktop runtime lane reserved even while the catalog is being refreshed.',
+      plan: 'pro' as const,
+    },
+  ];
+  const degradedAssets = proAssets.length === 0;
 
   return (
     <main className="landing pricing-page">
@@ -84,6 +103,17 @@ export default async function ProVaultPage() {
           <span className="payment-chip ready accent-amber">Core premium layer</span>
           <span className="payment-chip alt accent-cyan">Reusable delivery</span>
           <span className="payment-chip manual accent-violet">Above Solo, below Full</span>
+        </div>
+        {degradedAssets ? (
+          <div className="pricing-state-banner warning">
+            <strong>Pro catalog in fallback mode.</strong>
+            <span>The tier remains usable while protected Pro assets finish syncing into the vault catalog.</span>
+          </div>
+        ) : null}
+        <div className="hero-actions compact">
+          <Link href="/vault" className="btn ghost">Vault Home</Link>
+          <Link href="/vault/launch" className="btn ghost">Compare With Full</Link>
+          <Link href="/pricing" className="btn primary">Review Pricing</Link>
         </div>
       </section>
 
@@ -146,12 +176,12 @@ export default async function ProVaultPage() {
 
       <section className="vault-strip">
         <article className="vault-kpi accent-amber">
-          <strong>{proAssets.length}</strong>
+          <strong>{assets.length}</strong>
           <span>Protected Pro assets</span>
           <p>A wider premium surface built to feel materially stronger than the Solo proof layer.</p>
         </article>
         <article className="vault-kpi accent-cyan">
-          <strong>{proDesktopTemplates.length}</strong>
+          <strong>{desktopTemplates.length}</strong>
           <span>Desktop templates</span>
           <p>Extra operator-facing catalog depth that expands the sense of value beyond raw files.</p>
         </article>
@@ -177,7 +207,7 @@ export default async function ProVaultPage() {
       </section>
 
       <section className="vault-assets-grid">
-        {proAssets.map((asset, index) => (
+        {assets.map((asset, index) => (
           <article key={asset.id} className={`asset-card pro ${proAccentCycle[index % proAccentCycle.length]}`}>
             <div className="asset-top">
               <div>
@@ -192,9 +222,15 @@ export default async function ProVaultPage() {
               <span className="payment-chip alt accent-cyan">Reusable</span>
               <span className="payment-chip manual accent-violet">Team-facing</span>
             </div>
-            <a className="btn primary full" href={`/api/download/${asset.id}`}>
-              Unlock {asset.name}
-            </a>
+            {degradedAssets ? (
+              <Link className="btn primary full" href="/pricing">
+                Review Pro Access
+              </Link>
+            ) : (
+              <a className="btn primary full" href={`/api/download/${asset.id}`}>
+                Unlock {asset.name}
+              </a>
+            )}
           </article>
         ))}
       </section>
@@ -204,7 +240,7 @@ export default async function ProVaultPage() {
           <p className="section-label">Desktop templates</p>
           <h2>Pro-only runtime catalog</h2>
           <ul>
-            {proDesktopTemplates.map((template) => (
+            {desktopTemplates.map((template) => (
               <li key={template.id}>
                 <strong>{template.name}</strong>: {template.summary}
               </li>
@@ -215,7 +251,7 @@ export default async function ProVaultPage() {
           <p className="section-label">Spreadsheet monetization</p>
           <h2>Excel and OpenOffice are Pro-only</h2>
           <p>
-            The Excel and OpenOffice kits are now behind the same Pro entitlement as the rest of the
+            The Excel and OpenOffice kits stay behind the same Pro entitlement as the rest of the
             protected commercial payload. Public previews can still live in the Solo surface, but
             the stronger execution value sits here in the Pro tier.
           </p>
