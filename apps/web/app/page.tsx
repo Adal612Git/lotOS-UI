@@ -47,10 +47,10 @@ const documentationLanes = [
   {
     title: 'Start Here',
     titleEs: 'Empieza Aqui',
-    href: '/docs/installation',
-    body: 'Installation, package selection, and first commands with a direct path to working output.',
-    bodyEs: 'Instalacion, seleccion de paquetes y primeros comandos con una ruta directa hacia output funcional.',
-    cta: 'Installation',
+    href: '/docs/start-here',
+    body: 'The shortest onboarding path: package choice, correct runtime, and where spreadsheet modernization fits.',
+    bodyEs: 'La ruta de onboarding mas corta: que paquete elegir, cual runtime usar y donde encaja la modernizacion de spreadsheets.',
+    cta: 'Start Here',
   },
   {
     title: 'Component Library',
@@ -209,7 +209,7 @@ export default async function HomePage() {
               </article>
             </div>
             <div className="hero-actions">
-              <Link href="/docs/installation" className="btn primary">Get Started / Empezar</Link>
+              <Link href="/docs/start-here" className="btn primary">Get Started / Empezar</Link>
               <Link href="/docs" className="btn ghost">Open Docs</Link>
               <Link href="/pricing" className="btn ghost">Pricing / Precios</Link>
               {signedInEmail ? (
@@ -250,8 +250,8 @@ export default async function HomePage() {
                       <h3>Docs-first path</h3>
                       <span className="payment-chip ready accent-cyan">Public</span>
                     </div>
-                    <p>Installation, components, and runtime guidance are now visible before checkout pressure.</p>
-                    <div className="preview-code-strip">docs | installation | components | runtime</div>
+                    <p>Onboarding, components, runtime guidance, and spreadsheet context are visible before checkout pressure.</p>
+                    <div className="preview-code-strip">start-here | installation | components | runtime</div>
                   </div>
                   <div className="preview-surface-card secondary">
                     <div className="preview-surface-head">
@@ -359,7 +359,7 @@ export default async function HomePage() {
             ))}
           </ul>
           <div className="hero-actions compact">
-            <Link href="/docs/components/button" className="btn ghost">Inspect Components</Link>
+            <Link href="/docs/start-here" className="btn ghost">Open Start Here</Link>
             <Link href="/docs/multi-runtime" className="btn ghost">Open Runtime Guide</Link>
           </div>
         </article>
@@ -542,7 +542,7 @@ export default async function HomePage() {
             The landing page now routes users in the correct order: understanding first, protected value second.
           </p>
           <div className="hero-actions compact">
-            <Link href="/docs" className="btn primary">Open Documentation</Link>
+            <Link href="/docs/start-here" className="btn primary">Open Start Here</Link>
             <Link href={vaultHref} className="btn ghost">Open Vault Surface</Link>
           </div>
         </article>

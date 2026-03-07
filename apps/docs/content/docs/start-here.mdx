@@ -1,0 +1,111 @@
+---
+title: Start Here
+description: The shortest path to understand LotOS UI, choose the right package, and avoid starting in the wrong runtime.
+---
+
+# Start Here
+
+This page is the practical onboarding for LotOS UI.
+
+If you only remember one thing, remember this:
+
+1. Start with the stable React arm first.
+2. Use multi-runtime tracks only when the delivery target actually requires them.
+3. Treat spreadsheet modernization as a product lane, not as the default installation path.
+
+## The correct first decision
+
+Choose the lane that matches your actual goal:
+
+| Goal | Recommended lane | Why |
+| --- | --- | --- |
+| Ship UI in a web app now | `@lotosui/claude-arm` | This is the stable production arm. |
+| Generate architecture or starter stacks | `@lotosui/cli` + docs | Good when you need scaffolding, not just components. |
+| Coordinate AI generation with contracts | `@lotosui/core` MCP | Use when agents need schemas, runtimes, and patterns. |
+| Modernize Excel or Calc workflows | Spreadsheet kits + macros | This is a delivery lane, not the first package most teams should install. |
+
+## Recommended first hour
+
+### 1. Install the stable package
+
+```bash
+npm install @lotosui/claude-arm
+```
+
+```tsx
+import '@lotosui/claude-arm/styles.css';
+import { Button } from '@lotosui/claude-arm';
+
+export function Example() {
+  return <Button variant="primary">LotOS UI</Button>;
+}
+```
+
+### 2. Read the runtime reality before expanding
+
+- React is the stable path.
+- Laravel, Django, Flask, Spring, .NET, and Go are expansion tracks.
+- Desktop and web components are useful, but they should not confuse the first implementation step.
+
+Continue with [Installation](/docs/installation) and then [Multi Runtime Guide](/docs/multi-runtime).
+
+### 3. Use the CLI when you need structure
+
+```bash
+pnpm --filter @lotosui/cli exec lotos-ui stacks
+pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
+```
+
+Use CLI commands when the team needs:
+
+- stack scaffolding
+- desktop shells
+- runtime discovery
+- a stronger starting structure for AI-assisted work
+
+## Spreadsheet modernization: the right expectation
+
+LotOS UI can improve spreadsheet workflows, but that path is different from the normal npm path.
+
+Use the spreadsheet lane when you need to:
+
+- make Excel look like an operator surface without replacing the workbook
+- improve Calc or OpenOffice workflows with macro-driven styling
+- prototype premium modernization offers for operations teams
+
+Relevant local references:
+
+- `demo-video/excel-lotos/lotos_excel_demo.bas`
+- `demo-video/excel-lotos/README.md`
+- `demo-video/calc-lotos/lotos_calc_demo.bas`
+- `packages/pro/industry-kits/excel-lotus-grid-kit.json`
+- `packages/pro/industry-kits/openoffice-calc-command-kit.json`
+
+Important distinction:
+
+- `npm install @lotosui/claude-arm` is the correct path for app UI.
+- Excel and Calc macros are a separate delivery surface for spreadsheet modernization.
+
+## Avoid these mistakes
+
+1. Do not start in an alpha runtime if the project can ship in React.
+2. Do not treat premium spreadsheet kits as the same thing as the public component package.
+3. Do not skip the docs map and jump straight into premium assets without validating the public layer first.
+
+## Suggested learning order
+
+1. Read [Installation](/docs/installation).
+2. Open [Multi Runtime Guide](/docs/multi-runtime).
+3. Inspect one component, for example [Button](/docs/components/button).
+4. If you are selling workflow modernization, review the spreadsheet references listed above.
+5. Move into pricing or vault surfaces only when you actually need protected assets.
+
+## En espanol
+
+La ruta recomendada es simple:
+
+1. Empieza con React y `@lotosui/claude-arm`.
+2. Usa el CLI cuando necesites estructura, starters o discovery.
+3. Trata Excel y Calc como una linea de entrega separada, orientada a modernizacion de flujos con macros.
+
+Eso evita el error principal: querer aprender todo el sistema desde el runtime equivocado.

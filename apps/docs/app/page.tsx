@@ -90,6 +90,33 @@ const pillars = [
   },
 ];
 
+const learningTracks = [
+  {
+    title: 'App UI first',
+    titleEs: 'Primero UI de app',
+    href: '/docs/start-here',
+    body: 'Use this if your goal is to install the right npm package and ship UI without getting lost in the larger runtime map.',
+    bodyEs: 'Usa esto si tu meta es instalar el paquete correcto de npm y enviar UI sin perderte en el mapa grande de runtimes.',
+    tone: 'stable',
+  },
+  {
+    title: 'React production setup',
+    titleEs: 'Setup productivo en React',
+    href: '/docs/installation',
+    body: 'Go here once you are ready to install the stable arm and wire styles, components, and first commands.',
+    bodyEs: 'Ve aqui cuando ya estes listo para instalar el brazo estable y conectar estilos, componentes y primeros comandos.',
+    tone: 'desktop',
+  },
+  {
+    title: 'Spreadsheet modernization',
+    titleEs: 'Modernizacion de spreadsheets',
+    href: '/docs/start-here',
+    body: 'This path explains where Excel and Calc macros fit so teams do not confuse premium workflow upgrades with the default package path.',
+    bodyEs: 'Esta ruta explica donde entran las macros de Excel y Calc para no confundir upgrades premium de workflows con la ruta normal del paquete.',
+    tone: 'proto',
+  },
+];
+
 const commands = `pnpm --filter @lotosui/cli exec lotos-ui stacks
 pnpm --filter @lotosui/cli exec lotos-ui stack-init -s php-laravel-starter -d mongodb -o stack/php-laravel
 pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
@@ -129,7 +156,7 @@ export default async function DocsHomePage() {
             <p className="hero-proof">Signed in as {signedInEmail}. The docs domain can now open the commercial vault directly.</p>
           ) : null}
           <div className="hero-actions">
-            <Link href="/docs/installation" className="btn btn-primary">Get Started / Empezar</Link>
+            <Link href="/docs/start-here" className="btn btn-primary">Get Started / Empezar</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Runtime Guide / Guia</Link>
             <Link href="/pricing" className="btn btn-ghost">Pricing / Precios</Link>
             {signedInEmail ? (
@@ -218,6 +245,28 @@ export default async function DocsHomePage() {
             una demostracion viva de las mismas reglas visuales, jerarquia y superficies reutilizables
             que la plataforma expone a los equipos.
           </p>
+        </div>
+      </section>
+
+      <section className="section light">
+        <div className="section-head">
+          <p className="eyebrow">Start paths / Rutas de inicio</p>
+          <h2>One clear entry per kind of user.</h2>
+          <p>
+            The docs should teach users how to approach the product, not just list what exists.
+          </p>
+        </div>
+        <div className="runtime-grid">
+          {learningTracks.map((track) => (
+            <Link key={track.title} href={track.href} className={`runtime-card ${track.tone}`}>
+              <div className="runtime-top">
+                <h3>{track.title}</h3>
+                <span className={`pill ${track.tone}`}>Start</span>
+              </div>
+              <p>{track.body}</p>
+              <p className="es">{track.titleEs}: {track.bodyEs}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -760,6 +809,7 @@ export default async function DocsHomePage() {
           background: rgba(255,255,255,0.82);
           padding: 16px;
           box-shadow: 0 18px 28px rgba(15, 23, 42, 0.06);
+          text-decoration: none;
         }
         .runtime-top {
           display: flex;

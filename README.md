@@ -46,6 +46,29 @@ import '@lotosui/claude-arm/styles.css';
 import { Button } from '@lotosui/claude-arm';
 ```
 
+## Ruta de inicio recomendada
+
+Si alguien llega nuevo al producto, el orden correcto es:
+
+1. Instalar `@lotosui/claude-arm` si quiere UI de aplicacion en React.
+2. Leer la ruta de onboarding en `apps/docs/content/docs/start-here.mdx`.
+3. Usar `@lotosui/cli` solo cuando ya necesite scaffolding, stacks o shells desktop.
+4. Tratar Excel y Calc como una linea separada de modernizacion de workflows, no como la ruta normal de npm.
+
+## Excel y Calc
+
+El caso de macros para spreadsheet si existe en el repo, pero no reemplaza la instalacion npm principal.
+
+- Excel VBA demo: `demo-video/excel-lotos/lotos_excel_demo.bas`
+- Excel guide: `demo-video/excel-lotos/README.md`
+- Calc demo: `demo-video/calc-lotos/lotos_calc_demo.bas`
+- Calc guide: `demo-video/calc-lotos/README.md`
+
+Resumen rapido:
+
+- `@lotosui/claude-arm` = paquete principal para UI web/producto
+- macros Excel/Calc = superficie de modernizacion para hojas operativas
+
 ## Desarrollo local
 
 ```bash
