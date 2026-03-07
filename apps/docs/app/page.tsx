@@ -158,6 +158,7 @@ export default async function DocsHomePage() {
           <div className="hero-actions">
             <Link href="/docs/start-here" className="btn btn-primary">Get Started / Empezar</Link>
             <Link href="/docs/multi-runtime" className="btn btn-ghost">Runtime Guide / Guia</Link>
+            <Link href="/examples" className="btn btn-ghost">Examples</Link>
             <Link href="/pricing" className="btn btn-ghost">Pricing / Precios</Link>
             {signedInEmail ? (
               <Link href="/vault" className="btn btn-ghost">Open Vault</Link>

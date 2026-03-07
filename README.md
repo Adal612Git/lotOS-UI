@@ -59,10 +59,10 @@ Si alguien llega nuevo al producto, el orden correcto es:
 
 El caso de macros para spreadsheet si existe en el repo, pero no reemplaza la instalacion npm principal.
 
-- Excel VBA demo: `demo-video/excel-lotos/lotos_excel_demo.bas`
-- Excel guide: `demo-video/excel-lotos/README.md`
-- Calc demo: `demo-video/calc-lotos/lotos_calc_demo.bas`
-- Calc guide: `demo-video/calc-lotos/README.md`
+- Excel VBA demo: `OLD/demo-video/excel-lotos/lotos_excel_demo.bas`
+- Excel guide: `OLD/demo-video/excel-lotos/README.md`
+- Calc demo: `OLD/demo-video/calc-lotos/lotos_calc_demo.bas`
+- Calc guide: `OLD/demo-video/calc-lotos/README.md`
 
 Resumen rapido:
 

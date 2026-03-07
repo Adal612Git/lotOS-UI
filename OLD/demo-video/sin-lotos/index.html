@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard sin LotOS UI</title>
+  <style>
+    :root {
+      --bg-a: #0d1b2a;
+      --bg-b: #1b263b;
+      --panel: #ffffff;
+      --text: #102a43;
+      --muted: #6b7c93;
+      --line: #d9e2ec;
+      --ok: #1f9d55;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--bg-a), var(--bg-b));
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: var(--text);
+      padding: 28px;
+    }
+
+    .shell {
+      max-width: 1050px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .top {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .title {
+      margin: 0 0 6px;
+      font-size: 26px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: #fff;
+      border: 1px solid #dce7f2;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .stat h3 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #486581;
+      font-weight: 600;
+    }
+
+    .stat p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #102a43;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 14px;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #dce7f2;
+      padding: 16px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn-primary {
+      border: none;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      border: 1px solid #8da2c0;
+      background: #f8fbff;
+      color: #334e68;
+      border-radius: 6px;
+      padding: 9px 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-ghost {
+      border: 0;
+      background: transparent;
+      color: #486581;
+      padding: 8px 10px;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .form-row label {
+      font-size: 13px;
+      color: #486581;
+    }
+
+    .form-row input {
+      border: 1px solid #bcccdc;
+      border-radius: 4px;
+      padding: 9px 10px;
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid #e6edf5;
+    }
+
+    th {
+      background: #f5f8fc;
+      color: #486581;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin: 0;
+      color: #9aa5b1;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    @media (max-width: 860px) {
+      .stats, .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="top">
+      <h1 class="title">Dashboard operativo (sin LotOS UI)</h1>
+      <p class="subtitle">UI hecha a mano: usable, pero sin contratos ni consistencia automática.</p>
+    </section>
+
+    <section class="stats">
+      <article class="stat">
+        <h3>Tickets</h3>
+        <p>19</p>
+      </article>
+      <article class="stat">
+        <h3>Disponibilidad</h3>
+        <p>98.4%</p>
+      </article>
+      <article class="stat">
+        <h3>Alertas</h3>
+        <p>2</p>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Acciones</h2>
+        <div class="actions">
+          <button class="btn-primary">Guardar</button>
+          <button class="btn-secondary">Exportar</button>
+          <button class="btn-ghost">Ver historial</button>
+        </div>
+
+        <div class="form-row">
+          <label for="name">Nombre</label>
+          <input id="name" placeholder="Servicio principal">
+        </div>
+        <div class="form-row">
+          <label for="owner">Responsable</label>
+          <input id="owner" placeholder="ops@empresa.com">
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Estado rápido</h2>
+        <p style="margin:0 0 10px;color:#627d98;font-size:14px;">Sin un design system, cada bloque suele tener estilos propios.</p>
+        <ul style="margin:0;padding-left:20px;color:#334e68;">
+          <li>Botones con radios y pesos distintos</li>
+          <li>Inputs con espaciado inconsistente</li>
+          <li>Tokens repetidos manualmente</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Tabla de items</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Owner</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Item 1</td>
+              <td>Rick</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Item 2</td>
+              <td>Ops Team</td>
+              <td>Pendiente</td>
+            </tr>
+            <tr>
+              <td>Item 3</td>
+              <td>Backend</td>
+              <td>Revisión</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="footer-note">Comparativa visual para demo: "sin LotOS UI".</p>
+  </main>
+</body>
+</html>

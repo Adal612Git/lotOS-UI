@@ -529,6 +529,66 @@ button.btn {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.examples-band {
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 28%),
+    radial-gradient(circle at left center, rgba(244, 63, 94, 0.08), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(243, 246, 255, 0.93));
+}
+
+.examples-lane-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.example-lane-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 20px 38px rgba(20, 44, 71, 0.08);
+}
+
+.example-lane-card.accent-cyan {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 248, 255, 0.92));
+}
+
+.example-lane-card.accent-emerald {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 253, 247, 0.92));
+}
+
+.example-lane-card.accent-amber {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 235, 0.92));
+}
+
+.example-lane-card.accent-violet {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(246, 242, 255, 0.92));
+}
+
+.example-lane-top {
+  display: grid;
+  gap: 6px;
+}
+
+.example-lane-top h3 {
+  margin: 0;
+  color: #153553;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.example-mini-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .docs-lane-card {
   display: grid;
   gap: 10px;
@@ -1984,6 +2044,7 @@ th {
   .hero-language-grid,
   .hero-preview-body,
   .docs-lane-grid,
+  .examples-lane-grid,
   .runtime-card-grid,
   .signature-grid {
     grid-template-columns: 1fr;

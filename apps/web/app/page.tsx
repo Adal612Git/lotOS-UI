@@ -4,6 +4,7 @@ import './lotos-landing.css';
 import { authOptions } from '../auth-options';
 import { AuthAction } from './auth-action';
 import { foundersOffer, salesLinks, salesPlans } from './sales-config';
+import { premiumExamples } from './examples/gallery-data';
 
 const runtimeCards = [
   {
@@ -146,6 +147,7 @@ export default async function HomePage() {
         <div className="brand">LotOS UI</div>
         <nav>
           <Link href="/docs">Docs</Link>
+          <Link href="/examples">Examples</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/multi-framework">Runtime Matrix</Link>
           {signedInEmail ? (
@@ -217,7 +219,7 @@ export default async function HomePage() {
               ) : (
                 <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">Sign In With Google</AuthAction>
               )}
-              <Link href="/design-lab" className="btn ghost">Design Lab</Link>
+              <Link href="/examples" className="btn ghost">Examples</Link>
             </div>
           </div>
 
@@ -281,6 +283,39 @@ export default async function HomePage() {
         <article><strong>4</strong><span>Web Primitives</span></article>
         <article><strong>10</strong><span>Stack Templates</span></article>
         <article><strong>8</strong><span>Desktop Templates</span></article>
+      </section>
+
+      <section className="card landing-section examples-band">
+        <div className="section-headline">
+          <p className="section-label">Examples / Ejemplos</p>
+          <h2>Show the product as finished surfaces, not isolated parts.</h2>
+          <p className="micro-note">
+            A stronger examples layer makes the system easier to imagine in real work: command rooms,
+            narrative dashboards, spreadsheet upgrades, and premium vault experiences.
+          </p>
+        </div>
+        <div className="examples-lane-grid">
+          {premiumExamples.slice(0, 4).map((example, index) => (
+            <article key={example.slug} className={`example-lane-card ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
+              <div className="example-lane-top">
+                <p className="docs-lane-kicker">{example.category}</p>
+                <h3>{example.title}</h3>
+              </div>
+              <p>{example.summary}</p>
+              <div className="example-mini-metrics">
+                {example.metrics.map((metric) => (
+                  <span key={metric.label} className={`tier-pill ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
+                    {metric.value} {metric.label}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="hero-actions compact">
+          <Link href="/examples" className="btn primary">Open All Examples</Link>
+          <Link href="/pricing" className="btn ghost">See Premium Ladder</Link>
+        </div>
       </section>
 
       <section className="card landing-section signature-band">
@@ -361,6 +396,7 @@ export default async function HomePage() {
           <div className="hero-actions compact">
             <Link href="/docs/start-here" className="btn ghost">Open Start Here</Link>
             <Link href="/docs/multi-runtime" className="btn ghost">Open Runtime Guide</Link>
+            <Link href="/examples" className="btn ghost">See Examples</Link>
           </div>
         </article>
         <section className="terminal landing-terminal">
@@ -564,6 +600,7 @@ export default async function HomePage() {
         <p>LotOS UI | 2026 | Lotos Technologies</p>
         <div>
           <Link href="/docs">Docs</Link>
+          <Link href="/examples">Examples</Link>
           <Link href="/pricing">Pricing</Link>
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </div>

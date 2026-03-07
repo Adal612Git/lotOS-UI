@@ -127,8 +127,8 @@ export default async function VaultPage() {
               <Link href="/multi-framework" className="btn ghost">
                 Runtime Matrix
               </Link>
-              <Link href="/design-lab" className="btn ghost">
-                Design Lab
+              <Link href="/examples" className="btn ghost">
+                Examples
               </Link>
             </div>
           </div>
