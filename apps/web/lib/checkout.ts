@@ -13,6 +13,11 @@ const checkoutUrlByPlan: Partial<Record<CommercialPlan, string | undefined>> = {
   launch_pack: env.LOTOS_LAUNCH_PACK_URL,
 };
 
+export type CheckoutConfiguration = {
+  state: 'managed_lemon' | 'direct_lemon' | 'unsupported_external' | 'unconfigured';
+  directUrl: string | null;
+};
+
 function isLemonCheckoutUrl(value: string | undefined): boolean {
   const normalized = value?.trim();
 
@@ -45,8 +50,42 @@ function getLemonBaseCheckoutUrl(plan: CommercialPlan): string | null {
   return `https://${storeSlug}.lemonsqueezy.com/checkout/buy/${variantId}`;
 }
 
+export function getCheckoutConfiguration(plan: CommercialPlan): CheckoutConfiguration {
+  const directCheckoutUrl = checkoutUrlByPlan[plan]?.trim() || null;
+
+  if (directCheckoutUrl && isLemonCheckoutUrl(directCheckoutUrl)) {
+    return {
+      state: 'direct_lemon',
+      directUrl: directCheckoutUrl,
+    };
+  }
+
+  const storeSlug = env.LEMON_STORE_SLUG?.trim();
+  const variantId = lemonVariantByPlan[plan]?.trim();
+
+  if (storeSlug && variantId) {
+    return {
+      state: 'managed_lemon',
+      directUrl: null,
+    };
+  }
+
+  if (directCheckoutUrl) {
+    return {
+      state: 'unsupported_external',
+      directUrl: directCheckoutUrl,
+    };
+  }
+
+  return {
+    state: 'unconfigured',
+    directUrl: null,
+  };
+}
+
 export function hasAutomaticCheckoutForPlan(plan: CommercialPlan): boolean {
-  return Boolean(getLemonBaseCheckoutUrl(plan));
+  const configuration = getCheckoutConfiguration(plan);
+  return configuration.state === 'managed_lemon' || configuration.state === 'direct_lemon';
 }
 
 export function buildLemonCheckoutUrl(input: {
@@ -72,7 +111,5 @@ export function buildManagedCheckoutPath(plan: CommercialPlan): string {
 }
 
 export function usesNonLemonCheckoutFallback(plan: CommercialPlan): boolean {
-  const configuredCheckoutUrl = checkoutUrlByPlan[plan]?.trim();
-  return Boolean(configuredCheckoutUrl && !isLemonCheckoutUrl(configuredCheckoutUrl));
+  return getCheckoutConfiguration(plan).state === 'unsupported_external';
 }
-

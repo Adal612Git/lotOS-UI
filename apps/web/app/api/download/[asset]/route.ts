@@ -71,7 +71,14 @@ export async function GET(
   const assetPath = await resolveAssetPath(asset.sourceCandidates);
 
   if (!assetPath) {
-    return Response.json({ ok: false, error: 'Protected asset source not found.' }, { status: 404 });
+    return Response.json(
+      {
+        ok: false,
+        error:
+          'Protected asset source not found. Stage the private bundle before exposing this download.',
+      },
+      { status: 404 }
+    );
   }
 
   const body = await readFile(assetPath);

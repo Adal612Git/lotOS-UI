@@ -1,4 +1,5 @@
 import type { CommercialPlan } from './plans';
+import { env } from './env';
 
 export interface ProtectedAsset {
   id: string;
@@ -16,6 +17,13 @@ export interface DesktopTemplateSummary {
   plan: CommercialPlan;
 }
 
+function privateAssetCandidates(relativePath: string): readonly string[] {
+  const customRoot = env.LOTOS_PRIVATE_ASSETS_ROOT?.trim();
+  return customRoot
+    ? [`${customRoot}/${relativePath}`]
+    : [`packages/pro/.private-dist/${relativePath}`];
+}
+
 export const protectedAssets: readonly ProtectedAsset[] = [
   {
     id: 'sales-preview',
@@ -23,10 +31,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Commercial preview deck for Solo, Pro, and Full buyers.',
     plan: 'solo',
     fileName: 'sales-preview.html',
-    sourceCandidates: [
-      'packages/pro/.private-dist/previews/sales-preview.html',
-      'packages/pro/previews/sales-preview.html',
-    ],
+    sourceCandidates: privateAssetCandidates('previews/sales-preview.html'),
   },
   {
     id: 'license-matrix',
@@ -34,10 +39,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Commercial comparison sheet for protected offers.',
     plan: 'solo',
     fileName: 'license-matrix.html',
-    sourceCandidates: [
-      'packages/pro/.private-dist/previews/license-matrix.html',
-      'packages/pro/previews/license-matrix.html',
-    ],
+    sourceCandidates: privateAssetCandidates('previews/license-matrix.html'),
   },
   {
     id: 'excel-preview',
@@ -45,7 +47,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Preview-only HTML for spreadsheet modernization pitches.',
     plan: 'solo',
     fileName: 'excel-lotus-grid-preview.html',
-    sourceCandidates: ['packages/pro/previews/excel-lotus-grid-preview.html'],
+    sourceCandidates: privateAssetCandidates('previews/excel-lotus-grid-preview.html'),
   },
   {
     id: 'openoffice-preview',
@@ -53,7 +55,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Preview-only HTML for OpenOffice and LibreOffice modernization pitches.',
     plan: 'solo',
     fileName: 'openoffice-calc-command-preview.html',
-    sourceCandidates: ['packages/pro/previews/openoffice-calc-command-preview.html'],
+    sourceCandidates: privateAssetCandidates('previews/openoffice-calc-command-preview.html'),
   },
   {
     id: 'pro-release-manifest',
@@ -61,7 +63,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Release manifest for the protected LotOS UI Pro payload.',
     plan: 'pro',
     fileName: 'release-manifest.json',
-    sourceCandidates: ['packages/pro/.private-dist/release-manifest.json'],
+    sourceCandidates: privateAssetCandidates('release-manifest.json'),
   },
   {
     id: 'dashboard-shell',
@@ -69,10 +71,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Premium admin starter shell from the protected distribution.',
     plan: 'pro',
     fileName: 'dashboard-shell.html',
-    sourceCandidates: [
-      'packages/pro/.private-dist/admin-starter/dashboard-shell.html',
-      'packages/pro/admin-starter/dashboard-shell.html',
-    ],
+    sourceCandidates: privateAssetCandidates('admin-starter/dashboard-shell.html'),
   },
   {
     id: 'executive-briefing-layout',
@@ -80,10 +79,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Reusable executive reporting layout.',
     plan: 'pro',
     fileName: 'executive-briefing-layout.html',
-    sourceCandidates: [
-      'packages/pro/.private-dist/layouts/executive-briefing-layout.html',
-      'packages/pro/layouts/executive-briefing-layout.html',
-    ],
+    sourceCandidates: privateAssetCandidates('layouts/executive-briefing-layout.html'),
   },
   {
     id: 'operator-triad-layout',
@@ -91,10 +87,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Reusable operator workflow layout.',
     plan: 'pro',
     fileName: 'operator-triad-layout.html',
-    sourceCandidates: [
-      'packages/pro/.private-dist/layouts/operator-triad-layout.html',
-      'packages/pro/layouts/operator-triad-layout.html',
-    ],
+    sourceCandidates: privateAssetCandidates('layouts/operator-triad-layout.html'),
   },
   {
     id: 'finance-ops-kit',
@@ -102,10 +95,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Protected finance-focused industry kit.',
     plan: 'pro',
     fileName: 'finance-ops-kit.json',
-    sourceCandidates: [
-      'packages/pro/.private-dist/industry-kits/finance-ops-kit.json',
-      'packages/pro/industry-kits/finance-ops-kit.json',
-    ],
+    sourceCandidates: privateAssetCandidates('industry-kits/finance-ops-kit.json'),
   },
   {
     id: 'health-ops-kit',
@@ -113,10 +103,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Protected health-oriented industry kit.',
     plan: 'pro',
     fileName: 'health-ops-kit.json',
-    sourceCandidates: [
-      'packages/pro/.private-dist/industry-kits/health-ops-kit.json',
-      'packages/pro/industry-kits/health-ops-kit.json',
-    ],
+    sourceCandidates: privateAssetCandidates('industry-kits/health-ops-kit.json'),
   },
   {
     id: 'excel-grid-kit',
@@ -124,7 +111,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Pro-only spreadsheet modernization kit for Excel.',
     plan: 'pro',
     fileName: 'excel-lotus-grid-kit.json',
-    sourceCandidates: ['packages/pro/industry-kits/excel-lotus-grid-kit.json'],
+    sourceCandidates: privateAssetCandidates('industry-kits/excel-lotus-grid-kit.json'),
   },
   {
     id: 'openoffice-grid-kit',
@@ -132,7 +119,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Pro-only spreadsheet modernization kit for OpenOffice.',
     plan: 'pro',
     fileName: 'openoffice-calc-command-kit.json',
-    sourceCandidates: ['packages/pro/industry-kits/openoffice-calc-command-kit.json'],
+    sourceCandidates: privateAssetCandidates('industry-kits/openoffice-calc-command-kit.json'),
   },
   {
     id: 'google-sheets-command-kit',
@@ -140,7 +127,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only premium spreadsheet shell for Google Sheets operator workflows.',
     plan: 'launch_pack',
     fileName: 'google-sheets-command-kit.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/google-sheets-command-kit.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/google-sheets-command-kit.json'),
   },
   {
     id: 'm365-excel-web-kit',
@@ -148,7 +135,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only browser-first Excel operator surface for Microsoft 365 teams.',
     plan: 'launch_pack',
     fileName: 'microsoft-365-excel-web-kit.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/microsoft-365-excel-web-kit.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/microsoft-365-excel-web-kit.json'),
   },
   {
     id: 'outlook-approval-console',
@@ -156,7 +143,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only approval and triage surface built for email-driven workflows.',
     plan: 'launch_pack',
     fileName: 'outlook-approval-console.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/outlook-approval-console.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/outlook-approval-console.json'),
   },
   {
     id: 'executive-boardroom-surface',
@@ -164,7 +151,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only executive command layer for board-ready decisions and reporting.',
     plan: 'launch_pack',
     fileName: 'executive-boardroom-surface.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/executive-boardroom-surface.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/executive-boardroom-surface.json'),
   },
   {
     id: 'power-bi-executive-visual-pack',
@@ -172,7 +159,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only visual pack for premium executive analytics and reporting surfaces.',
     plan: 'launch_pack',
     fileName: 'power-bi-executive-visual-pack.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/power-bi-executive-visual-pack.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/power-bi-executive-visual-pack.json'),
   },
   {
     id: 'figma-token-sync-plugin',
@@ -180,7 +167,7 @@ export const protectedAssets: readonly ProtectedAsset[] = [
     description: 'Full-only design handoff bridge for premium theme and token alignment.',
     plan: 'launch_pack',
     fileName: 'figma-token-sync-plugin.json',
-    sourceCandidates: ['packages/pro/launch-exclusive/figma-token-sync-plugin.json'],
+    sourceCandidates: privateAssetCandidates('launch-exclusive/figma-token-sync-plugin.json'),
   },
 ];
 

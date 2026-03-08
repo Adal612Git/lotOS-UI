@@ -73,6 +73,7 @@ const launchDirectCheckout = hasValue("LOTOS_LAUNCH_PACK_URL");
 const soloAutomaticCheckout = (soloDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_SOLO_CHECKOUT_URL"))) || (hasLemonStore && hasValue("LEMON_SOLO_VARIANT_ID"));
 const proAutomaticCheckout = (proDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_PRO_CHECKOUT_URL"))) || (hasLemonStore && hasValue("LEMON_PRO_VARIANT_ID"));
 const launchAutomaticCheckout = (launchDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_LAUNCH_PACK_URL"))) || (hasLemonStore && hasValue("LEMON_LAUNCH_VARIANT_ID"));
+const launchCheckoutExpected = launchDirectCheckout || hasValue("LEMON_LAUNCH_VARIANT_ID");
 const anyDirectCheckout = soloDirectCheckout || proDirectCheckout || launchDirectCheckout;
 const anyFallbackPayment =
   hasValue("LOTOS_SOLO_PAYPAL_URL") ||
@@ -113,11 +114,11 @@ if (!proAutomaticCheckout && (proDirectCheckout || hasLemonStore)) {
   failures.push("LOTOS_PRO_CHECKOUT_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
-if ((launchDirectCheckout || hasLemonStore) && !hasValue("LEMON_LAUNCH_VARIANT_ID")) {
+if (launchCheckoutExpected && !hasValue("LEMON_LAUNCH_VARIANT_ID")) {
   failures.push("LEMON_LAUNCH_VARIANT_ID is required when LOTOS_LAUNCH_PACK_URL is enabled.");
 }
 
-if (!launchAutomaticCheckout && (launchDirectCheckout || hasLemonStore)) {
+if (!launchAutomaticCheckout && launchCheckoutExpected) {
   failures.push("LOTOS_LAUNCH_PACK_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
@@ -143,12 +144,25 @@ if (!hasValue("LOTOS_OWNER_EMAILS")) {
   warnings.push("LOTOS_OWNER_EMAILS is empty. Manual owner grant flow will be unavailable.");
 }
 
+if (!hasValue("LOTOS_PROVIDER_LEGAL_NAME")) {
+  warnings.push("LOTOS_PROVIDER_LEGAL_NAME is missing. Provider page will show a placeholder.");
+}
+
+if (!hasValue("LOTOS_SUPPORT_EMAIL")) {
+  warnings.push("LOTOS_SUPPORT_EMAIL is missing. Support page will show a placeholder.");
+}
+
 if (!existsSync(envLocalPath)) {
   warnings.push("apps/web/.env.local was not found. Using process environment only.");
 }
 
 if (!hasLemonStore) {
   warnings.push("LEMON_STORE_SLUG is missing. Managed Lemon checkout routes cannot be generated yet.");
+}
+
+const commercialAssetsSource = readFileSync(join(repoRoot, "apps", "web", "lib", "commercial-assets.ts"), "utf8");
+if (commercialAssetsSource.includes("packages/pro/") && !commercialAssetsSource.includes("packages/pro/.private-dist/")) {
+  failures.push("commercial-assets.ts still points to public premium source paths.");
 }
 
 if (failures.length > 0) {

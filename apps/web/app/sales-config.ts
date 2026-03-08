@@ -1,5 +1,11 @@
 import { env } from '../lib/env';
-import { buildManagedCheckoutPath, hasAutomaticCheckoutForPlan, usesNonLemonCheckoutFallback } from '../lib/checkout';
+import {
+  buildManagedCheckoutPath,
+  getCheckoutConfiguration,
+  hasAutomaticCheckoutForPlan,
+  usesNonLemonCheckoutFallback
+} from '../lib/checkout';
+import { commercialRoutes } from '../lib/commercial-site';
 
 export type SalesPlan = {
   id: string;
@@ -47,8 +53,7 @@ const directCheckoutConfigured =
 const automaticUnlockConfigured =
   env.supabaseConfigured &&
   hasAutomaticCheckoutForPlan('solo') &&
-  hasAutomaticCheckoutForPlan('pro') &&
-  hasAutomaticCheckoutForPlan('launch_pack');
+  hasAutomaticCheckoutForPlan('pro');
 
 function buildPaidActions(input: {
   plan: 'solo' | 'pro' | 'launch_pack';
@@ -59,7 +64,11 @@ function buildPaidActions(input: {
 }) {
   const checkoutUrl = input.checkoutUrl?.trim();
   const paypalUrl = input.paypalUrl?.trim();
-  const managedCheckoutUrl = hasAutomaticCheckoutForPlan(input.plan) ? buildManagedCheckoutPath(input.plan) : null;
+  const checkoutConfiguration = getCheckoutConfiguration(input.plan);
+  const managedCheckoutUrl =
+    checkoutConfiguration.state === 'managed_lemon' ? buildManagedCheckoutPath(input.plan) : null;
+  const directLemonCheckoutUrl =
+    checkoutConfiguration.state === 'direct_lemon' ? checkoutConfiguration.directUrl : null;
   const automaticUnlockSupportedForCheckout = Boolean(managedCheckoutUrl) && env.supabaseConfigured;
   const paymentActions: PaymentAction[] = [];
 
@@ -70,16 +79,16 @@ function buildPaidActions(input: {
       external: false,
       tone: "primary",
     });
-  } else if (checkoutUrl) {
+  } else if (directLemonCheckoutUrl) {
     paymentActions.push({
       label: "Abrir checkout",
-      href: checkoutUrl,
+      href: directLemonCheckoutUrl,
       external: true,
       tone: "primary",
     });
   }
 
-  if (paypalUrl) {
+  if ((managedCheckoutUrl || directLemonCheckoutUrl) && paypalUrl) {
     paymentActions.push({
       label: "Pagar con PayPal",
       href: paypalUrl,
@@ -110,16 +119,16 @@ function buildPaidActions(input: {
           ? "Checkout principal listo via Lemon. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
           : "Checkout principal listo via Lemon. El acceso se activa automaticamente despues del pago."
         : "Checkout Lemon disponible, pero falta completar la configuracion segura del unlock."
+      : directLemonCheckoutUrl
+        ? paypalUrl
+          ? "Checkout directo de Lemon listo. El acceso depende del mismo correo de compra; PayPal queda como respaldo."
+          : "Checkout directo de Lemon listo. El acceso depende del mismo correo de compra."
       : checkoutUrl
         ? providerNeedsMigration
-          ? paypalUrl
-            ? "Tu checkout actual sigue cobrando, pero no desbloquea acceso automatico. Migra este plan a Lemon o agrega webhook/API real del proveedor actual. PayPal queda como respaldo."
-            : "Tu checkout actual sigue cobrando, pero no desbloquea acceso automatico. Migra este plan a Lemon o agrega webhook/API real del proveedor actual."
-          : paypalUrl
-            ? "Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
-            : "Checkout principal listo. El acceso se activa automaticamente despues del pago."
+          ? "El enlace de pago configurado para este plan no sirve como unlock automatico en produccion. Por seguridad la app cae a contacto o cierre guiado hasta migrarlo a Lemon."
+          : "Hay un checkout configurado, pero la app no puede confirmar que sea apto para unlock automatico."
         : paypalUrl
-        ? "PayPal listo como via de cobro. Agrega un checkout principal cuando quieras."
+        ? "Hay una ruta de pago auxiliar, pero no se expone como compra automatica hasta tener un checkout principal compatible."
         : "Sin checkout directo configurado. El flujo cae a contacto manual.",
   };
 }
@@ -156,6 +165,14 @@ export const salesLinks = {
   premiumPreview: linkOrFallback(process.env.LOTOS_PREMIUM_PREVIEW_URL, fallbackPreview),
   contact: fallbackContact,
   demo: fallbackDemo,
+  terms: commercialRoutes.terms,
+  privacy: commercialRoutes.privacy,
+  refunds: commercialRoutes.refunds,
+  cancellations: commercialRoutes.cancellations,
+  support: commercialRoutes.support,
+  provider: commercialRoutes.provider,
+  afterPurchase: commercialRoutes.afterPurchase,
+  manageSubscription: commercialRoutes.manageSubscription,
 };
 
 export const commercialReadiness = {
@@ -164,7 +181,8 @@ export const commercialReadiness = {
     hasNonEmptyValue(process.env.LOTOS_SOLO_PAYPAL_URL) ||
     hasNonEmptyValue(process.env.LOTOS_PRO_PAYPAL_URL) ||
     hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL),
-  automaticUnlockReady: automaticUnlockConfigured && directCheckoutConfigured,
+  automaticUnlockReady: automaticUnlockConfigured,
+  launchCheckoutReady: hasAutomaticCheckoutForPlan('launch_pack'),
 };
 
 export const foundersOffer = {
@@ -319,4 +337,12 @@ export const checkoutEnvKeys = [
   "LOTOS_LAUNCH_PACK_URL",
   "LOTOS_LAUNCH_PACK_PAYPAL_URL",
   "LOTOS_PREMIUM_PREVIEW_URL",
+  "LOTOS_PRIVATE_ASSETS_ROOT",
+  "LOTOS_PROVIDER_LEGAL_NAME",
+  "LOTOS_PROVIDER_RFC",
+  "LOTOS_PROVIDER_ADDRESS",
+  "LOTOS_PROVIDER_EMAIL",
+  "LOTOS_SUPPORT_EMAIL",
+  "LOTOS_SUPPORT_HOURS",
+  "LOTOS_SUBSCRIPTION_PORTAL_URL",
 ];

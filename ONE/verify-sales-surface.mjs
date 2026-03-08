@@ -26,6 +26,14 @@ if (!packageJson.scripts?.["verify:paid-preview"]) {
 const requiredFiles = [
   "apps/web/app/sales-config.ts",
   "apps/web/app/pricing/page.tsx",
+  "apps/web/app/terms/page.tsx",
+  "apps/web/app/privacy/page.tsx",
+  "apps/web/app/refunds/page.tsx",
+  "apps/web/app/cancellations/page.tsx",
+  "apps/web/app/support/page.tsx",
+  "apps/web/app/provider/page.tsx",
+  "apps/web/app/after-purchase/page.tsx",
+  "apps/web/app/manage-subscription/page.tsx",
   "ONE/FIRST_REVENUE_RUNBOOK.md",
   "ONE/PREMIUM_PREVIEW_RUNBOOK.md",
   "ONE/prepare-paid-preview.mjs",
@@ -50,6 +58,7 @@ if (!webHome.includes('href="/pricing"')) {
 
 const pricingPage = readFileSync(join(repoRoot, "apps", "web", "app", "pricing", "page.tsx"), "utf8");
 const salesConfig = readFileSync(join(repoRoot, "apps", "web", "app", "sales-config.ts"), "utf8");
+const commercialAssets = readFileSync(join(repoRoot, "apps", "web", "lib", "commercial-assets.ts"), "utf8");
 const privateReleaseScript = readFileSync(join(repoRoot, "packages", "pro", "scripts", "prepare-private-release.mjs"), "utf8");
 const proManifest = readFileSync(join(repoRoot, "packages", "pro", "distribution", "pro.manifest.json"), "utf8");
 
@@ -59,10 +68,20 @@ for (const marker of ["salesPlans", "checkoutEnvKeys", "prep:first-sale", "prep:
   }
 }
 
+for (const marker of ["/after-purchase", "/manage-subscription", "/terms", "/privacy"]) {
+  if (!pricingPage.includes(marker)) {
+    failures.push(`Pricing page missing commercial route marker: ${marker}`);
+  }
+}
+
 for (const marker of ["Buy Solo", "Buy Pro", "Book Launch Pack", "LOTOS_SOLO_CHECKOUT_URL", "LOTOS_PREMIUM_PREVIEW_URL"]) {
   if (!salesConfig.includes(marker)) {
     failures.push(`Sales config missing marker: ${marker}`);
   }
+}
+
+if (commercialAssets.includes("packages/pro/admin-starter") || commercialAssets.includes("packages/pro/layouts") || commercialAssets.includes("packages/pro/industry-kits") || commercialAssets.includes("packages/pro/launch-exclusive")) {
+  failures.push("Commercial assets must not fall back to packages/pro source paths.");
 }
 
 if (!privateReleaseScript.includes('"launch-exclusive"')) {

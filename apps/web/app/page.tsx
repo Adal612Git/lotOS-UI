@@ -4,6 +4,7 @@ import './lotos-landing.css';
 import { Badge, Card, Stat } from './lotos-surface';
 import { authOptions } from '../auth-options';
 import { LangToggle } from './lang-toggle';
+import { CommercialFooter } from './commercial-footer';
 import { foundersOffer, salesLinks, salesPlans } from './sales-config';
 import { premiumExamples } from './examples/gallery-data';
 
@@ -734,20 +735,14 @@ export default async function HomePage() {
           <pre><code>pnpm.cmd run prep:first-sale</code></pre>
           <div className="hero-actions compact">
             <Link href="/pricing" className="btn primary btn-pricing"><span className="en-only">Open Pricing</span><span className="es-only">Abrir Precios</span></Link>
+            <Link href={salesLinks.afterPurchase} className="btn ghost"><span className="en-only">After Purchase</span><span className="es-only">Despues de Comprar</span></Link>
+            <Link href={salesLinks.manageSubscription} className="btn ghost"><span className="en-only">Manage Subscription</span><span className="es-only">Administrar Suscripcion</span></Link>
             <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer"><span className="en-only">Contact Sales</span><span className="es-only">Contactar Ventas</span></a>
           </div>
         </article>
       </section>
 
-      <footer className="footer">
-        <p>LotOS UI | 2026 | Lotos Technologies</p>
-        <div>
-          <Link href="/docs"><span className="en-only">Docs</span><span className="es-only">Documentacion</span></Link>
-          <Link href="/examples"><span className="en-only">Examples</span><span className="es-only">Ejemplos</span></Link>
-          <Link href="/pricing"><span className="en-only">Pricing</span><span className="es-only">Precios</span></Link>
-          <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-      </footer>
+      <CommercialFooter />
     </main>
   );
 }

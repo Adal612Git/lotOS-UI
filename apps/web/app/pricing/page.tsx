@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth-options';
 import { AuthAction } from '../auth-action';
+import { CommercialFooter } from '../commercial-footer';
 import {
   commercialReadiness,
   checkoutEnvKeys,
@@ -304,7 +305,7 @@ export default async function PricingPage({
           </div>
         ) : null}
         {signedInEmail ? (
-          <p className="lead">Signed in as {signedInEmail}. You can open the protected vault directly.</p>
+          <p className="lead">Your session is active. Use the same purchase email to open the protected vault.</p>
         ) : null}
         <div className="hero-language-grid">
           <article className="language-panel">
@@ -328,6 +329,9 @@ export default async function PricingPage({
           <a href={salesLinks.contact} className="btn primary" target="_blank" rel="noreferrer">
             Talk to Sales
           </a>
+          <Link href="/after-purchase" className="btn ghost">
+            What Happens After Purchase
+          </Link>
           {signedInEmail ? (
             <Link href="/vault" className="btn ghost">
               Open Vault
@@ -751,12 +755,64 @@ pnpm.cmd run prep:first-sale`}</code></pre>
             <a href={salesLinks.launchPack} className="btn primary" target="_blank" rel="noreferrer">
               Open Full Signature
             </a>
+            <Link href="/after-purchase" className="btn ghost">
+              After Purchase
+            </Link>
+            <Link href="/manage-subscription" className="btn ghost">
+              Manage Subscription
+            </Link>
             <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer">
               Talk to Sales
             </a>
           </div>
         </article>
       </section>
+
+      <section className="grid two">
+        <article className="card">
+          <p className="section-label">After Purchase</p>
+          <h2>Explain access and delivery before the buyer asks.</h2>
+          <ul>
+            <li>Which email to use after checkout.</li>
+            <li>How automatic unlock works.</li>
+            <li>What is immediate and what stays guided.</li>
+            <li>Where support steps in if unlock misses.</li>
+          </ul>
+          <div className="hero-actions compact">
+            <Link href="/after-purchase" className="btn ghost">
+              Open After Purchase Guide
+            </Link>
+            <Link href="/support" className="btn ghost">
+              Support
+            </Link>
+          </div>
+        </article>
+        <article className="card">
+          <p className="section-label">Buyer Operations</p>
+          <h2>Billing, cancellation, legal and support should stay visible.</h2>
+          <ul>
+            <li>Review renewal and cancellation rules before checkout.</li>
+            <li>Keep legal pages one click away from the pricing ladder.</li>
+            <li>Use the subscription page as the source of truth for buyer operations.</li>
+          </ul>
+          <div className="hero-actions compact">
+            <Link href="/manage-subscription" className="btn ghost">
+              Manage Subscription
+            </Link>
+            <Link href="/cancellations" className="btn ghost">
+              Cancellation Policy
+            </Link>
+            <Link href="/terms" className="btn ghost">
+              Terms
+            </Link>
+            <Link href="/privacy" className="btn ghost">
+              Privacy
+            </Link>
+          </div>
+        </article>
+      </section>
+
+      <CommercialFooter />
     </main>
   );
 }
