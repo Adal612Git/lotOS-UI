@@ -38,11 +38,34 @@ const linkOrFallback = (value: string | undefined, fallback: string) => {
 };
 
 const hasNonEmptyValue = (value: string | undefined) => Boolean(value?.trim());
-const automaticUnlockConfigured = env.supabaseConfigured && env.lemonConfigured;
-const directCheckoutConfigured =
-  hasNonEmptyValue(process.env.LOTOS_SOLO_CHECKOUT_URL) ||
-  hasNonEmptyValue(process.env.LOTOS_PRO_CHECKOUT_URL) ||
-  hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_URL);
+
+function isLemonCheckoutUrl(value: string | undefined): boolean {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return false;
+  }
+
+  try {
+    const url = new URL(normalized);
+    return /(^|\.)lemonsqueezy\.com$/i.test(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+const directCheckoutUrls = [
+  process.env.LOTOS_SOLO_CHECKOUT_URL,
+  process.env.LOTOS_PRO_CHECKOUT_URL,
+  process.env.LOTOS_LAUNCH_PACK_URL,
+].filter((value): value is string => hasNonEmptyValue(value));
+
+const directCheckoutConfigured = directCheckoutUrls.length > 0;
+const automaticUnlockConfigured =
+  env.supabaseConfigured &&
+  env.lemonConfigured &&
+  directCheckoutConfigured &&
+  directCheckoutUrls.every(isLemonCheckoutUrl);
 
 function buildPaidActions(input: {
   checkoutUrl?: string;
@@ -52,6 +75,8 @@ function buildPaidActions(input: {
 }) {
   const checkoutUrl = input.checkoutUrl?.trim();
   const paypalUrl = input.paypalUrl?.trim();
+  const automaticUnlockSupportedForCheckout =
+    Boolean(checkoutUrl) && env.supabaseConfigured && env.lemonConfigured && isLemonCheckoutUrl(checkoutUrl);
   const paymentActions: PaymentAction[] = [];
 
   if (checkoutUrl) {
@@ -88,13 +113,13 @@ function buildPaidActions(input: {
     external: primaryAction.external,
     paymentActions,
     checkoutHint: checkoutUrl
-      ? automaticUnlockConfigured
+      ? automaticUnlockSupportedForCheckout
         ? paypalUrl
           ? "Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
           : "Checkout principal listo. El acceso se activa automaticamente despues del pago."
         : paypalUrl
-          ? "Checkout principal listo, pero el unlock automatico aun no esta completo. PayPal queda como respaldo."
-          : "Checkout principal listo, pero el unlock automatico aun no esta completo."
+          ? "Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia. PayPal queda como respaldo."
+          : "Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia."
       : paypalUrl
         ? "PayPal listo como via de cobro. Agrega un checkout principal cuando quieras."
         : "Sin checkout directo configurado. El flujo cae a contacto manual.",

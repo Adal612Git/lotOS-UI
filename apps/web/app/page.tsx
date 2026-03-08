@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
-import { Badge, Card, Stat } from '@lotosui/claude-arm';
+import { Badge, Card, Stat } from './lotos-surface';
 import { authOptions } from '../auth-options';
 import { LangToggle } from './lang-toggle';
 import { foundersOffer, salesLinks, salesPlans } from './sales-config';

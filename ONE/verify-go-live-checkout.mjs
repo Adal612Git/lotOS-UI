@@ -40,6 +40,20 @@ const getValue = (key) => {
 };
 
 const hasValue = (key) => getValue(key).length > 0;
+const isLemonCheckoutUrl = (value) => {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return false;
+  }
+
+  try {
+    const url = new URL(normalized);
+    return /(^|\.)lemonsqueezy\.com$/i.test(url.hostname);
+  } catch {
+    return false;
+  }
+};
 const failures = [];
 const warnings = [];
 
@@ -83,12 +97,24 @@ if (soloDirectCheckout && !hasValue("LEMON_SOLO_VARIANT_ID")) {
   failures.push("LEMON_SOLO_VARIANT_ID is required when LOTOS_SOLO_CHECKOUT_URL is enabled.");
 }
 
+if (soloDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_SOLO_CHECKOUT_URL"))) {
+  failures.push("LOTOS_SOLO_CHECKOUT_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
+}
+
 if (proDirectCheckout && !hasValue("LEMON_PRO_VARIANT_ID")) {
   failures.push("LEMON_PRO_VARIANT_ID is required when LOTOS_PRO_CHECKOUT_URL is enabled.");
 }
 
+if (proDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_PRO_CHECKOUT_URL"))) {
+  failures.push("LOTOS_PRO_CHECKOUT_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
+}
+
 if (launchDirectCheckout && !hasValue("LEMON_LAUNCH_VARIANT_ID")) {
   failures.push("LEMON_LAUNCH_VARIANT_ID is required when LOTOS_LAUNCH_PACK_URL is enabled.");
+}
+
+if (launchDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_LAUNCH_PACK_URL"))) {
+  failures.push("LOTOS_LAUNCH_PACK_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
 if (launchDirectCheckout) {

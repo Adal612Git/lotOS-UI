@@ -23,6 +23,21 @@ const fallbackDemo =
   process.env.LOTOS_BOOKING_URL?.trim() ||
   fallbackContact;
 
+function isLemonCheckoutUrl(value: string | undefined): boolean {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return false;
+  }
+
+  try {
+    const url = new URL(normalized);
+    return /(^|\.)lemonsqueezy\.com$/i.test(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function buildPaidActions(input: {
   checkoutUrl?: string;
   paypalUrl?: string;
@@ -31,6 +46,16 @@ function buildPaidActions(input: {
 }) {
   const checkoutUrl = input.checkoutUrl?.trim();
   const paypalUrl = input.paypalUrl?.trim();
+  const automaticUnlockSupportedForCheckout =
+    Boolean(checkoutUrl) &&
+    Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY)) &&
+    Boolean(
+      process.env.LEMON_WEBHOOK_SECRET &&
+      process.env.LEMON_SOLO_VARIANT_ID &&
+      process.env.LEMON_PRO_VARIANT_ID &&
+      process.env.LEMON_LAUNCH_VARIANT_ID
+    ) &&
+    isLemonCheckoutUrl(checkoutUrl);
   const paymentActions: PaymentAction[] = [];
 
   if (checkoutUrl) {
@@ -63,9 +88,13 @@ function buildPaidActions(input: {
     href: primaryAction.href,
     paymentActions,
     checkoutHint: checkoutUrl
-      ? paypalUrl
-        ? 'Checkout principal listo para activar acceso. PayPal queda como respaldo.'
-        : 'Checkout principal listo para activar acceso mensual.'
+      ? automaticUnlockSupportedForCheckout
+        ? paypalUrl
+          ? 'Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo.'
+          : 'Checkout principal listo. El acceso se activa automaticamente despues del pago.'
+        : paypalUrl
+          ? 'Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia. PayPal queda como respaldo.'
+          : 'Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia.'
       : paypalUrl
         ? 'PayPal listo como via de cobro. El checkout principal sigue opcional.'
         : 'Sin checkout directo configurado. El flujo cae a contacto manual.',

@@ -1,5 +1,3 @@
-@import '@lotosui/claude-arm/styles.css';
-
 /* Reset global */
 *,
 *::before,
@@ -7,9 +5,37 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: dark;
+  --lotos-bg-primary: #0d0f1e;
+  --lotos-bg-card: #161829;
+  --lotos-fg-primary: #f0f4ff;
+  --lotos-fg-secondary: rgba(240, 244, 255, 0.72);
+  --lotos-fg-muted: rgba(240, 244, 255, 0.42);
+  --lotos-border: rgba(240, 244, 255, 0.1);
+  --lotos-border-strong: rgba(240, 244, 255, 0.18);
+  --lotos-border-focus: #e94560;
+  --lotos-accent-glow-sm: rgba(233, 69, 96, 0.2);
+  --lotos-success: #22c55e;
+  --lotos-success-subtle: rgba(34, 197, 94, 0.12);
+  --lotos-warning: #f59e0b;
+  --lotos-warning-subtle: rgba(245, 158, 11, 0.12);
+  --lotos-error: #e94560;
+  --lotos-error-subtle: rgba(233, 69, 96, 0.12);
+  --lotos-info: #3b82f6;
+  --lotos-info-subtle: rgba(59, 130, 246, 0.12);
+  --lotos-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --lotos-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --lotos-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --lotos-radius-xl: 0.875rem;
+  --lotos-radius-full: 9999px;
+}
+
 body {
   margin: 0;
   padding: 0;
+  background: var(--lotos-bg-primary);
+  color: var(--lotos-fg-primary);
 }
 
 /* ── Language toggle ── */
@@ -51,4 +77,174 @@ body {
 .lotos-lang-toggle button.is-active {
   background: linear-gradient(120deg, #155eef, #0b7a60);
   color: #fff;
+}
+
+.lotos-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: var(--lotos-radius-full);
+  border: 1px solid transparent;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lotos-badge--default {
+  background: rgba(240, 244, 255, 0.09);
+  color: var(--lotos-fg-secondary);
+  border-color: var(--lotos-border);
+}
+
+.lotos-badge--success {
+  background: var(--lotos-success-subtle);
+  color: var(--lotos-success);
+}
+
+.lotos-badge--warning {
+  background: var(--lotos-warning-subtle);
+  color: var(--lotos-warning);
+}
+
+.lotos-badge--error {
+  background: var(--lotos-error-subtle);
+  color: var(--lotos-error);
+}
+
+.lotos-badge--info {
+  background: var(--lotos-info-subtle);
+  color: var(--lotos-info);
+}
+
+.lotos-badge--outline {
+  background: transparent;
+  color: var(--lotos-fg-secondary);
+  border-color: var(--lotos-border-strong);
+}
+
+.lotos-badge--sm {
+  padding: 0.125rem 0.375rem;
+}
+
+.lotos-badge--md {
+  padding: 0.25rem 0.625rem;
+}
+
+.lotos-badge--lg {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.lotos-card {
+  position: relative;
+  border-radius: var(--lotos-radius-xl);
+  border: 1px solid var(--lotos-border);
+  background: linear-gradient(160deg, rgba(240, 244, 255, 0.04) 0%, transparent 100%), var(--lotos-bg-card);
+  box-shadow: var(--lotos-shadow-md);
+}
+
+.lotos-card--border-none {
+  border-color: transparent;
+}
+
+.lotos-card--border-strong {
+  border-color: var(--lotos-border-strong);
+}
+
+.lotos-card--padding-none {
+  padding: 0;
+}
+
+.lotos-card--padding-sm {
+  padding: 0.75rem;
+}
+
+.lotos-card--padding-md {
+  padding: 1.25rem;
+}
+
+.lotos-card--padding-lg {
+  padding: 2rem;
+}
+
+.lotos-card--shadow-none {
+  box-shadow: none;
+}
+
+.lotos-card--shadow-sm {
+  box-shadow: var(--lotos-shadow-sm);
+}
+
+.lotos-card--shadow-md {
+  box-shadow: var(--lotos-shadow-md);
+}
+
+.lotos-card--shadow-lg {
+  box-shadow: var(--lotos-shadow-lg);
+}
+
+.lotos-stat {
+  border-radius: var(--lotos-radius-xl);
+  border: 1px solid var(--lotos-border);
+  background: var(--lotos-bg-card);
+  box-shadow: var(--lotos-shadow-sm);
+  padding: 1rem;
+}
+
+.lotos-stat--neutral {
+  border-color: var(--lotos-border);
+}
+
+.lotos-stat--success {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.lotos-stat--warning {
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.lotos-stat--danger {
+  border-color: rgba(233, 69, 96, 0.35);
+}
+
+.lotos-stat--info {
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.lotos-stat__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.lotos-stat__label {
+  color: var(--lotos-fg-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lotos-stat__value {
+  margin-top: 0.4rem;
+  color: var(--lotos-fg-primary);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.lotos-stat__change {
+  color: var(--lotos-info);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.lotos-stat__helper {
+  margin: 0.75rem 0 0;
+  color: var(--lotos-fg-secondary);
+  font-size: 0.9rem;
 }
