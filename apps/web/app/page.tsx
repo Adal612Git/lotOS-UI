@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
+import { Badge, Card, Stat } from '@lotosui/claude-arm';
 import { authOptions } from '../auth-options';
-import { AuthAction } from './auth-action';
 import { LangToggle } from './lang-toggle';
 import { foundersOffer, salesLinks, salesPlans } from './sales-config';
 import { premiumExamples } from './examples/gallery-data';
@@ -149,6 +149,23 @@ const homepageTierFocus: Record<string, string[]> = {
 };
 
 const homepageAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet', 'accent-rose'] as const;
+type AccentTone = typeof homepageAccentCycle[number];
+
+const accentToBadgeVariant: Record<AccentTone, 'info' | 'success' | 'warning' | 'outline' | 'default'> = {
+  'accent-cyan': 'info',
+  'accent-emerald': 'success',
+  'accent-amber': 'warning',
+  'accent-violet': 'outline',
+  'accent-rose': 'default',
+};
+
+function badgeVariantFor(tone: AccentTone) {
+  return accentToBadgeVariant[tone];
+}
+
+function accentAt(index: number): AccentTone {
+  return homepageAccentCycle[index % homepageAccentCycle.length] ?? 'accent-cyan';
+}
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
@@ -208,10 +225,10 @@ export default async function HomePage() {
               <span className="es-only">{foundersOffer.label} · desde MX$59 / mes · 27 componentes · multi-runtime</span>
             </p>
             <div className="hero-pill-row" aria-label="Landing signals">
-              <span className="tier-pill accent-cyan"><span className="en-only">React Stable</span><span className="es-only">React Estable</span></span>
-              <span className="tier-pill accent-emerald"><span className="en-only">Docs First</span><span className="es-only">Docs Primero</span></span>
-              <span className="tier-pill accent-amber"><span className="en-only">AI-safe contracts</span><span className="es-only">Contratos seguros para AI</span></span>
-              <span className="tier-pill accent-violet"><span className="en-only">Full Signature ready</span><span className="es-only">Full Signature listo</span></span>
+              <Badge variant="info" size="lg"><span className="en-only">React Stable</span><span className="es-only">React Estable</span></Badge>
+              <Badge variant="success" size="lg"><span className="en-only">Docs First</span><span className="es-only">Docs Primero</span></Badge>
+              <Badge variant="warning" size="lg"><span className="en-only">AI-safe contracts</span><span className="es-only">Contratos seguros para AI</span></Badge>
+              <Badge variant="outline" size="lg"><span className="en-only">Full Signature ready</span><span className="es-only">Full Signature listo</span></Badge>
             </div>
             <h1>
               <span className="en-only">Ship production UI with the discipline it actually needs.</span>
@@ -254,27 +271,27 @@ export default async function HomePage() {
               </article>
             </div>
             <div className="hero-actions">
-              <Link href="/docs/start-here" className="btn primary">
+              <Link href="/docs/start-here" className="lotos-btn lotos-btn--primary lotos-btn--md">
                 <span className="en-only">Get Started</span>
                 <span className="es-only">Empezar</span>
               </Link>
-              <Link href="/docs/multi-runtime" className="btn ghost btn-runtime">
+              <Link href="/docs/multi-runtime" className="lotos-btn lotos-btn--outline lotos-btn--md">
                 <span className="en-only">Runtime Guide</span>
                 <span className="es-only">Guia de Runtimes</span>
               </Link>
-              <Link href="/docs/components/button" className="btn ghost btn-components">
+              <Link href="/docs/components/button" className="lotos-btn lotos-btn--outline lotos-btn--md">
                 <span className="en-only">Components</span>
                 <span className="es-only">Componentes</span>
               </Link>
-              <Link href="/examples" className="btn ghost btn-showcase">
+              <Link href="/examples" className="lotos-btn lotos-btn--outline lotos-btn--md">
                 <span className="en-only">Examples</span>
                 <span className="es-only">Ejemplos</span>
               </Link>
-              <Link href="/pricing" className="btn ghost btn-pricing">
+              <Link href="/pricing" className="lotos-btn lotos-btn--outline lotos-btn--md">
                 <span className="en-only">Pricing</span>
                 <span className="es-only">Precios</span>
               </Link>
-              <Link href="/demo" className="btn ghost btn-demo-premium">
+              <Link href="/demo" className="lotos-btn lotos-btn--secondary lotos-btn--md">
                 <span className="en-only">Premium Demo</span>
                 <span className="es-only">Demo Premium</span>
               </Link>
@@ -308,7 +325,7 @@ export default async function HomePage() {
                   <div className="preview-surface-card primary">
                     <div className="preview-surface-head">
                       <h3>Docs-first path</h3>
-                      <span className="payment-chip ready accent-cyan">Public</span>
+                      <Badge variant="info" size="md">Public</Badge>
                     </div>
                     <p>
                       <span className="en-only">Onboarding, components, runtime guidance, and spreadsheet context are visible before checkout pressure.</span>
@@ -319,7 +336,7 @@ export default async function HomePage() {
                   <div className="preview-surface-card secondary">
                     <div className="preview-surface-head">
                       <h3>Premium ladder</h3>
-                      <span className="payment-chip alt accent-violet">Clear</span>
+                      <Badge variant="outline" size="md">Clear</Badge>
                     </div>
                     <p>
                       <span className="en-only">Solo proves value, Pro carries delivery weight, and Full closes at the top tier.</span>
@@ -345,10 +362,10 @@ export default async function HomePage() {
       </section>
 
       <section className="stats">
-        <article><strong>27</strong><span><span className="en-only">React Components</span><span className="es-only">Componentes React</span></span></article>
-        <article><strong>4</strong><span><span className="en-only">Web Primitives</span><span className="es-only">Primitivas Web</span></span></article>
-        <article><strong>10</strong><span><span className="en-only">Stack Templates</span><span className="es-only">Templates de Stack</span></span></article>
-        <article><strong>8</strong><span><span className="en-only">Desktop Templates</span><span className="es-only">Templates Desktop</span></span></article>
+        <Stat label="React Components" value="27" tone="info" helperText="Stable production arm shipping now." />
+        <Stat label="Web Primitives" value="4" tone="neutral" helperText="Portable primitives for cross-runtime reuse." />
+        <Stat label="Stack Templates" value="10" tone="success" helperText="CLI-ready starting points across the product surface." />
+        <Stat label="Desktop Templates" value="8" tone="warning" helperText="Operator-ready desktop shells and premium rooms." />
       </section>
 
       <section className="card landing-section examples-band">
@@ -375,9 +392,9 @@ export default async function HomePage() {
               <p>{example.summary}</p>
               <div className="example-mini-metrics">
                 {example.metrics.map((metric) => (
-                  <span key={metric.label} className={`tier-pill ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
+                  <Badge key={metric.label} variant={badgeVariantFor(accentAt(index))} size="md">
                     {metric.value} {metric.label}
-                  </span>
+                  </Badge>
                 ))}
               </div>
             </article>
@@ -405,13 +422,13 @@ export default async function HomePage() {
         </div>
         <div className="signature-grid">
           {signaturePrinciples.map((item, index) => (
-            <article key={item.label} className={`signature-card ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
+            <Card key={item.label} padding="lg" shadow="md" border="strong" className={`signature-card ${accentAt(index)}`}>
               <p className="signature-label"><span className="en-only">{item.label}</span><span className="es-only">{item.labelEs}</span></p>
               <h3 className="en-only">{item.title}</h3>
               <h3 className="es-only">{item.titleEs}</h3>
               <p className="en-only">{item.body}</p>
               <p className="es-only">{item.bodyEs}</p>
-            </article>
+            </Card>
           ))}
         </div>
       </section>
@@ -508,14 +525,14 @@ export default async function HomePage() {
         </div>
         <div className="runtime-card-grid">
           {runtimeCards.map((runtime) => (
-            <article key={runtime.name} className={`runtime-showcase-card ${runtime.tone}`}>
+            <Card key={runtime.name} padding="md" shadow="md" border="strong" className={`runtime-showcase-card ${runtime.tone}`}>
               <div className="runtime-showcase-top">
                 <h3>{runtime.name}</h3>
-                <span className={`payment-chip ready ${runtime.tone}`}>{runtime.status}</span>
+                <Badge variant={badgeVariantFor(runtime.tone as AccentTone)} size="md">{runtime.status}</Badge>
               </div>
               <p className="en-only">{runtime.summary}</p>
               <p className="es-only">{runtime.summaryEs}</p>
-            </article>
+            </Card>
           ))}
         </div>
         <div className="hero-actions compact">
@@ -593,10 +610,10 @@ export default async function HomePage() {
           </p>
           <div className="premium-stage-list">
             {['Protected kits', 'Team-ready assets', 'Premium operators'].map((item, index) => (
-              <span key={item} className={`tier-pill ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
+              <Badge key={item} variant={badgeVariantFor(accentAt(index))} size="md">
                 <span className="en-only">{item}</span>
                 <span className="es-only">{item === 'Protected kits' ? 'Kits protegidos' : item === 'Team-ready assets' ? 'Assets listos para equipo' : 'Operadores premium'}</span>
-              </span>
+              </Badge>
             ))}
           </div>
         </article>
@@ -612,10 +629,10 @@ export default async function HomePage() {
           </p>
           <div className="premium-stage-list">
             {['Full-suite exclusives', 'Boardroom-grade finish', 'Highest polish'].map((item, index) => (
-              <span key={item} className={`tier-pill ${homepageAccentCycle[(index + 2) % homepageAccentCycle.length]}`}>
+              <Badge key={item} variant={badgeVariantFor(accentAt(index + 2))} size="md">
                 <span className="en-only">{item}</span>
                 <span className="es-only">{item === 'Full-suite exclusives' ? 'Exclusivos full-suite' : item === 'Boardroom-grade finish' ? 'Acabado de boardroom' : 'Maximo pulido'}</span>
-              </span>
+              </Badge>
             ))}
           </div>
         </article>
@@ -644,12 +661,13 @@ export default async function HomePage() {
               {tierHighlights.length > 0 ? (
                 <div className="tier-pill-grid compact" aria-label={`Highlights for ${plan.name}`}>
                   {tierHighlights.map((item, itemIndex) => (
-                    <span
+                    <Badge
                       key={`${plan.id}-${item}`}
-                      className={`tier-pill ${homepageAccentCycle[(itemIndex + index) % homepageAccentCycle.length]}`}
+                      variant={badgeVariantFor(accentAt(itemIndex + index))}
+                      size="md"
                     >
                       {item}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               ) : null}
