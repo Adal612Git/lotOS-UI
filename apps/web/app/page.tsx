@@ -154,7 +154,6 @@ export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const signedInEmail = session?.user?.email ?? null;
   const paidPlans = salesPlans.filter((plan) => plan.kind === 'paid');
-  const vaultHref = signedInEmail ? '/vault' : '/login';
 
   return (
     <main className="landing">
@@ -178,18 +177,19 @@ export default async function HomePage() {
             <span className="en-only">Pricing</span>
             <span className="es-only">Precios</span>
           </Link>
+          <Link href="/docs/components/button" className="nav-link nav-link--components">
+            <span className="en-only">Components</span>
+            <span className="es-only">Componentes</span>
+          </Link>
           <Link href="/multi-framework" className="nav-link nav-link--runtime">
             <span className="en-only">Runtime Matrix</span>
             <span className="es-only">Matriz de Runtimes</span>
           </Link>
           {signedInEmail ? (
-            <>
-              <Link href="/vault" className="nav-link nav-link--cta">Vault</Link>
-              <a href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">
-                <span className="en-only">Sign Out</span>
-                <span className="es-only">Cerrar Sesion</span>
-              </a>
-            </>
+            <a href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">
+              <span className="en-only">Sign Out</span>
+              <span className="es-only">Cerrar Sesion</span>
+            </a>
           ) : (
             <Link href="/login" className="nav-link">
               <span className="en-only">Sign In</span>
@@ -258,21 +258,25 @@ export default async function HomePage() {
                 <span className="en-only">Get Started</span>
                 <span className="es-only">Empezar</span>
               </Link>
-              <Link href="/docs" className="btn ghost">
-                <span className="en-only">Open Docs</span>
-                <span className="es-only">Abrir Docs</span>
+              <Link href="/docs/multi-runtime" className="btn ghost btn-runtime">
+                <span className="en-only">Runtime Guide</span>
+                <span className="es-only">Guia de Runtimes</span>
               </Link>
-              <Link href="/pricing" className="btn ghost">
+              <Link href="/docs/components/button" className="btn ghost btn-components">
+                <span className="en-only">Components</span>
+                <span className="es-only">Componentes</span>
+              </Link>
+              <Link href="/examples" className="btn ghost btn-showcase">
+                <span className="en-only">Examples</span>
+                <span className="es-only">Ejemplos</span>
+              </Link>
+              <Link href="/pricing" className="btn ghost btn-pricing">
                 <span className="en-only">Pricing</span>
                 <span className="es-only">Precios</span>
               </Link>
-              <Link href="/demo" className="btn ghost">
-                <span className="en-only">Live Demos</span>
-                <span className="es-only">Demos en Vivo</span>
-              </Link>
-              <Link href="/examples" className="btn ghost">
-                <span className="en-only">Examples</span>
-                <span className="es-only">Ejemplos</span>
+              <Link href="/demo" className="btn ghost btn-demo-premium">
+                <span className="en-only">Premium Demo</span>
+                <span className="es-only">Demo Premium</span>
               </Link>
             </div>
           </div>
@@ -696,7 +700,7 @@ export default async function HomePage() {
           <div className="hero-actions compact">
             <Link href="/demo" className="btn primary"><span className="en-only">Open Live Demos</span><span className="es-only">Abrir Demos en Vivo</span></Link>
             <Link href="/docs/start-here" className="btn ghost"><span className="en-only">Start Here</span><span className="es-only">Empieza Aqui</span></Link>
-            <Link href={vaultHref} className="btn ghost btn-vault"><span className="en-only">Open Vault</span><span className="es-only">Abrir Vault</span></Link>
+            <Link href="/docs/components/button" className="btn ghost btn-components"><span className="en-only">Explore Components</span><span className="es-only">Explorar Componentes</span></Link>
           </div>
         </article>
         <article className="card">

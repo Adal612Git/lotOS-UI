@@ -96,6 +96,14 @@
   color: #166534;
 }
 
+.nav-link--components,
+.btn-components {
+  border-color: rgba(14, 165, 233, 0.24);
+  background:
+    linear-gradient(135deg, rgba(240, 249, 255, 0.97), rgba(224, 242, 254, 0.92));
+  color: #075985;
+}
+
 .nav-link--pricing,
 .btn-pricing {
   border-color: rgba(236, 72, 153, 0.24);
@@ -169,6 +177,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .btn {
@@ -250,6 +259,27 @@
   border-color: rgba(34, 197, 94, 0.26);
   background:
     linear-gradient(135deg, rgba(240, 253, 244, 0.98), rgba(220, 252, 231, 0.94));
+}
+
+.btn-components {
+  color: #075985;
+  border-color: rgba(14, 165, 233, 0.28);
+  background:
+    linear-gradient(135deg, rgba(240, 249, 255, 0.99), rgba(224, 242, 254, 0.94));
+}
+
+.btn-pricing {
+  color: #9d174d;
+  border-color: rgba(236, 72, 153, 0.28);
+  background:
+    linear-gradient(135deg, rgba(253, 242, 248, 0.99), rgba(252, 231, 243, 0.94));
+}
+
+.btn-demo-premium {
+  color: #6d28d9;
+  border-color: rgba(139, 92, 246, 0.28);
+  background:
+    linear-gradient(135deg, rgba(245, 243, 255, 0.99), rgba(237, 233, 254, 0.94));
 }
 
 .btn-vault {
