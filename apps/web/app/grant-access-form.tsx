@@ -120,8 +120,8 @@ export function GrantAccessForm() {
       </div>
 
       <p className="grant-note">
-        Usa esto solo despues de confirmar el pago. El registro queda guardado en Supabase como
-        entitlement manual o como respaldo del webhook.
+        Usa esto solo como respaldo: si el webhook no entro, si hay que corregir un correo o si
+        necesitas rehacer un unlock despues de confirmar el pago.
       </p>
 
       {status ? <p className="grant-status">{status}</p> : null}

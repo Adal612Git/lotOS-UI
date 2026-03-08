@@ -162,41 +162,41 @@ export default async function HomePage() {
         <div className="brand">LotOS UI</div>
         <nav>
           <LangToggle />
-          <Link href="/docs">
+          <Link href="/docs" className="nav-link">
             <span className="en-only">Docs</span>
             <span className="es-only">Documentacion</span>
           </Link>
-          <Link href="/demo">
+          <Link href="/demo" className="nav-link">
             <span className="en-only">Demos</span>
             <span className="es-only">Demos</span>
           </Link>
-          <Link href="/examples">
+          <Link href="/examples" className="nav-link nav-link--showcase">
             <span className="en-only">Examples</span>
             <span className="es-only">Ejemplos</span>
           </Link>
-          <Link href="/pricing">
+          <Link href="/pricing" className="nav-link nav-link--pricing">
             <span className="en-only">Pricing</span>
             <span className="es-only">Precios</span>
           </Link>
-          <Link href="/multi-framework">
+          <Link href="/multi-framework" className="nav-link nav-link--runtime">
             <span className="en-only">Runtime Matrix</span>
             <span className="es-only">Matriz de Runtimes</span>
           </Link>
           {signedInEmail ? (
             <>
-              <Link href="/vault">Vault</Link>
-              <a href="/api/auth/signout?callbackUrl=/">
+              <Link href="/vault" className="nav-link nav-link--cta">Vault</Link>
+              <a href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">
                 <span className="en-only">Sign Out</span>
                 <span className="es-only">Cerrar Sesion</span>
               </a>
             </>
           ) : (
-            <Link href="/login">
+            <Link href="/login" className="nav-link">
               <span className="en-only">Sign In</span>
               <span className="es-only">Iniciar Sesion</span>
             </Link>
           )}
-          <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="nav-link">GitHub</a>
         </nav>
       </header>
 
@@ -492,8 +492,8 @@ export default async function HomePage() {
           </ul>
           <div className="hero-actions compact">
             <Link href="/docs/start-here" className="btn ghost"><span className="en-only">Open Start Here</span><span className="es-only">Abrir Empieza Aqui</span></Link>
-            <Link href="/docs/multi-runtime" className="btn ghost"><span className="en-only">Open Runtime Guide</span><span className="es-only">Abrir Guia de Runtimes</span></Link>
-            <Link href="/examples" className="btn ghost"><span className="en-only">See Examples</span><span className="es-only">Ver Ejemplos</span></Link>
+            <Link href="/docs/multi-runtime" className="btn ghost btn-runtime"><span className="en-only">Open Runtime Guide</span><span className="es-only">Abrir Guia de Runtimes</span></Link>
+            <Link href="/examples" className="btn ghost btn-showcase"><span className="en-only">See Examples</span><span className="es-only">Ver Ejemplos</span></Link>
           </div>
         </article>
         <section className="terminal landing-terminal">
@@ -710,7 +710,7 @@ export default async function HomePage() {
           <div className="hero-actions compact">
             <Link href="/demo" className="btn primary"><span className="en-only">Open Live Demos</span><span className="es-only">Abrir Demos en Vivo</span></Link>
             <Link href="/docs/start-here" className="btn ghost"><span className="en-only">Start Here</span><span className="es-only">Empieza Aqui</span></Link>
-            <Link href={vaultHref} className="btn ghost"><span className="en-only">Open Vault</span><span className="es-only">Abrir Vault</span></Link>
+            <Link href={vaultHref} className="btn ghost btn-vault"><span className="en-only">Open Vault</span><span className="es-only">Abrir Vault</span></Link>
           </div>
         </article>
         <article className="card">
@@ -725,7 +725,7 @@ export default async function HomePage() {
           </p>
           <pre><code>pnpm.cmd run prep:first-sale</code></pre>
           <div className="hero-actions compact">
-            <Link href="/pricing" className="btn primary"><span className="en-only">Open Pricing</span><span className="es-only">Abrir Precios</span></Link>
+            <Link href="/pricing" className="btn primary btn-pricing"><span className="en-only">Open Pricing</span><span className="es-only">Abrir Precios</span></Link>
             <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer"><span className="en-only">Contact Sales</span><span className="es-only">Contactar Ventas</span></a>
           </div>
         </article>

@@ -34,7 +34,8 @@
   align-items: center;
 }
 
-.top a {
+.top a,
+.nav-link {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -42,39 +43,93 @@
   text-decoration: none;
   font-weight: 700;
   font-size: 13px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(6px);
-  transition: background 140ms, border-color 140ms, color 140ms, box-shadow 140ms;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 247, 255, 0.88));
+  box-shadow: 0 10px 22px rgba(20, 44, 71, 0.08);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
   white-space: nowrap;
 }
 
-.top a:hover {
-  background: rgba(255, 255, 255, 0.96);
-  border-color: rgba(21, 94, 239, 0.28);
-  color: #0d2a47;
-  box-shadow: 0 2px 8px rgba(20, 44, 71, 0.1);
-}
-
-/* Vault link stands out as CTA */
-.top a[href="/vault"] {
-  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240,249,255,0.92));
+.top a:hover,
+.top a:focus-visible,
+.nav-link:hover,
+.nav-link:focus-visible {
+  transform: translateY(-1px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(236, 245, 255, 0.94));
   border-color: rgba(21, 94, 239, 0.32);
-  color: #1547c0;
+  color: #0d2a47;
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.08),
+    0 16px 28px rgba(20, 44, 71, 0.14);
 }
 
-/* Sign out link less prominent */
-.top a[href*="signout"] {
-  background: transparent;
+.top a:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid rgba(31, 111, 235, 0.18);
+  outline-offset: 2px;
+}
+
+.nav-link--runtime,
+.btn-runtime {
+  border-color: rgba(245, 158, 11, 0.24);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(255, 243, 224, 0.92));
+  color: #9a3412;
+}
+
+.nav-link--showcase,
+.btn-showcase {
+  border-color: rgba(34, 197, 94, 0.24);
+  background:
+    linear-gradient(135deg, rgba(240, 253, 244, 0.96), rgba(220, 252, 231, 0.92));
+  color: #166534;
+}
+
+.nav-link--pricing,
+.btn-pricing {
+  border-color: rgba(236, 72, 153, 0.24);
+  background:
+    linear-gradient(135deg, rgba(253, 242, 248, 0.97), rgba(252, 231, 243, 0.92));
+  color: #9d174d;
+}
+
+.nav-link--cta,
+.btn-vault {
+  border-color: rgba(37, 99, 235, 0.34);
+  background:
+    linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(219, 234, 254, 0.94));
+  color: #1d4ed8;
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.08),
+    0 16px 28px rgba(37, 99, 235, 0.14);
+}
+
+.nav-link--muted {
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: 12px;
   border-color: transparent;
-  color: rgba(26, 58, 92, 0.55);
+  background: transparent;
+  color: rgba(26, 58, 92, 0.62);
+  box-shadow: none;
   font-size: 12px;
 }
-.top a[href*="signout"]:hover {
-  background: rgba(255,255,255,0.7);
-  border-color: rgba(148,163,184,0.22);
+
+.nav-link--muted:hover,
+.nav-link--muted:focus-visible {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(148, 163, 184, 0.2);
   color: #1a3a5c;
   box-shadow: none;
 }
@@ -173,6 +228,27 @@
     linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(248, 251, 255, 0.94));
   color: var(--lotos-ocean-blue, #14314e);
   border-color: var(--lotos-border-strong, #d6e3f5);
+}
+
+.btn-runtime {
+  color: #9a3412;
+  border-color: rgba(245, 158, 11, 0.28);
+  background:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.98), rgba(255, 243, 224, 0.94));
+}
+
+.btn-showcase {
+  color: #166534;
+  border-color: rgba(34, 197, 94, 0.26);
+  background:
+    linear-gradient(135deg, rgba(240, 253, 244, 0.98), rgba(220, 252, 231, 0.94));
+}
+
+.btn-vault {
+  color: #1d4ed8;
+  border-color: rgba(37, 99, 235, 0.32);
+  background:
+    linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(219, 234, 254, 0.95));
 }
 
 .btn.button-like {

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getViewerContext } from '../../lib/auth-server';
 import '../lotos-landing.css';
 import { GrantAccessForm } from '../grant-access-form';
+import { commercialReadiness } from '../sales-config';
 
 const vaultAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet'] as const;
 
@@ -33,9 +34,10 @@ const planLabels: Record<string, string> = {
 
 export default async function VaultPage() {
   const viewer = await getViewerContext();
-  const hasSolo = viewer.isOwner || viewer.plans.includes('solo') || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
-  const hasPro = viewer.isOwner || viewer.plans.includes('pro') || viewer.plans.includes('launch_pack');
-  const hasLaunch = viewer.isOwner || viewer.plans.includes('launch_pack');
+  const viewerPlans = new Set<string>(viewer.plans);
+  const hasSolo = viewer.isOwner || viewerPlans.has('solo') || viewerPlans.has('pro') || viewerPlans.has('launch_pack');
+  const hasPro = viewer.isOwner || viewerPlans.has('pro') || viewerPlans.has('launch_pack');
+  const hasLaunch = viewer.isOwner || viewerPlans.has('launch_pack');
   const vaultExperienceCards = [
     {
       label: 'Access state',
@@ -74,11 +76,11 @@ export default async function VaultPage() {
       <header className="top">
         <div className="brand">LotOS UI</div>
         <nav>
-          <Link href="/">Home</Link>
-          <Link href="/docs">Docs</Link>
-          <Link href="/demo">Demos</Link>
-          <Link href="/pricing">Pricing</Link>
-          <a href="/api/auth/signout?callbackUrl=/">Sign Out</a>
+          <Link href="/" className="nav-link">Home</Link>
+          <Link href="/docs" className="nav-link">Docs</Link>
+          <Link href="/demo" className="nav-link">Demos</Link>
+          <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
+          <a href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</a>
         </nav>
       </header>
 
@@ -98,7 +100,9 @@ export default async function VaultPage() {
         <div className="payment-meta" aria-label="Vault state">
           <span className="payment-chip free accent-cyan">Free foundation stays open</span>
           <span className="payment-chip alt accent-amber">Public first, premium after</span>
-          <span className="payment-chip manual accent-violet">Protected routes use entitlements</span>
+          <span className={`payment-chip ${commercialReadiness.automaticUnlockReady ? 'ready' : 'manual'} accent-violet`}>
+            {commercialReadiness.automaticUnlockReady ? 'Purchases unlock automatically' : 'Protected routes use entitlements'}
+          </span>
         </div>
         <div className="hero-actions">
           <a href="#free-foundation" className="btn ghost">
@@ -254,11 +258,10 @@ export default async function VaultPage() {
       {viewer.isOwner ? (
         <section className="card owner-panel">
           <p className="section-label">Owner tools</p>
-          <h2>Confirm payment, then unlock the buyer</h2>
+          <h2>Fallback unlock tools for exceptional cases</h2>
           <p>
-            Use this when you need an operator override: confirm the Lemon Squeezy subscription,
-            Mercado Pago receipt, or fallback payment, then grant the matching plan to the buyer
-            email from here.
+            Automatic unlock should handle normal purchases. Use this only when you need an operator
+            override after a webhook miss, an email correction, or a manual payment exception.
           </p>
           <GrantAccessForm />
         </section>

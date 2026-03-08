@@ -1,3 +1,5 @@
+import { env } from '../lib/env';
+
 export type SalesPlan = {
   id: string;
   name: string;
@@ -36,6 +38,11 @@ const linkOrFallback = (value: string | undefined, fallback: string) => {
 };
 
 const hasNonEmptyValue = (value: string | undefined) => Boolean(value?.trim());
+const automaticUnlockConfigured = env.supabaseConfigured && env.lemonConfigured;
+const directCheckoutConfigured =
+  hasNonEmptyValue(process.env.LOTOS_SOLO_CHECKOUT_URL) ||
+  hasNonEmptyValue(process.env.LOTOS_PRO_CHECKOUT_URL) ||
+  hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_URL);
 
 function buildPaidActions(input: {
   checkoutUrl?: string;
@@ -81,9 +88,13 @@ function buildPaidActions(input: {
     external: primaryAction.external,
     paymentActions,
     checkoutHint: checkoutUrl
-      ? paypalUrl
-        ? "Checkout principal listo para activar acceso. PayPal queda como respaldo."
-        : "Checkout principal listo para activar acceso mensual."
+      ? automaticUnlockConfigured
+        ? paypalUrl
+          ? "Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
+          : "Checkout principal listo. El acceso se activa automaticamente despues del pago."
+        : paypalUrl
+          ? "Checkout principal listo, pero el unlock automatico aun no esta completo. PayPal queda como respaldo."
+          : "Checkout principal listo, pero el unlock automatico aun no esta completo."
       : paypalUrl
         ? "PayPal listo como via de cobro. Agrega un checkout principal cuando quieras."
         : "Sin checkout directo configurado. El flujo cae a contacto manual.",
@@ -122,19 +133,12 @@ export const salesLinks = {
 };
 
 export const commercialReadiness = {
-  directCheckoutReady:
-    hasNonEmptyValue(process.env.LOTOS_SOLO_CHECKOUT_URL) ||
-    hasNonEmptyValue(process.env.LOTOS_PRO_CHECKOUT_URL) ||
-    hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_URL),
+  directCheckoutReady: directCheckoutConfigured,
   fallbackPaymentReady:
     hasNonEmptyValue(process.env.LOTOS_SOLO_PAYPAL_URL) ||
     hasNonEmptyValue(process.env.LOTOS_PRO_PAYPAL_URL) ||
     hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL),
-  automaticUnlockReady:
-    hasNonEmptyValue(process.env.LEMON_WEBHOOK_SECRET) &&
-    hasNonEmptyValue(process.env.LEMON_SOLO_VARIANT_ID) &&
-    hasNonEmptyValue(process.env.LEMON_PRO_VARIANT_ID) &&
-    hasNonEmptyValue(process.env.LEMON_LAUNCH_VARIANT_ID),
+  automaticUnlockReady: automaticUnlockConfigured && directCheckoutConfigured,
 };
 
 export const foundersOffer = {

@@ -210,8 +210,8 @@ export default async function PricingPage({
       label: 'Unlock',
       value: commercialReadiness.automaticUnlockReady ? 'Automatic' : 'Manual',
       body: commercialReadiness.automaticUnlockReady
-        ? 'Paid users can be unlocked automatically through the configured entitlement path.'
-        : 'Use owner grant flow until automatic unlock is fully wired.',
+        ? 'Paid users unlock automatically after checkout through the webhook and entitlement path.'
+        : 'Unlock is still missing some production wiring. Keep owner grant only as a temporary fallback.',
       tone: commercialReadiness.automaticUnlockReady ? 'accent-cyan' : 'accent-violet',
     },
     {
@@ -229,19 +229,19 @@ export default async function PricingPage({
       <header className="top">
         <div className="brand">LotOS UI</div>
         <nav>
-          <Link href="/">Home</Link>
-          <Link href="/docs">Docs</Link>
-          <Link href="/demo">Demos</Link>
-          <Link href="/examples">Examples</Link>
+          <Link href="/" className="nav-link">Home</Link>
+          <Link href="/docs" className="nav-link">Docs</Link>
+          <Link href="/demo" className="nav-link">Demos</Link>
+          <Link href="/examples" className="nav-link nav-link--showcase">Examples</Link>
           {signedInEmail ? (
             <>
-              <Link href="/vault">Open Vault</Link>
-              <a href="/api/auth/signout?callbackUrl=/pricing">Sign Out</a>
+              <Link href="/vault" className="nav-link nav-link--cta">Open Vault</Link>
+              <a href="/api/auth/signout?callbackUrl=/pricing" className="nav-link nav-link--muted">Sign Out</a>
             </>
           ) : (
-            <Link href="/login">Sign In</Link>
+            <Link href="/login" className="nav-link">Sign In</Link>
           )}
-          <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="nav-link">GitHub</a>
         </nav>
       </header>
 
@@ -272,7 +272,7 @@ export default async function PricingPage({
             {commercialReadiness.fallbackPaymentReady ? 'Fallback payment activo' : 'Fallback payment pendiente'}
           </span>
           <span className={`payment-chip ${commercialReadiness.automaticUnlockReady ? 'ready' : 'manual'} accent-rose`}>
-            {commercialReadiness.automaticUnlockReady ? 'Unlock automatico activo' : 'Unlock automatico pendiente'}
+            {commercialReadiness.automaticUnlockReady ? 'Unlock automatico activo' : 'Unlock automatico incompleto'}
           </span>
         </div>
         {pricingState ? (
