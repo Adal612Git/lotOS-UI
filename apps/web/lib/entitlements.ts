@@ -1,7 +1,6 @@
-import type { PostgrestError } from '@supabase/supabase-js';
-import { listAcceptedPlans, normalizePlan, type CommercialPlan } from './plans';
+import { env } from './env';
 import { normalizeEmail } from './owner';
-import { createServiceRoleClient } from './supabase';
+import { listAcceptedPlans, normalizePlan, type CommercialPlan } from './plans';
 
 export interface EntitlementRow {
   id: number;
@@ -22,6 +21,35 @@ function ensureEmail(value: string): string {
   return normalized;
 }
 
+function requireSupabaseRestConfig() {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error(
+      'Supabase service role configuration is missing. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.'
+    );
+  }
+
+  return {
+    supabaseUrl: env.SUPABASE_URL,
+    serviceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY,
+  };
+}
+
+function buildEntitlementsEndpoint() {
+  const { supabaseUrl } = requireSupabaseRestConfig();
+  return new URL('/rest/v1/entitlements', supabaseUrl);
+}
+
+function buildHeaders(extraHeaders?: Record<string, string>) {
+  const { serviceRoleKey } = requireSupabaseRestConfig();
+
+  return {
+    apikey: serviceRoleKey,
+    Authorization: `Bearer ${serviceRoleKey}`,
+    'Content-Type': 'application/json',
+    ...(extraHeaders ?? {}),
+  };
+}
+
 function coercePlanList(rows: Array<{ plan: string }>): CommercialPlan[] {
   const deduped = new Set<CommercialPlan>();
 
@@ -35,57 +63,76 @@ function coercePlanList(rows: Array<{ plan: string }>): CommercialPlan[] {
   return [...deduped];
 }
 
-function requireClient() {
-  const client = createServiceRoleClient();
+function normalizeEntitlementRow(row: Omit<EntitlementRow, 'plan'> & { plan: string }): EntitlementRow {
+  const normalizedPlan = normalizePlan(row.plan);
 
-  if (!client) {
-    throw new Error(
-      'Supabase service role configuration is missing. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.'
-    );
+  if (!normalizedPlan) {
+    throw new Error(`Supabase returned an invalid plan value: ${String(row.plan)}`);
   }
 
-  return client;
+  return {
+    ...row,
+    plan: normalizedPlan,
+  };
+}
+
+async function parseErrorResponse(response: Response) {
+  try {
+    const payload = (await response.json()) as { message?: string; error?: string };
+    return payload.message || payload.error || `Supabase request failed with status ${response.status}.`;
+  } catch {
+    return `Supabase request failed with status ${response.status}.`;
+  }
 }
 
 export async function listUserPlans(userEmail: string): Promise<CommercialPlan[]> {
-  const client = createServiceRoleClient();
   const normalizedEmail = ensureEmail(userEmail);
 
-  if (!client) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
     return [];
   }
 
-  const { data, error } = await client
-    .from('entitlements')
-    .select('plan')
-    .eq('user_email', normalizedEmail);
+  const endpoint = buildEntitlementsEndpoint();
+  endpoint.searchParams.set('select', 'plan');
+  endpoint.searchParams.set('user_email', `eq.${normalizedEmail}`);
 
-  if (error) {
-    throw error;
+  const response = await fetch(endpoint, {
+    headers: buildHeaders(),
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
   }
 
-  return coercePlanList((data ?? []) as Array<{ plan: string }>);
+  const data = (await response.json()) as Array<{ plan: string }>;
+  return coercePlanList(data ?? []);
 }
 
 export async function hasEntitlement(userEmail: string, requiredPlan: CommercialPlan): Promise<boolean> {
-  const client = createServiceRoleClient();
   const normalizedEmail = ensureEmail(userEmail);
 
-  if (!client) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
     return false;
   }
 
-  const { count, error } = await client
-    .from('entitlements')
-    .select('id', { head: true, count: 'exact' })
-    .eq('user_email', normalizedEmail)
-    .in('plan', listAcceptedPlans(requiredPlan));
+  const endpoint = buildEntitlementsEndpoint();
+  endpoint.searchParams.set('select', 'id');
+  endpoint.searchParams.set('user_email', `eq.${normalizedEmail}`);
+  endpoint.searchParams.set('plan', `in.(${listAcceptedPlans(requiredPlan).join(',')})`);
+  endpoint.searchParams.set('limit', '1');
 
-  if (error) {
-    throw error;
+  const response = await fetch(endpoint, {
+    headers: buildHeaders(),
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
   }
 
-  return Boolean(count && count > 0);
+  const data = (await response.json()) as Array<{ id?: number }>;
+  return data.length > 0;
 }
 
 export async function upsertEntitlement(input: {
@@ -94,48 +141,43 @@ export async function upsertEntitlement(input: {
   source: string;
   metadata?: Record<string, unknown>;
 }): Promise<EntitlementRow> {
-  const client = requireClient();
   const normalizedEmail = ensureEmail(input.userEmail);
+  const endpoint = buildEntitlementsEndpoint();
+  endpoint.searchParams.set('on_conflict', 'user_email,plan');
+  endpoint.searchParams.set('select', 'id,user_email,plan,granted_at,source,metadata');
 
-  const { data, error } = await client
-    .from('entitlements')
-    .upsert(
-      {
-        user_email: normalizedEmail,
-        plan: input.plan,
-        source: input.source,
-        metadata: input.metadata ?? {},
-      },
-      {
-        onConflict: 'user_email,plan',
-      }
-    )
-    .select('id, user_email, plan, granted_at, source, metadata')
-    .single();
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: buildHeaders({
+      Prefer: 'resolution=merge-duplicates,return=representation',
+    }),
+    body: JSON.stringify({
+      user_email: normalizedEmail,
+      plan: input.plan,
+      source: input.source,
+      metadata: input.metadata ?? {},
+    }),
+    cache: 'no-store',
+  });
 
-  if (error) {
-    throw error;
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
   }
 
-  const normalizedPlan = normalizePlan(data.plan);
+  const data = (await response.json()) as Array<
+    Omit<EntitlementRow, 'plan'> & { plan: string }
+  >;
 
-  if (!normalizedPlan) {
-    throw new Error(`Supabase returned an invalid plan value: ${String(data.plan)}`);
+  const row = data[0];
+
+  if (!row) {
+    throw new Error('Supabase upsert returned no entitlement row.');
   }
 
-  return {
-    ...(data as Omit<EntitlementRow, 'plan'>),
-    plan: normalizedPlan,
-  };
+  return normalizeEntitlementRow(row);
 }
 
 export function formatEntitlementError(error: unknown): string {
-  const postgrestError = error as PostgrestError | undefined;
-
-  if (postgrestError?.message) {
-    return postgrestError.message;
-  }
-
   if (error instanceof Error) {
     return error.message;
   }
