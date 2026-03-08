@@ -3,28 +3,38 @@ title: Start Here
 description: The shortest path to understand LotOS UI, choose the right package, and avoid starting in the wrong runtime.
 ---
 
-# Start Here
+# Start Here / Empieza Aqui
 
 This page is the practical onboarding for LotOS UI.
 
-If you only remember one thing, remember this:
+**English:** If you only remember one thing, remember this:
 
 1. Start with the stable React arm first.
 2. Use multi-runtime tracks only when the delivery target actually requires them.
 3. Treat spreadsheet modernization as a product lane, not as the default installation path.
 
-## The correct first decision
+**Español:** Si solo recuerdas una cosa, recuerda esto:
+
+1. Empieza con el brazo estable de React primero.
+2. Usa rutas multi-runtime solo cuando el objetivo de entrega lo requiere realmente.
+3. Trata la modernizacion de spreadsheets como una linea de entrega, no como la ruta de instalacion predeterminada.
+
+---
+
+## The correct first decision / La decision correcta
 
 Choose the lane that matches your actual goal:
 
-| Goal | Recommended lane | Why |
+| Goal / Objetivo | Recommended lane / Ruta recomendada | Why / Por que |
 | --- | --- | --- |
-| Ship UI in a web app now | `@lotosui/claude-arm` | This is the stable production arm. |
+| Ship UI in a web app now | `@lotosui/claude-arm` | This is the stable production arm. / Brazo estable de produccion. |
 | Generate architecture or starter stacks | `@lotosui/cli` + docs | Good when you need scaffolding, not just components. |
 | Coordinate AI generation with contracts | `@lotosui/core` MCP | Use when agents need schemas, runtimes, and patterns. |
 | Modernize Excel or Calc workflows | Spreadsheet kits + macros | This is a delivery lane, not the first package most teams should install. |
 
-## Recommended first hour
+---
+
+## Recommended first hour / Primera hora recomendada
 
 ### 1. Install the stable package
 
@@ -32,36 +42,75 @@ Choose the lane that matches your actual goal:
 npm install @lotosui/claude-arm
 ```
 
+Import styles once in your root layout:
+
 ```tsx
+// app/layout.tsx (Next.js) or main.tsx (Vite)
 import '@lotosui/claude-arm/styles.css';
-import { Button } from '@lotosui/claude-arm';
+```
+
+Use a component:
+
+```tsx
+import { Button, Badge, Card } from '@lotosui/claude-arm';
 
 export function Example() {
-  return <Button variant="primary">LotOS UI</Button>;
+  return (
+    <Card>
+      <Badge variant="success">Active</Badge>
+      <Button variant="primary">Ship it</Button>
+    </Card>
+  );
 }
 ```
 
 ### 2. Read the runtime reality before expanding
 
-- React is the stable path.
-- Laravel, Django, Flask, Spring, .NET, and Go are expansion tracks.
-- Desktop and web components are useful, but they should not confuse the first implementation step.
+- **React** — stable, production-ready. This is your entry point.
+- **Laravel, Django, Flask, Spring, .NET, Go** — expansion tracks, alpha status.
+- **Desktop (Python, Java, C, C++)** — useful for operator UIs, but do not start here.
+- **Web Components** — prototype, good for cross-framework reuse.
 
 Continue with [Installation](/docs/installation) and then [Multi Runtime Guide](/docs/multi-runtime).
 
 ### 3. Use the CLI when you need structure
 
 ```bash
+# List available stack templates
 pnpm --filter @lotosui/cli exec lotos-ui stacks
+
+# Scaffold a Laravel + MongoDB stack
+pnpm --filter @lotosui/cli exec lotos-ui stack-init -s php-laravel-starter -d mongodb -o stack/php-laravel
+
+# List desktop templates
 pnpm --filter @lotosui/cli exec lotos-ui desktop-templates
+
+# Scaffold a Python desktop control center
+pnpm --filter @lotosui/cli exec lotos-ui desktop-init -l python -t control-center-desktop -o desktop/python-control-center
 ```
 
 Use CLI commands when the team needs:
 
-- stack scaffolding
-- desktop shells
-- runtime discovery
-- a stronger starting structure for AI-assisted work
+- Stack scaffolding for a specific backend runtime
+- Desktop shells for operator or internal tools
+- Runtime discovery before committing to a path
+- A stronger starting structure for AI-assisted work
+
+---
+
+## Use case quick map / Mapa rapido de casos de uso
+
+| Use case | Entry point | Package |
+| --- | --- | --- |
+| SaaS dashboard (React, dark mode) | `@lotosui/claude-arm` | `Button`, `Card`, `Badge`, `Stat` |
+| Internal operator control room | CLI desktop-init | Desktop shell + `Table`, `Progress`, `Alert` |
+| Excel / Calc spreadsheet upgrade | Spreadsheet kits | Macro-driven VBA/Basic styling |
+| Multi-runtime app (React + Laravel) | `@lotosui/cli` stack-init | MCP contracts for cross-runtime consistency |
+| AI agent generating UI | `@lotosui/core` MCP + Sentinel | Schema-safe generation with guardrails |
+
+For detailed walkthroughs of each case, see [Use Cases](/docs/use-cases).
+
+---
 
 ## Spreadsheet modernization: the right expectation
 
@@ -69,9 +118,9 @@ LotOS UI can improve spreadsheet workflows, but that path is different from the 
 
 Use the spreadsheet lane when you need to:
 
-- make Excel look like an operator surface without replacing the workbook
-- improve Calc or OpenOffice workflows with macro-driven styling
-- prototype premium modernization offers for operations teams
+- Make Excel look like an operator surface without replacing the workbook
+- Improve Calc or OpenOffice workflows with macro-driven styling
+- Prototype premium modernization offers for operations teams
 
 Relevant local references:
 
@@ -81,31 +130,44 @@ Relevant local references:
 - `packages/pro/industry-kits/excel-lotus-grid-kit.json`
 - `packages/pro/industry-kits/openoffice-calc-command-kit.json`
 
-Important distinction:
+**Important distinction:**
 
-- `npm install @lotosui/claude-arm` is the correct path for app UI.
+- `npm install @lotosui/claude-arm` is the correct path for web app UI.
 - Excel and Calc macros are a separate delivery surface for spreadsheet modernization.
 
-## Avoid these mistakes
+---
 
-1. Do not start in an alpha runtime if the project can ship in React.
-2. Do not treat premium spreadsheet kits as the same thing as the public component package.
-3. Do not skip the docs map and jump straight into premium assets without validating the public layer first.
+## Avoid these mistakes / Evita estos errores
 
-## Suggested learning order
+1. **EN:** Do not start in an alpha runtime if the project can ship in React.
+   **ES:** No empieces en un runtime alpha si el proyecto puede enviarse en React.
+
+2. **EN:** Do not treat premium spreadsheet kits as the same thing as the public component package.
+   **ES:** No trates los kits premium de spreadsheets igual que el paquete publico de componentes.
+
+3. **EN:** Do not skip the docs map and jump straight into premium assets without validating the public layer first.
+   **ES:** No te saltes el mapa de docs y saltes directo a assets premium sin validar primero la capa publica.
+
+---
+
+## Suggested learning order / Orden de aprendizaje sugerido
 
 1. Read [Installation](/docs/installation).
 2. Open [Multi Runtime Guide](/docs/multi-runtime).
-3. Inspect one component, for example [Button](/docs/components/button).
-4. If you are selling workflow modernization, review the spreadsheet references listed above.
-5. Move into pricing or vault surfaces only when you actually need protected assets.
+3. Browse [Use Cases](/docs/use-cases) for your specific scenario.
+4. Inspect one component, for example [Button](/docs/components/button).
+5. If you are selling workflow modernization, review the spreadsheet references listed above.
+6. Move into pricing or vault surfaces only when you actually need protected assets.
 
-## En espanol
+---
+
+## En espanol — Ruta recomendada
 
 La ruta recomendada es simple:
 
-1. Empieza con React y `@lotosui/claude-arm`.
-2. Usa el CLI cuando necesites estructura, starters o discovery.
-3. Trata Excel y Calc como una linea de entrega separada, orientada a modernizacion de flujos con macros.
+1. **Empieza con React** y `@lotosui/claude-arm`. Es el brazo estable y de produccion.
+2. **Usa el CLI** cuando necesites estructura, starters o discovery de runtimes.
+3. **Trata Excel y Calc** como una linea de entrega separada, orientada a modernizacion de flujos con macros.
+4. **Lee los casos de uso** en [Use Cases](/docs/use-cases) para ver ejemplos reales que coincidan con tu objetivo.
 
 Eso evita el error principal: querer aprender todo el sistema desde el runtime equivocado.

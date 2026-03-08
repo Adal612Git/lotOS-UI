@@ -12,6 +12,13 @@ const requiredBundlePaths = [
   "admin-starter/manifest.json",
   "layouts/manifest.json",
   "industry-kits/manifest.json",
+  "launch-exclusive/manifest.json",
+  "launch-exclusive/google-sheets-command-kit.json",
+  "launch-exclusive/microsoft-365-excel-web-kit.json",
+  "launch-exclusive/outlook-approval-console.json",
+  "launch-exclusive/executive-boardroom-surface.json",
+  "launch-exclusive/power-bi-executive-visual-pack.json",
+  "launch-exclusive/figma-token-sync-plugin.json",
   "previews/sales-preview.html",
   "distribution/pro.manifest.json",
   "release-manifest.json"

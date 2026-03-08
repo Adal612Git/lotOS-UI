@@ -25,6 +25,13 @@ const requiredPaths = [
   ".commercial-dist/pro/packages/pro/admin-starter/manifest.json",
   ".commercial-dist/pro/packages/pro/layouts/manifest.json",
   ".commercial-dist/pro/packages/pro/industry-kits/manifest.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/manifest.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/google-sheets-command-kit.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/microsoft-365-excel-web-kit.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/outlook-approval-console.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/executive-boardroom-surface.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/power-bi-executive-visual-pack.json",
+  ".commercial-dist/pro/packages/pro/launch-exclusive/figma-token-sync-plugin.json",
   ".commercial-dist/pro/packages/pro/industry-kits/excel-lotus-grid-kit.json",
   ".commercial-dist/pro/packages/pro/industry-kits/openoffice-calc-command-kit.json",
   ".commercial-dist/pro/packages/pro/previews/sales-preview.html",
@@ -35,7 +42,8 @@ const requiredPaths = [
   "packages/pro/previews/sales-preview.html",
   "packages/pro/previews/license-matrix.html",
   "packages/pro/previews/excel-lotus-grid-preview.html",
-  "packages/pro/previews/openoffice-calc-command-preview.html"
+  "packages/pro/previews/openoffice-calc-command-preview.html",
+  "packages/pro/launch-exclusive/manifest.json"
 ];
 
 for (const relativePath of requiredPaths) {

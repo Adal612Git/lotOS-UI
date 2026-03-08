@@ -17,6 +17,14 @@ Esto afecta directamente a `Full Signature`.
 
 ## Que debes preparar antes de abrir Lemon Squeezy
 
+Primero ejecuta:
+
+```bat
+pnpm.cmd run verify:go-live
+```
+
+Si falla, no publiques checkout todavia.
+
 ## 1. Definir moneda y precio real
 
 Tus precios actuales en la app son:

@@ -28,6 +28,12 @@
       "notes": "Finance and health-oriented config packs."
     },
     {
+      "id": "full-launch-exclusive",
+      "path": "packages/pro/launch-exclusive",
+      "type": "asset-pack",
+      "notes": "Full Signature-only surfaces for Sheets, Microsoft 365, Outlook, Power BI, Figma, and executive workflows."
+    },
+    {
       "id": "pro-previews",
       "path": "packages/pro/previews",
       "type": "sales-preview",

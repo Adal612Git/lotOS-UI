@@ -1,0 +1,407 @@
+---
+title: Use Cases
+description: Five real use cases showing how to use LotOS UI across different delivery targets — from SaaS dashboards to AI-assisted UI generation.
+---
+
+# Use Cases / Casos de Uso
+
+Real scenarios for LotOS UI across different delivery targets. Each case shows which package to reach for, which components to use, and what the agent or team produces.
+
+---
+
+## 1. SaaS Dashboard — React, Dark Mode
+
+**Scenario:** A B2B SaaS product needs a polished admin dashboard with real-time metrics, user management, and status indicators. The team wants dark mode from day one and needs to ship fast.
+
+**Entry point:** `@lotosui/claude-arm` (React stable arm)
+
+**Components used:** `Card`, `Stat`, `Badge`, `Table`, `Button`, `Alert`
+
+**Setup:**
+
+```bash
+npm install @lotosui/claude-arm
+```
+
+```tsx
+// app/dashboard/page.tsx
+import '@lotosui/claude-arm/styles.css';
+import { Card, Stat, Badge, Table, Button, Alert } from '@lotosui/claude-arm';
+
+const metrics = [
+  { label: 'Active Users', value: '2,847', change: '+12%' },
+  { label: 'MRR', value: '$48,200', change: '+8%' },
+  { label: 'Churn Rate', value: '1.4%', change: '-0.3%' },
+];
+
+export default function DashboardPage() {
+  return (
+    <div>
+      <Alert variant="info">
+        System maintenance scheduled for Sunday 02:00 UTC.
+      </Alert>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+        {metrics.map((metric) => (
+          <Stat
+            key={metric.label}
+            label={metric.label}
+            value={metric.value}
+            change={metric.change}
+          />
+        ))}
+      </div>
+
+      <Card>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>Recent Users</h2>
+          <Badge variant="success">Live</Badge>
+        </div>
+        <Table
+          columns={['Name', 'Plan', 'Status', 'Joined']}
+          rows={[
+            ['Ana Garcia', 'Pro', 'Active', '2026-01-15'],
+            ['Carlos Ruiz', 'Solo', 'Trial', '2026-02-20'],
+            ['Maria Lopez', 'Full', 'Active', '2025-12-01'],
+          ]}
+        />
+        <Button variant="ghost">Export CSV</Button>
+      </Card>
+    </div>
+  );
+}
+```
+
+**Why LotOS UI here:**
+- Dark-first design matches SaaS operator aesthetics out of the box.
+- `Stat` gives KPI cards without custom CSS.
+- `Badge` variants (success/warning/error) cover all status states.
+- WCAG 2.2 AAA accessibility means no a11y rework at launch.
+
+---
+
+## 2. Internal Operator Control Room
+
+**Scenario:** An operations team monitors 50+ server nodes in real time. The UI needs to feel like a professional control room — dark glass surface, dense data, clear status hierarchy. This runs inside an intranet.
+
+**Español:** Un equipo de operaciones monitorea mas de 50 nodos de servidor en tiempo real. La UI debe sentirse como un cuarto de control profesional: superficie oscura de vidrio, datos densos, jerarquia de estado clara.
+
+**Entry point:** CLI desktop-init or `@lotosui/claude-arm` (React)
+
+**Components used:** `Table`, `Progress`, `Alert`, `Badge`, `Card` (glass variant)
+
+```bash
+# Option A: Scaffold a desktop control-room shell
+pnpm --filter @lotosui/cli exec lotos-ui desktop-init \
+  -l python \
+  -t control-center-desktop \
+  -o desktop/ops-center
+
+# Option B: React web control room
+npm install @lotosui/claude-arm
+```
+
+```tsx
+// React web version
+import { Card, Table, Progress, Badge, Alert } from '@lotosui/claude-arm';
+
+const nodes = [
+  { id: 'node-01', region: 'US-East', cpu: 72, mem: 58, status: 'ok' },
+  { id: 'node-02', region: 'EU-West', cpu: 94, mem: 81, status: 'warning' },
+  { id: 'node-03', region: 'LATAM', cpu: 31, mem: 44, status: 'ok' },
+];
+
+export function ControlRoom() {
+  const criticalNodes = nodes.filter((n) => n.status === 'warning');
+
+  return (
+    <div>
+      {criticalNodes.map((node) => (
+        <Alert key={node.id} variant="warning">
+          {node.id} ({node.region}) — CPU at {node.cpu}%. Review load balancer.
+        </Alert>
+      ))}
+
+      <Card variant="glass">
+        <h2>Node Status</h2>
+        {nodes.map((node) => (
+          <div key={node.id} style={{ display: 'grid', gap: '0.5rem', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <strong>{node.id} — {node.region}</strong>
+              <Badge variant={node.status === 'ok' ? 'success' : 'warning'}>
+                {node.status}
+              </Badge>
+            </div>
+            <Progress value={node.cpu} label={`CPU ${node.cpu}%`} />
+            <Progress value={node.mem} label={`MEM ${node.mem}%`} />
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+```
+
+**Why LotOS UI here:**
+- Glass morphism card fits the dark control-room aesthetic.
+- `Progress` bars make resource usage scannable at a glance.
+- `Alert` variant="warning" draws attention without full-screen modals.
+- The desktop CLI option generates a Python/Java shell with the same visual language if the intranet runs a native app.
+
+---
+
+## 3. Spreadsheet Modernization (Excel → UI)
+
+**Scenario:** An operations team manages 200-row Excel sheets for project tracking. The goal is to give them a browser-based UI that mirrors their Excel workflow — same columns, same filters, but with a premium interface and real-time validation.
+
+**Español:** Un equipo de operaciones gestiona hojas de Excel de 200 filas para seguimiento de proyectos. El objetivo es darles una UI en el navegador que refleje su flujo de trabajo de Excel.
+
+**Entry point:** `@lotosui/claude-arm` for the React UI + optional Excel macro kit for the migration bridge
+
+**Components used:** `Table`, `Input`, `Button`, `Badge`, `Modal`
+
+```tsx
+import { Table, Input, Button, Badge, Modal } from '@lotosui/claude-arm';
+import { useState } from 'react';
+
+type Project = {
+  id: string;
+  name: string;
+  owner: string;
+  status: 'on-track' | 'at-risk' | 'delayed';
+  due: string;
+};
+
+const statusVariant = {
+  'on-track': 'success',
+  'at-risk': 'warning',
+  'delayed': 'error',
+} as const;
+
+export function ProjectTracker({ projects }: { projects: Project[] }) {
+  const [search, setSearch] = useState('');
+  const [editTarget, setEditTarget] = useState<Project | null>(null);
+
+  const filtered = projects.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        <Input
+          placeholder="Search projects..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button variant="primary">+ New Project</Button>
+      </div>
+
+      <Table
+        columns={['Project', 'Owner', 'Status', 'Due Date', '']}
+        rows={filtered.map((p) => [
+          p.name,
+          p.owner,
+          <Badge variant={statusVariant[p.status]}>{p.status}</Badge>,
+          p.due,
+          <Button variant="ghost" onClick={() => setEditTarget(p)}>Edit</Button>,
+        ])}
+      />
+
+      {editTarget ? (
+        <Modal
+          title={`Edit: ${editTarget.name}`}
+          onClose={() => setEditTarget(null)}
+        >
+          <Input placeholder="Project name" defaultValue={editTarget.name} />
+          <Button variant="primary" onClick={() => setEditTarget(null)}>Save</Button>
+        </Modal>
+      ) : null}
+    </div>
+  );
+}
+```
+
+**Excel bridge (optional):**
+
+For teams that still need Excel as a data source, use the macro kit:
+
+```
+packages/pro/industry-kits/excel-lotus-grid-kit.json
+OLD/demo-video/excel-lotos/lotos_excel_demo.bas
+```
+
+The macro exports the Excel data as JSON, which your React component consumes via a simple fetch. The UI handles all display and editing — Excel stays as the archive or import source only.
+
+---
+
+## 4. Multi-Runtime App — React + Laravel Backend
+
+**Scenario:** A startup has a React frontend and a Laravel PHP backend. They want consistent UI contracts across both: the same component schemas that the React UI uses should also validate server-rendered partials from Laravel.
+
+**Español:** Una startup tiene un frontend en React y un backend en Laravel PHP. Quieren contratos UI consistentes entre ambos.
+
+**Entry point:** `@lotosui/cli` for stack scaffolding + `@lotosui/core` MCP for contract sharing
+
+```bash
+# Scaffold the Laravel stack with MongoDB
+pnpm --filter @lotosui/cli exec lotos-ui stack-init \
+  -s php-laravel-starter \
+  -d mongodb \
+  -o stack/php-laravel
+```
+
+**Frontend (React):**
+
+```tsx
+// Uses @lotosui/claude-arm — same as any React app
+import '@lotosui/claude-arm/styles.css';
+import { Button, Card, Input } from '@lotosui/claude-arm';
+
+export function OrderForm() {
+  return (
+    <Card>
+      <h2>New Order</h2>
+      <Input name="customer" placeholder="Customer name" />
+      <Input name="amount" placeholder="Amount" type="number" />
+      <Button variant="primary" type="submit">Submit Order</Button>
+    </Card>
+  );
+}
+```
+
+**Backend (Laravel) — contract validation via MCP:**
+
+```php
+// Laravel controller using MCP contract validation
+use LotOS\Core\ContractValidator;
+
+class OrderController extends Controller
+{
+    public function store(Request $request)
+    {
+        // Validate against the shared LotOS component schema
+        $validator = ContractValidator::make($request->all(), 'order-form');
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // ... process order
+    }
+}
+```
+
+**MCP server for contract sharing:**
+
+```bash
+# Run the MCP server
+node packages/core/dist/mcp/server.js
+
+# Both React and Laravel can query the same contract
+curl http://localhost:3100/components/button
+curl http://localhost:3100/patterns/form
+```
+
+**Why LotOS UI here:**
+- One set of schemas powers validation on both ends.
+- When the design system updates, both React and Laravel receive the change via the shared MCP contracts.
+- No drift between frontend appearance and backend validation rules.
+
+---
+
+## 5. AI Agent Generating UI — Sentinel + MCP Anti-Hallucination Flow
+
+**Scenario:** A development team uses an AI coding agent (Claude, Cursor, Copilot) to generate UI components. Without guardrails, the agent invents props that don't exist or composes components in invalid ways. LotOS UI's MCP server and Sentinel package prevent this.
+
+**Español:** Un equipo usa un agente de codigo con IA para generar componentes UI. Sin guardrails, el agente inventa props que no existen o compone componentes de formas invalidas.
+
+**Entry point:** `@lotosui/core` MCP + `@lotosui/sentinel`
+
+**The problem without guardrails:**
+
+```tsx
+// ❌ Agent hallucination — Button does not have a `size="xl"` variant
+<Button variant="primary" size="xl" rounded="full" shadow="lg">
+  Submit
+</Button>
+```
+
+**The solution — query the contract first:**
+
+```bash
+# Agent queries the MCP server before generating code
+curl http://localhost:3100/components/button
+```
+
+```json
+{
+  "component": "Button",
+  "props": {
+    "variant": { "enum": ["primary", "ghost", "danger", "outline"] },
+    "size": { "enum": ["sm", "md", "lg"] },
+    "disabled": { "type": "boolean" }
+  },
+  "invalidCombinations": [
+    { "variant": "danger", "disabled": true }
+  ]
+}
+```
+
+**Agent now generates valid code:**
+
+```tsx
+// ✅ Contract-safe — uses only documented props and variants
+<Button variant="primary" size="lg">
+  Submit
+</Button>
+```
+
+**Sentinel runtime validation:**
+
+```tsx
+import { SentinelProvider } from '@lotosui/sentinel';
+
+// Wrap your app in development to catch invalid composition
+function DevApp() {
+  return (
+    <SentinelProvider mode="warn">
+      <App />
+    </SentinelProvider>
+  );
+}
+```
+
+If an agent generates an invalid prop combination, Sentinel logs a warning in the console:
+
+```
+[LotOS Sentinel] Button: prop "size" received "xl" — valid values: sm, md, lg.
+  at <Button size="xl"> in OrderForm (OrderForm.tsx:12)
+```
+
+**Full flow:**
+
+1. AI agent reads MCP `/components/button` before writing code.
+2. Agent generates component using only documented props.
+3. Sentinel validates at runtime in development.
+4. In CI, run `pnpm --filter @lotosui/sentinel exec sentinel check` to catch violations before merge.
+5. Deploy with confidence — no hallucinated props reach production.
+
+**Why LotOS UI here:**
+- MCP contracts are machine-readable, not just human-readable docs.
+- Sentinel catches contract violations that slip past the agent.
+- The combination reduces hallucination rate in AI-assisted UI teams significantly.
+
+---
+
+## Which case matches you? / Que caso se aplica?
+
+| If you need... | Go to |
+| --- | --- |
+| A polished React dashboard | Case 1: SaaS Dashboard |
+| A dense operator interface | Case 2: Control Room |
+| To replace Excel with a web UI | Case 3: Spreadsheet Modernization |
+| Frontend + backend consistency | Case 4: Multi-Runtime |
+| AI-safe component generation | Case 5: Agent + Sentinel + MCP |
+
+Back to [Start Here](/docs/start-here) or read [Installation](/docs/installation).

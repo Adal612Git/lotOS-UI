@@ -28,6 +28,7 @@ The paid surface is the proprietary asset layer:
 - `packages/pro/admin-starter`
 - `packages/pro/layouts`
 - `packages/pro/industry-kits`
+- `packages/pro/launch-exclusive` (Full Signature-only assets)
 - private future exports of premium templates, industry packs, and guided starter bundles
 
 This layer is used for:

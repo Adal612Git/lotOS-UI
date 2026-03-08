@@ -32,6 +32,9 @@ const requiredFiles = [
   "ONE/verify-paid-preview.mjs",
   "ONE/prepare-first-sale.mjs",
   "ONE/verify-commercial-readiness.mjs",
+  "packages/pro/scripts/prepare-private-release.mjs",
+  "packages/pro/scripts/verify-private-bundle.mjs",
+  "packages/pro/distribution/pro.manifest.json",
 ];
 
 for (const relativePath of requiredFiles) {
@@ -47,6 +50,8 @@ if (!webHome.includes('href="/pricing"')) {
 
 const pricingPage = readFileSync(join(repoRoot, "apps", "web", "app", "pricing", "page.tsx"), "utf8");
 const salesConfig = readFileSync(join(repoRoot, "apps", "web", "app", "sales-config.ts"), "utf8");
+const privateReleaseScript = readFileSync(join(repoRoot, "packages", "pro", "scripts", "prepare-private-release.mjs"), "utf8");
+const proManifest = readFileSync(join(repoRoot, "packages", "pro", "distribution", "pro.manifest.json"), "utf8");
 
 for (const marker of ["salesPlans", "checkoutEnvKeys", "prep:first-sale", "prep:paid-preview", "Premium Preview"]) {
   if (!pricingPage.includes(marker)) {
@@ -58,6 +63,14 @@ for (const marker of ["Buy Solo", "Buy Pro", "Book Launch Pack", "LOTOS_SOLO_CHE
   if (!salesConfig.includes(marker)) {
     failures.push(`Sales config missing marker: ${marker}`);
   }
+}
+
+if (!privateReleaseScript.includes('"launch-exclusive"')) {
+  failures.push("Private release script must include launch-exclusive payload for Full Signature delivery.");
+}
+
+if (!proManifest.includes('"packages/pro/launch-exclusive"')) {
+  failures.push("Pro distribution manifest must declare packages/pro/launch-exclusive.");
 }
 
 if (failures.length > 0) {

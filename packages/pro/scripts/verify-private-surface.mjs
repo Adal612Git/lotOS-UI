@@ -14,6 +14,13 @@ const requiredPaths = [
   "industry-kits/manifest.json",
   "industry-kits/finance-ops-kit.json",
   "industry-kits/health-ops-kit.json",
+  "launch-exclusive/manifest.json",
+  "launch-exclusive/google-sheets-command-kit.json",
+  "launch-exclusive/microsoft-365-excel-web-kit.json",
+  "launch-exclusive/outlook-approval-console.json",
+  "launch-exclusive/executive-boardroom-surface.json",
+  "launch-exclusive/power-bi-executive-visual-pack.json",
+  "launch-exclusive/figma-token-sync-plugin.json",
   "previews/sales-preview.html",
   "previews/license-matrix.html",
   "distribution/pro.manifest.json"

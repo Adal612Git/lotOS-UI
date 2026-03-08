@@ -15,6 +15,7 @@
     "verify:runtime-contracts": "node ONE/verify-runtime-contracts.mjs",
     "verify:desktop": "node ONE/verify-desktop-pipelines.mjs",
     "verify:sales": "node ONE/verify-sales-surface.mjs",
+    "verify:go-live": "node ONE/verify-go-live-checkout.mjs",
     "verify:commercial": "node ONE/verify-commercial-readiness.mjs",
     "verify:paid-preview": "node ONE/verify-paid-preview.mjs",
     "verify:ops": "node ONE/verify-ops-readiness.mjs",

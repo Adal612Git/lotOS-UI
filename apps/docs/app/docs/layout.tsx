@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
 import { source } from '../../source';
+import { LangToggle } from '../lang-toggle';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -13,13 +14,24 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span className="lotos-nav-brand__mark" aria-hidden="true" />
             <span className="lotos-nav-brand__text">
               <strong>LotOS UI</strong>
-              <small>React-first system</small>
+              <small>
+                <span className="en-only">React-first system</span>
+                <span className="es-only">Sistema React-first</span>
+              </small>
             </span>
           </span>
         ),
         url: '/',
         transparentMode: 'top',
-        children: <span className="lotos-nav-status">React stable</span>,
+        children: (
+          <>
+            <span className="lotos-nav-status">
+              <span className="en-only">React stable</span>
+              <span className="es-only">React estable</span>
+            </span>
+            <LangToggle />
+          </>
+        ),
       }}
       containerProps={{
         className: 'lotos-docs-layout-shell',
@@ -28,16 +40,23 @@ export default function Layout({ children }: { children: ReactNode }) {
         defaultOpenLevel: 1,
         banner: (
           <div className="lotos-sidebar-callout">
-            <p className="lotos-sidebar-callout__eyebrow">Early access</p>
+            <p className="lotos-sidebar-callout__eyebrow">
+              <span className="en-only">Early access</span>
+              <span className="es-only">Acceso temprano</span>
+            </p>
             <strong>Solo from $149</strong>
-            <span>Private acceleration, proof-first delivery, and no fake volume claims.</span>
+            <span>
+              <span className="en-only">Private acceleration, proof-first delivery, and no fake volume claims.</span>
+              <span className="es-only">Aceleracion privada, entrega enfocada en prueba y sin claims falsos de volumen.</span>
+            </span>
             <a
               href="https://lotos-ui.vercel.app/pricing"
               className="lotos-sidebar-callout__link"
               target="_blank"
               rel="noreferrer"
             >
-              Open pricing
+              <span className="en-only">Open pricing</span>
+              <span className="es-only">Abrir precios</span>
             </a>
           </div>
         ),
@@ -46,7 +65,10 @@ export default function Layout({ children }: { children: ReactNode }) {
             <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">
               GitHub
             </a>
-            <Link href="/docs/installation">Start here</Link>
+            <Link href="/docs/installation">
+              <span className="en-only">Start here</span>
+              <span className="es-only">Empieza aqui</span>
+            </Link>
           </div>
         ),
       }}

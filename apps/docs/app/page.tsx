@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth-options';
 import { AuthAction } from './auth-action';
+import { LangToggle } from './lang-toggle';
+import './docs-home.css';
 
 export const metadata: Metadata = {
   title: 'LotOS UI Docs - React-first Multi-runtime Platform',
@@ -130,42 +132,80 @@ export default async function DocsHomePage() {
     <main className="lotos-docs-home">
       <section className="hero-shell">
         <div className="hero-copy">
-          <p className="eyebrow">LotOS UI Docs | English + Espanol</p>
+          <div className="hero-lang-row">
+            <LangToggle />
+            <p className="eyebrow">
+              <span className="en-only">LotOS UI Docs</span>
+              <span className="es-only">LotOS UI Documentacion</span>
+            </p>
+          </div>
           <div className="hero-badges" aria-label="Product status">
-            <span className="hero-badge badge-stable">React Stable</span>
-            <span className="hero-badge badge-proof">Built with LotOS UI</span>
-            <span className="hero-badge badge-active">Expansion Active</span>
+            <span className="hero-badge badge-stable"><span className="en-only">React Stable</span><span className="es-only">React Estable</span></span>
+            <span className="hero-badge badge-proof"><span className="en-only">Built with LotOS UI</span><span className="es-only">Hecho con LotOS UI</span></span>
+            <span className="hero-badge badge-active"><span className="en-only">Expansion Active</span><span className="es-only">Expansion Activa</span></span>
           </div>
           <h1>
-            Ship premium UI in React today
-            <span>Expand across your stack tomorrow</span>
+            <span className="en-only">Ship premium UI in React today</span>
+            <span className="es-only">Entrega UI premium en React hoy</span>
+            <span className="en-only">Expand across your stack tomorrow</span>
+            <span className="es-only">Expande por todo tu stack manana</span>
           </h1>
-          <p className="lead">
+          <p className="lead en-only">
             LotOS UI gives you a production-ready React entry point, then carries the same visual
             language into Laravel, Django, Java, .NET, Go, and desktop runtimes.
           </p>
-          <p className="lead lead-es">
+          <p className="lead es-only">
             LotOS UI te da una entrada lista para produccion en React y luego lleva el mismo
             lenguaje visual a Laravel, Django, Java, .NET, Go y runtimes desktop.
           </p>
           <p className="hero-proof">
-            This page is dogfooded on the same product discipline it sells: structured hierarchy,
-            contract-safe messaging, and reusable UI surfaces.
+            <span className="en-only">
+              This page is dogfooded on the same product discipline it sells: structured hierarchy,
+              contract-safe messaging, and reusable UI surfaces.
+            </span>
+            <span className="es-only">
+              Esta pagina se dog-foodea sobre la misma disciplina del producto que vende: jerarquia
+              estructurada, mensajeria segura en contratos y superficies UI reutilizables.
+            </span>
           </p>
           {signedInEmail ? (
-            <p className="hero-proof">Signed in as {signedInEmail}. The docs domain can now open the commercial vault directly.</p>
+            <p className="hero-proof">
+              <span className="en-only">Signed in as {signedInEmail}. The docs domain can now open the commercial vault directly.</span>
+              <span className="es-only">Conectado como {signedInEmail}. El dominio de docs puede abrir el vault comercial directamente.</span>
+            </p>
           ) : null}
           <div className="hero-actions">
-            <Link href="/docs/start-here" className="btn btn-primary">Get Started / Empezar</Link>
-            <Link href="/docs/multi-runtime" className="btn btn-ghost">Runtime Guide / Guia</Link>
-            <Link href="/examples" className="btn btn-ghost">Examples</Link>
-            <Link href="/pricing" className="btn btn-ghost">Pricing / Precios</Link>
+            <Link href="/docs/start-here" className="lotos-btn lotos-btn--primary">
+              <span className="en-only">Get Started</span>
+              <span className="es-only">Empezar</span>
+            </Link>
+            <Link href="/docs/multi-runtime" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Runtime Guide</span>
+              <span className="es-only">Guia de Runtimes</span>
+            </Link>
+            <Link href="/examples" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Examples</span>
+              <span className="es-only">Ejemplos</span>
+            </Link>
+            <Link href="/pricing" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Pricing</span>
+              <span className="es-only">Precios</span>
+            </Link>
             {signedInEmail ? (
-              <Link href="/vault" className="btn btn-ghost">Open Vault</Link>
+              <Link href="/vault" className="lotos-btn lotos-btn--ghost">
+                <span className="en-only">Open Vault</span>
+                <span className="es-only">Abrir Vault</span>
+              </Link>
             ) : (
-              <AuthAction mode="signin" callbackUrl="/vault" className="btn btn-google">Sign In With Google</AuthAction>
+              <AuthAction mode="signin" callbackUrl="/vault" className="lotos-btn btn-google">
+                <span className="en-only">Sign In With Google</span>
+                <span className="es-only">Entrar con Google</span>
+              </AuthAction>
             )}
-            <Link href="/docs/components/button" className="btn btn-ghost">Components / Componentes</Link>
+            <Link href="/docs/components/button" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Components</span>
+              <span className="es-only">Componentes</span>
+            </Link>
           </div>
         </div>
 
@@ -179,7 +219,7 @@ export default async function DocsHomePage() {
             </div>
             <div className="preview-grid">
               <aside className="preview-nav">
-                <div className="preview-kicker">Control room</div>
+                <div className="preview-kicker"><span className="en-only">Control room</span><span className="es-only">Cuarto de control</span></div>
                 <button className="chip active">React</button>
                 <button className="chip">Laravel</button>
                 <button className="chip">Desktop</button>
@@ -202,22 +242,22 @@ export default async function DocsHomePage() {
                 </div>
                 <div className="surface-card">
                   <div className="surface-head">
-                    <h3>Operator Build Flow</h3>
-                    <span className="pill stable">Stable</span>
+                    <h3><span className="en-only">Operator Build Flow</span><span className="es-only">Flujo de Construccion Operativa</span></h3>
+                    <span className="pill stable"><span className="en-only">Stable</span><span className="es-only">Estable</span></span>
                   </div>
-                  <p>Generate a backend stack, then overlay premium UI contracts.</p>
+                  <p><span className="en-only">Generate a backend stack, then overlay premium UI contracts.</span><span className="es-only">Genera un stack backend y luego superpone contratos premium de UI.</span></p>
                   <div className="code-strip">stack-init | desktop-init | MCP render</div>
                   <div className="action-row">
-                    <button className="btn-mini primary">Deploy</button>
-                    <button className="btn-mini ghost">Inspect</button>
+                    <button className="btn-mini primary"><span className="en-only">Deploy</span><span className="es-only">Desplegar</span></button>
+                    <button className="btn-mini ghost"><span className="en-only">Inspect</span><span className="es-only">Inspeccionar</span></button>
                   </div>
                 </div>
                 <div className="surface-card muted">
                   <div className="surface-head">
                     <h3>Sentinel Guard</h3>
-                    <span className="pill proto">Guardrails</span>
+                    <span className="pill proto"><span className="en-only">Guardrails</span><span className="es-only">Guardrails</span></span>
                   </div>
-                  <p>Warnings catch invalid composition before users ever see it.</p>
+                  <p><span className="en-only">Warnings catch invalid composition before users ever see it.</span><span className="es-only">Las advertencias detectan composicion invalida antes de que el usuario la vea.</span></p>
                 </div>
               </section>
             </div>
@@ -226,22 +266,26 @@ export default async function DocsHomePage() {
       </section>
 
       <section className="band stats-band">
-        <article><strong>27</strong><span>React components</span></article>
-        <article><strong>4</strong><span>Web primitives</span></article>
-        <article><strong>10</strong><span>Stack templates</span></article>
-        <article><strong>8</strong><span>Desktop templates</span></article>
+        <article><strong>27</strong><span><span className="en-only">React components</span><span className="es-only">Componentes React</span></span></article>
+        <article><strong>4</strong><span><span className="en-only">Web primitives</span><span className="es-only">Primitivas web</span></span></article>
+        <article><strong>10</strong><span><span className="en-only">Stack templates</span><span className="es-only">Templates de stack</span></span></article>
+        <article><strong>8</strong><span><span className="en-only">Desktop templates</span><span className="es-only">Templates desktop</span></span></article>
       </section>
 
       <section className="band proof-band">
         <div className="proof-card">
-          <p className="eyebrow">Dogfooding / Credibilidad</p>
-          <h2>This docs portal is part of the product proof, not separate from it.</h2>
-          <p>
+          <p className="eyebrow">
+            <span className="en-only">Dogfooding / Credibility</span>
+            <span className="es-only">Dogfooding / Credibilidad</span>
+          </p>
+          <h2 className="en-only">This docs portal is part of the product proof, not separate from it.</h2>
+          <h2 className="es-only">Este portal de docs es parte de la prueba del producto, no algo separado.</h2>
+          <p className="en-only">
             LotOS UI is not presenting a disconnected marketing shell. The docs are being used as a
             live showcase for the same visual rules, hierarchy, and reusable surfaces the platform
             exposes to teams.
           </p>
-          <p className="es">
+          <p className="es-only">
             LotOS UI no esta mostrando una capa de marketing desconectada. Los docs funcionan como
             una demostracion viva de las mismas reglas visuales, jerarquia y superficies reutilizables
             que la plataforma expone a los equipos.
@@ -251,21 +295,77 @@ export default async function DocsHomePage() {
 
       <section className="section light">
         <div className="section-head">
-          <p className="eyebrow">Start paths / Rutas de inicio</p>
-          <h2>One clear entry per kind of user.</h2>
-          <p>
+          <p className="eyebrow">
+            <span className="en-only">Language support</span>
+            <span className="es-only">Soporte de idioma</span>
+          </p>
+          <h2 className="en-only">Choose your shell language, then move into the right depth.</h2>
+          <h2 className="es-only">Elige el idioma de la interfaz y luego entra a la profundidad correcta.</h2>
+          <p className="en-only">
+            The landing surfaces, navigation, and guidance now respect English or Spanish. Deep technical
+            references still stay in English while the bilingual layer keeps orientation clear.
+          </p>
+          <p className="es-only">
+            Las superficies de entrada, la navegacion y la guia ya respetan ingles o espanol. La referencia
+            tecnica profunda sigue en ingles mientras la capa bilingue mantiene clara la orientacion.
+          </p>
+        </div>
+        <div className="runtime-grid">
+          <article className="runtime-card stable">
+            <div className="runtime-top">
+              <h3 className="en-only">Public shell</h3>
+              <h3 className="es-only">Capa publica</h3>
+              <span className="pill stable"><span className="en-only">Bilingual</span><span className="es-only">Bilingue</span></span>
+            </div>
+            <p className="en-only">Home, navigation, calls to action, and docs guidance are separated cleanly by language choice.</p>
+            <p className="es-only">La home, la navegacion, los llamados a la accion y la guia de docs quedan separados limpiamente por idioma.</p>
+          </article>
+          <article className="runtime-card desktop">
+            <div className="runtime-top">
+              <h3 className="en-only">Operator path</h3>
+              <h3 className="es-only">Ruta operativa</h3>
+              <span className="pill desktop"><span className="en-only">Guided</span><span className="es-only">Guiada</span></span>
+            </div>
+            <p className="en-only">Start Here, Installation, and Runtime Guide now behave like the shortest path into real use.</p>
+            <p className="es-only">Empieza Aqui, Instalacion y Guia de Runtimes ahora funcionan como la ruta mas corta hacia uso real.</p>
+          </article>
+          <article className="runtime-card proto">
+            <div className="runtime-top">
+              <h3 className="en-only">Deep reference</h3>
+              <h3 className="es-only">Referencia profunda</h3>
+              <span className="pill proto"><span className="en-only">English first</span><span className="es-only">English first</span></span>
+            </div>
+            <p className="en-only">Component specs and deep technical pages remain English-first until full translations are expanded.</p>
+            <p className="es-only">Las especificaciones de componentes y las paginas tecnicas profundas siguen primero en ingles mientras se amplian las traducciones.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="section light">
+        <div className="section-head">
+          <p className="eyebrow">
+            <span className="en-only">Start paths</span>
+            <span className="es-only">Rutas de inicio</span>
+          </p>
+          <h2 className="en-only">One clear entry per kind of user.</h2>
+          <h2 className="es-only">Una entrada clara por tipo de usuario.</h2>
+          <p className="en-only">
             The docs should teach users how to approach the product, not just list what exists.
+          </p>
+          <p className="es-only">
+            Los docs deben ensenarte como acercarte al producto, no solo listar lo que existe.
           </p>
         </div>
         <div className="runtime-grid">
           {learningTracks.map((track) => (
             <Link key={track.title} href={track.href} className={`runtime-card ${track.tone}`}>
               <div className="runtime-top">
-                <h3>{track.title}</h3>
+                <h3 className="en-only">{track.title}</h3>
+                <h3 className="es-only">{track.titleEs}</h3>
                 <span className={`pill ${track.tone}`}>Start</span>
               </div>
-              <p>{track.body}</p>
-              <p className="es">{track.titleEs}: {track.bodyEs}</p>
+              <p className="en-only">{track.body}</p>
+              <p className="es-only">{track.bodyEs}</p>
             </Link>
           ))}
         </div>
@@ -273,19 +373,28 @@ export default async function DocsHomePage() {
 
       <section className="section dark">
         <div className="section-head">
-          <p className="eyebrow">Why LotOS UI / Por que LotOS UI</p>
-          <h2>React first. Contracts everywhere.</h2>
-          <p>
+          <p className="eyebrow">
+            <span className="en-only">Why LotOS UI</span>
+            <span className="es-only">Por que LotOS UI</span>
+          </p>
+          <h2 className="en-only">React first. Contracts everywhere.</h2>
+          <h2 className="es-only">React primero. Contratos en todas partes.</h2>
+          <p className="en-only">
             The stable entry point is React. The advantage is that your design language can keep
             moving after React instead of getting trapped there.
+          </p>
+          <p className="es-only">
+            El punto de entrada estable es React. La ventaja es que tu lenguaje de diseno puede
+            seguir evolucionando despues de React en lugar de quedar atrapado ahi.
           </p>
         </div>
         <div className="pillar-grid">
           {pillars.map((pillar) => (
             <article key={pillar.title} className="pillar-card">
-              <h3>{pillar.title}</h3>
-              <p>{pillar.body}</p>
-              <p className="es">{pillar.titleEs}: {pillar.bodyEs}</p>
+              <h3 className="en-only">{pillar.title}</h3>
+              <h3 className="es-only">{pillar.titleEs}</h3>
+              <p className="en-only">{pillar.body}</p>
+              <p className="es-only">{pillar.bodyEs}</p>
             </article>
           ))}
         </div>
@@ -293,11 +402,19 @@ export default async function DocsHomePage() {
 
       <section className="section light">
         <div className="section-head">
-          <p className="eyebrow">Runtime Matrix / Matriz</p>
-          <h2>Cards, not spreadsheets.</h2>
-          <p>
+          <p className="eyebrow">
+            <span className="en-only">Runtime Matrix</span>
+            <span className="es-only">Matriz de Runtimes</span>
+          </p>
+          <h2 className="en-only">Cards, not spreadsheets.</h2>
+          <h2 className="es-only">Tarjetas, no hojas de calculo.</h2>
+          <p className="en-only">
             Your product already has range. The docs should frame that range like a premium system,
             not like a gray internal spreadsheet.
+          </p>
+          <p className="es-only">
+            Tu producto ya tiene alcance. Los docs deben enmarcar ese alcance como un sistema premium,
+            no como una hoja de calculo gris interna.
           </p>
         </div>
         <div className="runtime-grid">
@@ -307,8 +424,8 @@ export default async function DocsHomePage() {
                 <h3>{card.name}</h3>
                 <span className={`pill ${card.tone}`}>{card.status}</span>
               </div>
-              <p>{card.summary}</p>
-              <p className="es">{card.summaryEs}</p>
+              <p className="en-only">{card.summary}</p>
+              <p className="es-only">{card.summaryEs}</p>
             </article>
           ))}
         </div>
@@ -316,11 +433,19 @@ export default async function DocsHomePage() {
 
       <section className="section dark">
         <div className="section-head">
-          <p className="eyebrow">Quick Start / Inicio Rapido</p>
-          <h2>Real commands. Real starters.</h2>
-          <p>
+          <p className="eyebrow">
+            <span className="en-only">Quick Start</span>
+            <span className="es-only">Inicio Rapido</span>
+          </p>
+          <h2 className="en-only">Real commands. Real starters.</h2>
+          <h2 className="es-only">Comandos reales. Starters reales.</h2>
+          <p className="en-only">
             The surface looks premium, but the proof still lands in executable commands and starter
             generators your team can run now.
+          </p>
+          <p className="es-only">
+            La superficie se ve premium, pero la prueba sigue aterrizando en comandos ejecutables y
+            generadores de starters que tu equipo puede correr ahora.
           </p>
         </div>
         <div className="terminal">
@@ -339,602 +464,45 @@ export default async function DocsHomePage() {
       <section className="section light cta-shell">
         <div className="cta-card">
           <div>
-            <p className="eyebrow">Next step / Siguiente paso</p>
-            <h2>Use the docs as the command center, not just a reference page.</h2>
-            <p>
+            <p className="eyebrow">
+              <span className="en-only">Next step</span>
+              <span className="es-only">Siguiente paso</span>
+            </p>
+            <h2 className="en-only">Use the docs as the command center, not just a reference page.</h2>
+            <h2 className="es-only">Usa los docs como centro de comando, no solo como pagina de referencia.</h2>
+            <p className="en-only">
               Start free, validate your architecture, and move into premium templates when you need
               more velocity without lowering your product bar.
             </p>
+            <p className="es-only">
+              Empieza gratis, valida tu arquitectura y pasa a templates premium cuando necesites
+              mas velocidad sin bajar el nivel de tu producto.
+            </p>
           </div>
           <div className="hero-actions">
-            <Link href="/docs/installation" className="btn btn-primary">Installation</Link>
-            <Link href="/docs/multi-runtime" className="btn btn-ghost">Open Runtime Guide</Link>
-            <Link href="/pricing" className="btn btn-ghost">Pricing</Link>
+            <Link href="/docs/installation" className="lotos-btn lotos-btn--primary">
+              <span className="en-only">Installation</span>
+              <span className="es-only">Instalacion</span>
+            </Link>
+            <Link href="/docs/multi-runtime" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Open Runtime Guide</span>
+              <span className="es-only">Guia de Runtimes</span>
+            </Link>
+            <Link href="/pricing" className="lotos-btn lotos-btn--ghost">
+              <span className="en-only">Pricing</span>
+              <span className="es-only">Precios</span>
+            </Link>
             {signedInEmail ? (
-              <Link href="/vault" className="btn btn-ghost">Vault</Link>
+              <Link href="/vault" className="lotos-btn lotos-btn--ghost">Vault</Link>
             ) : (
-              <Link href="/login" className="btn btn-ghost">Login</Link>
+              <Link href="/login" className="lotos-btn lotos-btn--ghost">Login</Link>
             )}
-            <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="btn btn-ghost">
+            <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer" className="lotos-btn lotos-btn--ghost">
               GitHub
             </a>
           </div>
         </div>
       </section>
-
-      <style>{`
-        .lotos-docs-home {
-          min-height: 100vh;
-          color: #ecf3ff;
-          background:
-            radial-gradient(920px 480px at 12% 8%, rgba(15, 118, 110, 0.22), transparent 50%),
-            radial-gradient(860px 540px at 88% 0%, rgba(37, 99, 235, 0.22), transparent 50%),
-            linear-gradient(160deg, #020617 0%, #09162a 42%, #0d1b31 100%);
-          font-family: var(--font-inter), "Segoe UI", sans-serif;
-        }
-        .hero-shell,
-        .band,
-        .section {
-          max-width: 1180px;
-          margin: 0 auto;
-          padding-left: 24px;
-          padding-right: 24px;
-        }
-        .hero-shell {
-          display: grid;
-          gap: 24px;
-          grid-template-columns: 1.05fr .95fr;
-          padding-top: 42px;
-          padding-bottom: 54px;
-          align-items: center;
-        }
-        .eyebrow {
-          margin: 0 0 10px;
-          text-transform: uppercase;
-          letter-spacing: .1em;
-          font-size: 12px;
-          color: #67e8f9;
-          font-weight: 800;
-        }
-        .hero-badges {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-          margin-bottom: 18px;
-        }
-        .hero-badge {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 999px;
-          padding: 7px 10px;
-          border: 1px solid transparent;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: .08em;
-          text-transform: uppercase;
-        }
-        .badge-stable {
-          background: rgba(20,184,166,0.16);
-          border-color: rgba(45, 212, 191, 0.3);
-          color: #99f6e4;
-        }
-        .badge-proof {
-          background: rgba(129,140,248,0.16);
-          border-color: rgba(165, 180, 252, 0.3);
-          color: #dbeafe;
-        }
-        .badge-active {
-          background: rgba(244,114,182,0.14);
-          border-color: rgba(244,114,182,0.28);
-          color: #fbcfe8;
-        }
-        .hero-copy h1 {
-          margin: 0;
-          font-family: var(--font-outfit), "Segoe UI", sans-serif;
-          font-size: clamp(42px, 7vw, 84px);
-          line-height: .96;
-          letter-spacing: -.03em;
-          max-width: 760px;
-        }
-        .hero-copy h1 span {
-          display: block;
-          background: linear-gradient(120deg, #67e8f9, #818cf8 60%, #f472b6);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
-        .lead {
-          margin: 18px 0 0;
-          max-width: 650px;
-          color: rgba(236, 243, 255, 0.8);
-          font-size: 18px;
-          line-height: 1.65;
-        }
-        .lead-es,
-        .es {
-          color: rgba(182, 205, 236, 0.85);
-        }
-        .hero-proof {
-          margin: 16px 0 0;
-          max-width: 650px;
-          color: rgba(191, 219, 254, 0.76);
-          font-size: 13px;
-          line-height: 1.7;
-          letter-spacing: .01em;
-        }
-        .hero-actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-          margin-top: 24px;
-        }
-        .btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-          padding: 11px 16px;
-          border-radius: 999px;
-          font-size: 14px;
-          font-weight: 800;
-          transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
-        }
-        .btn:hover { transform: translateY(-1px); }
-        .btn-primary {
-          background: linear-gradient(120deg, #14b8a6, #2563eb);
-          color: #fff;
-          border: 1px solid transparent;
-        }
-        .btn-ghost {
-          color: #ecf3ff;
-          border: 1px solid rgba(236, 243, 255, 0.14);
-          background: rgba(236, 243, 255, 0.04);
-        }
-        .hero-preview {
-          position: relative;
-        }
-        .preview-window {
-          border-radius: 22px;
-          border: 1px solid rgba(148, 163, 184, 0.18);
-          background:
-            linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.7));
-          box-shadow:
-            0 28px 65px rgba(2, 6, 23, 0.48),
-            inset 0 1px 0 rgba(255,255,255,0.06);
-          backdrop-filter: blur(10px);
-          overflow: hidden;
-        }
-        .window-top {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          padding: 12px 14px;
-          border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-        }
-        .window-top span {
-          width: 10px;
-          height: 10px;
-          border-radius: 999px;
-        }
-        .window-top span:nth-child(1) { background: #fb7185; }
-        .window-top span:nth-child(2) { background: #fbbf24; }
-        .window-top span:nth-child(3) { background: #34d399; }
-        .window-top small {
-          margin-left: auto;
-          color: rgba(191, 219, 254, 0.8);
-          font-size: 12px;
-          letter-spacing: .06em;
-          text-transform: uppercase;
-        }
-        .preview-grid {
-          display: grid;
-          grid-template-columns: 180px 1fr;
-          min-height: 430px;
-        }
-        .preview-nav {
-          border-right: 1px solid rgba(148, 163, 184, 0.12);
-          padding: 18px;
-          display: grid;
-          align-content: start;
-          gap: 10px;
-        }
-        .preview-kicker {
-          color: rgba(191, 219, 254, 0.7);
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: .1em;
-          margin-bottom: 6px;
-        }
-        .chip {
-          text-align: left;
-          border-radius: 999px;
-          border: 1px solid rgba(148, 163, 184, 0.16);
-          background: rgba(255,255,255,0.03);
-          color: rgba(236, 243, 255, 0.86);
-          padding: 8px 10px;
-          font-size: 13px;
-          font-weight: 700;
-        }
-        .chip.active {
-          background: linear-gradient(120deg, rgba(20,184,166,0.22), rgba(37,99,235,0.24));
-          border-color: rgba(103, 232, 249, 0.34);
-        }
-        .preview-main {
-          padding: 18px;
-          display: grid;
-          gap: 14px;
-          align-content: start;
-        }
-        .stats-row {
-          display: grid;
-          gap: 10px;
-          grid-template-columns: repeat(3, minmax(90px, 1fr));
-        }
-        .stats-row article {
-          border-radius: 16px;
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          background: rgba(255,255,255,0.035);
-          padding: 12px;
-        }
-        .stats-row strong {
-          display: block;
-          font-size: 24px;
-          color: #fff;
-        }
-        .stats-row span {
-          font-size: 11px;
-          color: rgba(191, 219, 254, 0.72);
-          text-transform: uppercase;
-          letter-spacing: .06em;
-        }
-        .surface-card {
-          border-radius: 18px;
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          background:
-            linear-gradient(180deg, rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.42));
-          padding: 16px;
-        }
-        .surface-card.muted {
-          background: rgba(255,255,255,0.03);
-        }
-        .surface-head {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 10px;
-        }
-        .surface-head h3 {
-          margin: 0;
-          font-size: 18px;
-          color: #fff;
-        }
-        .surface-card p {
-          margin: 8px 0 0;
-          color: rgba(214, 228, 255, 0.8);
-          line-height: 1.55;
-          font-size: 14px;
-        }
-        .pill {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 999px;
-          padding: 5px 9px;
-          font-size: 11px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: .06em;
-        }
-        .pill.stable {
-          background: rgba(20,184,166,0.18);
-          color: #99f6e4;
-          border: 1px solid rgba(20,184,166,0.32);
-        }
-        .pill.alpha {
-          background: rgba(244,114,182,0.18);
-          color: #fbcfe8;
-          border: 1px solid rgba(244,114,182,0.28);
-        }
-        .pill.proto {
-          background: rgba(59,130,246,0.18);
-          color: #bfdbfe;
-          border: 1px solid rgba(59,130,246,0.3);
-        }
-        .pill.desktop {
-          background: rgba(251,191,36,0.16);
-          color: #fde68a;
-          border: 1px solid rgba(251,191,36,0.28);
-        }
-        .code-strip {
-          margin-top: 10px;
-          border-radius: 10px;
-          background: rgba(2, 6, 23, 0.6);
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          padding: 10px 12px;
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          font-size: 12px;
-          color: #c7d7f7;
-        }
-        .action-row {
-          display: flex;
-          gap: 8px;
-          margin-top: 12px;
-        }
-        .btn-mini {
-          border-radius: 10px;
-          padding: 8px 12px;
-          font-size: 12px;
-          font-weight: 800;
-          border: 1px solid transparent;
-        }
-        .btn-mini.primary {
-          background: linear-gradient(120deg, #14b8a6, #2563eb);
-          color: #fff;
-        }
-        .btn-mini.ghost {
-          background: rgba(255,255,255,0.04);
-          color: #d7e7ff;
-          border-color: rgba(148, 163, 184, 0.14);
-        }
-        .band.stats-band {
-          display: grid;
-          gap: 10px;
-          grid-template-columns: repeat(4, minmax(130px, 1fr));
-          padding-bottom: 24px;
-        }
-        .stats-band article {
-          border-radius: 16px;
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          background: rgba(255,255,255,0.04);
-          padding: 14px;
-        }
-        .stats-band strong {
-          display: block;
-          font-size: 28px;
-          color: #fff;
-        }
-        .stats-band span {
-          color: rgba(191, 219, 254, 0.78);
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: .06em;
-        }
-        .proof-band {
-          padding-bottom: 12px;
-        }
-        .proof-card {
-          border-radius: 24px;
-          border: 1px solid rgba(103, 232, 249, 0.14);
-          background:
-            linear-gradient(135deg, rgba(14, 116, 144, 0.14), rgba(76, 29, 149, 0.14)),
-            rgba(255,255,255,0.035);
-          box-shadow:
-            0 20px 44px rgba(2, 6, 23, 0.18),
-            inset 0 1px 0 rgba(255,255,255,0.05);
-          padding: 20px;
-          backdrop-filter: blur(10px);
-        }
-        .proof-card h2 {
-          margin: 0;
-          font-family: var(--font-outfit), "Segoe UI", sans-serif;
-          font-size: clamp(24px, 4vw, 40px);
-          line-height: 1.06;
-          letter-spacing: -.02em;
-          color: #fff;
-          max-width: 820px;
-        }
-        .proof-card p {
-          margin: 12px 0 0;
-          max-width: 860px;
-          color: rgba(214, 228, 255, 0.82);
-          font-size: 15px;
-          line-height: 1.7;
-        }
-        .section {
-          padding-top: 34px;
-          padding-bottom: 34px;
-        }
-        .section.dark {
-          color: #ecf3ff;
-        }
-        .section.light {
-          color: #14263d;
-        }
-        .section.light .section-head h2,
-        .section.light .runtime-card h3,
-        .section.light .cta-card h2 {
-          color: #10253f;
-        }
-        .section-head {
-          max-width: 760px;
-        }
-        .section-head h2 {
-          margin: 0;
-          font-family: var(--font-outfit), "Segoe UI", sans-serif;
-          font-size: clamp(28px, 5vw, 52px);
-          line-height: 1.03;
-          letter-spacing: -.02em;
-        }
-        .section-head p {
-          margin: 12px 0 0;
-          font-size: 17px;
-          line-height: 1.6;
-          color: inherit;
-          opacity: .8;
-        }
-        .pillar-grid {
-          display: grid;
-          gap: 12px;
-          grid-template-columns: repeat(2, minmax(220px, 1fr));
-          margin-top: 18px;
-        }
-        .pillar-card {
-          border-radius: 18px;
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          background: rgba(255,255,255,0.04);
-          padding: 16px;
-        }
-        .pillar-card h3 {
-          margin: 0;
-          font-size: 18px;
-          color: #fff;
-        }
-        .pillar-card p {
-          margin: 8px 0 0;
-          font-size: 14px;
-          line-height: 1.6;
-          color: rgba(214, 228, 255, 0.82);
-        }
-        .pillar-card .es {
-          color: rgba(167, 191, 226, 0.86);
-        }
-        .section.light {
-          border-radius: 30px;
-          background:
-            radial-gradient(900px 380px at 0% 0%, rgba(196, 247, 239, 0.85), transparent 48%),
-            radial-gradient(820px 420px at 100% 0%, rgba(206, 230, 255, 0.92), transparent 46%),
-            linear-gradient(180deg, rgba(247,250,255,0.98), rgba(236,243,252,0.98));
-          box-shadow: 0 24px 50px rgba(2, 6, 23, 0.1);
-          margin-top: 12px;
-        }
-        .runtime-grid {
-          display: grid;
-          gap: 12px;
-          grid-template-columns: repeat(3, minmax(220px, 1fr));
-          margin-top: 18px;
-        }
-        .runtime-card {
-          border-radius: 18px;
-          border: 1px solid rgba(148, 163, 184, 0.16);
-          background: rgba(255,255,255,0.82);
-          padding: 16px;
-          box-shadow: 0 18px 28px rgba(15, 23, 42, 0.06);
-          text-decoration: none;
-        }
-        .runtime-top {
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          align-items: start;
-        }
-        .runtime-card h3 {
-          margin: 0;
-          font-size: 18px;
-          line-height: 1.2;
-        }
-        .runtime-card p {
-          margin: 9px 0 0;
-          color: #49627f;
-          line-height: 1.6;
-          font-size: 14px;
-        }
-        .runtime-card .es {
-          color: #6784a3;
-        }
-        .terminal {
-          margin-top: 18px;
-          border-radius: 20px;
-          overflow: hidden;
-          border: 1px solid rgba(148, 163, 184, 0.14);
-          background: rgba(2, 6, 23, 0.7);
-          box-shadow: 0 24px 48px rgba(2, 6, 23, 0.28);
-        }
-        .terminal-top {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          padding: 11px 14px;
-          border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-        }
-        .terminal-top span {
-          width: 10px;
-          height: 10px;
-          border-radius: 999px;
-        }
-        .terminal-top span:nth-child(1) { background: #fb7185; }
-        .terminal-top span:nth-child(2) { background: #fbbf24; }
-        .terminal-top span:nth-child(3) { background: #34d399; }
-        .terminal-top small {
-          margin-left: auto;
-          color: rgba(191, 219, 254, 0.72);
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: .08em;
-        }
-        .terminal pre {
-          margin: 0;
-          padding: 16px;
-          overflow: auto;
-          color: #dbe7ff;
-          font-size: 12px;
-          line-height: 1.65;
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        }
-        .cta-shell {
-          padding-top: 18px;
-          padding-bottom: 42px;
-        }
-        .cta-card {
-          border-radius: 22px;
-          border: 1px solid rgba(15, 118, 110, 0.14);
-          background:
-            linear-gradient(135deg, rgba(248, 252, 255, 0.95), rgba(238, 245, 255, 0.95));
-          box-shadow: 0 24px 40px rgba(15, 23, 42, 0.08);
-          padding: 20px;
-        }
-        .cta-card p {
-          margin: 10px 0 0;
-          color: #4a627f;
-          line-height: 1.6;
-        }
-        @media (max-width: 980px) {
-          .hero-shell {
-            grid-template-columns: 1fr;
-          }
-          .preview-grid {
-            grid-template-columns: 1fr;
-          }
-          .preview-nav {
-            border-right: none;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-          }
-          .band.stats-band {
-            grid-template-columns: repeat(2, minmax(130px, 1fr));
-          }
-          .pillar-grid,
-          .runtime-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        @media (max-width: 640px) {
-          .hero-shell,
-          .band,
-          .section {
-            padding-left: 16px;
-            padding-right: 16px;
-          }
-          .hero-shell {
-            padding-top: 28px;
-            padding-bottom: 36px;
-          }
-          .hero-copy h1 {
-            font-size: clamp(34px, 12vw, 54px);
-          }
-          .preview-nav {
-            grid-template-columns: 1fr 1fr;
-          }
-          .band.stats-band {
-            grid-template-columns: 1fr 1fr;
-          }
-          .hero-badges {
-            gap: 6px;
-          }
-        }
-      `}</style>
     </main>
   );
 }
-
-

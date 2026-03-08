@@ -1,4 +1,5 @@
 @import 'fumadocs-ui/style.css';
+@import '@lotosui/claude-arm/styles.css';
 
 :root {
   color-scheme: dark;
@@ -639,4 +640,60 @@ code {
   #nd-page pre {
     padding: 2.8rem 0.85rem 0.9rem;
   }
+}
+
+/* ── Language toggle ── */
+.es-only { display: none; }
+[data-lang="es"] .en-only { display: none; }
+[data-lang="es"] .es-only { display: revert; }
+
+.lotos-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  transition: background var(--lotos-duration-normal) ease, border-color var(--lotos-duration-normal) ease;
+}
+
+.lotos-lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.lotos-lang-toggle button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(221, 235, 255, 0.9);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.42rem 0.78rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--lotos-duration-normal) ease, color var(--lotos-duration-normal) ease;
+}
+
+.lotos-lang-toggle button.is-active {
+  background: linear-gradient(120deg, #34d399, #60a5fa);
+  color: #04111f;
+}
+
+/* ── Lotos button overrides for Fumadocs dark context ── */
+.lotos-btn {
+  font-family: var(--lotos-font-sans);
+}
+
+.lotos-btn--primary {
+  background: linear-gradient(120deg, var(--lotos-accent), var(--lotos-ocean-blue));
+}
+
+.lotos-btn--ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--lotos-border-strong);
+  color: var(--lotos-fg-primary);
 }

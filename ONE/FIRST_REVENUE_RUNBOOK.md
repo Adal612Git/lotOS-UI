@@ -2,6 +2,14 @@
 
 This is the shortest technical path from "customer said yes" to "private payload delivered".
 
+## Pre-flight before charging
+
+```bat
+pnpm.cmd run verify:go-live
+```
+
+Use this to confirm checkout links, webhook mapping, and unlock prerequisites are configured.
+
 ## One-command preparation
 
 ```bat
@@ -25,6 +33,11 @@ This command does all of the following in order:
 - optional customer-specific starter from:
   - `stack-init`
   - `desktop-init`
+
+`packages/pro/.private-dist` includes:
+
+- Pro assets (`admin-starter`, `layouts`, `industry-kits`, `previews`)
+- Full Signature payload (`launch-exclusive`)
 
 ## Minimum delivery sequence
 

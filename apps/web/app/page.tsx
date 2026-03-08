@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import './lotos-landing.css';
 import { authOptions } from '../auth-options';
 import { AuthAction } from './auth-action';
+import { LangToggle } from './lang-toggle';
 import { foundersOffer, salesLinks, salesPlans } from './sales-config';
 import { premiumExamples } from './examples/gallery-data';
 
@@ -82,21 +83,27 @@ const documentationLanes = [
 const signaturePrinciples = [
   {
     label: 'System',
-    title: 'A visual language with operational discipline.',
-    titleEs: 'Un lenguaje visual con disciplina operativa.',
-    body: 'LotOS UI is not a loose component dump. It is a product language meant to hold shape across documentation, delivery, and premium surfaces.',
+    labelEs: 'Sistema',
+    title: 'Product discipline, not component chaos.',
+    titleEs: 'Disciplina de producto, no caos de componentes.',
+    body: 'LotOS UI is organized around a product language: tokens, contracts, and a visual hierarchy that holds across docs, vault, and every runtime surface without drifting.',
+    bodyEs: 'LotOS UI esta organizado en un lenguaje de producto: tokens, contratos y una jerarquia visual que se mantiene en docs, vault y cada runtime sin desviarse.',
   },
   {
     label: 'Clarity',
-    title: 'Premium without hiding the map.',
-    titleEs: 'Premium sin esconder el mapa.',
-    body: 'The interface should feel elevated and still explain itself fast: where to start, what is stable, and where the protected value begins.',
+    labelEs: 'Claridad',
+    title: 'Premium without hidden complexity.',
+    titleEs: 'Premium sin complejidad oculta.',
+    body: 'Every layer from free docs to paid vault is structured so buyers know exactly what they get, what it costs, and why it is worth the upgrade.',
+    bodyEs: 'Cada capa desde docs gratis hasta vault pagado esta estructurada para que los compradores sepan que obtienen, cuanto cuesta y por que vale la pena el upgrade.',
   },
   {
     label: 'Range',
-    title: 'React first. Expansion built in.',
-    titleEs: 'React primero. Expansion integrada.',
-    body: 'The system starts with the strongest runtime today and keeps the same product language ready for backend and desktop growth.',
+    labelEs: 'Alcance',
+    title: 'React today. Backend, desktop, AI-native tomorrow.',
+    titleEs: 'React hoy. Backend, desktop e IA nativa manana.',
+    body: 'The component arm is stable. Backend stacks are in alpha. Desktop and AI surfaces are being built on the same design language — one system, many delivery paths.',
+    bodyEs: 'El brazo de componentes es estable. Los stacks backend estan en alpha. Las superficies desktop e IA se construyen sobre el mismo lenguaje — un sistema, muchas rutas.',
   },
 ];
 
@@ -120,6 +127,14 @@ const architectureItems = [
   '`@lotosui/web-components`: portable primitives for cross-framework reuse',
   '`@lotosui/cli`: blueprint, stack-init, and desktop-init',
   '`@lotosui/sentinel`: guardrails and misuse warnings',
+];
+
+const architectureItemsEs = [
+  '`@lotosui/core`: tokens, schemas, runtimes, patterns, stacks y templates desktop',
+  '`@lotosui/claude-arm`: brazo React listo para produccion',
+  '`@lotosui/web-components`: primitivas portables para reutilizacion cross-framework',
+  '`@lotosui/cli`: blueprint, stack-init y desktop-init',
+  '`@lotosui/sentinel`: guardrails y advertencias de mal uso',
 ];
 
 const commandBlock = `pnpm --filter @lotosui/cli exec lotos-ui stacks
@@ -146,17 +161,40 @@ export default async function HomePage() {
       <header className="top">
         <div className="brand">LotOS UI</div>
         <nav>
-          <Link href="/docs">Docs</Link>
-          <Link href="/examples">Examples</Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/multi-framework">Runtime Matrix</Link>
+          <LangToggle />
+          <Link href="/docs">
+            <span className="en-only">Docs</span>
+            <span className="es-only">Documentacion</span>
+          </Link>
+          <Link href="/demo">
+            <span className="en-only">Demos</span>
+            <span className="es-only">Demos</span>
+          </Link>
+          <Link href="/examples">
+            <span className="en-only">Examples</span>
+            <span className="es-only">Ejemplos</span>
+          </Link>
+          <Link href="/pricing">
+            <span className="en-only">Pricing</span>
+            <span className="es-only">Precios</span>
+          </Link>
+          <Link href="/multi-framework">
+            <span className="en-only">Runtime Matrix</span>
+            <span className="es-only">Matriz de Runtimes</span>
+          </Link>
           {signedInEmail ? (
             <>
               <Link href="/vault">Vault</Link>
-              <a href="/api/auth/signout?callbackUrl=/">Sign Out</a>
+              <a href="/api/auth/signout?callbackUrl=/">
+                <span className="en-only">Sign Out</span>
+                <span className="es-only">Cerrar Sesion</span>
+              </a>
             </>
           ) : (
-            <Link href="/login">Sign In</Link>
+            <Link href="/login">
+              <span className="en-only">Sign In</span>
+              <span className="es-only">Iniciar Sesion</span>
+            </Link>
           )}
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
@@ -165,61 +203,91 @@ export default async function HomePage() {
       <section className="hero home-hero">
         <div className="home-hero-grid">
           <div className="hero-copy-stack">
-            <p className="kicker">{foundersOffer.label} from MX$59 / mes | public docs + premium ladder</p>
+            <p className="kicker">
+              <span className="en-only">{foundersOffer.label} · from MX$59 / month · 27 components · multi-runtime</span>
+              <span className="es-only">{foundersOffer.label} · desde MX$59 / mes · 27 componentes · multi-runtime</span>
+            </p>
             <div className="hero-pill-row" aria-label="Landing signals">
-              <span className="tier-pill accent-cyan">React Stable</span>
-              <span className="tier-pill accent-emerald">Docs First</span>
-              <span className="tier-pill accent-amber">AI-safe contracts</span>
-              <span className="tier-pill accent-violet">Full Signature ready</span>
+              <span className="tier-pill accent-cyan"><span className="en-only">React Stable</span><span className="es-only">React Estable</span></span>
+              <span className="tier-pill accent-emerald"><span className="en-only">Docs First</span><span className="es-only">Docs Primero</span></span>
+              <span className="tier-pill accent-amber"><span className="en-only">AI-safe contracts</span><span className="es-only">Contratos seguros para AI</span></span>
+              <span className="tier-pill accent-violet"><span className="en-only">Full Signature ready</span><span className="es-only">Full Signature listo</span></span>
             </div>
             <h1>
-              The public face now carries the same discipline as the premium product.
-              <span className="hero-subline">Structured, credible, and unmistakably built like LotOS UI.</span>
+              <span className="en-only">Ship production UI with the discipline it actually needs.</span>
+              <span className="es-only">Entrega UI de produccion con la disciplina que realmente necesita.</span>
+              <span className="hero-subline en-only">Dark-first. Contract-driven. Premium-gated from the first deploy.</span>
+              <span className="hero-subline es-only">Dark-first. Basado en contratos. Premium protegido desde el primer deploy.</span>
             </h1>
-            <p className="lead">
-              LotOS UI should feel like a real system the moment it opens: a clearer public entry,
-              stronger documentation, a visible free trust layer, and a premium path that scales
-              from proof to full-suite delivery without losing visual authority.
+            <p className="lead en-only">
+              LotOS UI is a structured component system for React: 27 production-ready components,
+              a CLI that scaffolds real starting points, and a layered architecture from open docs
+              to gated vault — so buyers can evaluate the system before they pay for protected surfaces.
+            </p>
+            <p className="lead es-only">
+              LotOS UI es un sistema de componentes estructurado para React: 27 componentes listos
+              para produccion, un CLI que genera puntos de partida reales y una arquitectura por capas
+              desde docs abiertos hasta vault protegido — para que los compradores evaluen antes de pagar.
             </p>
             {signedInEmail ? (
               <p className="lead lead-compact">
-                Signed in as {signedInEmail}. Your vault, docs, and pricing path are connected from here.
+                <span className="en-only">Signed in as {signedInEmail}. Your vault, docs, and pricing path are connected from here.</span>
+                <span className="es-only">Conectado como {signedInEmail}. Tu vault, docs y ruta de precios quedan conectados desde aqui.</span>
               </p>
             ) : (
               <p className="lead lead-compact">
-                The public layer stays open so teams can validate the system before paying for protected surfaces.
+                <span className="en-only">The public layer stays open so teams can validate the system before paying for protected surfaces.</span>
+                <span className="es-only">La capa publica queda abierta para que los equipos validen el sistema antes de pagar por superficies protegidas.</span>
               </p>
             )}
             <div className="hero-language-grid">
-              <article className="language-panel">
-                <p className="section-label">English</p>
-                <h2>Start with clarity, not friction.</h2>
+              <article className="language-panel en-only">
+                <p className="section-label">React First</p>
+                <h2>Start fast with the stable arm.</h2>
                 <p>
-                  The landing page now behaves like an operating surface: docs are easier to find,
-                  the interface explains what is public versus premium, and the product range is
-                  framed without forcing users through a wall of text.
+                  The React arm ships polished surfaces right now: 27 components, a CLI that
+                  generates real project scaffolds, and a design system that holds visual discipline
+                  from the first screen to the premium vault.
                 </p>
               </article>
-              <article className="language-panel es">
-                <p className="section-label">Espanol</p>
-                <h2>Empieza con claridad, no con friccion.</h2>
+              <article className="language-panel es es-only">
+                <p className="section-label">React Primero</p>
+                <h2>Empieza rapido con el brazo estable.</h2>
                 <p>
-                  La landing ahora se comporta como una superficie operativa: la documentacion se
-                  encuentra mas facil, la interfaz explica que es publico y que es premium, y el
-                  rango del producto se entiende sin empujar al usuario a un muro de texto.
+                  El brazo React entrega superficies pulidas ahora mismo: 27 componentes, un CLI
+                  que genera scaffolds reales y un sistema de diseno que mantiene disciplina visual
+                  desde la primera pantalla hasta el vault premium.
                 </p>
               </article>
             </div>
             <div className="hero-actions">
-              <Link href="/docs/start-here" className="btn primary">Get Started / Empezar</Link>
-              <Link href="/docs" className="btn ghost">Open Docs</Link>
-              <Link href="/pricing" className="btn ghost">Pricing / Precios</Link>
+              <Link href="/docs/start-here" className="btn primary">
+                <span className="en-only">Get Started</span>
+                <span className="es-only">Empezar</span>
+              </Link>
+              <Link href="/docs" className="btn ghost">
+                <span className="en-only">Open Docs</span>
+                <span className="es-only">Abrir Docs</span>
+              </Link>
+              <Link href="/pricing" className="btn ghost">
+                <span className="en-only">Pricing</span>
+                <span className="es-only">Precios</span>
+              </Link>
               {signedInEmail ? (
-                <Link href="/vault" className="btn ghost">Open Vault</Link>
+                <Link href="/vault" className="btn ghost">
+                  <span className="en-only">Open Vault</span>
+                  <span className="es-only">Abrir Vault</span>
+                </Link>
               ) : (
-                <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">Sign In With Google</AuthAction>
+                <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">
+                  <span className="en-only">Sign In With Google</span>
+                  <span className="es-only">Entrar con Google</span>
+                </AuthAction>
               )}
-              <Link href="/examples" className="btn ghost">Examples</Link>
+              <Link href="/examples" className="btn ghost">
+                <span className="en-only">Examples</span>
+                <span className="es-only">Ejemplos</span>
+              </Link>
             </div>
           </div>
 
@@ -252,7 +320,10 @@ export default async function HomePage() {
                       <h3>Docs-first path</h3>
                       <span className="payment-chip ready accent-cyan">Public</span>
                     </div>
-                    <p>Onboarding, components, runtime guidance, and spreadsheet context are visible before checkout pressure.</p>
+                    <p>
+                      <span className="en-only">Onboarding, components, runtime guidance, and spreadsheet context are visible before checkout pressure.</span>
+                      <span className="es-only">Onboarding, componentes, guia de runtimes y contexto de spreadsheets quedan visibles antes de cualquier presion de checkout.</span>
+                    </p>
                     <div className="preview-code-strip">start-here | installation | components | runtime</div>
                   </div>
                   <div className="preview-surface-card secondary">
@@ -260,15 +331,20 @@ export default async function HomePage() {
                       <h3>Premium ladder</h3>
                       <span className="payment-chip alt accent-violet">Clear</span>
                     </div>
-                    <p>Solo proves value, Pro carries delivery weight, and Full closes at the top tier.</p>
+                    <p>
+                      <span className="en-only">Solo proves value, Pro carries delivery weight, and Full closes at the top tier.</span>
+                      <span className="es-only">Solo prueba valor, Pro carga la entrega y Full cierra en la capa mas alta.</span>
+                    </p>
                   </div>
                 </div>
                 <div className="hero-preview-rail">
                   <p className="preview-rail-label">Navigation</p>
                   {documentationLanes.map((lane, index) => (
                     <div key={lane.title} className={`preview-rail-item ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
-                      <strong>{lane.title}</strong>
-                      <span>{lane.titleEs}</span>
+                      <strong className="en-only">{lane.title}</strong>
+                      <strong className="es-only">{lane.titleEs}</strong>
+                      <span className="en-only">{lane.cta}</span>
+                      <span className="es-only">{lane.titleEs}</span>
                     </div>
                   ))}
                 </div>
@@ -279,19 +355,24 @@ export default async function HomePage() {
       </section>
 
       <section className="stats">
-        <article><strong>27</strong><span>React Components</span></article>
-        <article><strong>4</strong><span>Web Primitives</span></article>
-        <article><strong>10</strong><span>Stack Templates</span></article>
-        <article><strong>8</strong><span>Desktop Templates</span></article>
+        <article><strong>27</strong><span><span className="en-only">React Components</span><span className="es-only">Componentes React</span></span></article>
+        <article><strong>4</strong><span><span className="en-only">Web Primitives</span><span className="es-only">Primitivas Web</span></span></article>
+        <article><strong>10</strong><span><span className="en-only">Stack Templates</span><span className="es-only">Templates de Stack</span></span></article>
+        <article><strong>8</strong><span><span className="en-only">Desktop Templates</span><span className="es-only">Templates Desktop</span></span></article>
       </section>
 
       <section className="card landing-section examples-band">
         <div className="section-headline">
-          <p className="section-label">Examples / Ejemplos</p>
-          <h2>Show the product as finished surfaces, not isolated parts.</h2>
-          <p className="micro-note">
-            A stronger examples layer makes the system easier to imagine in real work: command rooms,
-            narrative dashboards, spreadsheet upgrades, and premium vault experiences.
+          <p className="section-label"><span className="en-only">Examples</span><span className="es-only">Ejemplos</span></p>
+          <h2 className="en-only">Six real delivery scenarios. One design system powering all of them.</h2>
+          <h2 className="es-only">Seis escenarios reales de entrega. Un sistema de diseno que los alimenta a todos.</h2>
+          <p className="micro-note en-only">
+            Command rooms, executive dashboards, spreadsheet modernization, premium vaults, and AI agent surfaces —
+            all shipped with the same component language and visual discipline.
+          </p>
+          <p className="micro-note es-only">
+            Cuartos de comando, dashboards ejecutivos, modernizacion de spreadsheets, vaults premium y superficies
+            de agentes IA — todos entregados con el mismo lenguaje de componentes y disciplina visual.
           </p>
         </div>
         <div className="examples-lane-grid">
@@ -313,27 +394,33 @@ export default async function HomePage() {
           ))}
         </div>
         <div className="hero-actions compact">
-          <Link href="/examples" className="btn primary">Open All Examples</Link>
-          <Link href="/pricing" className="btn ghost">See Premium Ladder</Link>
+          <Link href="/examples" className="btn primary"><span className="en-only">Open All Examples</span><span className="es-only">Abrir Todos los Ejemplos</span></Link>
+          <Link href="/pricing" className="btn ghost"><span className="en-only">See Premium Ladder</span><span className="es-only">Ver Escalera Premium</span></Link>
         </div>
       </section>
 
       <section className="card landing-section signature-band">
         <div className="signature-band-copy">
-          <p className="section-label">Product Signal / Senal de Producto</p>
-          <h2>This home now behaves like a flagship surface, not a placeholder entry.</h2>
-          <p className="micro-note">
-            The message is simple even when the system is broad: this is a serious UI platform with
-            a defined language, real delivery paths, and premium-grade presentation from the first screen.
+          <p className="section-label"><span className="en-only">Product Principles</span><span className="es-only">Principios del Producto</span></p>
+          <h2 className="en-only">A design system built to survive real delivery pressure.</h2>
+          <h2 className="es-only">Un sistema de diseno construido para sobrevivir la presion real de entrega.</h2>
+          <p className="micro-note en-only">
+            Not a component dump. A product language with defined tokens, contract-ready schemas,
+            and a visual hierarchy that holds discipline across docs, vault, and every runtime surface.
+          </p>
+          <p className="micro-note es-only">
+            No es un dump de componentes. Es un lenguaje de producto con tokens definidos, schemas
+            listos para contratos y una jerarquia visual que mantiene disciplina en docs, vault y cada runtime.
           </p>
         </div>
         <div className="signature-grid">
           {signaturePrinciples.map((item, index) => (
             <article key={item.label} className={`signature-card ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
-              <p className="signature-label">{item.label}</p>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-              <p className="lane-es">{item.titleEs}</p>
+              <p className="signature-label"><span className="en-only">{item.label}</span><span className="es-only">{item.labelEs}</span></p>
+              <h3 className="en-only">{item.title}</h3>
+              <h3 className="es-only">{item.titleEs}</h3>
+              <p className="en-only">{item.body}</p>
+              <p className="es-only">{item.bodyEs}</p>
             </article>
           ))}
         </div>
@@ -341,23 +428,30 @@ export default async function HomePage() {
 
       <section className="card landing-section">
         <div className="section-headline">
-          <p className="section-label">Documentation / Documentacion</p>
-          <h2>Faster orientation, better trust, less guesswork.</h2>
-          <p className="micro-note">
-            The public home should answer where to start, what is stable, and how to upgrade before
-            the user ever opens a sales conversation.
+          <p className="section-label"><span className="en-only">Documentation</span><span className="es-only">Documentacion</span></p>
+          <h2 className="en-only">Docs that teach the system, not just list the API.</h2>
+          <h2 className="es-only">Documentacion que ensena el sistema, no solo lista la API.</h2>
+          <p className="micro-note en-only">
+            Start Here orients you in under 5 minutes. Component docs show exact schema and behavior.
+            The Runtime Guide tells you what is stable, what is alpha, and how to pick the right path.
+          </p>
+          <p className="micro-note es-only">
+            Start Here te orienta en menos de 5 minutos. Los docs de componentes muestran el schema exacto
+            y comportamiento. La Guia de Runtimes te dice que esta estable, que esta en alpha y como elegir.
           </p>
         </div>
         <div className="docs-lane-grid">
           {documentationLanes.map((lane, index) => (
             <Link key={lane.title} href={lane.href} className={`docs-lane-card ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
               <div className="docs-lane-top">
-                <p className="docs-lane-kicker">{lane.titleEs}</p>
-                <h3>{lane.title}</h3>
+                <p className="docs-lane-kicker"><span className="en-only">{lane.title}</span><span className="es-only">{lane.titleEs}</span></p>
+                <h3 className="en-only">{lane.title}</h3>
+                <h3 className="es-only">{lane.titleEs}</h3>
               </div>
-              <p>{lane.body}</p>
-              <p className="lane-es">{lane.bodyEs}</p>
-              <span className="docs-lane-link">Open {lane.cta}</span>
+              <p className="en-only">{lane.body}</p>
+              <p className="es-only">{lane.bodyEs}</p>
+              <span className="docs-lane-link en-only">Open {lane.cta}</span>
+              <span className="docs-lane-link es-only">Abrir {lane.titleEs}</span>
             </Link>
           ))}
         </div>
@@ -365,18 +459,15 @@ export default async function HomePage() {
 
       <section className="grid two">
         <article className="card">
-          <p className="section-label">English Flow</p>
-          <h2>How teams should read the product</h2>
-          <ol className="clarity-list">
+          <p className="section-label"><span className="en-only">Product Flow</span><span className="es-only">Flujo del Producto</span></p>
+          <h2 className="en-only">How teams should read the product</h2>
+          <h2 className="es-only">Como deberian leer el producto los equipos</h2>
+          <ol className="clarity-list en-only">
             {englishFlow.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ol>
-        </article>
-        <article className="card">
-          <p className="section-label">Flujo en Espanol</p>
-          <h2>Como deberia leerse el producto</h2>
-          <ol className="clarity-list">
+          <ol className="clarity-list es-only">
             {spanishFlow.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -386,32 +477,43 @@ export default async function HomePage() {
 
       <section className="grid two">
         <article className="card">
-          <p className="section-label">Architecture / Arquitectura</p>
-          <h2>One design system, multiple delivery surfaces.</h2>
-          <ul className="architecture-list">
+          <p className="section-label"><span className="en-only">Architecture</span><span className="es-only">Arquitectura</span></p>
+          <h2 className="en-only">One design system, multiple delivery surfaces.</h2>
+          <h2 className="es-only">Un sistema de diseno, multiples superficies de entrega.</h2>
+          <ul className="architecture-list en-only">
             {architectureItems.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
+          <ul className="architecture-list es-only">
+            {architectureItemsEs.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
           <div className="hero-actions compact">
-            <Link href="/docs/start-here" className="btn ghost">Open Start Here</Link>
-            <Link href="/docs/multi-runtime" className="btn ghost">Open Runtime Guide</Link>
-            <Link href="/examples" className="btn ghost">See Examples</Link>
+            <Link href="/docs/start-here" className="btn ghost"><span className="en-only">Open Start Here</span><span className="es-only">Abrir Empieza Aqui</span></Link>
+            <Link href="/docs/multi-runtime" className="btn ghost"><span className="en-only">Open Runtime Guide</span><span className="es-only">Abrir Guia de Runtimes</span></Link>
+            <Link href="/examples" className="btn ghost"><span className="en-only">See Examples</span><span className="es-only">Ver Ejemplos</span></Link>
           </div>
         </article>
         <section className="terminal landing-terminal">
-          <div className="term-head">Quick Start / Comandos</div>
+          <div className="term-head"><span className="en-only">Quick Start</span><span className="es-only">Inicio Rapido</span></div>
           <pre><code>{commandBlock}</code></pre>
         </section>
       </section>
 
       <section className="card landing-section">
         <div className="section-headline">
-          <p className="section-label">Runtime Surface / Superficie</p>
-          <h2>Present the range as a premium system, not a spreadsheet.</h2>
-          <p className="micro-note">
+          <p className="section-label"><span className="en-only">Runtime Surface</span><span className="es-only">Superficie de Runtimes</span></p>
+          <h2 className="en-only">Present the range as a premium system, not a spreadsheet.</h2>
+          <h2 className="es-only">Presenta el alcance como un sistema premium, no como una hoja de calculo.</h2>
+          <p className="micro-note en-only">
             React stays stable and first-class. Every other runtime is shown with the right level of
             honesty so buyers see ambition without confusing maturity.
+          </p>
+          <p className="micro-note es-only">
+            React se mantiene estable y de primera clase. Cada otro runtime se muestra con el nivel
+            correcto de honestidad para que los compradores vean ambicion sin confundir madurez.
           </p>
         </div>
         <div className="runtime-card-grid">
@@ -421,14 +523,14 @@ export default async function HomePage() {
                 <h3>{runtime.name}</h3>
                 <span className={`payment-chip ready ${runtime.tone}`}>{runtime.status}</span>
               </div>
-              <p>{runtime.summary}</p>
-              <p className="lane-es">{runtime.summaryEs}</p>
+              <p className="en-only">{runtime.summary}</p>
+              <p className="es-only">{runtime.summaryEs}</p>
             </article>
           ))}
         </div>
         <div className="hero-actions compact">
-          <Link href="/multi-framework" className="btn primary">Open Full Runtime Matrix</Link>
-          <Link href="/docs/multi-runtime" className="btn ghost">Docs Guide</Link>
+          <Link href="/multi-framework" className="btn primary"><span className="en-only">Open Full Runtime Matrix</span><span className="es-only">Abrir Matriz Completa de Runtimes</span></Link>
+          <Link href="/docs/multi-runtime" className="btn ghost"><span className="en-only">Docs Guide</span><span className="es-only">Guia de Docs</span></Link>
         </div>
       </section>
 
@@ -437,11 +539,16 @@ export default async function HomePage() {
           <div className="free-main-stack">
             <div className="free-rich-panel">
               <div className="free-rich-copy">
-                <p className="tier-mini-label">Public foundation</p>
-                <h4>The free layer should feel trustworthy before users ever pay.</h4>
-                <p>
+                <p className="tier-mini-label"><span className="en-only">Public foundation</span><span className="es-only">Base publica</span></p>
+                <h4 className="en-only">The free layer should feel trustworthy before users ever pay.</h4>
+                <h4 className="es-only">La capa gratuita debe sentirse confiable antes de que alguien pague.</h4>
+                <p className="en-only">
                   A stronger landing page makes the open surface more credible: clearer docs, better
                   navigation, and a visible product map that makes the premium ladder easier to trust.
+                </p>
+                <p className="es-only">
+                  Una landing mas fuerte hace la superficie abierta mas creible: docs mas claros,
+                  mejor navegacion y un mapa visible del producto que hace mas facil confiar en la escalera premium.
                 </p>
               </div>
               <div className="free-signal-grid" aria-label="Free landing signals">
@@ -453,24 +560,31 @@ export default async function HomePage() {
                 ].map((signal, index) => (
                   <div key={signal.label} className={`free-signal ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
                     <strong>{signal.value}</strong>
-                    <span>{signal.label}</span>
+                    <span className="en-only">{signal.label}</span>
+                    <span className="es-only">
+                      {signal.label === 'Visible first' ? 'Visible primero' : signal.label === 'Trust layer' ? 'Capa de confianza' : signal.label === 'Delivery value' ? 'Valor de entrega' : 'Acabado superior'}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="payment-meta" aria-label="Landing trust signals">
-              <span className="payment-chip free accent-cyan">Free docs stay public</span>
-              <span className="payment-chip manual accent-amber">Premium stays protected</span>
-              <span className="payment-chip alt accent-violet">Clear upgrade story</span>
+              <span className="payment-chip free accent-cyan"><span className="en-only">Free docs stay public</span><span className="es-only">Los docs gratis siguen publicos</span></span>
+              <span className="payment-chip manual accent-amber"><span className="en-only">Premium stays protected</span><span className="es-only">Lo premium sigue protegido</span></span>
+              <span className="payment-chip alt accent-violet"><span className="en-only">Clear upgrade story</span><span className="es-only">Ruta de upgrade clara</span></span>
             </div>
           </div>
           <aside className="free-side-card">
-            <p className="tier-mini-label">Why this matters</p>
-            <h4>Clarity is part of the product quality, not a separate marketing task.</h4>
+            <p className="tier-mini-label"><span className="en-only">Why this matters</span><span className="es-only">Por que importa</span></p>
+            <h4 className="en-only">Clarity is part of the product quality, not a separate marketing task.</h4>
+            <h4 className="es-only">La claridad es parte de la calidad del producto, no una tarea aparte de marketing.</h4>
             <ul className="free-proof-list">
-              <li>Better navigation reduces confusion for first-time visitors.</li>
-              <li>Bilingual separation makes the product easier to read for both audiences.</li>
-              <li>The premium ladder feels stronger when the public layer already looks complete.</li>
+              <li className="en-only">Better navigation reduces confusion for first-time visitors.</li>
+              <li className="en-only">Bilingual separation makes the product easier to read for both audiences.</li>
+              <li className="en-only">The premium ladder feels stronger when the public layer already looks complete.</li>
+              <li className="es-only">Una mejor navegacion reduce confusion para visitantes nuevos.</li>
+              <li className="es-only">La separacion por idioma hace el producto mas facil de leer para ambas audiencias.</li>
+              <li className="es-only">La escalera premium se siente mas fuerte cuando la capa publica ya luce completa.</li>
             </ul>
           </aside>
         </div>
@@ -478,29 +592,39 @@ export default async function HomePage() {
 
       <section className="premium-stage">
         <article className="premium-stage-card pro">
-          <p className="section-label">Pro Focus</p>
-          <h2>Pro is the paid tier where delivery starts to feel substantial.</h2>
-          <p className="micro-note">
+          <p className="section-label"><span className="en-only">Pro Focus</span><span className="es-only">Enfoque Pro</span></p>
+          <h2 className="en-only">Pro is the paid tier where delivery starts to feel substantial.</h2>
+          <h2 className="es-only">Pro es la capa pagada donde la entrega empieza a sentirse solida.</h2>
+          <p className="micro-note en-only">
             Reusable protected assets, team-facing structure, and a stronger month-to-month value story.
+          </p>
+          <p className="micro-note es-only">
+            Assets protegidos reutilizables, estructura para equipos y una historia de valor mensual mas fuerte.
           </p>
           <div className="premium-stage-list">
             {['Protected kits', 'Team-ready assets', 'Premium operators'].map((item, index) => (
               <span key={item} className={`tier-pill ${homepageAccentCycle[index % homepageAccentCycle.length]}`}>
-                {item}
+                <span className="en-only">{item}</span>
+                <span className="es-only">{item === 'Protected kits' ? 'Kits protegidos' : item === 'Team-ready assets' ? 'Assets listos para equipo' : 'Operadores premium'}</span>
               </span>
             ))}
           </div>
         </article>
         <article className="premium-stage-card full">
-          <p className="section-label">Full Focus</p>
-          <h2>Full Signature is the top-tier package that should feel unmistakably complete.</h2>
-          <p className="micro-note">
+          <p className="section-label"><span className="en-only">Full Focus</span><span className="es-only">Enfoque Full</span></p>
+          <h2 className="en-only">Full Signature is the top-tier package that should feel unmistakably complete.</h2>
+          <h2 className="es-only">Full Signature es el paquete mas alto y debe sentirse inequivamente completo.</h2>
+          <p className="micro-note en-only">
             Executive-facing polish, broader exclusive surfaces, and the highest-finish presentation in the stack.
+          </p>
+          <p className="micro-note es-only">
+            Pulido para nivel ejecutivo, superficies exclusivas mas amplias y la presentacion de mayor acabado del stack.
           </p>
           <div className="premium-stage-list">
             {['Full-suite exclusives', 'Boardroom-grade finish', 'Highest polish'].map((item, index) => (
               <span key={item} className={`tier-pill ${homepageAccentCycle[(index + 2) % homepageAccentCycle.length]}`}>
-                {item}
+                <span className="en-only">{item}</span>
+                <span className="es-only">{item === 'Full-suite exclusives' ? 'Exclusivos full-suite' : item === 'Boardroom-grade finish' ? 'Acabado de boardroom' : 'Maximo pulido'}</span>
               </span>
             ))}
           </div>
@@ -572,26 +696,37 @@ export default async function HomePage() {
 
       <section className="grid two">
         <article className="card">
-          <p className="section-label">Next Step / Siguiente Paso</p>
-          <h2>Use the docs first, then open the right commercial lane.</h2>
-          <p className="micro-note">
-            The landing page now routes users in the correct order: understanding first, protected value second.
+          <p className="section-label"><span className="en-only">Next Step</span><span className="es-only">Siguiente Paso</span></p>
+          <h2 className="en-only">Try the demos, read the docs, then open the vault when you are ready.</h2>
+          <h2 className="es-only">Prueba los demos, lee los docs, luego abre el vault cuando estes listo.</h2>
+          <p className="micro-note en-only">
+            Three interactive demos show the system at work before you commit to anything.
+            The free layer is substantial enough to build real trust.
+          </p>
+          <p className="micro-note es-only">
+            Tres demos interactivos muestran el sistema en accion antes de comprometerte con algo.
+            La capa gratuita es lo suficientemente solida para construir confianza real.
           </p>
           <div className="hero-actions compact">
-            <Link href="/docs/start-here" className="btn primary">Open Start Here</Link>
-            <Link href={vaultHref} className="btn ghost">Open Vault Surface</Link>
+            <Link href="/demo" className="btn primary"><span className="en-only">Open Live Demos</span><span className="es-only">Abrir Demos en Vivo</span></Link>
+            <Link href="/docs/start-here" className="btn ghost"><span className="en-only">Start Here</span><span className="es-only">Empieza Aqui</span></Link>
+            <Link href={vaultHref} className="btn ghost"><span className="en-only">Open Vault</span><span className="es-only">Abrir Vault</span></Link>
           </div>
         </article>
         <article className="card">
-          <p className="section-label">Sales / Comercial</p>
-          <h2>Ready to close when the buyer is ready.</h2>
-          <p className="micro-note">
+          <p className="section-label"><span className="en-only">Sales</span><span className="es-only">Comercial</span></p>
+          <h2 className="en-only">Ready to close when the buyer is ready.</h2>
+          <h2 className="es-only">Listo para cerrar cuando el comprador lo este.</h2>
+          <p className="micro-note en-only">
             The public experience is clearer now, but the premium close path remains direct for qualified buyers.
+          </p>
+          <p className="micro-note es-only">
+            La experiencia publica ahora es mas clara, pero la ruta de cierre premium sigue directa para compradores calificados.
           </p>
           <pre><code>pnpm.cmd run prep:first-sale</code></pre>
           <div className="hero-actions compact">
-            <Link href="/pricing" className="btn primary">Open Pricing</Link>
-            <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer">Contact Sales</a>
+            <Link href="/pricing" className="btn primary"><span className="en-only">Open Pricing</span><span className="es-only">Abrir Precios</span></Link>
+            <a href={salesLinks.contact} className="btn ghost" target="_blank" rel="noreferrer"><span className="en-only">Contact Sales</span><span className="es-only">Contactar Ventas</span></a>
           </div>
         </article>
       </section>
@@ -599,9 +734,9 @@ export default async function HomePage() {
       <footer className="footer">
         <p>LotOS UI | 2026 | Lotos Technologies</p>
         <div>
-          <Link href="/docs">Docs</Link>
-          <Link href="/examples">Examples</Link>
-          <Link href="/pricing">Pricing</Link>
+          <Link href="/docs"><span className="en-only">Docs</span><span className="es-only">Documentacion</span></Link>
+          <Link href="/examples"><span className="en-only">Examples</span><span className="es-only">Ejemplos</span></Link>
+          <Link href="/pricing"><span className="en-only">Pricing</span><span className="es-only">Precios</span></Link>
           <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </footer>

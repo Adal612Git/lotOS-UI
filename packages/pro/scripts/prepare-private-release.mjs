@@ -12,6 +12,7 @@ const payloadPaths = [
   "admin-starter",
   "layouts",
   "industry-kits",
+  "launch-exclusive",
   "previews",
   "distribution/pro.manifest.json"
 ];

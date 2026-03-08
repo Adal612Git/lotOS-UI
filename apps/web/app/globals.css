@@ -1,4 +1,6 @@
-/* Reset global — all design tokens handled in neurotask-demo.css */
+@import '@lotosui/claude-arm/styles.css';
+
+/* Reset global */
 *,
 *::before,
 *::after {
@@ -8,4 +10,45 @@
 body {
   margin: 0;
   padding: 0;
+}
+
+/* ── Language toggle ── */
+.es-only { display: none; }
+[data-lang="es"] .en-only { display: none; }
+[data-lang="es"] .es-only { display: revert; }
+
+.lotos-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  border: 1px solid #c7d8ef;
+  background: rgba(255, 255, 255, 0.82);
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.lotos-lang-toggle:hover {
+  background: #fff;
+  border-color: #9ec4f8;
+}
+
+.lotos-lang-toggle button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #33557a;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.42rem 0.78rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.lotos-lang-toggle button.is-active {
+  background: linear-gradient(120deg, #155eef, #0b7a60);
+  color: #fff;
 }

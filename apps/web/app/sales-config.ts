@@ -35,6 +35,8 @@ const linkOrFallback = (value: string | undefined, fallback: string) => {
   return normalized && normalized.length > 0 ? normalized : fallback;
 };
 
+const hasNonEmptyValue = (value: string | undefined) => Boolean(value?.trim());
+
 function buildPaidActions(input: {
   checkoutUrl?: string;
   paypalUrl?: string;
@@ -117,6 +119,22 @@ export const salesLinks = {
   premiumPreview: linkOrFallback(process.env.LOTOS_PREMIUM_PREVIEW_URL, fallbackPreview),
   contact: fallbackContact,
   demo: fallbackDemo,
+};
+
+export const commercialReadiness = {
+  directCheckoutReady:
+    hasNonEmptyValue(process.env.LOTOS_SOLO_CHECKOUT_URL) ||
+    hasNonEmptyValue(process.env.LOTOS_PRO_CHECKOUT_URL) ||
+    hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_URL),
+  fallbackPaymentReady:
+    hasNonEmptyValue(process.env.LOTOS_SOLO_PAYPAL_URL) ||
+    hasNonEmptyValue(process.env.LOTOS_PRO_PAYPAL_URL) ||
+    hasNonEmptyValue(process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL),
+  automaticUnlockReady:
+    hasNonEmptyValue(process.env.LEMON_WEBHOOK_SECRET) &&
+    hasNonEmptyValue(process.env.LEMON_SOLO_VARIANT_ID) &&
+    hasNonEmptyValue(process.env.LEMON_PRO_VARIANT_ID) &&
+    hasNonEmptyValue(process.env.LEMON_LAUNCH_VARIANT_ID),
 };
 
 export const foundersOffer = {
@@ -256,6 +274,10 @@ export const checkoutEnvKeys = [
   "SUPABASE_SECRET_KEY",
   "SUPABASE_ANON_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
+  "LEMON_WEBHOOK_SECRET",
+  "LEMON_SOLO_VARIANT_ID",
+  "LEMON_PRO_VARIANT_ID",
+  "LEMON_LAUNCH_VARIANT_ID",
   "LOTOS_OWNER_EMAILS",
   "LOTOS_CONTACT_SALES_URL",
   "LOTOS_BOOKING_URL",

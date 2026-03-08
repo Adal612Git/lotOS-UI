@@ -37,7 +37,12 @@ const webhookSchema = z
   .passthrough();
 
 function isSupportedEvent(eventName: string | undefined) {
-  return eventName === 'order_created' || eventName === 'subscription_created';
+  return (
+    eventName === 'order_created' ||
+    eventName === 'subscription_created' ||
+    eventName === 'subscription_payment_success' ||
+    eventName === 'subscription_resumed'
+  );
 }
 
 function timingSafeMatch(received: string, expected: string) {

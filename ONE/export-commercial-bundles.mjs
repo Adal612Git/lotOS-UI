@@ -31,6 +31,7 @@ const tiers = [
       "packages/pro/admin-starter",
       "packages/pro/layouts",
       "packages/pro/industry-kits",
+      "packages/pro/launch-exclusive",
       "packages/pro/previews"
     ]
   }

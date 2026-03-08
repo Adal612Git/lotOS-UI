@@ -7,32 +7,193 @@ description: Install the React production arm first, then expand to multi-runtim
 
 Before installing anything, read [Start Here](/docs/start-here) if you need the shortest path by use case.
 
-## Recommended path (production)
+---
 
-- Node.js 18+
-- React 19+ app (Next.js, Vite, or similar)
+## Requirements
+
+- **Node.js** 18+
+- **React** 19+ (peer dependency)
+- **Package manager**: npm, pnpm, or yarn
+
+---
+
+## Install the stable package
 
 ```bash
 npm install @lotosui/claude-arm
+# or
+pnpm add @lotosui/claude-arm
+# or
+yarn add @lotosui/claude-arm
 ```
 
-Import styles once:
+---
+
+## Setup: Next.js (App Router)
+
+**1. Import styles in your root layout:**
 
 ```tsx
+// app/layout.tsx
 import '@lotosui/claude-arm/styles.css';
-```
+import type { Metadata } from 'next';
 
-Use a component:
+export const metadata: Metadata = {
+  title: 'My App',
+};
 
-```tsx
-import { Button } from '@lotosui/claude-arm';
-
-export default function Page() {
-  return <Button variant="primary">Get Started</Button>;
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
 ```
 
+**2. Use components in any page or component:**
+
+```tsx
+// app/page.tsx
+import { Button, Card, Badge } from '@lotosui/claude-arm';
+
+export default function Page() {
+  return (
+    <Card>
+      <Badge variant="success">Active</Badge>
+      <h2>Welcome to your dashboard</h2>
+      <Button variant="primary">Get Started</Button>
+      <Button variant="ghost">Learn More</Button>
+    </Card>
+  );
+}
+```
+
+**3. If using Tailwind CSS**, add the component paths to your `tailwind.config.ts`:
+
+```ts
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/@lotosui/claude-arm/dist/**/*.js', // include LotOS components
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+export default config;
+```
+
+---
+
+## Setup: Vite (React)
+
+**1. Install and configure:**
+
+```bash
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install @lotosui/claude-arm
+```
+
+**2. Import styles in `main.tsx`:**
+
+```tsx
+// src/main.tsx
+import '@lotosui/claude-arm/styles.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+```
+
+**3. Use components:**
+
+```tsx
+// src/App.tsx
+import { Button, Card, Input } from '@lotosui/claude-arm';
+
+function App() {
+  return (
+    <div style={{ padding: '2rem' }}>
+      <Card>
+        <Input placeholder="Search..." />
+        <Button variant="primary">Search</Button>
+      </Card>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## Theming
+
+LotOS UI uses CSS custom properties for its design tokens. Override them in your global CSS to match your brand:
+
+```css
+/* globals.css */
+:root {
+  /* Accent — default: Electric Red #E94560 */
+  --lotos-accent: #3b82f6;          /* override to blue */
+  --lotos-accent-hover: #2563eb;
+  --lotos-accent-active: #1d4ed8;
+  --lotos-accent-subtle: rgba(59, 130, 246, 0.12);
+  --lotos-accent-glow: rgba(59, 130, 246, 0.35);
+  --lotos-accent-glow-sm: rgba(59, 130, 246, 0.20);
+
+  /* Backgrounds */
+  --lotos-bg-primary: #ffffff;      /* override to light */
+  --lotos-bg-card: #f8fafc;
+
+  /* Foreground */
+  --lotos-fg-primary: #0f172a;
+  --lotos-fg-secondary: rgba(15, 23, 42, 0.72);
+}
+```
+
+The design system is dark-first by default (`#0D0F1E` background). Overriding `--lotos-bg-primary` and foreground tokens is all you need to create a light theme.
+
+---
+
+## Available components
+
+| Component | Import | Description |
+| --- | --- | --- |
+| `Button` | `{ Button }` | Primary, ghost, danger, outline variants |
+| `Badge` | `{ Badge }` | Status indicators: success, warning, error, info |
+| `Card` | `{ Card }` | Glass morphism surface container |
+| `Input` | `{ Input }` | Text input with label and validation |
+| `Select` | `{ Select }` | Dropdown selector |
+| `Modal` | `{ Modal }` | Accessible dialog overlay |
+| `Table` | `{ Table }` | Data table with sorting support |
+| `Progress` | `{ Progress }` | Progress bar / loading indicator |
+| `Alert` | `{ Alert }` | Dismissible status banners |
+| `Stat` | `{ Stat }` | KPI metric display card |
+| `Tabs` | `{ Tabs }` | Tabbed navigation |
+| `Toggle` | `{ Toggle }` | Boolean switch input |
+| `Avatar` | `{ Avatar }` | User or entity avatar |
+| `Breadcrumb` | `{ Breadcrumb }` | Navigation breadcrumb trail |
+| `Tooltip` | `{ Tooltip }` | Hover / focus tooltip |
+
+---
+
 ## MCP integration for AI agents
+
+Run the MCP server to expose component contracts to AI tools:
 
 ```bash
 pnpm --filter @lotosui/core build
@@ -45,17 +206,45 @@ Query a component contract:
 curl http://localhost:3100/components/button
 ```
 
+The MCP server returns JSON schemas that AI agents can use to generate valid component code without hallucinating props or variants.
+
+---
+
 ## Expansion tracks (status-aware)
 
 These tracks are useful for teams planning multi-language delivery:
 
-- `@lotosui/web-components` (prototype)
-- `lotos-laravel` (alpha)
-- Django / Flask / Spring / .NET / Go / C / C++ / Mojo (planned adapters using blueprint contracts)
+| Package | Status | Use when |
+| --- | --- | --- |
+| `@lotosui/web-components` | Prototype | You need cross-framework portability |
+| `lotos-laravel` | Alpha | PHP Laravel backend with LotOS contracts |
+| Django / Flask adapters | Planned | Python backend with contract-first UI |
+| Spring / .NET / Go adapters | Planned | Enterprise runtimes with shared design language |
+| C / C++ desktop shells | Alpha | Embedded or high-control native environments |
 
-Use the full runtime matrix and starter snippets here:
+See [Multi Runtime Guide](/docs/multi-runtime) for full runtime status and expansion paths.
 
-- [Multi Runtime Guide](/docs/multi-runtime)
+---
+
+## Troubleshooting
+
+**Styles not applying:**
+- Confirm `@lotosui/claude-arm/styles.css` is imported before your component code.
+- In Next.js, this import must be in `layout.tsx` (not inside a component).
+
+**TypeScript errors on props:**
+- Run `pnpm --filter @lotosui/claude-arm build` to generate updated type declarations.
+- Ensure `@types/react` is version 19+.
+
+**Dark mode not working:**
+- LotOS UI is dark-first. The `color-scheme: dark light` is set on `:root`.
+- To force light mode, add `color-scheme: light` to your own `:root` after the import.
+
+**Tailwind classes conflicting:**
+- LotOS uses prefixed classes (`.lotos-btn`, `.lotos-badge`). No conflicts with default Tailwind.
+- If using Tailwind's `preflight`, the LotOS reset is compatible.
+
+---
 
 ## Design + functional checklist
 
@@ -65,3 +254,12 @@ Before building a new screen:
 2. Apply design tokens and pattern section structure.
 3. Generate framework-safe snippets from component schemas.
 4. Validate with Sentinel warnings and runtime tests.
+
+**En espanol:**
+
+Antes de construir una nueva pantalla:
+
+1. Elige un runtime y patron desde MCP `/runtimes` + `/patterns`.
+2. Aplica design tokens y estructura de seccion del patron.
+3. Genera snippets seguros para el framework desde los schemas de componentes.
+4. Valida con las advertencias de Sentinel y tests de runtime.

@@ -109,11 +109,11 @@
 
 .btn.primary {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 48%),
-    linear-gradient(120deg, #0e8f71, #155eef 54%, #6d5ef8);
-  color: #fff;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 48%),
+    linear-gradient(120deg, var(--lotos-accent, #E94560), var(--lotos-ocean-blue, #0F3460) 60%);
+  color: var(--lotos-accent-fg, #fff);
   border-color: transparent;
-  box-shadow: 0 18px 34px rgba(21, 94, 239, 0.22);
+  box-shadow: 0 18px 34px rgba(233, 69, 96, 0.22);
 }
 
 .btn.paypal {
@@ -128,8 +128,8 @@
 .btn.ghost {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(248, 251, 255, 0.94));
-  color: #14314e;
-  border-color: #d6e3f5;
+  color: var(--lotos-ocean-blue, #14314e);
+  border-color: var(--lotos-border-strong, #d6e3f5);
 }
 
 .btn.button-like {

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fumadocs/content-collections": "^1.2.6",
+    "@lotosui/claude-arm": "workspace:*",
     "@repo/ui": "workspace:*",
     "fumadocs-core": "^16.6.5",
     "fumadocs-mdx": "^14.2.8",
