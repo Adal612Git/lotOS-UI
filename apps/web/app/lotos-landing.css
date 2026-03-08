@@ -224,10 +224,18 @@
 }
 
 .btn.ghost {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(248, 251, 255, 0.94));
-  color: var(--lotos-ocean-blue, #14314e);
-  border-color: var(--lotos-border-strong, #d6e3f5);
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f2644;
+  border-color: rgba(10, 36, 68, 0.22);
+  box-shadow: 0 2px 8px rgba(10, 36, 68, 0.07), 0 12px 24px rgba(21, 53, 83, 0.07);
+}
+
+.btn.ghost:hover,
+.btn.ghost:focus-visible {
+  background: #fff;
+  border-color: rgba(10, 36, 68, 0.38);
+  color: #071c2e;
+  box-shadow: 0 6px 18px rgba(10, 36, 68, 0.13);
 }
 
 .btn-runtime {

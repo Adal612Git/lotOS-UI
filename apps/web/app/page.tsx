@@ -229,17 +229,10 @@ export default async function HomePage() {
               para produccion, un CLI que genera puntos de partida reales y una arquitectura por capas
               desde docs abiertos hasta vault protegido — para que los compradores evaluen antes de pagar.
             </p>
-            {signedInEmail ? (
-              <p className="lead lead-compact">
-                <span className="en-only">Signed in as {signedInEmail}. Your vault, docs, and pricing path are connected from here.</span>
-                <span className="es-only">Conectado como {signedInEmail}. Tu vault, docs y ruta de precios quedan conectados desde aqui.</span>
-              </p>
-            ) : (
-              <p className="lead lead-compact">
-                <span className="en-only">The public layer stays open so teams can validate the system before paying for protected surfaces.</span>
-                <span className="es-only">La capa publica queda abierta para que los equipos validen el sistema antes de pagar por superficies protegidas.</span>
-              </p>
-            )}
+            <p className="lead lead-compact">
+              <span className="en-only">Built for teams that need speed, visual consistency, and scalability from the first deploy.</span>
+              <span className="es-only">Disenado para equipos que necesitan velocidad, consistencia visual y escalabilidad desde el primer deploy.</span>
+            </p>
             <div className="hero-language-grid">
               <article className="language-panel en-only">
                 <p className="section-label">React First</p>
@@ -273,17 +266,10 @@ export default async function HomePage() {
                 <span className="en-only">Pricing</span>
                 <span className="es-only">Precios</span>
               </Link>
-              {signedInEmail ? (
-                <Link href="/vault" className="btn ghost">
-                  <span className="en-only">Open Vault</span>
-                  <span className="es-only">Abrir Vault</span>
-                </Link>
-              ) : (
-                <AuthAction mode="signin" callbackUrl="/vault" className="btn ghost">
-                  <span className="en-only">Sign In With Google</span>
-                  <span className="es-only">Entrar con Google</span>
-                </AuthAction>
-              )}
+              <Link href="/demo" className="btn ghost">
+                <span className="en-only">Live Demos</span>
+                <span className="es-only">Demos en Vivo</span>
+              </Link>
               <Link href="/examples" className="btn ghost">
                 <span className="en-only">Examples</span>
                 <span className="es-only">Ejemplos</span>
