@@ -168,12 +168,6 @@ export default async function DocsHomePage() {
               estructurada, mensajeria segura en contratos y superficies UI reutilizables.
             </span>
           </p>
-          {signedInEmail ? (
-            <p className="hero-proof">
-              <span className="en-only">Signed in as {signedInEmail}. The docs domain can now open the commercial vault directly.</span>
-              <span className="es-only">Conectado como {signedInEmail}. El dominio de docs puede abrir el vault comercial directamente.</span>
-            </p>
-          ) : null}
           <div className="hero-actions">
             <Link href="/docs/start-here" className="lotos-btn lotos-btn--primary">
               <span className="en-only">Get Started</span>
