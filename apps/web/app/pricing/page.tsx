@@ -280,11 +280,19 @@ export default async function PricingPage({
             <strong>
               {pricingState === 'entitlement-check-failed'
                 ? 'Entitlement check temporarily unavailable.'
+                : pricingState === 'checkout-not-configured'
+                  ? 'Checkout is not configured yet.'
+                  : pricingState === 'invalid-checkout-plan'
+                    ? 'That checkout plan is invalid.'
                 : 'Upgrade required for that surface.'}
             </strong>
             <span>
               {pricingState === 'entitlement-check-failed'
                 ? 'The product degraded safely. You can still review pricing and contact sales while unlock checks recover.'
+                : pricingState === 'checkout-not-configured'
+                  ? 'The managed Lemon checkout still needs final configuration. Add your Lemon store slug or shared checkout URL in Vercel.'
+                  : pricingState === 'invalid-checkout-plan'
+                    ? 'The requested checkout route does not map to a paid plan. Use the pricing cards below instead.'
                 : 'That route needs a higher paid tier. Use the ladder below to choose the right access level.'}
             </span>
           </div>

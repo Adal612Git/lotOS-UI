@@ -18,6 +18,7 @@ const envSchema = z.object({
   SUPABASE_ANON_KEY: optionalString,
   SUPABASE_SERVICE_ROLE_KEY: optionalString,
   LEMON_WEBHOOK_SECRET: optionalString,
+  LEMON_STORE_SLUG: optionalString,
   LEMON_SOLO_VARIANT_ID: optionalString,
   LEMON_PRO_VARIANT_ID: optionalString,
   LEMON_LAUNCH_VARIANT_ID: optionalString,
@@ -40,6 +41,7 @@ const parsed = envSchema.parse({
   SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
   SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   LEMON_WEBHOOK_SECRET: process.env.LEMON_WEBHOOK_SECRET,
+  LEMON_STORE_SLUG: process.env.LEMON_STORE_SLUG,
   LEMON_SOLO_VARIANT_ID: process.env.LEMON_SOLO_VARIANT_ID,
   LEMON_PRO_VARIANT_ID: process.env.LEMON_PRO_VARIANT_ID,
   LEMON_LAUNCH_VARIANT_ID: process.env.LEMON_LAUNCH_VARIANT_ID,
@@ -71,6 +73,7 @@ export const env = {
   supabaseConfigured: Boolean(parsed.SUPABASE_URL && supabaseServerKey),
   lemonConfigured: Boolean(
     parsed.LEMON_WEBHOOK_SECRET &&
+    parsed.LEMON_STORE_SLUG &&
     parsed.LEMON_SOLO_VARIANT_ID &&
     parsed.LEMON_PRO_VARIANT_ID &&
     parsed.LEMON_LAUNCH_VARIANT_ID

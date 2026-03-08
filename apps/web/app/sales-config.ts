@@ -1,4 +1,5 @@
 import { env } from '../lib/env';
+import { buildManagedCheckoutPath, hasAutomaticCheckoutForPlan, usesNonLemonCheckoutFallback } from '../lib/checkout';
 
 export type SalesPlan = {
   id: string;
@@ -39,35 +40,18 @@ const linkOrFallback = (value: string | undefined, fallback: string) => {
 
 const hasNonEmptyValue = (value: string | undefined) => Boolean(value?.trim());
 
-function isLemonCheckoutUrl(value: string | undefined): boolean {
-  const normalized = value?.trim();
-
-  if (!normalized) {
-    return false;
-  }
-
-  try {
-    const url = new URL(normalized);
-    return /(^|\.)lemonsqueezy\.com$/i.test(url.hostname);
-  } catch {
-    return false;
-  }
-}
-
-const directCheckoutUrls = [
-  process.env.LOTOS_SOLO_CHECKOUT_URL,
-  process.env.LOTOS_PRO_CHECKOUT_URL,
-  process.env.LOTOS_LAUNCH_PACK_URL,
-].filter((value): value is string => hasNonEmptyValue(value));
-
-const directCheckoutConfigured = directCheckoutUrls.length > 0;
+const directCheckoutConfigured =
+  hasAutomaticCheckoutForPlan('solo') ||
+  hasAutomaticCheckoutForPlan('pro') ||
+  hasAutomaticCheckoutForPlan('launch_pack');
 const automaticUnlockConfigured =
   env.supabaseConfigured &&
-  env.lemonConfigured &&
-  directCheckoutConfigured &&
-  directCheckoutUrls.every(isLemonCheckoutUrl);
+  hasAutomaticCheckoutForPlan('solo') &&
+  hasAutomaticCheckoutForPlan('pro') &&
+  hasAutomaticCheckoutForPlan('launch_pack');
 
 function buildPaidActions(input: {
+  plan: 'solo' | 'pro' | 'launch_pack';
   checkoutUrl?: string;
   paypalUrl?: string;
   fallbackUrl: string;
@@ -75,13 +59,20 @@ function buildPaidActions(input: {
 }) {
   const checkoutUrl = input.checkoutUrl?.trim();
   const paypalUrl = input.paypalUrl?.trim();
-  const automaticUnlockSupportedForCheckout =
-    Boolean(checkoutUrl) && env.supabaseConfigured && env.lemonConfigured && isLemonCheckoutUrl(checkoutUrl);
+  const managedCheckoutUrl = hasAutomaticCheckoutForPlan(input.plan) ? buildManagedCheckoutPath(input.plan) : null;
+  const automaticUnlockSupportedForCheckout = Boolean(managedCheckoutUrl) && env.supabaseConfigured;
   const paymentActions: PaymentAction[] = [];
 
-  if (checkoutUrl) {
+  if (managedCheckoutUrl) {
     paymentActions.push({
       label: "Activar acceso ahora",
+      href: managedCheckoutUrl,
+      external: false,
+      tone: "primary",
+    });
+  } else if (checkoutUrl) {
+    paymentActions.push({
+      label: "Abrir checkout",
       href: checkoutUrl,
       external: true,
       tone: "primary",
@@ -107,26 +98,34 @@ function buildPaidActions(input: {
   }
 
   const primaryAction = paymentActions[0]!;
+  const providerNeedsMigration = usesNonLemonCheckoutFallback(input.plan);
 
   return {
     href: primaryAction.href,
     external: primaryAction.external,
     paymentActions,
-    checkoutHint: checkoutUrl
+    checkoutHint: managedCheckoutUrl
       ? automaticUnlockSupportedForCheckout
         ? paypalUrl
-          ? "Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
-          : "Checkout principal listo. El acceso se activa automaticamente despues del pago."
+          ? "Checkout principal listo via Lemon. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
+          : "Checkout principal listo via Lemon. El acceso se activa automaticamente despues del pago."
+        : "Checkout Lemon disponible, pero falta completar la configuracion segura del unlock."
+      : checkoutUrl
+        ? providerNeedsMigration
+          ? paypalUrl
+            ? "Tu checkout actual sigue cobrando, pero no desbloquea acceso automatico. Migra este plan a Lemon o agrega webhook/API real del proveedor actual. PayPal queda como respaldo."
+            : "Tu checkout actual sigue cobrando, pero no desbloquea acceso automatico. Migra este plan a Lemon o agrega webhook/API real del proveedor actual."
+          : paypalUrl
+            ? "Checkout principal listo. El acceso se activa automaticamente despues del pago; PayPal queda como respaldo."
+            : "Checkout principal listo. El acceso se activa automaticamente despues del pago."
         : paypalUrl
-          ? "Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia. PayPal queda como respaldo."
-          : "Checkout principal listo, pero este proveedor no desbloquea acceso automatico todavia."
-      : paypalUrl
         ? "PayPal listo como via de cobro. Agrega un checkout principal cuando quieras."
         : "Sin checkout directo configurado. El flujo cae a contacto manual.",
   };
 }
 
 const soloCheckout = buildPaidActions({
+  plan: 'solo',
   checkoutUrl: process.env.LOTOS_SOLO_CHECKOUT_URL,
   paypalUrl: process.env.LOTOS_SOLO_PAYPAL_URL,
   fallbackUrl: fallbackContact,
@@ -134,6 +133,7 @@ const soloCheckout = buildPaidActions({
 });
 
 const proCheckout = buildPaidActions({
+  plan: 'pro',
   checkoutUrl: process.env.LOTOS_PRO_CHECKOUT_URL,
   paypalUrl: process.env.LOTOS_PRO_PAYPAL_URL,
   fallbackUrl: fallbackContact,
@@ -141,6 +141,7 @@ const proCheckout = buildPaidActions({
 });
 
 const launchCheckout = buildPaidActions({
+  plan: 'launch_pack',
   checkoutUrl: process.env.LOTOS_LAUNCH_PACK_URL,
   paypalUrl: process.env.LOTOS_LAUNCH_PACK_PAYPAL_URL,
   fallbackUrl: fallbackDemo,
@@ -304,6 +305,7 @@ export const checkoutEnvKeys = [
   "SUPABASE_ANON_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "LEMON_WEBHOOK_SECRET",
+  "LEMON_STORE_SLUG",
   "LEMON_SOLO_VARIANT_ID",
   "LEMON_PRO_VARIANT_ID",
   "LEMON_LAUNCH_VARIANT_ID",

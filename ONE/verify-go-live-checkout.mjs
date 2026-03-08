@@ -40,6 +40,7 @@ const getValue = (key) => {
 };
 
 const hasValue = (key) => getValue(key).length > 0;
+const hasLemonStore = hasValue("LEMON_STORE_SLUG");
 const isLemonCheckoutUrl = (value) => {
   const normalized = value?.trim();
 
@@ -69,6 +70,9 @@ const hasSupabaseServerKey = hasValue("SUPABASE_SERVICE_ROLE_KEY") || hasValue("
 const soloDirectCheckout = hasValue("LOTOS_SOLO_CHECKOUT_URL");
 const proDirectCheckout = hasValue("LOTOS_PRO_CHECKOUT_URL");
 const launchDirectCheckout = hasValue("LOTOS_LAUNCH_PACK_URL");
+const soloAutomaticCheckout = (soloDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_SOLO_CHECKOUT_URL"))) || (hasLemonStore && hasValue("LEMON_SOLO_VARIANT_ID"));
+const proAutomaticCheckout = (proDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_PRO_CHECKOUT_URL"))) || (hasLemonStore && hasValue("LEMON_PRO_VARIANT_ID"));
+const launchAutomaticCheckout = (launchDirectCheckout && isLemonCheckoutUrl(getValue("LOTOS_LAUNCH_PACK_URL"))) || (hasLemonStore && hasValue("LEMON_LAUNCH_VARIANT_ID"));
 const anyDirectCheckout = soloDirectCheckout || proDirectCheckout || launchDirectCheckout;
 const anyFallbackPayment =
   hasValue("LOTOS_SOLO_PAYPAL_URL") ||
@@ -93,27 +97,27 @@ if (anyDirectCheckout && !hasValue("LEMON_WEBHOOK_SECRET")) {
   failures.push("LEMON_WEBHOOK_SECRET is required when direct checkout is enabled.");
 }
 
-if (soloDirectCheckout && !hasValue("LEMON_SOLO_VARIANT_ID")) {
+if ((soloDirectCheckout || hasLemonStore) && !hasValue("LEMON_SOLO_VARIANT_ID")) {
   failures.push("LEMON_SOLO_VARIANT_ID is required when LOTOS_SOLO_CHECKOUT_URL is enabled.");
 }
 
-if (soloDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_SOLO_CHECKOUT_URL"))) {
+if (!soloAutomaticCheckout && (soloDirectCheckout || hasLemonStore)) {
   failures.push("LOTOS_SOLO_CHECKOUT_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
-if (proDirectCheckout && !hasValue("LEMON_PRO_VARIANT_ID")) {
+if ((proDirectCheckout || hasLemonStore) && !hasValue("LEMON_PRO_VARIANT_ID")) {
   failures.push("LEMON_PRO_VARIANT_ID is required when LOTOS_PRO_CHECKOUT_URL is enabled.");
 }
 
-if (proDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_PRO_CHECKOUT_URL"))) {
+if (!proAutomaticCheckout && (proDirectCheckout || hasLemonStore)) {
   failures.push("LOTOS_PRO_CHECKOUT_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
-if (launchDirectCheckout && !hasValue("LEMON_LAUNCH_VARIANT_ID")) {
+if ((launchDirectCheckout || hasLemonStore) && !hasValue("LEMON_LAUNCH_VARIANT_ID")) {
   failures.push("LEMON_LAUNCH_VARIANT_ID is required when LOTOS_LAUNCH_PACK_URL is enabled.");
 }
 
-if (launchDirectCheckout && !isLemonCheckoutUrl(getValue("LOTOS_LAUNCH_PACK_URL"))) {
+if (!launchAutomaticCheckout && (launchDirectCheckout || hasLemonStore)) {
   failures.push("LOTOS_LAUNCH_PACK_URL must use a Lemon Squeezy checkout URL for automatic unlock.");
 }
 
@@ -141,6 +145,10 @@ if (!hasValue("LOTOS_OWNER_EMAILS")) {
 
 if (!existsSync(envLocalPath)) {
   warnings.push("apps/web/.env.local was not found. Using process environment only.");
+}
+
+if (!hasLemonStore) {
+  warnings.push("LEMON_STORE_SLUG is missing. Managed Lemon checkout routes cannot be generated yet.");
 }
 
 if (failures.length > 0) {
