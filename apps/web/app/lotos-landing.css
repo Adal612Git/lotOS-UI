@@ -15,25 +15,68 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 0;
+  gap: 16px;
 }
 
 .brand {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: #0d1f38;
+  flex-shrink: 0;
 }
 
 .top nav {
   display: flex;
-  gap: 14px;
+  gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .top a {
-  color: #33557a;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #1a3a5c;
   text-decoration: none;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(6px);
+  transition: background 140ms, border-color 140ms, color 140ms, box-shadow 140ms;
+  white-space: nowrap;
+}
+
+.top a:hover {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(21, 94, 239, 0.28);
+  color: #0d2a47;
+  box-shadow: 0 2px 8px rgba(20, 44, 71, 0.1);
+}
+
+/* Vault link stands out as CTA */
+.top a[href="/vault"] {
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240,249,255,0.92));
+  border-color: rgba(21, 94, 239, 0.32);
+  color: #1547c0;
+}
+
+/* Sign out link less prominent */
+.top a[href*="signout"] {
+  background: transparent;
+  border-color: transparent;
+  color: rgba(26, 58, 92, 0.55);
+  font-size: 12px;
+}
+.top a[href*="signout"]:hover {
+  background: rgba(255,255,255,0.7);
+  border-color: rgba(148,163,184,0.22);
+  color: #1a3a5c;
+  box-shadow: none;
 }
 
 .hero {

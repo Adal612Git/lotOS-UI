@@ -75,6 +75,8 @@ export default async function VaultPage() {
         <div className="brand">LotOS UI</div>
         <nav>
           <Link href="/">Home</Link>
+          <Link href="/docs">Docs</Link>
+          <Link href="/demo">Demos</Link>
           <Link href="/pricing">Pricing</Link>
           <a href="/api/auth/signout?callbackUrl=/">Sign Out</a>
         </nav>

@@ -231,10 +231,11 @@ export default async function PricingPage({
         <nav>
           <Link href="/">Home</Link>
           <Link href="/docs">Docs</Link>
-          <Link href="/multi-framework">Runtime Matrix</Link>
+          <Link href="/demo">Demos</Link>
+          <Link href="/examples">Examples</Link>
           {signedInEmail ? (
             <>
-              <Link href="/vault">Vault</Link>
+              <Link href="/vault">Open Vault</Link>
               <a href="/api/auth/signout?callbackUrl=/pricing">Sign Out</a>
             </>
           ) : (

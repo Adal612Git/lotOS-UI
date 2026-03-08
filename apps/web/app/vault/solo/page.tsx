@@ -77,6 +77,8 @@ export default async function SoloVaultPage() {
       <header className="top">
         <div className="brand">LotOS UI</div>
         <nav>
+          <Link href="/">Home</Link>
+          <Link href="/docs">Docs</Link>
           <Link href="/vault">Vault Home</Link>
           <Link href="/vault/pro">Pro</Link>
           <Link href="/pricing">Pricing</Link>

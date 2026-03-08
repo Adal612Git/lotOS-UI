@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="en-only">Early access</span>
               <span className="es-only">Acceso temprano</span>
             </p>
-            <strong>Solo from $149</strong>
+            <strong>Solo desde MX$59 / mes</strong>
             <span>
               <span className="en-only">Private acceleration, proof-first delivery, and no fake volume claims.</span>
               <span className="es-only">Aceleracion privada, entrega enfocada en prueba y sin claims falsos de volumen.</span>
