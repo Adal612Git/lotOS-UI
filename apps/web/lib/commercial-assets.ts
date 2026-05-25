@@ -22,6 +22,7 @@ function privateAssetCandidates(relativePath: string): readonly string[] {
   return customRoot
     ? [`${customRoot}/${relativePath}`]
     : [
+        `private-assets/${relativePath}`,
         `apps/web/private-assets/${relativePath}`,
         `packages/pro/.private-dist/${relativePath}`,
         `packages/pro/${relativePath}`,

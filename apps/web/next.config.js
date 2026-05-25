@@ -8,6 +8,9 @@ const repoRoot = path.join(__dirname, '../..');
 const nextConfig = {
   transpilePackages: ['@lotosui/core', '@lotosui/claude-arm', '@lotosui/registry'],
   outputFileTracingRoot: repoRoot,
+  outputFileTracingIncludes: {
+    '/api/download/[asset]': ['./private-assets/**/*'],
+  },
   webpack: (config) => {
     config.resolve ??= {};
     config.resolve.alias ??= {};
