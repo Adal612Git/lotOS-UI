@@ -1,0 +1,20 @@
+{
+  "id": "launch-exclusive-surfaces",
+  "name": "LotOS Full Exclusive Surfaces",
+  "tier": "launch_pack",
+  "version": "0.1.0",
+  "entries": [
+    "google-sheets-command-kit.json",
+    "microsoft-365-excel-web-kit.json",
+    "outlook-approval-console.json",
+    "executive-boardroom-surface.json",
+    "power-bi-executive-visual-pack.json",
+    "figma-token-sync-plugin.json"
+  ],
+  "positioning": "Full-only surfaces for integrated operator workflows and premium commercial delivery.",
+  "delivery": [
+    "private-zip",
+    "private-repository",
+    "customer-specific handoff"
+  ]
+}

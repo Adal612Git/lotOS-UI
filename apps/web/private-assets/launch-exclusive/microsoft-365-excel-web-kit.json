@@ -1,0 +1,21 @@
+{
+  "id": "microsoft-365-excel-web-kit",
+  "name": "Microsoft 365 Excel Web Kit",
+  "tier": "launch_pack",
+  "platform": "Microsoft 365 Excel Web",
+  "runtime": "typescript",
+  "purpose": "Upgrade shared Excel web workflows with Office Scripts hooks, collaboration states, and a browser-first operator shell.",
+  "deliveryMode": [
+    "Office Scripts recipe set",
+    "web layout shell",
+    "collaboration state guide",
+    "action panel map"
+  ],
+  "includes": [
+    "approval rail",
+    "status ribbon",
+    "multi-user task surface",
+    "browser-ready detail panel"
+  ],
+  "commercialAngle": "Enterprise-ready spreadsheet polish for teams already living in Microsoft 365."
+}

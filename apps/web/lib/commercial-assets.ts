@@ -21,7 +21,11 @@ function privateAssetCandidates(relativePath: string): readonly string[] {
   const customRoot = env.LOTOS_PRIVATE_ASSETS_ROOT?.trim();
   return customRoot
     ? [`${customRoot}/${relativePath}`]
-    : [`packages/pro/.private-dist/${relativePath}`];
+    : [
+        `apps/web/private-assets/${relativePath}`,
+        `packages/pro/.private-dist/${relativePath}`,
+        `packages/pro/${relativePath}`,
+      ];
 }
 
 export const protectedAssets: readonly ProtectedAsset[] = [

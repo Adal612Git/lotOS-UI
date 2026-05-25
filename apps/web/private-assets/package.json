@@ -1,0 +1,13 @@
+{
+  "name": "@lotosui/pro-private",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE.proprietary.txt",
+  "description": "Private proprietary asset layer for LotOS UI commercial delivery.",
+  "scripts": {
+    "verify": "node scripts/verify-private-surface.mjs",
+    "bundle": "node scripts/prepare-private-release.mjs",
+    "verify:bundle": "node scripts/verify-private-bundle.mjs"
+  }
+}

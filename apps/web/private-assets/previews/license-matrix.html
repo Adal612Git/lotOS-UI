@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LotOS UI License Matrix</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #10213a;
+    }
+    .sheet {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #d7e0ef;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 24px 80px rgba(16, 33, 58, 0.08);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+    p {
+      margin: 0 0 22px;
+      color: #4f6488;
+      line-height: 1.7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #e7edf7;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #6d82a3;
+    }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .free { background: #e1f0ff; color: #155e9f; }
+    .pro { background: #dff7e9; color: #156f47; }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <h1>LotOS UI distribution matrix</h1>
+    <p>
+      Use this sheet to explain, before purchase, what stays public and what is delivered
+      as a paid asset. It is safe to share because it does not expose the full premium payload.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Tier</th>
+          <th>License</th>
+          <th>How it is delivered</th>
+          <th>What the client receives</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core, CLI, React arm, adapters</td>
+          <td><span class="tag free">Free</span></td>
+          <td>MIT</td>
+          <td>Public repo / public install</td>
+          <td>Technical evaluation, public adoption, base implementation</td>
+        </tr>
+        <tr>
+          <td>Admin starter shell</td>
+          <td><span class="tag pro">Pro</span></td>
+          <td>Proprietary</td>
+          <td>Private ZIP or private repo</td>
+          <td>Premium layout shell and acceleration assets</td>
+        </tr>
+        <tr>
+          <td>Layout collection</td>
+          <td><span class="tag pro">Pro</span></td>
+          <td>Proprietary</td>
+          <td>Private ZIP or private repo</td>
+          <td>Reusable executive/operator shells</td>
+        </tr>
+        <tr>
+          <td>Industry kits</td>
+          <td><span class="tag pro">Pro</span></td>
+          <td>Proprietary</td>
+          <td>Private ZIP or private repo</td>
+          <td>Vertical presets for consulting and implementation</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

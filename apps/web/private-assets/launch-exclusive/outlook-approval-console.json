@@ -1,0 +1,21 @@
+{
+  "id": "outlook-approval-console",
+  "name": "Outlook Approval Console",
+  "tier": "launch_pack",
+  "platform": "Microsoft Outlook",
+  "runtime": "typescript",
+  "purpose": "Embed approval, triage, and next-action UI directly into email-driven workflows.",
+  "deliveryMode": [
+    "mail sidebar surface",
+    "decision action stack",
+    "approval state mapping",
+    "handoff note templates"
+  ],
+  "includes": [
+    "approval summary card",
+    "priority alert rail",
+    "owner assignment panel",
+    "context action buttons"
+  ],
+  "commercialAngle": "Turns operational email into a cleaner command surface instead of a message pile."
+}

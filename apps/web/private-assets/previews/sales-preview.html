@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LotOS UI Pro Preview</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #10213a;
+      --line: rgba(120, 155, 220, 0.22);
+      --ink: #e8eefc;
+      --muted: #9fb0d2;
+      --accent: #4dd2ff;
+      --accent-2: #86efac;
+      --warn: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(77, 210, 255, 0.16), transparent 34%),
+        radial-gradient(circle at 20% 20%, rgba(134, 239, 172, 0.12), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0b1730 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 48px 24px;
+    }
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(7, 17, 31, 0.88);
+      box-shadow: 0 24px 80px rgba(2, 8, 20, 0.5);
+      overflow: hidden;
+    }
+    .hero {
+      padding: 36px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+    .eyebrow, .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(16, 33, 58, 0.6);
+    }
+    h1 {
+      margin: 16px 0 12px;
+      font-size: 52px;
+      line-height: 1.02;
+      max-width: 10ch;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .hero-grid {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(16, 33, 58, 0.7), rgba(7, 17, 31, 0.85));
+    }
+    .metric {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      padding: 28px 36px 36px;
+    }
+    .stack h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .list {
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .badge.accent { background: rgba(77, 210, 255, 0.16); color: var(--accent); }
+    .badge.good { background: rgba(134, 239, 172, 0.16); color: var(--accent-2); }
+    .badge.warn { background: rgba(251, 191, 36, 0.14); color: var(--warn); }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .table th,
+    .table td {
+      text-align: left;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(120, 155, 220, 0.12);
+    }
+    .table th { color: var(--muted); font-weight: 600; }
+    @media (max-width: 920px) {
+      .hero, .stack { grid-template-columns: 1fr; }
+      h1 { font-size: 38px; }
+      .metric { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">LotOS UI Pro Layer</span>
+        <h1>Premium control surfaces that are ready to charge for.</h1>
+        <p>
+          This preview demonstrates the paid asset layer: premium layouts,
+          implementation accelerators, and industry-tuned starter shells that sit on top
+          of the public LotOS UI contract system.
+        </p>
+        <div class="metric">
+          <div class="card">
+            <strong>3</strong>
+            <span>Paid packs separated today</span>
+          </div>
+          <div class="card">
+            <strong>30</strong>
+            <span>Public React components underneath</span>
+          </div>
+          <div class="card">
+            <strong>6</strong>
+            <span>Server-side runtimes to pair with delivery</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-grid">
+        <div class="card">
+          <h2>Commercial split</h2>
+          <table class="table">
+            <thead>
+              <tr><th>Surface</th><th>License</th><th>Delivery</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Core + CLI</td><td>MIT</td><td>Public</td></tr>
+              <tr><td>Pro layouts</td><td>Proprietary</td><td>Private ZIP</td></tr>
+              <tr><td>Industry kits</td><td>Proprietary</td><td>Private repo</td></tr>
+            </tbody>
+          </table>
+          <span class="badge accent">Sellable Now</span>
+        </div>
+        <div class="card">
+          <h2>Recommended package</h2>
+          <div class="list">
+            <span>1. Export the pro bundle.</span>
+            <span>2. Pair it with a generated starter.</span>
+            <span>3. Deliver through a private channel.</span>
+            <span>4. Keep the MIT layer public for adoption.</span>
+          </div>
+          <span class="badge good">Full Signature</span>
+        </div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="card">
+        <h2>Admin Starter</h2>
+        <div class="list">
+          <span>Control center shell</span>
+          <span>Operator dashboard layout</span>
+          <span>Premium information density</span>
+          <span>Hooks into runtime-generated starters</span>
+        </div>
+        <span class="badge accent">Paid Asset</span>
+      </div>
+      <div class="card">
+        <h2>Layout Collection</h2>
+        <div class="list">
+          <span>Executive briefing layout</span>
+          <span>Operator triad layout</span>
+          <span>Reusable for web and desktop shells</span>
+          <span>Low-friction demo surface for clients</span>
+        </div>
+        <span class="badge good">Reusable</span>
+      </div>
+      <div class="card">
+        <h2>Industry Kits</h2>
+        <div class="list">
+          <span>Finance ops preset</span>
+          <span>Health ops preset</span>
+          <span>Roadmap for more vertical packs</span>
+          <span>Easy upsell for consulting delivery</span>
+        </div>
+        <span class="badge warn">Expandable</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

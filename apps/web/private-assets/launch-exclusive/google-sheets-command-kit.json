@@ -1,0 +1,21 @@
+{
+  "id": "google-sheets-command-kit",
+  "name": "Google Sheets Command Kit",
+  "tier": "launch_pack",
+  "platform": "Google Sheets",
+  "runtime": "typescript",
+  "purpose": "Turn operational spreadsheets into a premium command surface with sidebar actions, KPI ribbons, and filter rails.",
+  "deliveryMode": [
+    "Apps Script sidebar shell",
+    "named range map",
+    "sheet formatting tokens",
+    "workflow action menu"
+  ],
+  "includes": [
+    "command ribbon",
+    "review queue table",
+    "detail sidebar",
+    "owner action strip"
+  ],
+  "commercialAngle": "Spreadsheet modernization without forcing a full app rewrite."
+}

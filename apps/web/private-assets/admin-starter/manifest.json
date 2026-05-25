@@ -1,0 +1,22 @@
+{
+  "id": "pro-admin-starter",
+  "name": "LotOS Pro Admin Starter",
+  "tier": "pro",
+  "version": "0.1.0",
+  "entry": "dashboard-shell.html",
+  "recommendedRuntimes": [
+    "react",
+    "php-laravel",
+    "python-django",
+    "java-spring",
+    "dotnet-razor"
+  ],
+  "primaryComponents": [
+    "card",
+    "stat",
+    "table",
+    "button",
+    "toast",
+    "breadcrumbs"
+  ]
+}

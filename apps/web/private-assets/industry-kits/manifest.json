@@ -1,0 +1,12 @@
+{
+  "id": "pro-industry-kits",
+  "name": "LotOS Pro Industry Kits",
+  "tier": "pro",
+  "version": "0.1.0",
+  "kits": [
+    "finance-ops-kit.json",
+    "health-ops-kit.json",
+    "excel-lotus-grid-kit.json",
+    "openoffice-calc-command-kit.json"
+  ]
+}

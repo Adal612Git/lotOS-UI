@@ -1,0 +1,41 @@
+{
+  "id": "openoffice-calc-command-kit",
+  "name": "OpenOffice Calc Command Kit",
+  "platform": "OpenOffice / LibreOffice Calc",
+  "tier": "pro",
+  "purpose": "Upgrade Calc-based operational sheets with a cleaner command-center layout and low-friction macro wiring.",
+  "implementationEase": "high",
+  "deliveryMode": [
+    "sheet layout blueprint",
+    "cell style system",
+    "macro button placement map",
+    "sidebar-like detail zones"
+  ],
+  "uiPatterns": [
+    "top command strip",
+    "risk monitor tiles",
+    "task queue table",
+    "alert rail",
+    "daily actions panel"
+  ],
+  "buildHints": {
+    "recommendedSheets": [
+      "ControlRoom",
+      "DataFeed",
+      "Alerts",
+      "Macros"
+    ],
+    "macroHooks": [
+      "SyncControlRoom",
+      "OpenAlertInspector",
+      "ClearCompletedQueue"
+    ],
+    "namedRanges": [
+      "LOTOS_ALERT_COUNT",
+      "LOTOS_QUEUE_SOURCE",
+      "LOTOS_OWNER_FILTER",
+      "LOTOS_ACTION_TARGET"
+    ]
+  },
+  "value": "Turns utilitarian Calc files into a cleaner, easier-to-adopt operational interface."
+}

@@ -1,0 +1,65 @@
+{
+  "package": "@lotosui/pro-private",
+  "exportedAt": "2026-03-05T00:19:31.895Z",
+  "releaseManifest": {
+    "id": "lotos-pro-surface",
+    "name": "LotOS UI Pro Surface",
+    "tier": "pro",
+    "version": "0.1.0",
+    "license": "Proprietary",
+    "distribution": [
+      "private-zip",
+      "private-repository"
+    ],
+    "includes": [
+      {
+        "id": "pro-admin-starter",
+        "path": "packages/pro/admin-starter",
+        "type": "asset-pack",
+        "notes": "Premium control surface starter shell."
+      },
+      {
+        "id": "pro-layouts",
+        "path": "packages/pro/layouts",
+        "type": "asset-pack",
+        "notes": "Reusable executive and operator layout shells."
+      },
+      {
+        "id": "pro-industry-kits",
+        "path": "packages/pro/industry-kits",
+        "type": "asset-pack",
+        "notes": "Finance and health-oriented config packs."
+      },
+      {
+        "id": "full-launch-exclusive",
+        "path": "packages/pro/launch-exclusive",
+        "type": "asset-pack",
+        "notes": "Full Signature-only surfaces for Sheets, Microsoft 365, Outlook, Power BI, Figma, and executive workflows."
+      },
+      {
+        "id": "pro-previews",
+        "path": "packages/pro/previews",
+        "type": "sales-preview",
+        "notes": "Visual HTML previews for pre-sale and demos."
+      }
+    ],
+    "deliveryRules": [
+      "Do not publish these assets to the public npm registry.",
+      "Move this payload to a private channel before charging customers.",
+      "Pair with implementation services or customer-specific generated starters."
+    ],
+    "recommendedCommercialOffers": [
+      "Solo license",
+      "Pro license",
+      "Full Signature",
+      "Custom implementation"
+    ]
+  },
+  "delivery": {
+    "intendedChannels": [
+      "private-zip",
+      "private-repository"
+    ],
+    "note": "Do not publish this payload to a public package registry."
+  }
+}
