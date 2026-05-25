@@ -1,13 +1,18 @@
 'use client';
 
 import type { FormEvent } from 'react';
-import { useState, useTransition } from 'react';
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 
 type TesterAccessFormProps = {
   active: boolean;
+  autoUnlock: boolean;
   configured: boolean;
   expiresAt: string | null;
+  loginHref: string;
+  signedIn: boolean;
 };
+
+const storedPhoneKey = 'lotos_team_access_phone';
 
 function formatDate(value: string | null) {
   if (!value) {
@@ -25,15 +30,22 @@ function formatDate(value: string | null) {
   }).format(date);
 }
 
-export function TesterAccessForm({ active, configured, expiresAt }: TesterAccessFormProps) {
+export function TesterAccessForm({
+  active,
+  autoUnlock,
+  configured,
+  expiresAt,
+  loginHref,
+  signedIn,
+}: TesterAccessFormProps) {
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState<string | null>(
     active ? `Team QA access is active${formatDate(expiresAt) ? ` until ${formatDate(expiresAt)}` : ''}.` : null
   );
   const [isPending, startTransition] = useTransition();
+  const autoUnlockAttempted = useRef(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const activateAccess = useCallback((phoneToActivate: string) => {
     setStatus(null);
 
     startTransition(async () => {
@@ -42,7 +54,7 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phone }),
+        body: JSON.stringify({ phone: phoneToActivate }),
       });
       const result = (await response.json()) as {
         ok?: boolean;
@@ -58,6 +70,9 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
       }
 
       setPhone('');
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.removeItem(storedPhoneKey);
+      }
       const formattedExpiration = formatDate(result.expiresAt ?? null);
 
       if (result.persisted) {
@@ -75,6 +90,36 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
         }.`
       );
     });
+  }, []);
+
+  useEffect(() => {
+    if (!signedIn || !autoUnlock || !configured || active || autoUnlockAttempted.current) {
+      return;
+    }
+
+    autoUnlockAttempted.current = true;
+    const storedPhone = window.sessionStorage.getItem(storedPhoneKey);
+
+    if (!storedPhone) {
+      setStatus('Google sign-in is ready. Enter the authorized phone to finish Team QA unlock.');
+      return;
+    }
+
+    setPhone(storedPhone);
+    setStatus('Google sign-in complete. Activating Team QA access...');
+    activateAccess(storedPhone);
+  }, [activateAccess, active, autoUnlock, configured, signedIn]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!signedIn) {
+      window.sessionStorage.setItem(storedPhoneKey, phone);
+      window.location.assign(loginHref);
+      return;
+    }
+
+    activateAccess(phone);
   };
 
   const handleClear = () => {
@@ -111,7 +156,7 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
 
       <div className="hero-actions compact">
         <button type="submit" className="btn primary" disabled={!configured || isPending}>
-          {isPending ? 'Activating...' : 'Unlock Team QA'}
+          {isPending ? 'Activating...' : signedIn ? 'Unlock Team QA' : 'Continue with Google'}
         </button>
         <a href="/vault" className="btn ghost">
           Open Vault
@@ -124,9 +169,9 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
       </div>
 
       <p className="grant-note">
-        This creates a temporary browser unlock and saves a 30-day QA entitlement for this Google account when
-        the database is available. It does not create a paid entitlement or replace checkout, webhook, or buyer
-        access logic.
+        {signedIn
+          ? 'This creates a temporary browser unlock and saves a 30-day QA entitlement for this Google account when the database is available. It does not create a paid entitlement or replace checkout, webhook, or buyer access logic.'
+          : 'Enter the authorized phone first. Google sign-in runs next, then this page automatically saves the 30-day QA entitlement for that Google account.'}
       </p>
 
       {status ? <p className="grant-status">{status}</p> : null}

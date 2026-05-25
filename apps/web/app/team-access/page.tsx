@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { authOptions } from '../../auth-options';
 import { normalizeEmail } from '../../lib/owner';
 import { buildRouteMetadata } from '../../lib/seo';
@@ -17,16 +16,18 @@ export const metadata = buildRouteMetadata({
   path: '/team-access',
 });
 
-export default async function TeamAccessPage() {
+export default async function TeamAccessPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ autoUnlock?: string }>;
+}) {
+  const params = await searchParams;
   const session = await getServerSession(authOptions);
   const email = normalizeEmail(session?.user?.email);
-
-  if (!email) {
-    redirect('/login?callbackUrl=/team-access');
-  }
-
-  const testerAccess = await getActiveTesterAccess(email);
+  const testerAccess = email ? await getActiveTesterAccess(email) : null;
   const configured = isTesterAccessConfigured();
+  const loginHref = `/api/auth/signin/google?callbackUrl=${encodeURIComponent('/team-access?autoUnlock=1')}`;
+  const signedIn = Boolean(email);
 
   return (
     <main className="landing pricing-page">
@@ -37,23 +38,34 @@ export default async function TeamAccessPage() {
           <Link href="/vault" className="nav-link nav-link--cta">Vault</Link>
           <Link href="/playground" className="nav-link nav-link--components">Playground</Link>
           <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
-          <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
+          {signedIn ? (
+            <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
+          ) : (
+            <Link href={loginHref} className="nav-link nav-link--muted">Sign In</Link>
+          )}
         </nav>
       </header>
 
       <section className="hero compact">
         <p className="kicker">Internal QA</p>
-        <h1>Register the tester phone once, save QA access, and validate the full premium surface.</h1>
-        <p className="lead">
-          Signed in as <strong>{email}</strong>. This page verifies an authorized tester phone, saves a 30-day
-          Full Signature QA entitlement for this Google account, and sets a temporary browser unlock so the team
-          can evaluate the landing, vault, demos, playground, templates, and premium routes without waiting for a
-          paid checkout event.
-        </p>
+        <h1>Enter the tester phone, sign in with Google, and get Full Signature QA automatically.</h1>
+        {signedIn ? (
+          <p className="lead">
+            Signed in as <strong>{email}</strong>. This page verifies an authorized tester phone, saves a 30-day
+            Full Signature QA entitlement for this Google account, and sets a temporary browser unlock so the team
+            can evaluate the landing, vault, demos, playground, templates, and premium routes without waiting for a
+            paid checkout event.
+          </p>
+        ) : (
+          <p className="lead">
+            Start with the authorized tester phone. The next step is Google sign-in, and when Google returns with
+            the tester email this page saves the 30-day Full Signature QA entitlement automatically.
+          </p>
+        )}
         <div className="payment-meta" aria-label="Team access state">
           <span className="payment-chip ready accent-emerald">Full Signature QA</span>
-          <span className="payment-chip manual accent-amber">DB grant + cookie</span>
-          <span className="payment-chip alt accent-cyan">Google session required</span>
+          <span className="payment-chip manual accent-amber">Phone first</span>
+          <span className="payment-chip alt accent-cyan">DB grant + cookie</span>
         </div>
       </section>
 
@@ -63,8 +75,11 @@ export default async function TeamAccessPage() {
           <h2>Activate phone-based QA access</h2>
           <TesterAccessForm
             active={Boolean(testerAccess)}
+            autoUnlock={params?.autoUnlock === '1'}
             configured={configured}
             expiresAt={testerAccess?.expiresAt ?? null}
+            loginHref={loginHref}
+            signedIn={signedIn}
           />
         </article>
 
