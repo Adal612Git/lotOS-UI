@@ -37,12 +37,23 @@ Reposicionar LotOS UI como un sistema de product surfaces para apps creadas con 
 - `npm run lint`: OK
 - `npm run build`: OK
 
-## Pendiente despues del deploy
+## Resultados produccion
 
-- Verificar HTTP de `/`, `/pricing`, `/demo/student-control`, `/demo/components` y `/team-access`.
-- Revisar visualmente en produccion que la home ya no abre con inventario como mensaje principal.
-- Mantener como trabajo futuro real:
-  - publicar alias serio `@lotosui/react`
-  - reemplazar selects nativos restantes
-  - construir `DataGridPro`, `CommandShell` y `ReportSurface`
-  - auditar fallbacks Pro contra componentes reales
+- Deploy Vercel produccion: OK
+  - Production deployment: `https://lotos-jyvk9bmhv-adal666s-projects.vercel.app`
+  - Alias publico: `https://lotos-ui.vercel.app`
+- HTTP `https://lotos-ui.vercel.app/`: `200 OK`
+- HTTP `https://lotos-ui.vercel.app/pricing`: `200 OK`
+- HTTP `https://lotos-ui.vercel.app/demo/student-control`: `200 OK`
+- HTTP `https://lotos-ui.vercel.app/demo/components`: `200 OK`
+- HTTP `https://lotos-ui.vercel.app/team-access`: `200 OK`
+- Smoke QA por telefono contra produccion: OK
+- La home desplegada contiene el nuevo posicionamiento: `De pantalla generada a producto vendible`.
+- Pricing desplegado ya no muestra el bloque publico de variables de entorno.
+
+## Pendiente real
+
+- Publicar alias serio `@lotosui/react`.
+- Reemplazar selects nativos restantes.
+- Construir `DataGridPro`, `CommandShell` y `ReportSurface`.
+- Auditar fallbacks Pro contra componentes reales.
