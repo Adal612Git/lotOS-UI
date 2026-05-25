@@ -49,8 +49,8 @@ const lifecycle = requireMarkers('lifecycle-copy', 'apps/web/lib/entitlement-lif
 ]);
 
 const download = requireMarkers('download-route', 'apps/web/app/api/download/[asset]/route.ts', [
-  'getServerSession',
-  'canAccessPremium',
+  'resolveCurrentAccess',
+  'accessDecision.allowed',
   'Cache-Control',
   'private, no-store',
 ]);

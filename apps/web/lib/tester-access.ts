@@ -3,17 +3,23 @@ import { cookies } from 'next/headers';
 import { env } from './env';
 import { normalizeEmail } from './owner';
 import { planSatisfies, type CommercialPlan } from './plans';
+import {
+  bundledTesterPhoneHashes,
+  getTesterPhoneCandidates,
+  isTesterPhoneHashAuthorized,
+  normalizeTesterPhone,
+  testerAccessMaxAgeSeconds,
+  TESTER_ACCESS_COOKIE,
+  TESTER_ACCESS_PLAN,
+  TESTER_ACCESS_SOURCE,
+} from './tester-access-policy';
 
-export const TESTER_ACCESS_COOKIE = 'lotos_tester_access';
-export const TESTER_ACCESS_PLAN: CommercialPlan = 'launch_pack';
-export const TESTER_ACCESS_SOURCE = 'manual_owner_test:team_phone';
-
-const testerAccessMaxAgeSeconds = 14 * 24 * 60 * 60;
-
-const bundledTesterPhoneHashes = [
-  'e91fb357689946b6d11ef4fe1cd323a85b4f6e928eadae4c9f710d8b366082ed',
-  'e81544a50cca0c69bd09e5ba7fe30def53cf40f9824acea2f270f95747fb7cc2',
-] as const;
+export {
+  normalizeTesterPhone,
+  TESTER_ACCESS_COOKIE,
+  TESTER_ACCESS_PLAN,
+  TESTER_ACCESS_SOURCE,
+} from './tester-access-policy';
 
 type TesterAccessPayload = {
   v: 1;
@@ -46,43 +52,8 @@ export function isTesterAccessConfigured(): boolean {
   return Boolean(getTesterSigningSecret() && getAuthorizedTesterPhoneHashes().size > 0);
 }
 
-export function normalizeTesterPhone(value: string | null | undefined): string | null {
-  if (!value) {
-    return null;
-  }
-
-  const digits = value.replace(/\D/g, '');
-  const normalized = digits.startsWith('00') ? digits.slice(2) : digits;
-
-  if (normalized.length < 10 || normalized.length > 15) {
-    return null;
-  }
-
-  return normalized;
-}
-
 export function hashTesterPhone(normalizedPhone: string): string {
   return createHash('sha256').update(normalizedPhone).digest('hex');
-}
-
-function getPhoneHashCandidates(normalizedPhone: string): string[] {
-  const candidates = new Set([normalizedPhone]);
-
-  if (normalizedPhone.length === 10) {
-    candidates.add(`52${normalizedPhone}`);
-    candidates.add(`521${normalizedPhone}`);
-    candidates.add(`57${normalizedPhone}`);
-  }
-
-  if (normalizedPhone.startsWith('52') && normalizedPhone.length === 12) {
-    candidates.add(`521${normalizedPhone.slice(2)}`);
-  }
-
-  if (normalizedPhone.startsWith('521') && normalizedPhone.length === 13) {
-    candidates.add(`52${normalizedPhone.slice(3)}`);
-  }
-
-  return [...candidates].map(hashTesterPhone);
 }
 
 export function authorizeTesterPhone(value: string | null | undefined): { phoneHash: string } | null {
@@ -92,7 +63,7 @@ export function authorizeTesterPhone(value: string | null | undefined): { phoneH
   }
 
   const authorizedPhoneHashes = getAuthorizedTesterPhoneHashes();
-  const phoneHash = getPhoneHashCandidates(normalizedPhone).find((candidate) =>
+  const phoneHash = getTesterPhoneCandidates(normalizedPhone).map(hashTesterPhone).find((candidate) =>
     authorizedPhoneHashes.has(candidate)
   );
 
@@ -121,7 +92,7 @@ export function createTesterAccessToken(input: {
   if (!secret) {
     throw new Error('Tester access signing secret is not configured.');
   }
-  if (!getAuthorizedTesterPhoneHashes().has(input.phoneHash)) {
+  if (!isTesterPhoneHashAuthorized(input.phoneHash, env.testerPhoneHashes)) {
     throw new Error('Tester phone is not authorized.');
   }
 
@@ -186,7 +157,7 @@ export function verifyTesterAccessToken(
     payload.v !== 1 ||
     payload.role !== 'team_qa' ||
     (payloadEmail && email && payloadEmail !== email) ||
-    !getAuthorizedTesterPhoneHashes().has(payload.phoneHash)
+    !isTesterPhoneHashAuthorized(payload.phoneHash, env.testerPhoneHashes)
   ) {
     return null;
   }

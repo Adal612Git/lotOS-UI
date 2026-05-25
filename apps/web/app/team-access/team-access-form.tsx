@@ -54,27 +54,32 @@ export function TesterAccessForm({ active, configured, expiresAt, signedIn }: Te
       };
 
       if (!response.ok || !result.ok) {
-        setStatus(result.error ?? 'Could not activate tester access.');
+        setStatus(
+          `No se pudo activar QA: ${result.error ?? 'telefono no autorizado o formato invalido.'} Revisa el numero e intenta otra vez.`
+        );
         return;
       }
 
       setPhone('');
       const formattedExpiration = formatDate(result.expiresAt ?? null);
+      const successUrl = '/team-access?activated=1';
 
       if (result.persisted) {
         setStatus(
-          `Team QA access activated and saved in the database. Full Signature unlock is ready${
-            formattedExpiration ? ` until ${formattedExpiration}` : ''
+          `QA activo y guardado en BDD. Full Signature esta listo${
+            formattedExpiration ? ` hasta ${formattedExpiration}` : ''
           }.`
         );
+        window.location.assign(successUrl);
         return;
       }
 
       setStatus(
-        `${result.warning ?? 'Team QA access activated for this browser.'} Full Signature unlock is ready${
-          formattedExpiration ? ` until ${formattedExpiration}` : ''
+        `${result.warning ?? 'QA activo en este navegador.'} Full Signature esta listo${
+          formattedExpiration ? ` hasta ${formattedExpiration}` : ''
         }.`
       );
+      window.location.assign(successUrl);
     });
   };
 
@@ -83,7 +88,8 @@ export function TesterAccessForm({ active, configured, expiresAt, signedIn }: Te
 
     startTransition(async () => {
       await fetch('/api/tester-access', { method: 'DELETE' });
-      setStatus('Tester access cookie cleared for this browser.');
+      setStatus('Acceso QA limpiado en este navegador.');
+      window.location.assign('/team-access?cleared=1');
     });
   };
 
@@ -97,12 +103,12 @@ export function TesterAccessForm({ active, configured, expiresAt, signedIn }: Te
       ) : null}
 
       <label className="field">
-        <span>Authorized tester phone</span>
+        <span>Telefono autorizado</span>
         <input
           type="tel"
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
-          placeholder="+52 ... or +57 ..."
+          placeholder="+52 ..., 52 ..., con espacios o guiones"
           autoComplete="tel"
           inputMode="tel"
           disabled={!configured || isPending}
@@ -112,22 +118,22 @@ export function TesterAccessForm({ active, configured, expiresAt, signedIn }: Te
 
       <div className="hero-actions compact">
         <button type="submit" className="btn primary" disabled={!configured || isPending}>
-          {isPending ? 'Activating...' : 'Activate Full QA'}
+          {isPending ? 'Activando...' : 'Activar QA completo'}
         </button>
         <a href="/vault" className="btn ghost">
-          Open Vault
+          Abrir Vault
         </a>
         {active ? (
           <button type="button" className="btn ghost" onClick={handleClear} disabled={isPending}>
-            Clear QA Cookie
+            Limpiar QA
           </button>
         ) : null}
       </div>
 
       <p className="grant-note">
         {signedIn
-          ? 'This creates a temporary browser unlock and saves a 30-day QA entitlement for this Google account when the database is available. It does not create a paid entitlement or replace checkout, webhook, or buyer access logic.'
-          : 'Enter the authorized phone once. This browser gets temporary Full Signature QA access without requiring Google sign-in.'}
+          ? 'Activa QA en este navegador y, si Google esta activo, intenta guardar el grant temporal para ese correo. No reemplaza checkout ni compras reales.'
+          : 'Mete el telefono autorizado una sola vez. Este navegador recibe Full Signature QA temporal sin iniciar sesion con Google.'}
       </p>
 
       {status ? <p className="grant-status">{status}</p> : null}

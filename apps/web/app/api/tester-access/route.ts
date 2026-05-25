@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../../../auth-options';
+import { resolveCurrentAccess } from '../../../lib/access-resolver';
 import { recordEntitlementAuditEvent } from '../../../lib/entitlement-audit';
 import { formatEntitlementLogError, upsertEntitlement } from '../../../lib/entitlements';
 import { normalizeEmail } from '../../../lib/owner';
@@ -8,6 +9,7 @@ import {
   authorizeTesterPhone,
   createTesterAccessToken,
   getExpiredTesterAccessCookieOptions,
+  getActiveTesterAccess,
   getTesterAccessCookieOptions,
   isTesterAccessConfigured,
   TESTER_ACCESS_COOKIE,
@@ -23,6 +25,25 @@ const TEAM_QA_INTERNAL_NOTE = 'Automatic team QA grant from authorized phone unl
 type TesterAccessRequest = {
   phone?: unknown;
 };
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  const email = normalizeEmail(session?.user?.email);
+  const qaCookie = await getActiveTesterAccess(email);
+  const access = await resolveCurrentAccess('launch_pack');
+
+  return Response.json({
+    ok: true,
+    configured: isTesterAccessConfigured(),
+    qaCookieDetected: Boolean(qaCookie),
+    tier: access.tier,
+    source: access.source,
+    expiresAt: access.expiresAt,
+    allowed: access.allowed,
+    capabilities: access.capabilities,
+    warnings: access.warnings,
+  });
+}
 
 async function persistTesterEntitlement(input: {
   email: string;

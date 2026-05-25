@@ -1,6 +1,8 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { authOptions } from '../../auth-options';
+import { resolveCurrentAccess } from '../../lib/access-resolver';
+import type { AccessCapabilities } from '../../lib/access-policy';
 import { normalizeEmail } from '../../lib/owner';
 import { buildRouteMetadata } from '../../lib/seo';
 import { getActiveTesterAccess, isTesterAccessConfigured } from '../../lib/tester-access';
@@ -16,12 +18,95 @@ export const metadata = buildRouteMetadata({
   path: '/team-access',
 });
 
-export default async function TeamAccessPage() {
+type TeamAccessSearchParams = {
+  activated?: string;
+  cleared?: string;
+  error?: string;
+  state?: string;
+  next?: string;
+};
+
+const qaRoutes: Array<{
+  href: string;
+  label: string;
+  body: string;
+  capability: keyof AccessCapabilities;
+  primary?: boolean;
+}> = [
+  {
+    href: '/vault',
+    label: 'Abrir Vault',
+    body: 'Entrada principal para ver estado de acceso, tiers y rutas premium.',
+    capability: 'vault',
+    primary: true,
+  },
+  {
+    href: '/vault/launch',
+    label: 'Abrir Full / Launch',
+    body: 'Superficie Full Signature con assets exclusivos launch_pack.',
+    capability: 'vaultFull',
+    primary: true,
+  },
+  {
+    href: '/playground',
+    label: 'Abrir Playground',
+    body: 'Comparador de componentes y casos de uso para probar con IA.',
+    capability: 'playground',
+  },
+  {
+    href: '/templates',
+    label: 'Abrir Templates',
+    body: 'Galeria de plantillas, industrias, prompts y runtimes.',
+    capability: 'templates',
+  },
+  {
+    href: '/demo/components',
+    label: 'Catalogo de Componentes',
+    body: 'Showcase visual de componentes que Victor estaba buscando.',
+    capability: 'componentCatalog',
+  },
+  {
+    href: '/api/download/sales-preview',
+    label: 'Descarga de prueba',
+    body: 'Asset protegido para confirmar que downloads ya no dan 401/403/404.',
+    capability: 'downloads',
+  },
+];
+
+function formatDate(value: string | null) {
+  if (!value) {
+    return 'sin vencimiento registrado';
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return 'vencimiento invalido';
+  }
+
+  return new Intl.DateTimeFormat('es-MX', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+}
+
+function booleanLabel(value: boolean) {
+  return value ? 'si' : 'no';
+}
+
+export default async function TeamAccessPage({
+  searchParams,
+}: {
+  searchParams?: Promise<TeamAccessSearchParams>;
+}) {
+  const params = await searchParams;
   const session = await getServerSession(authOptions);
   const email = normalizeEmail(session?.user?.email);
   const testerAccess = await getActiveTesterAccess(email);
+  const access = await resolveCurrentAccess('launch_pack');
   const configured = isTesterAccessConfigured();
   const signedIn = Boolean(email);
+  const qaActive = Boolean(testerAccess);
+  const isFull = access.capabilities.vaultFull;
 
   return (
     <main className="landing pricing-page">
@@ -42,73 +127,119 @@ export default async function TeamAccessPage() {
 
       <section className="hero compact">
         <p className="kicker">Internal QA</p>
-        <h1>Enter the tester phone once and unlock Full Signature QA in this browser.</h1>
+        <h1>Acceso QA simple: telefono autorizado, activar, abrir Full.</h1>
         {signedIn ? (
           <p className="lead">
-            Signed in as <strong>{email}</strong>. This page verifies an authorized tester phone, saves a 30-day
-            Full Signature QA entitlement for this Google account, and sets a temporary browser unlock so the team
-            can evaluate the landing, vault, demos, playground, templates, and premium routes without waiting for a
-            paid checkout event.
+            Sesion Google detectada como <strong>{email}</strong>, pero es opcional para QA. El flujo principal
+            sigue siendo telefono autorizado y cookie segura de navegador.
           </p>
         ) : (
           <p className="lead">
-            No Google account is required for internal QA. This page verifies an authorized tester phone and sets a
-            secure browser unlock so the team can inspect vaults, downloads, demos, playground, templates, and
-            premium routes immediately.
+            No ocupas Google. Escribe el telefono autorizado, activa QA completo, y usa los botones grandes de abajo
+            para abrir Vault, Full, Playground, Templates y Catalogo de Componentes.
           </p>
         )}
+        {params?.activated === '1' ? (
+          <div className="pricing-state-banner">
+            <strong>QA activado.</strong>
+            <span>El servidor ya debe detectar la cookie en este navegador. Si no ves Full activo, recarga esta pagina.</span>
+          </div>
+        ) : null}
+        {params?.cleared === '1' ? (
+          <div className="pricing-state-banner warning">
+            <strong>QA limpiado.</strong>
+            <span>La cookie de este navegador fue removida. Puedes volver a activar con el telefono autorizado.</span>
+          </div>
+        ) : null}
+        {params?.error ? (
+          <div className="pricing-state-banner warning">
+            <strong>Google fallo, pero QA por telefono sigue disponible.</strong>
+            <span>No uses Google para esta prueba. Mete el telefono autorizado y activa QA completo.</span>
+          </div>
+        ) : null}
+        {params?.state === 'qa-required' ? (
+          <div className="pricing-state-banner warning">
+            <strong>Ruta premium bloqueada.</strong>
+            <span>Activa QA por telefono aqui y despues vuelve a abrir {params.next ?? 'la ruta premium'}.</span>
+          </div>
+        ) : null}
         <div className="payment-meta" aria-label="Team access state">
-          <span className="payment-chip ready accent-emerald">Full Signature QA</span>
-          <span className="payment-chip manual accent-amber">Phone-only unlock</span>
-          <span className="payment-chip alt accent-cyan">No Google required</span>
+          <span className={`payment-chip ${qaActive ? 'ready' : 'manual'} accent-emerald`}>
+            {qaActive ? 'QA activo' : 'QA pendiente'}
+          </span>
+          <span className="payment-chip manual accent-amber">Tier: {access.tier}</span>
+          <span className="payment-chip alt accent-cyan">Fuente: {access.source}</span>
         </div>
       </section>
 
       <section className="grid two">
         <article className="card owner-panel">
           <p className="section-label">Tester unlock</p>
-          <h2>Activate phone-based QA access</h2>
+          <h2>Activar acceso QA por telefono</h2>
           <TesterAccessForm
-            active={Boolean(testerAccess)}
+            active={qaActive}
             configured={configured}
-            expiresAt={testerAccess?.expiresAt ?? null}
+            expiresAt={testerAccess?.expiresAt ?? access.expiresAt}
             signedIn={signedIn}
           />
         </article>
 
         <article className="card">
-          <p className="section-label">What to test</p>
-          <h2>Exhaustive validation path</h2>
+          <p className="section-label">Diagnostico QA</p>
+          <h2>Estado real detectado por servidor</h2>
           <ul>
-            <li>Open the main landing and judge clarity, trust, and product positioning.</li>
-            <li>Use Playground and templates to see what products can already be built.</li>
-            <li>Open Solo, Pro, and Full vault routes and compare the paid ladder.</li>
-            <li>Try AI-assisted workflows with Gemini CLI or another free assistant.</li>
-            <li>Report friction: confusing copy, missing assets, broken routes, or weak examples.</li>
+            <li>Cookie QA detectada: {booleanLabel(qaActive)}</li>
+            <li>Entitlement resuelto: {access.tier} / {access.label}</li>
+            <li>Fuente: {access.source}</li>
+            <li>Vence: {formatDate(access.expiresAt)}</li>
+            <li>Full desbloqueado: {booleanLabel(isFull)}</li>
+            <li>Downloads desbloqueadas: {booleanLabel(access.capabilities.downloads)}</li>
           </ul>
           <div className="hero-actions compact">
-            <Link href="/playground" className="btn ghost">Open Playground</Link>
-            <Link href="/templates" className="btn ghost">Open Templates</Link>
-            <Link href="/vault/launch" className="btn primary">Open Full</Link>
+            <Link href="/api/tester-access" className="btn ghost">Ver Status JSON</Link>
+            <Link href="/vault/launch" className="btn primary">Abrir Full</Link>
           </div>
         </article>
       </section>
 
+      <section>
+        <p className="section-label">Mapa de accesos QA</p>
+        <h2>Despues de activar, usa estos accesos.</h2>
+        <div className="value-grid">
+          {qaRoutes.map((route) => {
+            const unlocked = access.capabilities[route.capability];
+
+            return (
+              <article key={route.href} className={`value-card ${unlocked ? 'accent-emerald' : 'accent-amber'}`}>
+                <p className="plan-tier">{unlocked ? 'Desbloqueado' : 'Requiere QA activo'}</p>
+                <h3>{route.label}</h3>
+                <p>{route.body}</p>
+                <div className="hero-actions compact">
+                  <Link href={route.href} className={`btn ${route.primary ? 'primary' : 'ghost'}`}>
+                    {route.label}
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
       <section className="value-grid">
         <article className="value-card accent-cyan">
-          <p className="plan-tier">Products possible</p>
-          <h3>Look for concrete buildable outputs.</h3>
-          <p>Dashboards, admin surfaces, landing systems, template packs, docs portals, and AI-assisted UI flows.</p>
+          <p className="plan-tier">Que validar</p>
+          <h3>Productos que ya se pueden armar.</h3>
+          <p>Dashboards, admin surfaces, landing systems, template packs, docs portals y flujos UI asistidos por IA.</p>
         </article>
         <article className="value-card accent-amber">
-          <p className="plan-tier">Quality bar</p>
-          <h3>Judge whether the output feels sellable.</h3>
-          <p>Strong tests should include responsive behavior, copy clarity, asset usefulness, and route polish.</p>
+          <p className="plan-tier">Barra de calidad</p>
+          <h3>Juzgar si el output se puede vender.</h3>
+          <p>Probar responsive, copy, utilidad de assets, rutas premium, descargas y claridad del catalogo.</p>
         </article>
         <article className="value-card accent-violet">
-          <p className="plan-tier">Website review</p>
-          <h3>Evaluate the page like a buyer.</h3>
-          <p>Focus on whether the landing makes the product understandable without help from the team.</p>
+          <p className="plan-tier">Pagina web</p>
+          <h3>Evaluarla como comprador.</h3>
+          <p>Confirmar si la landing y los demos explican el producto sin ayuda del equipo.</p>
         </article>
       </section>
     </main>

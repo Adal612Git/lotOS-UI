@@ -1,35 +1,21 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { getRequiredPlanForPath } from './lib/access-policy';
 import { hasEntitlementViaRest } from './lib/entitlements-rest';
 import { env } from './lib/env';
 import { isOwnerEmail, normalizeEmail } from './lib/owner';
-import type { CommercialPlan } from './lib/plans';
-
-const TESTER_ACCESS_COOKIE = 'lotos_tester_access';
-const bundledTesterPhoneHashes = new Set([
-  'e91fb357689946b6d11ef4fe1cd323a85b4f6e928eadae4c9f710d8b366082ed',
-  'e81544a50cca0c69bd09e5ba7fe30def53cf40f9824acea2f270f95747fb7cc2',
-]);
-
-function resolveRequiredPlan(pathname: string): CommercialPlan | null {
-  if (pathname.startsWith('/vault/launch')) {
-    return 'launch_pack';
-  }
-  if (pathname.startsWith('/vault/pro')) {
-    return 'pro';
-  }
-  if (pathname.startsWith('/vault/solo')) {
-    return 'solo';
-  }
-  if (pathname.startsWith('/vault')) {
-    return 'free';
-  }
-  return null;
-}
+import { isTesterPhoneHashAuthorized, TESTER_ACCESS_COOKIE } from './lib/tester-access-policy';
 
 function redirectToLogin(request: NextRequest) {
   const url = new URL('/login', request.url);
   url.searchParams.set('callbackUrl', request.nextUrl.pathname);
+  return NextResponse.redirect(url);
+}
+
+function redirectToTeamAccess(request: NextRequest) {
+  const url = new URL('/team-access', request.url);
+  url.searchParams.set('state', 'qa-required');
+  url.searchParams.set('next', request.nextUrl.pathname);
   return NextResponse.redirect(url);
 }
 
@@ -109,18 +95,17 @@ async function hasTesterAccessCookie(request: NextRequest) {
     return false;
   }
 
-  const authorizedPhoneHashes = new Set([...bundledTesterPhoneHashes, ...env.testerPhoneHashes]);
   const expiresAt = new Date(payload.expiresAt);
 
   return (
-    authorizedPhoneHashes.has(payload.phoneHash) &&
+    isTesterPhoneHashAuthorized(payload.phoneHash, env.testerPhoneHashes) &&
     !Number.isNaN(expiresAt.getTime()) &&
     expiresAt.getTime() > Date.now()
   );
 }
 
 export async function proxy(request: NextRequest) {
-  const requiredPlan = resolveRequiredPlan(request.nextUrl.pathname);
+  const requiredPlan = getRequiredPlanForPath(request.nextUrl.pathname);
 
   if (!requiredPlan) {
     return NextResponse.next();
@@ -128,6 +113,10 @@ export async function proxy(request: NextRequest) {
 
   if (!env.AUTH_SECRET) {
     return redirectToLogin(request);
+  }
+
+  if (requiredPlan === 'free') {
+    return NextResponse.next();
   }
 
   if (await hasTesterAccessCookie(request)) {
@@ -142,10 +131,10 @@ export async function proxy(request: NextRequest) {
   const email = normalizeEmail(typeof token?.email === 'string' ? token.email : null);
 
   if (!email) {
-    return redirectToLogin(request);
+    return redirectToTeamAccess(request);
   }
 
-  if (requiredPlan === 'free' || isOwnerEmail(email)) {
+  if (isOwnerEmail(email)) {
     return NextResponse.next();
   }
 

@@ -1,11 +1,8 @@
 import { constants as fsConstants } from 'node:fs';
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../../../auth-options';
+import { resolveCurrentAccess } from '../../../../lib/access-resolver';
 import { getProtectedAsset } from '../../../../lib/commercial-assets';
-import { canAccessPremium } from '../../../../lib/entitlement-access';
-import { normalizeEmail } from '../../../../lib/owner';
 
 export const runtime = 'nodejs';
 
@@ -52,11 +49,9 @@ export async function GET(
     return Response.json({ ok: false, error: 'Unknown protected asset.' }, { status: 404 });
   }
 
-  const session = await getServerSession(authOptions);
-  const email = normalizeEmail(session?.user?.email);
-  const allowed = await canAccessPremium(email, asset.plan);
+  const accessDecision = await resolveCurrentAccess(asset.plan);
 
-  if (!allowed) {
+  if (!accessDecision.allowed || !accessDecision.capabilities.downloads) {
     return Response.json(
       { ok: false, error: 'Premium access required.' },
       { status: 403 }

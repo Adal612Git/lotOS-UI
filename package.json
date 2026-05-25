@@ -47,6 +47,8 @@
     "verify:vault-lifecycle": "node ONE/verify-vault-lifecycle.mjs",
     "verify:rls-policy-plan": "node ONE/verify-rls-policy-plan.mjs",
     "verify:commercial-lifecycle": "pnpm --filter @lotosui/registry build && node ONE/verify-commercial-lifecycle.mjs",
+    "verify:team-access-qa": "node ONE/verify-team-access-qa.mjs",
+    "smoke:team-access-qa": "node ONE/smoke-team-access-qa.mjs",
     "release:public-tree:check": "node ONE/check-public-tree.mjs --report .release/public-tree-report.json",
     "verify:public-docs": "node ONE/verify-public-docs.mjs",
     "verify:public-ai-context": "pnpm --filter @lotosui/registry build && pnpm --filter @lotosui/core build && node ONE/verify-public-ai-context.mjs",
