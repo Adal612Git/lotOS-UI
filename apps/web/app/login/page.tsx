@@ -21,6 +21,7 @@ export default async function LoginPage({
           <Link href="/">Home</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/vault">Vault</Link>
+          <Link href="/team-access">Team QA</Link>
         </nav>
       </header>
 
@@ -51,6 +52,9 @@ export default async function LoginPage({
           <Link href="/pricing" className="btn ghost">
             Back to Pricing
           </Link>
+          <Link href="/team-access" className="btn ghost">
+            Team QA Access
+          </Link>
         </div>
       </section>
 
@@ -73,6 +77,14 @@ export default async function LoginPage({
             Any valid Google account can sign in. Paid routes unlock only when Supabase/Lemon
             entitlements match the buyer email. Emails in <code>LOTOS_OWNER_EMAILS</code> are
             administrative bypasses, not the buyer login policy.
+          </p>
+        </article>
+        <article className="card">
+          <p className="section-label">Internal QA</p>
+          <h2>Phone unlock for testers</h2>
+          <p>
+            Authorized testers can open <code>/team-access</code> after Google sign-in, register their phone, and
+            receive temporary Full Signature access in that browser for exhaustive validation.
           </p>
         </article>
       </section>

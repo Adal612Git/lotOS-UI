@@ -2,6 +2,7 @@ import { isOwnerBypass, mapEntitlementForVault, type EntitlementAccessStatus } f
 import { hasEntitlement, listUserEntitlements, type EntitlementAccessSummary } from './entitlements';
 import { normalizeEmail as normalizeOwnerEmail } from './owner';
 import type { CommercialPlan } from './plans';
+import { hasTesterPlanAccess } from './tester-access';
 
 export { isExpired, isRevoked, getEntitlementStatus, mapEntitlementForVault } from './entitlement-lifecycle';
 export type { EntitlementAccessStatus, VaultEntitlementView } from './entitlement-lifecycle';
@@ -25,6 +26,9 @@ export function isOwnerEntitlementBypass(value: string | null | undefined): bool
 
 export async function canAccessPremium(email: string, requiredPlan: CommercialPlan): Promise<boolean> {
   if (isOwnerBypass(email)) {
+    return true;
+  }
+  if (await hasTesterPlanAccess(email, requiredPlan)) {
     return true;
   }
 
@@ -54,6 +58,29 @@ export async function explainEntitlementAccess(
       status: 'owner_bypass',
       allowed: true,
       entitlements: [],
+    };
+  }
+  if (await hasTesterPlanAccess(normalizedEmail, requiredPlan ?? 'solo')) {
+    return {
+      email: normalizedEmail,
+      ownerBypass: false,
+      status: 'trialing',
+      allowed: true,
+      entitlements: [
+        {
+          id: 0,
+          plan: 'launch_pack',
+          source: 'manual_owner_test:team_phone',
+          kind: 'manual_test',
+          status: 'trialing',
+          active: true,
+          grantedAt: new Date().toISOString(),
+          expiresAt: null,
+          trialEndsAt: null,
+          revokedAt: null,
+          provider: 'team_qa_phone',
+        },
+      ],
     };
   }
 

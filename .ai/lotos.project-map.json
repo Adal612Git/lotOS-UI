@@ -38,8 +38,10 @@
     "auth": [
       "/login",
       "/vault",
+      "/team-access",
       "/checkout/[plan]",
-      "/api/auth/[...nextauth]"
+      "/api/auth/[...nextauth]",
+      "/api/tester-access"
     ],
     "entitlementGated": [
       "/vault/solo",

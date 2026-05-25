@@ -279,7 +279,7 @@ export const lotosManifest = {
       '/estrategia',
       '/architecture-map.html',
     ],
-    auth: ['/login', '/vault', '/checkout/[plan]', '/api/auth/[...nextauth]'],
+    auth: ['/login', '/vault', '/team-access', '/checkout/[plan]', '/api/auth/[...nextauth]', '/api/tester-access'],
     entitlementGated: ['/vault/solo', '/vault/pro', '/vault/launch', '/api/download/[asset]'],
     ownerOnly: ['/admin/entitlements', '/api/entitlements/grant', '/api/entitlements/revoke', '/api/entitlements/lookup'],
     webhook: ['/api/webhooks/lemon'],
@@ -452,7 +452,7 @@ export const lotosManifest = {
     entitlements: ['SUPABASE_URL', 'SUPABASE_PUBLISHABLE_KEY', 'SUPABASE_SECRET_KEY', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY'],
     lemon: ['LEMON_WEBHOOK_SECRET', 'LEMON_STORE_SLUG', 'LEMON_SOLO_VARIANT_ID', 'LEMON_PRO_VARIANT_ID', 'LEMON_LAUNCH_VARIANT_ID'],
     audit: ['ENTITLEMENT_AUDIT_HASH_PEPPER'],
-    operators: ['LOTOS_OWNER_EMAILS'],
+    operators: ['LOTOS_OWNER_EMAILS', 'LOTOS_TESTER_PHONE_HASHES'],
     checkout: [
       'LOTOS_CONTACT_SALES_URL',
       'LOTOS_BOOKING_URL',

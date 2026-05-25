@@ -24,6 +24,7 @@ const envSchema = z.object({
   LEMON_LAUNCH_VARIANT_ID: optionalString,
   ENTITLEMENT_AUDIT_HASH_PEPPER: optionalString,
   LOTOS_OWNER_EMAILS: optionalString,
+  LOTOS_TESTER_PHONE_HASHES: optionalString,
   LOTOS_CONTACT_SALES_URL: optionalString,
   LOTOS_BOOKING_URL: optionalString,
   LOTOS_SOLO_CHECKOUT_URL: optionalString,
@@ -59,6 +60,7 @@ const parsed = envSchema.parse({
   LEMON_LAUNCH_VARIANT_ID: process.env.LEMON_LAUNCH_VARIANT_ID,
   ENTITLEMENT_AUDIT_HASH_PEPPER: process.env.ENTITLEMENT_AUDIT_HASH_PEPPER,
   LOTOS_OWNER_EMAILS: process.env.LOTOS_OWNER_EMAILS,
+  LOTOS_TESTER_PHONE_HASHES: process.env.LOTOS_TESTER_PHONE_HASHES,
   LOTOS_CONTACT_SALES_URL: process.env.LOTOS_CONTACT_SALES_URL,
   LOTOS_BOOKING_URL: process.env.LOTOS_BOOKING_URL,
   LOTOS_SOLO_CHECKOUT_URL: process.env.LOTOS_SOLO_CHECKOUT_URL,
@@ -83,6 +85,11 @@ const ownerEmails = (parsed.LOTOS_OWNER_EMAILS ?? '')
   .map((email) => email.trim().toLowerCase())
   .filter(Boolean);
 
+const testerPhoneHashes = (parsed.LOTOS_TESTER_PHONE_HASHES ?? '')
+  .split(',')
+  .map((hash) => hash.trim().toLowerCase())
+  .filter((hash) => /^[a-f0-9]{64}$/.test(hash));
+
 const supabasePublishableKey = parsed.SUPABASE_PUBLISHABLE_KEY ?? parsed.SUPABASE_ANON_KEY;
 const supabaseServerKey = parsed.SUPABASE_SECRET_KEY ?? parsed.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -93,6 +100,7 @@ export const env = {
   SUPABASE_ANON_KEY: supabasePublishableKey,
   SUPABASE_SERVICE_ROLE_KEY: supabaseServerKey,
   ownerEmails,
+  testerPhoneHashes,
   googleConfigured: Boolean(parsed.GOOGLE_CLIENT_ID && parsed.GOOGLE_CLIENT_SECRET),
   supabaseConfigured: Boolean(parsed.SUPABASE_URL && supabaseServerKey),
   lemonConfigured: Boolean(

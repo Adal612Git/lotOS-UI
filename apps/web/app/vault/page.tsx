@@ -65,13 +65,15 @@ export default async function VaultPage() {
   const vaultExperienceCards = [
     {
       label: 'Access state',
-      value: viewer.isOwner ? 'Owner' : viewer.plans.length > 0 ? 'Entitled' : 'Public-only',
+      value: viewer.isOwner ? 'Owner' : viewer.isTester ? 'Team QA' : viewer.plans.length > 0 ? 'Entitled' : 'Public-only',
       body: viewer.isOwner
         ? 'Owner bypass is active, so every paid surface is reachable from this session.'
+        : viewer.isTester
+          ? 'Team QA unlock is active, so this browser can inspect every premium surface for validation.'
         : viewer.plans.length > 0
           ? 'The vault can route directly into the tiers the buyer already paid for.'
           : 'The account is signed in but does not currently hold a paid entitlement.',
-      tone: viewer.isOwner || viewer.plans.length > 0 ? 'accent-emerald' : 'accent-amber',
+      tone: viewer.isOwner || viewer.isTester || viewer.plans.length > 0 ? 'accent-emerald' : 'accent-amber',
     },
     {
       label: 'Entitlements',
@@ -104,6 +106,7 @@ export default async function VaultPage() {
           <Link href="/docs" className="nav-link">Docs</Link>
           <Link href="/demo" className="nav-link">Demos</Link>
           <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
+          <Link href="/team-access" className="nav-link nav-link--components">Team QA</Link>
           {viewer.isOwner ? <Link href="/admin/entitlements" className="nav-link nav-link--cta">Admin</Link> : null}
           <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
         </nav>
@@ -120,6 +123,12 @@ export default async function VaultPage() {
           <div className="pricing-state-banner warning">
             <strong>Vault recovered with fallback.</strong>
             <span>{viewer.warnings.join(' | ')}</span>
+          </div>
+        ) : null}
+        {viewer.isTester ? (
+          <div className="pricing-state-banner">
+            <strong>Team QA access is active.</strong>
+            <span>This browser has temporary Full Signature access for exhaustive validation. It is not a paid entitlement.</span>
           </div>
         ) : null}
         <div className="payment-meta" aria-label="Vault state">
@@ -247,8 +256,9 @@ export default async function VaultPage() {
           <h2>Current access</h2>
           <ul>
             <li>Owner: {viewer.isOwner ? 'Yes' : 'No'}</li>
+            <li>Team QA: {viewer.isTester ? 'Yes' : 'No'}</li>
             <li>
-              Active plans: {viewer.isOwner ? 'owner bypass (all premium)' : viewer.plans.map((plan) => planLabels[plan] ?? plan).join(', ') || 'none'}
+              Active plans: {viewer.isOwner ? 'owner bypass (all premium)' : viewer.isTester ? 'team QA unlock (all premium)' : viewer.plans.map((plan) => planLabels[plan] ?? plan).join(', ') || 'none'}
             </li>
             <li>Free docs, design references, CLI entry points, and public MIT packages remain open without this vault.</li>
           </ul>
