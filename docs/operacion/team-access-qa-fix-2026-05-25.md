@@ -94,5 +94,12 @@ Google es opcional. Si Google falla con `?error=...`, `/team-access` debe mostra
 - `npm run verify:vault-lifecycle`: OK
 - `npm run lint`: OK
 - `npm run build`: OK
-- Smoke contra produccion: pendiente despues del deploy final.
-- Deploy Vercel: pendiente despues del commit final.
+- Deploy Vercel produccion: OK
+  - Production deployment: `https://lotos-rkr7d7g52-adal666s-projects.vercel.app`
+  - Alias publico: `https://lotos-ui.vercel.app`
+- HTTP `https://lotos-ui.vercel.app/team-access`: `200 OK`
+- HTTP `https://lotos-rkr7d7g52-adal666s-projects.vercel.app/team-access`: `401 Unauthorized` por proteccion SSO del deployment directo de Vercel.
+- Smoke contra produccion con telefono QA autorizado: OK
+  - Activa `/api/tester-access`.
+  - Confirma status `qaCookieDetected=true` y `tier=launch_pack`.
+  - Confirma `200` en `/vault`, `/vault/solo`, `/vault/pro`, `/vault/launch`, `/playground`, `/templates`, `/demo/components` y `/api/download/sales-preview`.
