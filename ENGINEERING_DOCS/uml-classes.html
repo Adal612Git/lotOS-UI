@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Diagrama de Clases UML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        :root {
+            --bg: #04101b;
+            --line: rgba(120, 149, 184, .18);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%), radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%), linear-gradient(160deg, var(--bg), #071525 55%, #0a1929)
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .8);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nl {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .back {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 5px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .pt {
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .pb {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(52, 211, 153, .1);
+            border: 1px solid rgba(52, 211, 153, .28);
+            color: var(--g)
+        }
+
+        .shell {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            height: calc(100vh - 53px)
+        }
+
+        .stage {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--line)
+        }
+
+        .top {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .5);
+            backdrop-filter: blur(10px)
+        }
+
+        .top h2 {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 3px;
+            letter-spacing: -.02em
+        }
+
+        .top p {
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        .tbr {
+            display: flex;
+            gap: 7px;
+            margin-top: 9px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            padding: 6px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .24);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .btn.ac,
+        .btn:hover {
+            color: #fff;
+            border-color: rgba(52, 211, 153, .4);
+            background: rgba(52, 211, 153, .07)
+        }
+
+        .net {
+            flex: 1;
+            position: relative
+        }
+
+        .network {
+            position: absolute;
+            inset: 0
+        }
+
+        .leg {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            border-radius: 13px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(4, 16, 27, .9);
+            backdrop-filter: blur(12px);
+            padding: 11px 14px;
+            min-width: 240px
+        }
+
+        .lt {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 8px
+        }
+
+        .li {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 5px;
+            font-size: 10px;
+            color: var(--mut)
+        }
+
+        .side {
+            padding: 13px;
+            overflow: auto;
+            background: rgba(4, 16, 27, .45)
+        }
+
+        .sc {
+            border-radius: 14px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(8, 21, 37, .7);
+            padding: 13px;
+            margin-bottom: 9px;
+            backdrop-filter: blur(8px)
+        }
+
+        .lbl {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t);
+            margin-bottom: 5px
+        }
+
+        .sc h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .note {
+            background: rgba(2, 6, 23, .5);
+            border: 1px solid rgba(120, 149, 184, .14);
+            border-radius: 9px;
+            padding: 9px;
+            font-size: 11px;
+            line-height: 1.65;
+            color: var(--mut)
+        }
+
+        .al {
+            list-style: none;
+            margin-top: 7px
+        }
+
+        .al li {
+            padding: 5px 8px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(120, 149, 184, .1);
+            margin-bottom: 3px;
+            font-size: 10px;
+            line-height: 1.4;
+            display: flex;
+            gap: 6px;
+            align-items: flex-start
+        }
+
+        .vis {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 1px
+        }
+
+        .pri {
+            background: rgba(251, 113, 133, .12);
+            color: var(--r);
+            border: 1px solid rgba(251, 113, 133, .25)
+        }
+
+        .pub {
+            background: rgba(52, 211, 153, .12);
+            color: var(--g);
+            border: 1px solid rgba(52, 211, 153, .25)
+        }
+
+        .pro {
+            background: rgba(251, 191, 36, .12);
+            color: var(--a);
+            border: 1px solid rgba(251, 191, 36, .25)
+        }
+
+        .stt {
+            background: rgba(96, 165, 250, .12);
+            color: var(--b);
+            border: 1px solid rgba(96, 165, 250, .25)
+        }
+
+        .rel-type {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: var(--v);
+            display: block;
+            margin-bottom: 1px
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nl"><a class="back" href="index.html">← Hub</a><span class="pt">Clases UML — LotOS UI</span></div>
+        <span class="pb">UML · Estructura</span>
+    </nav>
+    <div class="shell">
+        <section class="stage">
+            <div class="top">
+                <h2>Diagrama de Clases UML</h2>
+                <p>Clases del sistema con herencia (▷─), composición (◆─), agregación (◇─), realización (punteado+▷) y
+                    dependencia. Semántica visual UML completa. Click para ver miembros.</p>
+                <div class="tbr">
+                    <button class="btn ac" id="fit-btn">Recentrar</button>
+                    <button class="btn" id="phy-btn">Toggle Física</button>
+                </div>
+            </div>
+            <div class="net">
+                <div class="network" id="network"></div>
+                <div class="leg">
+                    <div class="lt">Tipos de Relación UML</div>
+                    <div class="li"><svg width="44" height="12">
+                            <line x1="0" y1="6" x2="36" y2="6" stroke="#a78bfa" stroke-width="2" />
+                            <polygon points="36,3 44,6 36,9" fill="none" stroke="#a78bfa" stroke-width="1.8" />
+                        </svg>Herencia / Generalización</div>
+                    <div class="li"><svg width="44" height="12">
+                            <line x1="0" y1="6" x2="32" y2="6" stroke="#60a5fa" stroke-width="1.8"
+                                stroke-dasharray="5,3" />
+                            <polygon points="32,3 44,6 32,9" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+                        </svg>Realización (interfaz)</div>
+                    <div class="li"><svg width="44" height="12">
+                            <polygon points="0,6 8,2 16,6 8,10" fill="#fb7185" />
+                            <line x1="16" y1="6" x2="44" y2="6" stroke="#fb7185" stroke-width="2" />
+                        </svg>Composición ◆</div>
+                    <div class="li"><svg width="44" height="12">
+                            <polygon points="0,6 8,2 16,6 8,10" fill="none" stroke="#fbbf24" stroke-width="1.8" />
+                            <line x1="16" y1="6" x2="44" y2="6" stroke="#fbbf24" stroke-width="2" />
+                        </svg>Agregación ◇</div>
+                    <div class="li"><svg width="44" height="12">
+                            <line x1="0" y1="6" x2="36" y2="6" stroke="#34d399" stroke-width="2" />
+                            <polygon points="36,3 44,6 36,9" fill="#34d399" />
+                        </svg>Asociación / Dependencia</div>
+                </div>
+            </div>
+        </section>
+        <aside class="side">
+            <div class="sc">
+                <div class="lbl">Clase seleccionada</div>
+                <h3 id="cn">—</h3>
+                <div id="cd" class="note">Haz click en una clase para ver sus miembros, visibilidad y relaciones UML.
+                </div>
+            </div>
+            <div class="sc">
+                <div class="lbl">Atributos</div>
+                <ul class="al" id="ca">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+            <div class="sc">
+                <div class="lbl">Métodos</div>
+                <ul class="al" id="cm">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+            <div class="sc">
+                <div class="lbl">Relaciones UML</div>
+                <ul class="al" id="cr">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <script>
+        // Classes meta
+        const CL = {
+            IComponent: { name: '«interface»\nIComponent', color: '#60a5fa', desc: 'Interfaz que deben implementar todos los componentes LotOS UI.', attrs: [{ v: 'pub', n: 'id: string' }, { v: 'pub', n: 'variant: string' }, { v: 'pub', n: 'theme: Theme' }], methods: [{ v: 'pub', n: 'render(): HTML' }, { v: 'pub', n: 'validate(props): boolean' }], rels: [{ t: 'Realización', d: 'Button, Card, Badge implementan' }] },
+            Component: { name: 'Component\n(abstract)', color: '#60a5fa', desc: 'Clase base abstracta para todos los componentes de @lotosui/claude-arm.', attrs: [{ v: 'pro', n: '_id: string' }, { v: 'pro', n: '_props: Record' }, { v: 'pri', n: '_mounted: boolean' }], methods: [{ v: 'pub', n: 'mount(): void' }, { v: 'pub', n: 'unmount(): void' }, { v: 'pro', n: '_validate(): boolean' }, { v: 'pub', n: 'getProps(): Record' }], rels: [{ t: 'Implementa', d: 'IComponent' }, { t: 'Composición', d: 'Theme (1 theme por component)' }, { t: 'Herencia', d: 'Button, Card, Badge, Input…' }] },
+            Button: { name: 'Button', color: '#34d399', desc: 'Componente de botón. 27+ variantes. Published en @lotosui/claude-arm.', attrs: [{ v: 'pub', n: 'variant: ButtonVariant' }, { v: 'pub', n: 'size: Size' }, { v: 'pub', n: 'disabled: boolean' }, { v: 'pub', n: 'loading: boolean' }], methods: [{ v: 'pub', n: 'click(): void' }, { v: 'pub', n: 'render(): JSX' }], rels: [{ t: 'Herencia', d: 'extends Component' }, { t: 'Implementa', d: 'IComponent' }] },
+            Card: { name: 'Card', color: '#34d399', desc: 'Componente de tarjeta con slots para header, body y footer.', attrs: [{ v: 'pub', n: 'elevation: 0|1|2|3' }, { v: 'pub', n: 'bordered: boolean' }, { v: 'pub', n: 'padding: Size' }], methods: [{ v: 'pub', n: 'render(): JSX' }, { v: 'pub', n: 'addSlot(name): void' }], rels: [{ t: 'Herencia', d: 'extends Component' }, { t: 'Agregación', d: 'Badge[] (0..*)' }, { t: 'Composición', d: 'CardHeader, CardBody, CardFooter' }] },
+            Badge: { name: 'Badge', color: '#34d399', desc: 'Etiqueta de estado o categoría.', attrs: [{ v: 'pub', n: 'variant: BadgeVariant' }, { v: 'pub', n: 'text: string' }], methods: [{ v: 'pub', n: 'render(): JSX' }], rels: [{ t: 'Herencia', d: 'extends Component' }, { t: 'Agregación', d: 'Contenida en Card' }] },
+            Theme: { name: 'Theme', color: '#2dd4bf', desc: 'Sistema de tokens de diseño. Fuente de verdad de colores, tipografía y spacing.', attrs: [{ v: 'pub', n: 'mode: dark|light' }, { v: 'pub', n: 'colors: ColorTokens' }, { v: 'pub', n: 'typography: TypoTokens' }, { v: 'pub', n: 'spacing: SpacingScale' }, { v: 'stt', n: 'instance: Theme' }], methods: [{ v: 'stt', n: 'getInstance(): Theme' }, { v: 'pub', n: 'getToken(key): string' }, { v: 'pub', n: 'override(tokens): void' }], rels: [{ t: 'Composición', d: 'Contenida en Component (◆)' }, { t: 'Dependencia', d: 'Usada por McpRenderer' }] },
+            McpSpec: { name: 'McpSpec', color: '#a78bfa', desc: 'Especificación del protocolo MCP. Define rutas y capacidades disponibles.', attrs: [{ v: 'pub', n: 'version: string' }, { v: 'pub', n: 'routes: Route[]' }, { v: 'pub', n: 'runtimes: string[]' }], methods: [{ v: 'pub', n: 'getRoutes(): Route[]' }, { v: 'pub', n: 'validate(req): boolean' }, { v: 'pub', n: 'describe(id): Component' }], rels: [{ t: 'Composición', d: 'Routes[] (1..*)' }, { t: 'Dependencia', d: 'McpRenderer depende de McpSpec' }] },
+            McpRenderer: { name: 'McpRenderer', color: '#a78bfa', desc: 'Motor de render para POST /components/render. Soporta react, web-component, laravel-blade.', attrs: [{ v: 'pri', n: '_runtime: string' }, { v: 'pri', n: '_spec: McpSpec' }], methods: [{ v: 'pub', n: 'render(req): Response' }, { v: 'pri', n: '_buildJsx(c): string' }, { v: 'pri', n: '_buildBlade(c): string' }, { v: 'pri', n: '_buildWebComponent(c): string' }], rels: [{ t: 'Composición', d: 'McpSpec (◆ 1)' }, { t: 'Dependencia', d: 'Theme para tokens' }] },
+            SalesPlan: { name: 'SalesPlan', color: '#fb7185', desc: 'Modelo de plan comercial. Configurado en sales-config.ts.', attrs: [{ v: 'pub', n: 'id: string' }, { v: 'pub', n: 'name: string' }, { v: 'pub', n: 'priceLabel: string' }, { v: 'pub', n: 'tierLevel: number' }, { v: 'pub', n: 'paymentActions: Action[]' }, { v: 'pub', n: 'features: string[]' }], methods: [{ v: 'pub', n: 'getCheckoutUrl(): string' }, { v: 'pub', n: 'isAvailable(): boolean' }], rels: [{ t: 'Composición', d: 'paymentActions[] (◆)' }, { t: 'Dependencia', d: 'VaultEntitlement use' }] },
+            VaultEntitlement: { name: 'VaultEntitlement', color: '#fb7185', desc: 'Representa el acceso de un usuario a un tier del vault.', attrs: [{ v: 'pub', n: 'userId: string' }, { v: 'pub', n: 'planId: string' }, { v: 'pub', n: 'grantedAt: Date' }, { v: 'pub', n: 'isActive: boolean' }, { v: 'pub', n: 'source: string' }], methods: [{ v: 'pub', n: 'isValid(): boolean' }, { v: 'pub', n: 'revoke(): void' }, { v: 'pub', n: 'canAccess(tier): boolean' }], rels: [{ t: 'Dependencia', d: 'SalesPlan para validar tier' }, { t: 'Asociación', d: 'GrantService crea entitlements' }] },
+            GrantService: { name: 'GrantService', color: '#fbbf24', desc: 'Servicio que procesa webhooks de pago y crea entitlements.', attrs: [{ v: 'pri', n: '_supabase: SupabaseClient' }, { v: 'pri', n: '_secret: string' }], methods: [{ v: 'pub', n: 'processWebhook(req): void' }, { v: 'pri', n: '_verifyHmac(sig): boolean' }, { v: 'pri', n: '_checkIdempotency(id): boolean' }, { v: 'pub', n: 'grant(userId, planId): VaultEntitlement' }], rels: [{ t: 'Asociación', d: 'Crea VaultEntitlement' }, { t: 'Dependencia', d: 'SalesPlan para validar plan' }] },
+            QualityGate: { name: 'QualityGate\n(abstract)', color: '#2dd4bf', desc: 'Abstracción de gate de release. Implementaciones: ConsistencyGate, CommercialGate, OpsGate.', attrs: [{ v: 'pub', n: 'name: string' }, { v: 'pub', n: 'scope: string' }, { v: 'pub', n: 'status: green|red|pending' }], methods: [{ v: 'pub', n: 'run(): GateResult' }, { v: 'pub', n: 'report(): string' }, { v: 'pro', n: '_validate(): boolean' }], rels: [{ t: 'Herencia', d: 'ConsistencyGate, CommercialGate, OpsGate' }] },
+            ConsistencyGate: { name: 'ConsistencyGate', color: '#2dd4bf', desc: 'Verifica consistencia 100% entre web, docs y diagrama.', attrs: [{ v: 'pub', n: 'targets: string[]' }], methods: [{ v: 'pub', n: 'run(): GateResult' }], rels: [{ t: 'Herencia', d: 'extends QualityGate' }] },
+            CommercialGate: { name: 'CommercialGate', color: '#2dd4bf', desc: 'Verifica bundle manifest y commercial dist.', attrs: [{ v: 'pub', n: 'manifestPath: string' }], methods: [{ v: 'pub', n: 'run(): GateResult' }], rels: [{ t: 'Herencia', d: 'extends QualityGate' }] },
+        };
+
+        function mkN(id, cl) {
+            const cm = { '#60a5fa': 'rgba(10,24,48,.9)', '#34d399': 'rgba(6,38,26,.9)', '#a78bfa': 'rgba(28,15,58,.9)', '#2dd4bf': 'rgba(6,36,40,.9)', '#fb7185': 'rgba(46,6,16,.9)', '#fbbf24': 'rgba(42,26,4,.9)' };
+            const bg = cm[cl.color] || 'rgba(10,24,48,.9)';
+            return {
+                id, label: cl.name, shape: 'box', margin: 14, borderWidth: 2, shapeProperties: { borderRadius: 14 }, font: { color: '#edf6ff', size: 13, face: 'Inter' }, chosen: false,
+                color: { background: bg, border: cl.color, highlight: { background: bg, border: cl.color }, hover: { background: bg, border: cl.color } },
+                shadow: { enabled: true, color: `${cl.color}28`, x: 0, y: 0, size: 20 }, meta: cl
+            };
+        }
+
+        // Edge types: inheritance=hollow triangle, realization=dashed+hollow tri, composition=filled diamond from, aggregation=hollow diamond from, association=arrow
+        // vis-network supports custom arrow types
+        function mkE(id, from, to, type, label, color) {
+            const cfg = {
+                inheritance: { arrows: { to: { enabled: true, type: 'triangle', scaleFactor: 1.2 } }, dashes: false, width: 2 },
+                realization: { arrows: { to: { enabled: true, type: 'triangle', scaleFactor: 1.2 } }, dashes: [6, 4], width: 1.6 },
+                composition: { arrows: { from: { enabled: true, type: 'diamond', scaleFactor: 1.2 } }, dashes: false, width: 2 },
+                aggregation: { arrows: { from: { enabled: true, type: 'diamond', scaleFactor: 1.2 } }, dashes: false, width: 1.8 },
+                association: { arrows: { to: { enabled: true, type: 'arrow' } }, dashes: false, width: 1.8 },
+                dependency: { arrows: { to: { enabled: true, type: 'arrow' } }, dashes: [7, 4], width: 1.4 },
+            }[type] || { arrows: 'to', dashes: false, width: 1.8 };
+            return {
+                id, from, to, label: label || '', smooth: { type: 'dynamic' },
+                color: { color: color || '#60a5fa', highlight: color || '#60a5fa', hover: color || '#60a5fa', opacity: .76 },
+                font: { color: '#475569', size: 9, align: 'middle' }, ...cfg
+            };
+        }
+
+        const nodes = new vis.DataSet([
+            mkN('IComponent', CL.IComponent), mkN('Component', CL.Component),
+            mkN('Button', CL.Button), mkN('Card', CL.Card), mkN('Badge', CL.Badge),
+            mkN('Theme', CL.Theme), mkN('McpSpec', CL.McpSpec), mkN('McpRenderer', CL.McpRenderer),
+            mkN('SalesPlan', CL.SalesPlan), mkN('VaultEntitlement', CL.VaultEntitlement), mkN('GrantService', CL.GrantService),
+            mkN('QualityGate', CL.QualityGate), mkN('ConsistencyGate', CL.ConsistencyGate), mkN('CommercialGate', CL.CommercialGate),
+        ]);
+        const edges = new vis.DataSet([
+            mkE('e1', 'Component', 'IComponent', 'realization', 'implements', '#60a5fa'),
+            mkE('e2', 'Button', 'Component', 'inheritance', 'extends', '#a78bfa'),
+            mkE('e3', 'Card', 'Component', 'inheritance', 'extends', '#a78bfa'),
+            mkE('e4', 'Badge', 'Component', 'inheritance', 'extends', '#a78bfa'),
+            mkE('e5', 'Component', 'Theme', 'composition', '◆ theme', '#fb7185'),
+            mkE('e6', 'Card', 'Badge', 'aggregation', '◇ 0..*', '#fbbf24'),
+            mkE('e7', 'McpRenderer', 'McpSpec', 'composition', '◆ 1', '#fb7185'),
+            mkE('e8', 'McpRenderer', 'Theme', 'dependency', 'uses', '#34d399'),
+            mkE('e9', 'McpSpec', 'IComponent', 'association', 'describes 1..*', '#34d399'),
+            mkE('e10', 'SalesPlan', 'VaultEntitlement', 'dependency', 'unlocks', '#34d399'),
+            mkE('e11', 'GrantService', 'VaultEntitlement', 'association', 'creates', '#34d399'),
+            mkE('e12', 'GrantService', 'SalesPlan', 'dependency', 'validates', '#34d399'),
+            mkE('e13', 'ConsistencyGate', 'QualityGate', 'inheritance', 'extends', '#a78bfa'),
+            mkE('e14', 'CommercialGate', 'QualityGate', 'inheritance', 'extends', '#a78bfa'),
+        ]);
+
+        let phy = true;
+        const net = new vis.Network(document.getElementById('network'), { nodes, edges }, {
+            layout: { improvedLayout: true },
+            physics: { enabled: true, solver: 'forceAtlas2Based', forceAtlas2Based: { gravitationalConstant: -100, centralGravity: .015, springLength: 210, springConstant: .04, damping: .3, avoidOverlap: .85 }, stabilization: { iterations: 200, fit: false } },
+            interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true },
+            nodes: { chosen: false }, edges: { smooth: { type: 'dynamic' } }
+        });
+        const visMap = { pri: 'pri', pub: 'pub', pro: 'pro', stt: 'stt' };
+        const nameMap = { pri: '- private', pub: '+ public', pro: '# protected', stt: 'static' };
+        net.on('click', p => {
+            const id = p.nodes && p.nodes[0]; if (!id) return;
+            const cl = CL[id]; if (!cl) return;
+            document.getElementById('cn').textContent = id;
+            document.getElementById('cd').textContent = cl.desc;
+            document.getElementById('ca').innerHTML = cl.attrs.map(a => `<li><span class="vis ${a.v}">${nameMap[a.v] || a.v}</span>${a.n}</li>`).join('');
+            document.getElementById('cm').innerHTML = cl.methods.map(m => `<li><span class="vis ${m.v}">${nameMap[m.v] || m.v}</span>${m.n}</li>`).join('');
+            document.getElementById('cr').innerHTML = cl.rels.map(r => `<li><span class="rel-type">${r.t}</span>${r.d}</li>`).join('');
+        });
+        setTimeout(() => net.fit({ animation: { duration: 300 } }), 120);
+        document.getElementById('fit-btn').onclick = () => net.fit({ animation: { duration: 300 } });
+        document.getElementById('phy-btn').onclick = () => { phy = !phy; net.setOptions({ physics: { enabled: phy } }) };
+    </script>
+</body>
+
+</html>

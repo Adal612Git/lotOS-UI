@@ -1,0 +1,41 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "payment_failed",
+  "provider": "lemon_squeezy",
+  "kind": "mapper_and_route",
+  "request": {
+    "signatureMode": "valid",
+    "headers": {
+      "content-type": "application/json",
+      "x-event-name": "subscription_payment_failed",
+      "x-signature": "__TEST_GENERATED__"
+    }
+  },
+  "payload": {
+    "meta": {
+      "event_name": "subscription_payment_failed",
+      "event_id": "evt_fixture_payment_failed_001"
+    },
+    "data": {
+      "type": "subscription-invoices",
+      "id": "inv_fixture_failed_001",
+      "attributes": {
+        "customer_id": "cus_fixture_001",
+        "subscription_id": "sub_fixture_001",
+        "user_email": "buyer+pro@example.test",
+        "variant_id": "var_fixture_pro"
+      }
+    }
+  },
+  "expectedMapping": {
+    "action": "mark_past_due",
+    "status": "past_due",
+    "plan": "pro",
+    "providerEventId": "evt_fixture_payment_failed_001"
+  },
+  "expectedRoute": {
+    "status": 200,
+    "upsert": true,
+    "audit": ["webhook_received", "webhook_applied"]
+  }
+}

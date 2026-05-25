@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { componentSchemas } from '@lotosui/core/schemas';
 import * as components from '../../src/components/index.js';
+import { FREE_COMPONENTS, PRO_COMPONENTS } from '../../src/catalog.js';
 import {
     fetchComponentCatalog,
     fetchComponentSchema,
@@ -14,12 +14,17 @@ function toPascalCase(value: string): string {
 }
 
 describe('MCP catalog contract', () => {
-    it('exports all core schema components from claude arm barrel', () => {
-        for (const componentName of Object.keys(componentSchemas)) {
+    it('exports only free public components from the claude arm components barrel', () => {
+        for (const componentName of FREE_COMPONENTS) {
             const exportName = toPascalCase(componentName);
             const exported = (components as Record<string, unknown>)[exportName];
             expect(exported).toBeDefined();
             expect(['function', 'object']).toContain(typeof exported);
+        }
+
+        for (const componentName of PRO_COMPONENTS) {
+            const exportName = toPascalCase(componentName);
+            expect((components as Record<string, unknown>)[exportName]).toBeUndefined();
         }
     });
 

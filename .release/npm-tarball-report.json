@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/verify-npm-tarballs.mjs",
+  "generatedAt": "2026-05-19T03:51:35.939Z",
+  "result": "blocked",
+  "npmTarballsReady": false,
+  "redacted": true,
+  "tarballs": [
+    {
+      "packageName": "@lotosui/registry",
+      "status": "dry-run",
+      "filename": "lotosui-registry-0.1.0.tgz",
+      "size": 18612,
+      "unpackedSize": 74197,
+      "entryCount": 10
+    },
+    {
+      "packageName": "@lotosui/core",
+      "status": "dry-run",
+      "filename": "lotosui-core-0.1.0.tgz",
+      "size": 66190,
+      "unpackedSize": 418767,
+      "entryCount": 86
+    },
+    {
+      "packageName": "@lotosui/sentinel",
+      "status": "dry-run",
+      "filename": "lotosui-sentinel-0.0.1.tgz",
+      "size": 3376,
+      "unpackedSize": 11514,
+      "entryCount": 6
+    },
+    {
+      "packageName": "@lotosui/cli",
+      "status": "dry-run",
+      "filename": "lotosui-cli-0.0.1.tgz",
+      "size": 18301,
+      "unpackedSize": 76872,
+      "entryCount": 22
+    },
+    {
+      "packageName": "@lotosui/claude-arm",
+      "status": "dry-run",
+      "filename": "lotosui-claude-arm-1.1.0.tgz",
+      "size": 23209,
+      "unpackedSize": 97627,
+      "entryCount": 48
+    },
+    {
+      "packageName": "@lotosui/web-components",
+      "status": "dry-run",
+      "filename": "lotosui-web-components-0.1.0.tgz",
+      "size": 8994,
+      "unpackedSize": 47975,
+      "entryCount": 26
+    }
+  ],
+  "findings": [
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/registry",
+      "detail": "@repo/typescript-config"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/core",
+      "detail": "@lotosui/registry"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/core",
+      "detail": "@repo/typescript-config"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/sentinel",
+      "detail": "@lotosui/core"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/sentinel",
+      "detail": "@repo/typescript-config"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/cli",
+      "detail": "@lotosui/core"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/cli",
+      "detail": "@lotosui/registry"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/cli",
+      "detail": "@repo/typescript-config"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/claude-arm",
+      "detail": "@lotosui/core"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/claude-arm",
+      "detail": "@repo/typescript-config"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/web-components",
+      "detail": "@lotosui/core"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_dependency_in_publish_metadata",
+      "packageName": "@lotosui/web-components",
+      "detail": "@repo/typescript-config"
+    }
+  ]
+}

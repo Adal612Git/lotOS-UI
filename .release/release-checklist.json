@@ -1,0 +1,62 @@
+{
+  "generatedFrom": "ONE/verify-release-candidate.mjs",
+  "mode": "private-workspace",
+  "publicReleaseExpected": false,
+  "checks": [
+    {
+      "id": "verify:no-secrets",
+      "status": "failed"
+    },
+    {
+      "id": "verify:no-premium-leak",
+      "status": "passed"
+    },
+    {
+      "id": "verify:private-workspace",
+      "status": "passed"
+    },
+    {
+      "id": "verify:generated-ai",
+      "status": "passed"
+    },
+    {
+      "id": "verify:registry-consumers",
+      "status": "passed"
+    },
+    {
+      "id": "verify:routes",
+      "status": "passed"
+    },
+    {
+      "id": "verify:web-smoke",
+      "status": "passed"
+    },
+    {
+      "id": "verify:mcp-smoke",
+      "status": "passed"
+    },
+    {
+      "id": "verify:cli-smoke",
+      "status": "passed"
+    },
+    {
+      "id": "verify:package-exports",
+      "status": "passed"
+    },
+    {
+      "id": "verify:packages",
+      "status": "passed"
+    },
+    {
+      "id": "verify:ci",
+      "status": "passed"
+    }
+  ],
+  "result": "blocked",
+  "humanBlockers": [
+    "Rotate local secrets before public release.",
+    "Move premium source/assets to private repo or private registry before public release.",
+    "Set final legal/support values in deployment.",
+    "Approve final pricing before selling."
+  ]
+}

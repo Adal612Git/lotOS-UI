@@ -1,0 +1,33 @@
+{
+  "name": "@lotosui/registry",
+  "version": "0.1.0",
+  "description": "Manifest source of truth for LotOS UI components, runtimes, tiers, routes, env vars, and AI agent context.",
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "generate:ai": "pnpm build && node scripts/generate-ai-manifests.mjs",
+    "verify:ai": "pnpm build && node scripts/generate-ai-manifests.mjs --check",
+    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "invalid_signature_shape",
+  "provider": "lemon_squeezy",
+  "kind": "route_only",
+  "request": {
+    "signatureMode": "invalid",
+    "headers": {
+      "content-type": "application/json",
+      "x-event-name": "order_created",
+      "x-signature": "__INVALID_TEST_SIGNATURE__"
+    }
+  },
+  "payload": {
+    "meta": {
+      "event_name": "order_created",
+      "event_id": "evt_fixture_invalid_signature_001"
+    },
+    "data": {
+      "type": "orders",
+      "id": "ord_fixture_invalid_signature_001",
+      "attributes": {
+        "customer_id": "cus_fixture_001",
+        "user_email": "buyer+solo@example.test",
+        "first_order_item": {
+          "variant_id": "var_fixture_solo"
+        }
+      }
+    }
+  },
+  "expectedMapping": {
+    "action": "grant_active",
+    "status": "active",
+    "plan": "solo",
+    "providerEventId": "evt_fixture_invalid_signature_001"
+  },
+  "expectedRoute": {
+    "status": 401,
+    "upsert": false,
+    "audit": []
+  }
+}

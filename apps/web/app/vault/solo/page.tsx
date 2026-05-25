@@ -16,7 +16,7 @@ const soloAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accen
 
 const soloSignals = [
   { value: '1', label: 'Operator' },
-  { value: 'MX$59', label: 'Entry tier' },
+  { value: 'MX$59', label: 'Placeholder' },
   { value: 'Private', label: 'Proof layer' },
   { value: 'Fast', label: 'Upgrade path' },
 ];
@@ -180,7 +180,7 @@ export default async function SoloVaultPage() {
           <p>Solo is intentionally focused: one buyer, one recurring path, one clean upgrade ladder.</p>
         </article>
         <article className="vault-kpi accent-violet">
-          <strong>MX$59</strong>
+          <strong>MX$59 placeholder</strong>
           <span>Monthly entry point</span>
           <p>Phase 1 founders pricing for the first 20 customers keeps this tier accessible but still premium.</p>
         </article>

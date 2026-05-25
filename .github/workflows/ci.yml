@@ -146,11 +146,46 @@ jobs:
       - name: Verify commercial readiness
         run: pnpm run verify:commercial
 
+      - name: Verify no secrets
+        run: pnpm run verify:no-secrets
+
+      - name: Verify no premium leak
+        run: pnpm run verify:no-premium-leak
+
+      - name: Verify drift gates
+        run: pnpm run verify:drift
+
+      - name: Verify route and smoke gates
+        run: |
+          pnpm run verify:routes
+          pnpm run verify:web-smoke
+          pnpm run verify:mcp-smoke
+          pnpm run verify:cli-smoke
+
+      - name: Verify entitlement boundary
+        run: |
+          pnpm run verify:entitlement-boundary
+          pnpm run verify:webhook-lifecycle
+          pnpm run verify:webhook-contracts
+          pnpm run verify:entitlement-state-machine
+          pnpm run verify:supabase-migrations
+          pnpm run verify:entitlement-audit
+          pnpm run verify:admin-lifecycle
+          pnpm run verify:vault-lifecycle
+          pnpm run verify:rls-policy-plan
+          pnpm run verify:commercial-lifecycle
+
+      - name: Verify package exports
+        run: pnpm run verify:package-exports
+
       - name: Verify desktop delivery pipelines
         run: pnpm run verify:desktop
 
       - name: Verify release readiness
         run: pnpm run verify:release-readiness
+
+      - name: Verify release candidate
+        run: pnpm run verify:release-candidate
 
       - name: Verify private pro surface
         run: pnpm --filter @lotosui/pro-private run verify

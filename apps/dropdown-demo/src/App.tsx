@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Dropdown, Button } from '@lotosui/claude-arm';
-import type { DropdownItem } from '@lotosui/claude-arm';
-import { applyTheme } from '@lotosui/core';
+import { Button } from '@lotosui/claude-arm';
+import { Dropdown } from '@lotosui/claude-arm-pro';
+import type { DropdownItem } from '@lotosui/claude-arm-pro';
+import { applyTheme } from '@lotosui/core/theme';
 
 // ─── Inline SVG icons (no external dep) ──────────────────────────────────────
 

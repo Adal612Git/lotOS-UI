@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth-options';
 import { AuthAction } from '../auth-action';
 import { CommercialFooter } from '../commercial-footer';
+import { buildRouteMetadata } from '../../lib/seo';
 import {
   commercialReadiness,
   checkoutEnvKeys,
@@ -16,6 +17,12 @@ import {
 } from '../sales-config';
 import '../lotos-landing.css';
 import type { PaymentAction, SalesPlan } from '../sales-config';
+
+export const metadata = buildRouteMetadata({
+  title: 'LotOS UI Pricing',
+  description: 'Free, Solo, Pro, and Full Signature access paths for LotOS UI with explicit checkout, entitlement, and legal readiness states.',
+  path: '/pricing',
+});
 
 type TierSignal = {
   value: string;
@@ -181,7 +188,7 @@ export default async function PricingPage({
   const proPlan = ensurePlan(paidPlans.find((plan) => plan.id === 'pro'), {
     id: 'pro',
     name: 'Pro Studio',
-    priceLabel: 'MX$129 / mes',
+    priceLabel: 'MX$129 / mes (placeholder)',
     summary: 'Reusable premium delivery for teams that need real protected assets.',
     audience: 'Teams that need Pro access without ambiguity.',
     features: ['Protected kits', 'Reusable delivery assets', 'Private vault value'],
@@ -191,7 +198,7 @@ export default async function PricingPage({
   const fullPlan = ensurePlan(paidPlans.find((plan) => plan.id === 'launch-pack'), {
     id: 'launch-pack',
     name: 'Full Signature',
-    priceLabel: 'MX$249 / mes',
+    priceLabel: 'MX$249 / mes (placeholder)',
     summary: 'The fullest premium package with exclusive surfaces and the strongest handoff.',
     audience: 'Buyers that want the highest-finish version of the product.',
     features: ['Everything in Pro', 'Executive surfaces', 'Highest-finish handoff'],
@@ -237,7 +244,7 @@ export default async function PricingPage({
           {signedInEmail ? (
             <>
               <Link href="/vault" className="nav-link nav-link--cta">Open Vault</Link>
-              <a href="/api/auth/signout?callbackUrl=/pricing" className="nav-link nav-link--muted">Sign Out</a>
+              <Link href="/api/auth/signout?callbackUrl=/pricing" className="nav-link nav-link--muted">Sign Out</Link>
             </>
           ) : (
             <Link href="/login" className="nav-link">Sign In</Link>
@@ -667,7 +674,7 @@ export default async function PricingPage({
               <p className="plan-tier">Why Pro converts</p>
               <h3>{proPlan.name}</h3>
               <p>
-                It moves the offer from "premium access" into "premium execution" by adding the real
+                It moves the offer from &quot;premium access&quot; into &quot;premium execution&quot; by adding the real
                 protected bundle and a more useful delivery surface.
               </p>
               <ul className="value-list">

@@ -5,7 +5,7 @@ export async function listUserPlans(userEmail: string): Promise<CommercialPlan[]
   try {
     const normalizedEmail = normalizeEmail(userEmail);
     const supabaseUrl = process.env.SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY;
 
     if (!normalizedEmail || !supabaseUrl || !serviceRoleKey) {
       return [];
@@ -26,7 +26,7 @@ export async function listUserPlans(userEmail: string): Promise<CommercialPlan[]
     if (!response.ok) {
       console.error('LotOS docs vault failed to load entitlements', {
         status: response.status,
-        email: normalizedEmail,
+        hasEmail: Boolean(normalizedEmail),
       });
       return [];
     }
@@ -44,8 +44,8 @@ export async function listUserPlans(userEmail: string): Promise<CommercialPlan[]
     return [...deduped];
   } catch (error) {
     console.error('LotOS docs vault entitlement lookup crashed', {
-      reason: error instanceof Error ? error.message : 'unknown',
-      email: normalizeEmail(userEmail),
+      reason: error instanceof Error ? error.name : 'unknown',
+      hasEmail: Boolean(normalizeEmail(userEmail)),
     });
     return [];
   }

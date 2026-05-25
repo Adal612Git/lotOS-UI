@@ -5,11 +5,22 @@ import { spawnSync } from 'node:child_process';
 const rootDir = process.cwd();
 
 const targets = [
+    { dir: 'packages/registry', env: 'PUBLISH_REGISTRY' },
     { dir: 'packages/core', env: 'PUBLISH_CORE' },
     { dir: 'packages/sentinel', env: 'PUBLISH_SENTINEL' },
     { dir: 'packages/cli', env: 'PUBLISH_CLI' },
+    { dir: 'packages/claude-arm', env: 'PUBLISH_CLAUDE_ARM' },
     { dir: 'packages/web-components', env: 'PUBLISH_WEB_COMPONENTS' },
 ];
+
+const allowedPublicPackageNames = new Set([
+    '@lotosui/registry',
+    '@lotosui/core',
+    '@lotosui/sentinel',
+    '@lotosui/cli',
+    '@lotosui/claude-arm',
+    '@lotosui/web-components',
+]);
 
 function run(cmd, args, cwd = rootDir) {
     const result = spawnSync(cmd, args, {
@@ -40,7 +51,7 @@ function isEnabled(value) {
 function readPackageMeta(pkgDir) {
     const manifestPath = resolve(rootDir, pkgDir, 'package.json');
     const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-    return { name: manifest.name, version: manifest.version };
+    return { name: manifest.name, version: manifest.version, access: manifest.publishConfig?.access, privatePackage: manifest.private === true };
 }
 
 function findLatestTarball(packDir) {
@@ -80,9 +91,13 @@ for (const target of targets) {
         continue;
     }
 
-    const { name, version } = readPackageMeta(target.dir);
+    const { name, version, access, privatePackage } = readPackageMeta(target.dir);
     // eslint-disable-next-line no-console
     console.log(`\n=== ${name}@${version} ===`);
+
+    if (!allowedPublicPackageNames.has(name) || privatePackage || access !== 'public') {
+        throw new Error(`Refusing to publish non-public package target: ${target.dir}`);
+    }
 
     if (isVersionPublished(name, version)) {
         // eslint-disable-next-line no-console

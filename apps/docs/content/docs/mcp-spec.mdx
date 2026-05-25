@@ -5,58 +5,64 @@ description: Formal transport contract for the LotOS UI MCP layer.
 
 # MCP Transport Spec
 
-LotOS UI exposes its AI contract layer through a concrete transport, not only an idea.
+LotOS UI exposes its AI contract layer through a concrete HTTP JSON transport.
+The source of truth is `packages/core/src/mcp/spec.ts`; this page must stay aligned
+with `lotosMcpTransportSpec` and `pnpm run verify:mcp`.
 
 ## Current Transport
 
 - `Transport`: HTTP JSON
 - `Content-Type`: `application/json`
-- `Version`: `1.0.0`
+- `Version`: `1.1.0`
 - `Base Path`: `/`
-
-The typed specification is exported from:
-
-- `@lotosui/core` -> `lotosMcpTransportSpec`
-
-Source:
-
-- [spec.ts](/C:/Users/Rick/Documents/LotosTechnologies/LotOS%20UI/lotos-ui/packages/core/src/mcp/spec.ts)
+- Export: `@lotosui/core/mcp` -> `lotosMcpTransportSpec`
 
 ## Endpoint Surface
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/health` | Health and version check |
-| `GET` | `/components` | Component catalog |
-| `GET` | `/components/:name` | Component schema and metadata |
-| `GET` | `/components/:name/examples` | Framework-specific examples |
-| `POST` | `/components/render` | Contract-safe snippet rendering |
-| `GET` | `/runtimes` | Runtime profiles and maturity |
-| `GET` | `/patterns` | Pattern catalog |
-| `GET` | `/patterns/:id` | Pattern details |
-| `GET` | `/desktop/templates` | Desktop template list |
-| `GET` | `/desktop/templates/:id` | Desktop template detail |
-| `GET` | `/stacks` | Stack starter list |
-| `GET` | `/stacks/:id` | Stack starter detail |
-
-## Intent
-
-This transport gives AI tooling a stable way to:
-
-1. discover available components
-2. fetch schemas and restrictions
-3. fetch examples by runtime
-4. render contract-safe starter snippets
-5. inspect runtime, desktop, and stack capability surfaces
+| `GET` | `/health` | Check server availability and registry counts. |
+| `GET` | `/mcp/spec` | Expose the transport contract for agents and verifiers. |
+| `GET` | `/manifest` | Return the registry manifest as the source of truth. |
+| `GET` | `/ai/context` | Return compact agent context for planning and guardrails. |
+| `GET` | `/project-map` | Map apps, packages, routes, validation, and release readiness. |
+| `GET` | `/routes` | List route gates and access boundaries. |
+| `GET` | `/component-tiers` | List free and pro component contracts from the registry. |
+| `GET` | `/pricing-plans` | List commercial plan gates from the registry. |
+| `GET` | `/asset-permissions` | List public, pro, and private delivery rules. |
+| `GET` | `/env-requirements` | List required environment variable groups without values. |
+| `GET` | `/templates` | List product templates with optional filters. |
+| `GET` | `/templates/:id` | Fetch a single template definition. |
+| `GET` | `/templates/:id/prompt` | Fetch an AI-ready generation prompt for a template. |
+| `GET` | `/runtime-matrix` | List runtime support and maturity. |
+| `GET` | `/themes` | List theme metadata and token intent. |
+| `GET` | `/release-readiness` | Expose release readiness score, blockers, and validation commands. |
+| `GET` | `/entitlement-flows` | Expose paid, manual test, paid recovery, and revocation entitlement flows. |
+| `GET` | `/runtimes` | List runtime profiles and include registry runtime matrix. |
+| `GET` | `/frameworks` | List currently supported component rendering frameworks. |
+| `GET` | `/patterns` | List design patterns and runtime-safe guidance. |
+| `GET` | `/patterns/:id` | Fetch full design pattern details. |
+| `GET` | `/desktop/templates` | List desktop template packs. |
+| `GET` | `/desktop/templates/:id` | Fetch a specific desktop template. |
+| `GET` | `/stacks` | List starter stacks by runtime and database profile. |
+| `GET` | `/stacks/:id` | Fetch a specific stack starter definition. |
+| `GET` | `/components` | List available component contracts. |
+| `GET` | `/components/:name` | Fetch a single component schema and metadata. |
+| `GET` | `/components/:name/examples` | Fetch framework examples for a component. |
+| `POST` | `/components/render` | Render a contract-safe snippet for a target component. |
 
 ## Example Flow
 
-1. Call `/health`
-2. Call `/components/button`
-3. Call `/components/button/examples`
-4. Call `/components/render` with the target payload
-5. Use the returned snippet as the safe UI seed
+1. Call `/health`.
+2. Call `/manifest` or `/ai/context` before scanning large source files.
+3. Call `/components/button` or `/templates/ai-agent-console`.
+4. Call `/components/render` with the target framework and props.
+5. Use the returned snippet as a safe seed, then run the registry and MCP verifiers.
 
-The repository already includes a working E2E example:
+## Validation
 
-- [mcp-render-demo.mjs](/C:/Users/Rick/Documents/LotosTechnologies/LotOS%20UI/lotos-ui/packages/core/examples/mcp-render-demo.mjs)
+```bash
+pnpm run verify:mcp
+pnpm run verify:mcp-smoke
+pnpm run verify:registry-consumers
+```

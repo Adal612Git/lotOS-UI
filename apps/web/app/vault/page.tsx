@@ -1,8 +1,15 @@
 import Link from 'next/link';
 import { getViewerContext } from '../../lib/auth-server';
 import '../lotos-landing.css';
-import { GrantAccessForm } from '../grant-access-form';
 import { commercialReadiness } from '../sales-config';
+import { buildRouteMetadata } from '../../lib/seo';
+import { mapSummaryForVault } from '../../lib/entitlement-access';
+
+export const metadata = buildRouteMetadata({
+  title: 'LotOS UI Vault',
+  description: 'Protected LotOS UI delivery surface for entitlement-gated Solo, Pro, and Full Signature assets.',
+  path: '/vault',
+});
 
 const vaultAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accent-violet'] as const;
 
@@ -32,12 +39,29 @@ const planLabels: Record<string, string> = {
   launch_pack: 'Full Signature',
 };
 
+function formatVaultDate(value: string | null) {
+  if (!value) {
+    return null;
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat('es-MX', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+}
+
 export default async function VaultPage() {
   const viewer = await getViewerContext();
   const viewerPlans = new Set<string>(viewer.plans);
   const hasSolo = viewer.isOwner || viewerPlans.has('solo') || viewerPlans.has('pro') || viewerPlans.has('launch_pack');
   const hasPro = viewer.isOwner || viewerPlans.has('pro') || viewerPlans.has('launch_pack');
   const hasLaunch = viewer.isOwner || viewerPlans.has('launch_pack');
+  const entitlementRecords = viewer.entitlements;
   const vaultExperienceCards = [
     {
       label: 'Access state',
@@ -80,7 +104,8 @@ export default async function VaultPage() {
           <Link href="/docs" className="nav-link">Docs</Link>
           <Link href="/demo" className="nav-link">Demos</Link>
           <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
-          <a href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</a>
+          {viewer.isOwner ? <Link href="/admin/entitlements" className="nav-link nav-link--cta">Admin</Link> : null}
+          <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
         </nav>
       </header>
 
@@ -240,6 +265,62 @@ export default async function VaultPage() {
         </article>
       </section>
 
+      <section className="card owner-panel">
+        <p className="section-label">Entitlement lifecycle</p>
+        <h2>Access source and status</h2>
+        {viewer.isOwner ? (
+          <div className="pricing-state-banner">
+            <strong>Owner bypass is active.</strong>
+            <span>
+              This session can inspect premium surfaces for administration, but buyer access still depends on
+              entitlement rows. Use <Link href="/admin/entitlements">Entitlement Admin</Link> for manual grants,
+              recovery, and revocation.
+            </span>
+          </div>
+        ) : entitlementRecords.length === 0 ? (
+          <div className="pricing-state-banner warning">
+            <strong>No entitlement records found.</strong>
+            <span>
+              This account can keep using public assets. Premium vaults and downloads require a paid entitlement,
+              a temporary manual test grant, or a paid recovery record.
+            </span>
+          </div>
+        ) : (
+          <div className="value-grid">
+            {entitlementRecords.map((entry) => {
+              const vaultEntry = mapSummaryForVault(entry);
+              if (!vaultEntry) {
+                return null;
+              }
+              const expiresAt = formatVaultDate(vaultEntry.expiresAt ?? vaultEntry.trialEndsAt);
+              const grantedAt = formatVaultDate(entry.grantedAt);
+
+              return (
+                <article key={`${entry.plan}-${entry.source}-${entry.grantedAt}`} className="value-card">
+                  <div className="tier-head compact">
+                    <div className="tier-title-block">
+                      <p className="plan-tier">{planLabels[vaultEntry.plan] ?? vaultEntry.plan}</p>
+                      <h3>{vaultEntry.label}</h3>
+                    </div>
+                    <span className={`payment-chip ${vaultEntry.tone}`}>
+                      {entry.active ? 'Activo' : 'No activo'}
+                    </span>
+                  </div>
+                  <p>{vaultEntry.body}</p>
+                  <ul>
+                    <li>Granted: {grantedAt ?? 'not recorded'}</li>
+                    <li>{entry.kind === 'manual_test' ? `Trial ends: ${expiresAt ?? 'not recorded'}` : `Access window: ${expiresAt ?? 'not configured'}`}</li>
+                  </ul>
+                  <div className="hero-actions compact">
+                    <Link href={vaultEntry.ctaHref} className="btn ghost">{vaultEntry.ctaLabel}</Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
       <section className="value-grid">
         <article className="value-card">
           <h3>Solo Access</h3>
@@ -258,12 +339,14 @@ export default async function VaultPage() {
       {viewer.isOwner ? (
         <section className="card owner-panel">
           <p className="section-label">Owner tools</p>
-          <h2>Fallback unlock tools for exceptional cases</h2>
+          <h2>Manual test access and paid recovery tools</h2>
           <p>
-            Automatic unlock should handle normal purchases. Use this only when you need an operator
-            override after a webhook miss, an email correction, or a manual payment exception.
+            Use the dedicated admin panel to grant test access without payment, or recover access
+            after a confirmed payment exception. Normal buyers should still use checkout and webhook unlock.
           </p>
-          <GrantAccessForm />
+          <div className="hero-actions compact">
+            <Link href="/admin/entitlements" className="btn primary">Open Entitlement Admin</Link>
+          </div>
         </section>
       ) : null}
     </main>

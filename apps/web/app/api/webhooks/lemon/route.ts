@@ -1,8 +1,15 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
-import { formatEntitlementError, upsertEntitlement } from '../../../../lib/entitlements';
+import {
+  hasProcessedProviderEvent,
+  recordEntitlementAuditEvent,
+} from '../../../../lib/entitlement-audit';
+import { formatEntitlementError, formatEntitlementLogError, upsertEntitlement } from '../../../../lib/entitlements';
 import { env } from '../../../../lib/env';
-import type { CommercialPlan } from '../../../../lib/plans';
+import {
+  listSupportedLemonWebhookEvents,
+  mapLemonWebhookEvent,
+} from '../../../../lib/webhooks/lemon-event-mapper';
 
 export const runtime = 'nodejs';
 
@@ -37,12 +44,7 @@ const webhookSchema = z
   .passthrough();
 
 function isSupportedEvent(eventName: string | undefined) {
-  return (
-    eventName === 'order_created' ||
-    eventName === 'subscription_created' ||
-    eventName === 'subscription_payment_success' ||
-    eventName === 'subscription_resumed'
-  );
+  return eventName ? listSupportedLemonWebhookEvents().includes(eventName) : false;
 }
 
 function timingSafeMatch(received: string, expected: string) {
@@ -59,51 +61,6 @@ function timingSafeMatch(received: string, expected: string) {
 function validateSignature(rawBody: string, signature: string) {
   const digest = createHmac('sha256', env.LEMON_WEBHOOK_SECRET!).update(rawBody).digest('hex');
   return timingSafeMatch(signature, digest);
-}
-
-function resolvePlanFromVariantId(variantId: string | null): CommercialPlan | null {
-  if (!variantId) {
-    return null;
-  }
-
-  if (variantId === env.LEMON_SOLO_VARIANT_ID) {
-    return 'solo';
-  }
-  if (variantId === env.LEMON_PRO_VARIANT_ID) {
-    return 'pro';
-  }
-  if (variantId === env.LEMON_LAUNCH_VARIANT_ID) {
-    return 'launch_pack';
-  }
-
-  return null;
-}
-
-function readVariantId(payload: z.infer<typeof webhookSchema>) {
-  const directVariantId = payload.data?.attributes?.variant_id;
-  const orderVariantId = payload.data?.attributes?.first_order_item?.variant_id;
-  const resolved = directVariantId ?? orderVariantId;
-
-  if (resolved === undefined || resolved === null) {
-    return null;
-  }
-
-  return String(resolved);
-}
-
-function readUserEmail(payload: z.infer<typeof webhookSchema>) {
-  const directEmail = payload.data?.attributes?.user_email;
-  const customEmail = payload.meta?.custom_data?.user_email;
-
-  if (typeof directEmail === 'string' && directEmail.length > 0) {
-    return directEmail;
-  }
-
-  if (typeof customEmail === 'string' && customEmail.length > 0) {
-    return customEmail;
-  }
-
-  return null;
 }
 
 export async function POST(request: Request) {
@@ -138,51 +95,131 @@ export async function POST(request: Request) {
   }
 
   const payload = parsedPayload.data;
-  const eventName = payload.meta?.event_name;
+  const mapping = mapLemonWebhookEvent(payload);
+  const eventName = mapping.eventName;
 
   if (!isSupportedEvent(eventName)) {
+    await recordEntitlementAuditEvent({
+      actorType: 'webhook',
+      action: 'webhook_ignored',
+      provider: 'lemon_squeezy',
+      providerEventId: mapping.providerEventId,
+      metadata: {
+        eventName,
+        reason: 'unsupported_event',
+      },
+    });
     return Response.json({ ok: true, ignored: true, event: eventName ?? 'unknown' }, { status: 202 });
   }
 
-  const userEmail = readUserEmail(payload);
-  const variantId = readVariantId(payload);
-  const plan = resolvePlanFromVariantId(variantId);
-
-  if (!userEmail || !plan) {
+  if (mapping.action === 'reject_unmappable' || !mapping.userEmail || !mapping.plan || !mapping.status) {
+    await recordEntitlementAuditEvent({
+      actorType: 'webhook',
+      action: 'webhook_failed',
+      provider: 'lemon_squeezy',
+      providerEventId: mapping.providerEventId,
+      reason: mapping.reason,
+      metadata: {
+        eventName,
+        action: mapping.action,
+        hasUserEmail: Boolean(mapping.userEmail),
+        hasPlan: Boolean(mapping.plan),
+        hasVariantId: Boolean(mapping.variantId),
+      },
+    });
     return Response.json(
       {
         ok: false,
-        error: 'Webhook payload is missing user_email or a known variant_id mapping.',
+        error: 'Webhook payload cannot be mapped to a known entitlement action.',
       },
       { status: 400 }
     );
   }
 
+  if (mapping.providerEventId) {
+    const duplicate = await hasProcessedProviderEvent('lemon_squeezy', mapping.providerEventId);
+    if (duplicate) {
+      return Response.json({ ok: true, duplicate: true });
+    }
+  }
+
+  await recordEntitlementAuditEvent({
+    actorType: 'webhook',
+    action: 'webhook_received',
+    provider: 'lemon_squeezy',
+    providerEventId: mapping.providerEventId,
+    metadata: {
+      eventName,
+      action: mapping.action,
+      status: mapping.status,
+      hasUserEmail: Boolean(mapping.userEmail),
+      hasVariantId: Boolean(mapping.variantId),
+    },
+  });
+
   try {
     const entitlement = await upsertEntitlement({
-      userEmail,
-      plan,
+      userEmail: mapping.userEmail,
+      plan: mapping.plan,
       source: 'lemon',
+      provider: 'lemon_squeezy',
+      providerCustomerId: mapping.providerCustomerId,
+      providerSubscriptionId: mapping.providerSubscriptionId,
+      providerOrderId: mapping.providerOrderId,
+      providerEventId: mapping.providerEventId,
+      status: mapping.status,
       metadata: {
         eventName,
-        variantId,
+        providerAction: mapping.action,
+        providerEventId: mapping.providerEventId,
+        variantId: mapping.variantId,
         lemonResourceId: payload.data?.id ?? null,
+      },
+    });
+
+    await recordEntitlementAuditEvent({
+      entitlementId: entitlement.id,
+      actorType: 'webhook',
+      action: 'webhook_applied',
+      provider: 'lemon_squeezy',
+      providerEventId: mapping.providerEventId,
+      metadata: {
+        eventName,
+        action: mapping.action,
+        status: mapping.status,
+        plan: entitlement.plan,
       },
     });
 
     return Response.json({
       ok: true,
       entitlement: {
-        email: entitlement.user_email,
         plan: entitlement.plan,
+        status: mapping.status,
       },
     });
   } catch (error) {
-    console.error('LotOS Lemon webhook failed to persist entitlement', {
-      reason: formatEntitlementError(error),
+    await recordEntitlementAuditEvent({
+      actorType: 'webhook',
+      action: 'webhook_failed',
+      provider: 'lemon_squeezy',
+      providerEventId: mapping.providerEventId,
+      reason: formatEntitlementLogError(error),
+      metadata: {
+        eventName,
+        action: mapping.action,
+        status: mapping.status,
+        hasUserEmail: Boolean(mapping.userEmail),
+        hasVariantId: Boolean(mapping.variantId),
+      },
+    });
+
+    console.error('LotOS Lemon webhook persistence failed', {
+      reason: formatEntitlementLogError(error),
       eventName,
-      userEmail,
-      variantId,
+      action: mapping.action,
+      buyerIdentityPresent: Boolean(mapping.userEmail),
+      hasVariantId: Boolean(mapping.variantId),
     });
 
     return Response.json(

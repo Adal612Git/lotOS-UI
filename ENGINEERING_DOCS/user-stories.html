@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Historias de Usuario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04101b;
+            --bg2: #0a1929;
+            --line: rgba(120, 149, 184, .18);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%),
+                radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%),
+                linear-gradient(160deg, var(--bg), #071525 55%, var(--bg2));
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .75);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .back {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .page-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tx)
+        }
+
+        .page-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(96, 165, 250, .1);
+            border: 1px solid rgba(96, 165, 250, .28);
+            color: var(--b)
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 32px 80px
+        }
+
+        /* HEADER */
+        .page-header {
+            margin-bottom: 40px
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -.04em;
+            line-height: 1;
+            margin-bottom: 8px;
+            background: linear-gradient(100deg, var(--b), var(--v));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: var(--mut);
+            line-height: 1.6;
+            max-width: 600px
+        }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            align-items: center
+        }
+
+        .filter-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-right: 4px
+        }
+
+        .filter-btn {
+            padding: 7px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            color: #fff;
+            border-color: var(--tone, var(--c));
+            background: rgba(255, 255, 255, .07);
+            box-shadow: 0 0 12px rgba(103, 232, 249, .1)
+        }
+
+        .filter-btn.all {
+            --tone: var(--c)
+        }
+
+        .filter-btn.epic-dev {
+            --tone: var(--c)
+        }
+
+        .filter-btn.epic-buyer {
+            --tone: var(--b)
+        }
+
+        .filter-btn.epic-admin {
+            --tone: var(--v)
+        }
+
+        .filter-btn.epic-mcp {
+            --tone: var(--a)
+        }
+
+        .filter-btn.priority-high {
+            --tone: var(--r)
+        }
+
+        .filter-btn.priority-med {
+            --tone: var(--a)
+        }
+
+        .filter-btn.priority-low {
+            --tone: var(--g)
+        }
+
+        /* COLUMNS */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            align-items: start
+        }
+
+        .col-header {
+            padding: 12px 14px;
+            border-radius: 12px 12px 0 0;
+            border: 1px solid rgba(120, 149, 184, .2);
+            border-bottom: none;
+            background: rgba(8, 21, 37, .8);
+            backdrop-filter: blur(10px);
+            margin-bottom: 0
+        }
+
+        .col-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+
+        .col-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .col-count {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--mut);
+            margin-left: auto
+        }
+
+        .column {
+            border-radius: 0 0 16px 16px;
+            border: 1px solid rgba(120, 149, 184, .2);
+            border-top: none;
+            background: rgba(4, 12, 24, .4);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 300px
+        }
+
+        /* STORY CARD */
+        .story {
+            border-radius: 16px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(8, 21, 37, .7);
+            backdrop-filter: blur(10px);
+            padding: 14px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .2s, border-color .2s, box-shadow .2s;
+            cursor: pointer;
+        }
+
+        .story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 2px 2px 0 0;
+            background: var(--story-color, var(--b))
+        }
+
+        .story:hover {
+            transform: translateY(-3px);
+            border-color: rgba(120, 149, 184, .32);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .3)
+        }
+
+        .story-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .story-id {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mut);
+            font-family: 'Courier New', monospace
+        }
+
+        .story-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap
+        }
+
+        .badge {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 5px;
+            border: 1px solid transparent
+        }
+
+        .badge.high {
+            background: rgba(251, 113, 133, .12);
+            border-color: rgba(251, 113, 133, .25);
+            color: var(--r)
+        }
+
+        .badge.med {
+            background: rgba(251, 191, 36, .12);
+            border-color: rgba(251, 191, 36, .25);
+            color: var(--a)
+        }
+
+        .badge.low {
+            background: rgba(52, 211, 153, .12);
+            border-color: rgba(52, 211, 153, .25);
+            color: var(--g)
+        }
+
+        .story h4 {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -.01em;
+            margin-bottom: 6px
+        }
+
+        .story-body {
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--mut);
+            margin-bottom: 10px
+        }
+
+        .story-criteria {
+            border-top: 1px solid rgba(120, 149, 184, .12);
+            padding-top: 10px;
+            margin-top: 8px
+        }
+
+        .criteria-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 5px
+        }
+
+        .criteria-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-size: 10px;
+            line-height: 1.45;
+            color: var(--mut);
+            margin-bottom: 3px
+        }
+
+        .criteria-item::before {
+            content: '✓';
+            color: var(--g);
+            font-size: 10px;
+            flex-shrink: 0;
+            margin-top: 0
+        }
+
+        .story-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(120, 149, 184, .1)
+        }
+
+        .story-epic {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--story-color, var(--b));
+            opacity: .8
+        }
+
+        .story-pts {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--mut);
+            background: rgba(255, 255, 255, .05);
+            border-radius: 5px;
+            padding: 2px 6px
+        }
+
+        /* MODAL */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, .65);
+            backdrop-filter: blur(8px);
+            padding: 32px;
+            align-items: center;
+            justify-content: center
+        }
+
+        .modal-bg.open {
+            display: flex
+        }
+
+        .modal {
+            max-width: 560px;
+            width: 100%;
+            border-radius: 24px;
+            border: 1px solid rgba(120, 149, 184, .28);
+            background: rgba(8, 21, 37, .96);
+            backdrop-filter: blur(20px);
+            padding: 28px;
+            position: relative;
+            max-height: 90vh;
+            overflow: auto;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, .5)
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 149, 184, .28);
+            background: rgba(255, 255, 255, .05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--mut);
+            transition: all .2s
+        }
+
+        .modal-close:hover {
+            color: #fff;
+            border-color: var(--r);
+            background: rgba(251, 113, 133, .1)
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 4px;
+            line-height: 1.2
+        }
+
+        .modal-sub {
+            font-size: 11px;
+            color: var(--mut);
+            margin-bottom: 16px
+        }
+
+        .modal-section {
+            margin-bottom: 14px
+        }
+
+        .modal-section-label {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 6px
+        }
+
+        .modal-text {
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--mut)
+        }
+
+        .modal-criteria {
+            list-style: none
+        }
+
+        .modal-criteria li {
+            display: flex;
+            gap: 8px;
+            font-size: 12px;
+            line-height: 1.55;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(120, 149, 184, .1)
+        }
+
+        .modal-criteria li:last-child {
+            border-bottom: none
+        }
+
+        .modal-criteria li::before {
+            content: '✓';
+            color: var(--g);
+            flex-shrink: 0;
+            font-weight: 700
+        }
+
+        .def {
+            font-size: 11px;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--mut);
+            background: rgba(2, 6, 23, .5);
+            border: 1px solid rgba(120, 149, 184, .15);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 8px
+        }
+
+        @media(max-width:1100px) {
+            .board {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:640px) {
+            .board {
+                grid-template-columns: 1fr
+            }
+
+            .container {
+                padding: 24px 16px 60px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a class="back" href="index.html">← Hub</a>
+            <span class="page-title">Historias de Usuario — LotOS UI</span>
+        </div>
+        <span class="page-badge">Ágil · Backlog</span>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Historias de Usuario</h1>
+            <p>Backlog completo del producto, organizado por épica y estado. Cada historia incluye criterios de
+                aceptación y puntos de esfuerzo (story points).</p>
+        </div>
+
+        <div class="filters">
+            <span class="filter-label">Épica:</span>
+            <button class="filter-btn all active" data-epic="all">Todas</button>
+            <button class="filter-btn epic-dev" data-epic="DEVELOPER">Developer</button>
+            <button class="filter-btn epic-buyer" data-epic="BUYER">Buyer</button>
+            <button class="filter-btn epic-admin" data-epic="ADMIN">Admin</button>
+            <button class="filter-btn epic-mcp" data-epic="MCP">AI/MCP</button>
+            <span class="filter-label" style="margin-left:12px">Prioridad:</span>
+            <button class="filter-btn priority-high" data-priority="high">Alta</button>
+            <button class="filter-btn priority-med" data-priority="med">Media</button>
+            <button class="filter-btn priority-low" data-priority="low">Baja</button>
+        </div>
+
+        <div class="board" id="board">
+            <div>
+                <div class="col-header">
+                    <div class="col-title">
+                        <div class="col-dot" style="background:#a78bfa"></div>Backlog<span class="col-count"
+                            id="cnt-backlog"></span>
+                    </div>
+                </div>
+                <div class="column" id="col-backlog"></div>
+            </div>
+            <div>
+                <div class="col-header">
+                    <div class="col-title">
+                        <div class="col-dot" style="background:#fbbf24"></div>En Progreso<span class="col-count"
+                            id="cnt-progress"></span>
+                    </div>
+                </div>
+                <div class="column" id="col-progress"></div>
+            </div>
+            <div>
+                <div class="col-header">
+                    <div class="col-title">
+                        <div class="col-dot" style="background:#60a5fa"></div>En Review<span class="col-count"
+                            id="cnt-review"></span>
+                    </div>
+                </div>
+                <div class="column" id="col-review"></div>
+            </div>
+            <div>
+                <div class="col-header">
+                    <div class="col-title">
+                        <div class="col-dot" style="background:#34d399"></div>Completado<span class="col-count"
+                            id="cnt-done"></span>
+                    </div>
+                </div>
+                <div class="column" id="col-done"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-bg" id="modal-bg">
+        <div class="modal" id="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const STORIES = [
+            {
+                id: 'US-001', epic: 'DEVELOPER', priority: 'high', pts: 5, status: 'done',
+                color: '#67e8f9',
+                title: 'Instalar componentes React',
+                body: 'Como Developer, quiero instalar @lotosui/claude-arm con npm para usar los componentes en mi aplicación React sin configuración extra.',
+                criteria: ['npm install @lotosui/claude-arm funciona sin errores', 'El stylesheet global se importa con una línea', 'Los componentes se renderizan con el tema dark por defecto', 'TypeScript types incluidos en el paquete', 'Tree-shaking funciona correctamente'],
+                dod: 'Paquete publicado en npm con tipos TS. Demo funcionando en apps/web.'
+            },
+            {
+                id: 'US-002', epic: 'DEVELOPER', priority: 'high', pts: 3, status: 'done',
+                color: '#67e8f9',
+                title: 'Scaffold de stack con CLI',
+                body: 'Como Developer, quiero usar @lotosui/cli para generar un proyecto completo (Laravel, Next.js, Spring) con LotOS UI ya configurado.',
+                criteria: ['lotos-ui stack-init genera proyecto en directorio especificado', 'Soporta runtimes: next, laravel, spring, django, flask, go, dotnet', 'Proyecto generado tiene hello world funcionando', 'Opciones de base de datos incluidas (none, mongodb)', 'Help text claro'],
+                dod: 'CLI publicado. Comando stack-init documentado en docs.'
+            },
+            {
+                id: 'US-003', epic: 'DEVELOPER', priority: 'high', pts: 8, status: 'done',
+                color: '#67e8f9',
+                title: 'Adapters multi-runtime',
+                body: 'Como Developer backend, quiero usar componentes LotOS en mi stack (PHP, Python, Java, Go, .NET) sin depender de React.',
+                criteria: ['lotos-laravel: Blade component funciona con @lotosui/lotos-card', 'lotos-django: template tag renderiza badge', 'lotos-flask: Jinja2 helper disponible', 'lotos-go: html/template funciona', 'lotos-spring: Thymeleaf dialect incluido', 'lotos-dotnet: Razor tag helper disponible'],
+                dod: '6 adapters en packages/. Cada uno con README y ejemplo.'
+            },
+            {
+                id: 'US-004', epic: 'DEVELOPER', priority: 'med', pts: 5, status: 'done',
+                color: '#67e8f9',
+                title: 'Descargar desktop starters',
+                body: 'Como Developer, quiero generar una app desktop nativa (Python, Rust, Java, C++) con UI LotOS para mis herramientas internas.',
+                criteria: ['lotos-ui desktop-templates lista templates disponibles', 'lotos-ui desktop-init -l python genera proyecto pywebview', 'App Python ejecuta con python main.py', 'Equivalentes para Rust, Java, C++ documentados', 'Shell visual usa @lotosui/web-components'],
+                dod: '4 demos en apps/desktop-*-demo. CLI desktop-init funcional.'
+            },
+            {
+                id: 'US-005', epic: 'DEVELOPER', priority: 'low', pts: 3, status: 'progress',
+                color: '#67e8f9',
+                title: 'Storybook de componentes',
+                body: 'Como Developer, quiero ver todos los componentes de @lotosui/claude-arm en Storybook para explorar variantes sin montar una app.',
+                criteria: ['Storybook arranca con pnpm storybook', 'Cada componente tiene al menos una story', 'Controles de props disponibles', 'Tema dark por defecto', 'Export estático funciona'],
+                dod: 'packages/claude-arm/.storybook configurado. Stories para 27+ componentes.'
+            },
+            {
+                id: 'US-006', epic: 'BUYER', priority: 'high', pts: 3, status: 'done',
+                color: '#60a5fa',
+                title: 'Ver pricing claro',
+                body: 'Como Buyer, quiero ver los planes Free, Solo, Pro y Full en /pricing con sus precios y features para decidir cuál comprar.',
+                criteria: ['Página /pricing carga en <2s', '4 tiers claramente diferenciados', 'Cada tier lista sus features principales', 'Precio y CTA visibles sin scroll', 'Tabla de comparación disponible'],
+                dod: 'apps/web/app/pricing/ desplegado en Vercel. sales-config.ts actualizado.'
+            },
+            {
+                id: 'US-007', epic: 'BUYER', priority: 'high', pts: 5, status: 'done',
+                color: '#60a5fa',
+                title: 'Autenticarse con Google',
+                body: 'Como Buyer, quiero iniciar sesión con mi cuenta Google para acceder al vault y ver mi tier actual.',
+                criteria: ['Botón "Sign in with Google" visible en nav', 'OAuth flow completa sin errores', 'Sesión persiste al recargar', 'Email mostrado en nav tras login', 'Logout funciona correctamente'],
+                dod: 'NextAuth con Google provider configurado. Session en cookie httpOnly.'
+            },
+            {
+                id: 'US-008', epic: 'BUYER', priority: 'high', pts: 8, status: 'review',
+                color: '#60a5fa',
+                title: 'Comprar tier y desbloquear vault',
+                body: 'Como Buyer, quiero pagar con Lemon Squeezy y que mi vault se desbloquee automáticamente sin ningún proceso manual.',
+                criteria: ['Click en "Get Pro" redirige al checkout de Lemon', 'Webhook de pago procesado en <5s', 'Entitlement creado en Supabase', 'Vault muestra recursos del tier comprado inmediatamente', 'Email de confirmación enviado'],
+                dod: 'grant/route.ts procesa webhook. Supabase entitlements actualizado.'
+            },
+            {
+                id: 'US-009', epic: 'BUYER', priority: 'high', pts: 5, status: 'review',
+                color: '#60a5fa',
+                title: 'Acceder a recursos del vault',
+                body: 'Como Buyer con tier Pro, quiero acceder a los recursos exclusivos del vault (starters, templates, kits) sin ver recursos de tiers superiores con candado.',
+                criteria: ['Vault muestra recursos del tier activo y abajo', 'Recursos de tier superior tienen candado elegante', 'Preview demo disponible sin pagar', 'Descarga directa de zip para tier activo', 'Sin reload: acceso inmediato tras pago'],
+                dod: '/vault con lógica de entitlement. Recursos del tier correctamente filtrados.'
+            },
+            {
+                id: 'US-010', epic: 'BUYER', priority: 'med', pts: 2, status: 'backlog',
+                color: '#60a5fa',
+                title: 'Ver historial de compras',
+                body: 'Como Buyer, quiero ver mis compras previas y los bundles que he adquirido en una página de perfil.',
+                criteria: ['Página /profile con lista de orders', 'Fecha y tier de cada compra', 'Botón para re-descargar bundle', 'Estado de entitlement visible'],
+                dod: '/profile conectado a Supabase orders table.'
+            },
+            {
+                id: 'US-011', epic: 'ADMIN', priority: 'high', pts: 5, status: 'done',
+                color: '#a78bfa',
+                title: 'Ejecutar quality gates',
+                body: 'Como Admin, quiero correr verify:100, verify:commercial y verify:ops para confirmar que el release está listo.',
+                criteria: ['pnpm verify:100 retorna 100% consistency', 'verify:commercial valida bundle manifest', 'verify:ops valida release readiness', 'Output claro: green o lista de fallos', 'No requiere dependencias opcionales'],
+                dod: 'Scripts en ONE/. verify-all.cjs funcional. GitHub Actions los ejecuta.'
+            },
+            {
+                id: 'US-012', epic: 'ADMIN', priority: 'high', pts: 8, status: 'done',
+                color: '#a78bfa',
+                title: 'Preparar first sale',
+                body: 'Como Admin, quiero ejecutar un comando que genere todos los bundles comerciales y el payload privado para el primer cliente.',
+                criteria: ['prepare-first-sale.mjs corre sin errores', 'bundle-manifest.json generado en .commercial-dist', 'release-manifest.json incluye todos los paquetes', 'Checklists de entrega incluidos', 'Script idempotente: re-ejecutar es seguro'],
+                dod: 'ONE/prepare-first-sale.mjs. .commercial-dist con todos los artifacts.'
+            },
+            {
+                id: 'US-013', epic: 'ADMIN', priority: 'high', pts: 3, status: 'done',
+                color: '#a78bfa',
+                title: 'Publicar en npm sin OTP manual',
+                body: 'Como Admin, quiero publicar los paquetes npm desde GitHub Actions sin necesitar un OTP manual cada vez.',
+                criteria: ['Workflow publish-npm.yml en .github/workflows', 'NPM_TOKEN en GitHub secrets como Automation token', 'Publica @lotosui/core, sentinel, cli, web-components en orden', 'Falla clara si algún paquete falla', 'No requiere intervención manual'],
+                dod: '.github/workflows/publish-npm.yml. Probado con dry-run.'
+            },
+            {
+                id: 'US-014', epic: 'ADMIN', priority: 'med', pts: 2, status: 'progress',
+                color: '#a78bfa',
+                title: 'Modo degradado de build',
+                body: 'Como Admin en Windows con restricción EPERM, quiero que pnpm build corra en modo degradado sin fallar por spawn.',
+                criteria: ['pnpm build detecta EPERM automáticamente', 'Corre pipeline degradado: core build + verify:100 + verify:degraded', 'Output indica modo degradado claramente', 'No requiere configuración extra', 'Equivalente a build normal en CI'],
+                dod: 'package.json build script con detection. Documentado en README.'
+            },
+            {
+                id: 'US-015', epic: 'MCP', priority: 'high', pts: 8, status: 'done',
+                color: '#fbbf24',
+                title: 'Protocolo MCP para componentes',
+                body: 'Como AI Agent, quiero consultar GET /components en el endpoint MCP para descubrir todos los componentes disponibles y sus metadatos.',
+                criteria: ['GET /components retorna lista JSON de componentes', 'Cada componente tiene: id, label, runtimes[], props[]', 'GET /frameworks retorna runtimes soportados', 'GET /runtimes retorna info de cada runtime', 'Respuesta en <200ms'],
+                dod: 'packages/core/src/mcp/server.ts. Endpoints documentados en spec.ts.'
+            },
+            {
+                id: 'US-016', epic: 'MCP', priority: 'high', pts: 13, status: 'done',
+                color: '#fbbf24',
+                title: 'Render de componentes vía MCP',
+                body: 'Como AI Agent, quiero hacer POST /components/render con un componente y runtime target para recibir el código renderizado listo para usar.',
+                criteria: ['POST /components/render acepta {component, runtime, props}', 'Soporta runtimes: react, web-component, laravel-blade', 'Retorna {html, code, metadata}', 'Error 422 si componente inválido', 'Error 409 si spec version mismatch', 'Demo en packages/core/examples/mcp-render-demo.mjs'],
+                dod: 'server.ts con POST /components/render. Demo funcional.'
+            },
+            {
+                id: 'US-017', epic: 'MCP', priority: 'med', pts: 5, status: 'backlog',
+                color: '#fbbf24',
+                title: 'Themes vía MCP',
+                body: 'Como AI Agent, quiero poder especificar un tema (dark, light, brand) en el render de componentes MCP.',
+                criteria: ['POST /components/render acepta theme param', 'Temas disponibles: dark, light, custom', 'Custom theme acepta CSS custom properties', 'Output incluye variables CSS del tema', 'Documentado en spec.ts'],
+                dod: 'Extensión de POST /components/render con theme support.'
+            },
+            {
+                id: 'US-018', epic: 'MCP', priority: 'low', pts: 3, status: 'backlog',
+                color: '#fbbf24',
+                title: 'Catálogo de patrones de diseño',
+                body: 'Como Developer, quiero consultar GET /patterns para obtener patrones de diseño reutilizables por runtime.',
+                criteria: ['GET /patterns retorna lista de patrones', 'GET /patterns/:id dice: name, description, code, runtime', 'GET /patterns?runtime=laravel filtra por runtime', 'Incluye: card-list, dashboard, auth-form, data-table', 'Documentado en MCP spec'],
+                dod: 'packages/core/src/mcp/server.ts con patterns endpoint.'
+            },
+        ];
+
+        const COLS = { backlog: 'col-backlog', progress: 'col-progress', review: 'col-review', done: 'col-done' };
+
+
+        function renderStory(s) {
+            const el = document.createElement('div');
+            el.className = 'story';
+            el.style.setProperty('--story-color', s.color);
+            el.dataset.epic = s.epic;
+            el.dataset.priority = s.priority;
+            el.innerHTML = `
+    <div class="story-head">
+      <span class="story-id">${s.id}</span>
+      <div class="story-badges"><span class="badge ${s.priority}">${s.priority === 'high' ? 'Alta' : s.priority === 'med' ? 'Media' : 'Baja'}</span></div>
+    </div>
+    <h4>${s.title}</h4>
+    <div class="story-body">${s.body}</div>
+    <div class="story-criteria">
+      <div class="criteria-label">Criterios de aceptación</div>
+      ${s.criteria.slice(0, 2).map(c => `<div class="criteria-item">${c}</div>`).join('')}
+      ${s.criteria.length > 2 ? `<div class="criteria-item" style="color:var(--mut);font-style:italic">+${s.criteria.length - 2} más…</div>` : ''}
+    </div>
+    <div class="story-footer">
+      <span class="story-epic">${s.epic}</span>
+      <span class="story-pts">${s.pts} pts</span>
+    </div>`;
+            el.onclick = () => openModal(s);
+            return el;
+        }
+
+        function openModal(s) {
+            document.getElementById('modal-content').innerHTML = `
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:${s.color};margin-bottom:4px">${s.epic} · ${s.id}</div>
+      <h3>${s.title}</h3>
+      <div class="modal-sub">
+        ${['backlog', 'progress', 'review', 'done'].map(st => `<span style="opacity:${s.status === st ? 1 : .3};margin-right:8px;font-size:11px;font-weight:600;color:${s.status === st ? s.color : 'var(--mut)'}">${st === 'done' ? '✓ Completado' : st === 'review' ? '◎ Review' : st === 'progress' ? '◑ En Progreso' : '○ Backlog'}</span>`).join('')}
+        · <strong style="color:${s.color}">${s.pts} story points</strong>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Historia</div>
+      <div class="modal-text">${s.body}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Criterios de Aceptación</div>
+      <ul class="modal-criteria">${s.criteria.map(c => `<li>${c}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Definition of Done</div>
+      <div class="def">${s.dod}</div>
+    </div>`;
+            document.getElementById('modal-bg').classList.add('open');
+        }
+
+        document.getElementById('modal-close').onclick = () => document.getElementById('modal-bg').classList.remove('open');
+        document.getElementById('modal-bg').onclick = e => { if (e.target === document.getElementById('modal-bg')) document.getElementById('modal-bg').classList.remove('open') };
+
+        let activeEpic = 'all', activePriority = null;
+        function buildBoard() {
+            Object.values(COLS).forEach(id => { document.getElementById(id).innerHTML = ''; });
+            const counts = { backlog: 0, progress: 0, review: 0, done: 0 };
+            STORIES.forEach(s => {
+                if (activeEpic !== 'all' && s.epic !== activeEpic) return;
+                if (activePriority && s.priority !== activePriority) return;
+                const el = renderStory(s);
+                document.getElementById(COLS[s.status]).appendChild(el);
+                counts[s.status]++;
+            });
+            Object.entries(counts).forEach(([k, v]) => {
+                document.getElementById('cnt-' + k).textContent = v ? `· ${v}` : '';
+            });
+        }
+
+        document.querySelectorAll('.filter-btn[data-epic]').forEach(b => {
+            b.onclick = () => {
+                document.querySelectorAll('.filter-btn[data-epic]').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                activeEpic = b.dataset.epic;
+                buildBoard();
+            };
+        });
+        document.querySelectorAll('.filter-btn[data-priority]').forEach(b => {
+            b.onclick = () => {
+                if (activePriority === b.dataset.priority) { activePriority = null; b.classList.remove('active') }
+                else { document.querySelectorAll('.filter-btn[data-priority]').forEach(x => x.classList.remove('active')); b.classList.add('active'); activePriority = b.dataset.priority; }
+                buildBoard();
+            };
+        });
+
+        buildBoard();
+    </script>
+</body>
+
+</html>

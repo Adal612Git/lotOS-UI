@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lotosui/claude-arm": "workspace:*",
+    "@lotosui/claude-arm-pro": "workspace:*",
     "@lotosui/core": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

@@ -5,13 +5,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "pnpm -C ../.. --filter @lotosui/core build && pnpm -C ../.. --filter @lotosui/claude-arm build && next build --webpack",
+    "build": "pnpm -C ../.. --filter @lotosui/registry build && pnpm -C ../.. --filter @lotosui/core build && pnpm -C ../.. --filter @lotosui/claude-arm build && pnpm -C ../.. --filter @lotosui/claude-arm-pro build && next build --webpack",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@lotosui/claude-arm": "workspace:*",
+    "@lotosui/claude-arm-pro": "workspace:*",
+    "@lotosui/registry": "workspace:*",
     "@repo/ui": "workspace:*",
     "@supabase/supabase-js": "^2.98.0",
     "next": "16.1.5",

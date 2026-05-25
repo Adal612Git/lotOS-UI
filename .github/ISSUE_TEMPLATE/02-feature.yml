@@ -1,0 +1,26 @@
+name: Feature request
+description: Request a public feature or docs improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This request does not require exposing secrets or premium source in public packages.
+          required: true
+        - label: This is not a security vulnerability report.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true

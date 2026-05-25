@@ -1,110 +1,123 @@
 {
-    "name": "@lotosui/claude-arm",
-    "version": "1.0.1",
-    "description": "LotOS UI — Accessible React component library built for AI-first development. 27 components, WCAG 2.2 AAA, MCP Server integrated.",
-    "license": "MIT",
-    "type": "module",
-    "author": "Lotos Technologies <lotos@lotos.dev>",
-    "homepage": "https://lotos-ui.vercel.app",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lotos-technologies/lotos-ui.git",
-        "directory": "packages/claude-arm"
+  "name": "@lotosui/claude-arm",
+  "version": "1.1.0",
+  "description": "LotOS UI public React layer - 8 free components for evaluation and adoption, with MCP-aware contracts.",
+  "license": "MIT",
+  "type": "module",
+  "author": "Lotos Technologies <lotos@lotos.dev>",
+  "homepage": "https://lotos-ui.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lotos-technologies/lotos-ui.git",
+    "directory": "packages/claude-arm"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "accessibility",
+    "wcag",
+    "aria",
+    "design-system",
+    "lotos",
+    "mcp",
+    "free"
+  ],
+  "sideEffects": [
+    "./src/styles.css"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "keywords": [
-        "react",
-        "components",
-        "ui",
-        "accessibility",
-        "wcag",
-        "aria",
-        "design-system",
-        "multi-framework",
-        "web-components",
-        "lotos",
-        "mcp",
-        "ai"
-    ],
-    "sideEffects": [
-        "./src/styles.css"
-    ],
-    "engines": {
-        "node": ">=18.0.0"
+    "./catalog": {
+      "import": "./dist/catalog.js",
+      "types": "./dist/catalog.d.ts"
     },
-    "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "types": "./dist/index.d.ts"
-        },
-        "./components": {
-            "import": "./dist/components/index.js",
-            "types": "./dist/components/index.d.ts"
-        },
-        "./components/*": {
-            "import": "./dist/components/*/*.js",
-            "types": "./dist/components/*/*.d.ts"
-        },
-        "./mcp": {
-            "import": "./dist/mcp/index.js",
-            "types": "./dist/mcp/index.d.ts"
-        },
-        "./styles.css": "./src/styles.css"
+    "./mcp": {
+      "import": "./dist/mcp/index.js",
+      "types": "./dist/mcp/index.d.ts"
     },
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist",
-        "src/styles.css",
-        "README.md",
-        "CHANGELOG.md"
-    ],
-    "scripts": {
-        "build": "tsc -p tsconfig.build.json",
-        "dev": "tsc -p tsconfig.build.json --watch",
-        "storybook": "storybook dev -p 6006 --ci",
-        "build-storybook": "storybook build",
-        "showcase": "vite --config vite.showcase.config.ts",
-        "showcase:build": "vite build --config vite.showcase.config.ts",
-        "test": "vitest run",
-        "test:coverage": "vitest run --coverage.enabled",
-        "test:a11y": "vitest run --config vitest.a11y.config.ts",
-        "test:mcp": "vitest run tests/mcp",
-        "check-types": "tsc --noEmit -p tsconfig.build.json",
-        "typecheck": "tsc --noEmit -p tsconfig.build.json",
-        "verify:storybook": "node scripts/verify-storybook-surface.mjs",
-        "coverage:components": "node scripts/component-test-coverage.mjs",
-        "visual:baseline": "pnpm build && node scripts/visual-regression.mjs --write",
-        "visual:check": "pnpm build && node scripts/visual-regression.mjs",
-        "prepublishOnly": "pnpm test && pnpm build"
-    },
-    "peerDependencies": {
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
-    },
-    "devDependencies": {
-        "@repo/typescript-config": "workspace:*",
-        "@storybook/addon-a11y": "8.6.14",
-        "@storybook/addon-essentials": "8.6.14",
-        "@storybook/addon-interactions": "8.6.14",
-        "@storybook/react-vite": "8.6.14",
-        "@testing-library/jest-dom": "^6.6.0",
-        "@testing-library/react": "^16.0.0",
-        "@testing-library/user-event": "^14.5.0",
-        "@types/react": "^19.0.0",
-        "@types/react-dom": "^19.0.0",
-        "@vitejs/plugin-react": "^4.3.0",
-        "@vitest/coverage-v8": "2.1.9",
-        "axe-core": "^4.10.0",
-        "jsdom": "^25.0.0",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0",
-        "storybook": "8.6.14",
-        "typescript": "^5.7.2",
-        "vite": "^6.0.0",
-        "vitest": "^2.1.9"
-    },
-    "dependencies": {
-        "@lotosui/core": "workspace:*",
-        "zod": "^3.24.0"
-    }
+    "./styles.css": "./src/styles.css"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/index.js.map",
+    "dist/index.d.ts.map",
+    "dist/catalog.js",
+    "dist/catalog.d.ts",
+    "dist/catalog.js.map",
+    "dist/catalog.d.ts.map",
+    "dist/mcp",
+    "dist/components/alert",
+    "dist/components/badge",
+    "dist/components/button",
+    "dist/components/card",
+    "dist/components/divider",
+    "dist/components/empty-state",
+    "dist/components/input",
+    "dist/components/spinner",
+    "src/styles.css",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "storybook": "storybook dev -p 6006 --ci",
+    "build-storybook": "storybook build",
+    "showcase": "vite --config vite.showcase.config.ts",
+    "showcase:build": "vite build --config vite.showcase.config.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage.enabled",
+    "test:a11y": "vitest run --config vitest.a11y.config.ts",
+    "test:mcp": "vitest run tests/mcp",
+    "check-types": "tsc --noEmit -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "verify:storybook": "node scripts/verify-storybook-surface.mjs",
+    "coverage:components": "node scripts/component-test-coverage.mjs",
+    "visual:baseline": "pnpm build && node scripts/visual-regression.mjs --write",
+    "visual:check": "pnpm build && node scripts/visual-regression.mjs",
+    "prepublishOnly": "pnpm test && pnpm build"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@storybook/addon-a11y": "8.6.14",
+    "@storybook/addon-essentials": "8.6.14",
+    "@storybook/addon-interactions": "8.6.14",
+    "@storybook/react-vite": "8.6.14",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitest/coverage-v8": "2.1.9",
+    "axe-core": "^4.10.0",
+    "jsdom": "^25.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "storybook": "8.6.14",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "@lotosui/core": "workspace:*",
+    "zod": "^3.24.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

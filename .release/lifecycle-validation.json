@@ -1,0 +1,64 @@
+{
+  "generatedFrom": "ONE/verify-commercial-lifecycle.mjs",
+  "generatedAt": "static",
+  "schemaVersion": 1,
+  "wide_sales_ready": false,
+  "migrations_local_validated": true,
+  "webhook_contracts_validated": true,
+  "audit_validated": true,
+  "entitlement_boundary_validated": true,
+  "supabase_remote_validated": false,
+  "lemon_remote_validated": false,
+  "evidencePath": ".release/lifecycle-validation.json",
+  "runbook": "docs/STAGING_LIFECYCLE_TEST_RUNBOOK.md",
+  "validationCommands": [
+    "pnpm run verify:entitlement-boundary",
+    "pnpm run verify:webhook-lifecycle",
+    "pnpm run verify:webhook-contracts",
+    "pnpm run verify:supabase-migrations",
+    "pnpm run verify:entitlement-audit",
+    "pnpm run verify:commercial-lifecycle",
+    "pnpm run verify:rls-policy-plan"
+  ],
+  "requiredHumanTests": [
+    "Back up staging public.entitlements before migration.",
+    "Apply lifecycle and audit migrations in staging Supabase.",
+    "Validate RLS posture for entitlement and audit tables.",
+    "Confirm purchase creates active entitlement.",
+    "Confirm duplicate webhook delivery is idempotent.",
+    "Confirm invalid Lemon signature does not mutate entitlements.",
+    "Confirm payment failed, pause, resume, cancellation, expiration, revocation, and paid recovery.",
+    "Confirm audit rows do not store raw emails, secrets, raw payloads, cookies, or auth headers."
+  ],
+  "blockers": [
+    {
+      "id": "supabase_remote_not_validated",
+      "severity": "blocker",
+      "message": "Run lifecycle and audit migrations against staging Supabase, then validate RLS, indexed lifecycle columns, revocation, and audit writes."
+    },
+    {
+      "id": "lemon_remote_not_validated",
+      "severity": "blocker",
+      "message": "Validate exact Lemon webhook event names, signatures, duplicate delivery, and subscription lifecycle in Lemon test/live dashboard before wide sales."
+    }
+  ],
+  "required_human_tests": [
+    "Back up staging public.entitlements before migration.",
+    "Apply lifecycle and audit migrations in staging Supabase.",
+    "Validate RLS posture for entitlement and audit tables.",
+    "Confirm purchase creates active entitlement.",
+    "Confirm duplicate webhook delivery is idempotent.",
+    "Confirm invalid Lemon signature does not mutate entitlements.",
+    "Confirm payment failed, pause, resume, cancellation, expiration, revocation, and paid recovery.",
+    "Confirm audit rows do not store raw emails, secrets, raw payloads, cookies, or auth headers."
+  ],
+  "validation_commands": [
+    "pnpm run verify:entitlement-boundary",
+    "pnpm run verify:webhook-lifecycle",
+    "pnpm run verify:webhook-contracts",
+    "pnpm run verify:supabase-migrations",
+    "pnpm run verify:entitlement-audit",
+    "pnpm run verify:commercial-lifecycle",
+    "pnpm run verify:rls-policy-plan"
+  ]
+}

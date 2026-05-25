@@ -38,6 +38,11 @@ body {
   color: var(--lotos-fg-primary);
 }
 
+:where(a, button, input, select, textarea, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--lotos-border-focus);
+  outline-offset: 3px;
+}
+
 /* ── Language toggle ── */
 .es-only { display: none; }
 [data-lang="es"] .en-only { display: none; }

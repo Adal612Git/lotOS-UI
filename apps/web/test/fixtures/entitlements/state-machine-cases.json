@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "from": "none", "to": "active", "cause": "webhook_grant", "ok": true, "kind": "transition" },
+    { "from": "none", "to": "trialing", "cause": "owner_manual_test", "ok": true, "kind": "transition" },
+    {
+      "from": "none",
+      "to": "manual_recovery",
+      "cause": "owner_paid_recovery",
+      "ok": true,
+      "kind": "transition",
+      "options": { "recoveryReason": "reviewed payment evidence", "evidenceReviewed": true }
+    },
+    { "from": "active", "to": "past_due", "cause": "webhook_payment_failed", "ok": true, "kind": "transition" },
+    { "from": "past_due", "to": "active", "cause": "webhook_recovered", "ok": true, "kind": "transition" },
+    { "from": "active", "to": "paused", "cause": "webhook_paused", "ok": true, "kind": "transition" },
+    { "from": "paused", "to": "active", "cause": "webhook_recovered", "ok": true, "kind": "transition" },
+    { "from": "active", "to": "cancelled", "cause": "webhook_cancelled", "ok": true, "kind": "transition" },
+    { "from": "cancelled", "to": "active", "cause": "webhook_recovered", "ok": true, "kind": "transition" },
+    {
+      "from": "cancelled",
+      "to": "manual_recovery",
+      "cause": "owner_paid_recovery",
+      "ok": true,
+      "kind": "transition",
+      "options": { "recoveryReason": "reviewed payment evidence", "evidenceReviewed": true }
+    },
+    { "from": "trialing", "to": "expired", "cause": "system_expired", "ok": true, "kind": "transition" },
+    { "from": "active", "to": "revoked", "cause": "owner_revoke", "ok": true, "kind": "transition" },
+    { "from": "trialing", "to": "revoked", "cause": "owner_revoke", "ok": true, "kind": "transition" },
+    { "from": "manual_recovery", "to": "revoked", "cause": "owner_revoke", "ok": true, "kind": "transition" },
+    { "from": "active", "to": "active", "cause": "webhook_grant", "ok": true, "kind": "noop" },
+    {
+      "from": "revoked",
+      "to": "active",
+      "cause": "webhook_recovered",
+      "ok": false,
+      "kind": "error",
+      "code": "revoked_requires_explicit_owner_reactivation"
+    },
+    {
+      "from": "cancelled",
+      "to": "active",
+      "cause": "webhook_grant",
+      "ok": false,
+      "kind": "error",
+      "code": "invalid_entitlement_transition"
+    },
+    {
+      "from": "none",
+      "to": "revoked",
+      "cause": "owner_revoke",
+      "ok": false,
+      "kind": "error",
+      "code": "invalid_entitlement_transition"
+    },
+    {
+      "from": "none",
+      "to": "manual_recovery",
+      "cause": "owner_paid_recovery",
+      "ok": false,
+      "kind": "error",
+      "code": "paid_recovery_requires_reason_and_evidence"
+    }
+  ]
+}

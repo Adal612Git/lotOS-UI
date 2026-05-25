@@ -16,7 +16,7 @@ const proAccentCycle = ['accent-amber', 'accent-cyan', 'accent-violet', 'accent-
 
 const proSignals = [
   { value: 'Core', label: 'Paid tier' },
-  { value: 'MX$129', label: 'Monthly' },
+  { value: 'MX$129', label: 'Placeholder' },
   { value: 'Reusable', label: 'Assets' },
   { value: 'Teams', label: 'Ready' },
 ];
@@ -121,7 +121,7 @@ export default async function ProVaultPage() {
         <div className="tier-head">
           <div className="tier-title-block">
             <p className="plan-tier">Why Pro Wins</p>
-            <h3>This is where the buyer should stop feeling "preview" and start feeling "product".</h3>
+            <h3>This is where the buyer should stop feeling &quot;preview&quot; and start feeling &quot;product&quot;.</h3>
             <p>
               Pro is the commercial center of gravity. It is the tier that should most clearly justify
               recurring payment on real utility, not only on premium framing.
@@ -186,7 +186,7 @@ export default async function ProVaultPage() {
           <p>Extra operator-facing catalog depth that expands the sense of value beyond raw files.</p>
         </article>
         <article className="vault-kpi accent-violet">
-          <strong>MX$129</strong>
+          <strong>MX$129 placeholder</strong>
           <span>Core premium tier</span>
           <p>Phase 1 founders pricing for the first 20 customers positions Pro as the value center of the ladder.</p>
         </article>

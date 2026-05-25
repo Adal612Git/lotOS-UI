@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/check-public-tree.mjs",
+  "generatedAt": "2026-05-19T03:50:29.152Z",
+  "mode": "public-clean-room-simulation",
+  "result": "blocked",
+  "publicReleaseReady": false,
+  "redacted": true,
+  "keep": [
+    "apps/docs",
+    "packages/registry",
+    "packages/core",
+    "packages/sentinel",
+    "packages/cli",
+    "packages/web-components",
+    "packages/claude-arm",
+    "examples",
+    "docs",
+    ".ai",
+    ".github",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
+  ],
+  "remove": [
+    "packages/pro",
+    "packages/claude-arm-pro",
+    "packages/pro/.private-dist",
+    ".commercial-dist",
+    ".private-dist",
+    ".vercel",
+    ".env",
+    ".env.local",
+    ".env.development.local",
+    ".env.production.local",
+    ".claude/settings.local.json",
+    "ONE/.claude/settings.local.json"
+  ],
+  "stub": [
+    {
+      "id": "premium-components",
+      "source": "packages/claude-arm-pro",
+      "publicReplacement": "metadata-only registry entries",
+      "message": "Premium components are distributed through private access after entitlement."
+    },
+    {
+      "id": "premium-assets",
+      "source": ".commercial-dist",
+      "publicReplacement": "entitlement-gated download docs and placeholders",
+      "message": "Commercial bundles stay in private storage or a private release channel."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": "packages/pro"
+    },
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": "packages/claude-arm-pro"
+    },
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": "packages/pro/.private-dist"
+    },
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": ".commercial-dist"
+    },
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": ".vercel"
+    },
+    {
+      "severity": "blocker",
+      "id": "forbidden_public_path",
+      "message": "Path must not exist in a public clean-room tree.",
+      "path": "ONE/.claude/settings.local.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "README.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/docs/content/docs/start-here.mdx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/docs/content/docs/use-cases.mdx"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "apps/docs/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/dropdown-demo/package.json"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "apps/dropdown-demo/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/dropdown-demo/src/App.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/README.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/app/vault/launch/page.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/app/vault/page.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/lib/commercial-assets.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/package.json"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "apps/web/package.json"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/claude-arm/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/claude-arm/src/index.ts"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/cli/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/cli/src/catalog.ts"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/core/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/core/src/mcp/server.ts"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/sentinel/package.json"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/web-components/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": ".ai/lotos.assets.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": ".ai/lotos.commercial.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": ".ai/lotos.project-map.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": ".ai/lotos.release-readiness.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/app/playground/playground-cases.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "apps/web/app/playground/playground-client.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "docs/PACKAGE_PUBLISHING.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "docs/PREMIUM_SPLIT_PLAN.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "docs/PUBLIC_REPO_STRUCTURE.md"
+    },
+    {
+      "severity": "warning",
+      "id": "workspace_dependency_requires_public_rewrite",
+      "message": "Public package metadata still uses workspace:* and needs publish-time review.",
+      "path": "packages/registry/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/registry/src/lotos.manifest.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "oauth_client_secret_file",
+      "message": "OAuth client secret file must be evacuated before public export.",
+      "path": "client_secret_872857065432-33bclrhthik6lsobatvm939g3rtjuadu.apps.googleusercontent.com.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/claude-arm/dist/index.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/claude-arm/dist/index.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "local_tarball_artifact",
+      "message": "Local tarball artifacts must not be present in a public export.",
+      "path": "packages/claude-arm/lotosui-claude-arm-1.1.0.tgz"
+    },
+    {
+      "severity": "blocker",
+      "id": "local_tarball_artifact",
+      "message": "Local tarball artifacts must not be present in a public export.",
+      "path": "packages/claude-arm-pro/lotosui-claude-arm-pro-1.1.0.tgz"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/cli/dist/catalog.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/cli/dist/catalog.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/core/dist/mcp/server.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/registry/dist/lotos.manifest.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_reference_in_public_surface",
+      "message": "Public surface references premium/private code, assets, or packages.",
+      "path": "packages/registry/dist/lotos.manifest.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "workspace_includes_premium_glob",
+      "message": "Public workspace must not include every packages/* entry while premium packages exist.",
+      "path": "pnpm-workspace.yaml"
+    }
+  ]
+}

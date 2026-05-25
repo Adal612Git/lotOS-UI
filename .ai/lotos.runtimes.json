@@ -1,0 +1,415 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "maturityScale": {
+    "stable": "tested, documented, and fit for production use",
+    "beta": "usable with documented limits",
+    "alpha": "usable in controlled contexts",
+    "prototype": "demo-quality implementation",
+    "planned": "roadmap only"
+  },
+  "runtimes": [
+    {
+      "id": "react",
+      "label": "React",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "stable",
+      "packageName": "@lotosui/claude-arm",
+      "limitations": [],
+      "agentGuidance": "Use first for production UI."
+    },
+    {
+      "id": "next",
+      "label": "Next.js",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "stable",
+      "packageName": "apps/web",
+      "limitations": [],
+      "agentGuidance": "Primary app runtime for web, docs, pricing, and vault."
+    },
+    {
+      "id": "web-components",
+      "label": "Web Components",
+      "category": "web",
+      "language": "TypeScript",
+      "maturity": "prototype",
+      "packageName": "@lotosui/web-components",
+      "limitations": [
+        "Four custom elements are exported today."
+      ],
+      "agentGuidance": "Use for cross-framework bridge work."
+    },
+    {
+      "id": "vue",
+      "label": "Vue",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No wrapper package implemented yet."
+      ],
+      "agentGuidance": "Use web components until a wrapper exists."
+    },
+    {
+      "id": "nuxt",
+      "label": "Nuxt",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Nuxt module implemented yet."
+      ],
+      "agentGuidance": "Track as planned SSR wrapper."
+    },
+    {
+      "id": "svelte",
+      "label": "Svelte",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Svelte wrapper implemented yet."
+      ],
+      "agentGuidance": "Use web components for early experiments."
+    },
+    {
+      "id": "sveltekit",
+      "label": "SvelteKit",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No SvelteKit starter implemented yet."
+      ],
+      "agentGuidance": "Track as planned adapter."
+    },
+    {
+      "id": "astro",
+      "label": "Astro",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Astro integration implemented yet."
+      ],
+      "agentGuidance": "Good target for marketing/docs templates."
+    },
+    {
+      "id": "solid",
+      "label": "Solid",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Solid wrapper implemented yet."
+      ],
+      "agentGuidance": "Use only as roadmap signal."
+    },
+    {
+      "id": "qwik",
+      "label": "Qwik",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Qwik wrapper implemented yet."
+      ],
+      "agentGuidance": "Use only as roadmap signal."
+    },
+    {
+      "id": "angular",
+      "label": "Angular",
+      "category": "web",
+      "language": "TypeScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Angular wrapper implemented yet."
+      ],
+      "agentGuidance": "Prefer web components when experimenting."
+    },
+    {
+      "id": "remix",
+      "label": "Remix",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Remix starter implemented yet."
+      ],
+      "agentGuidance": "Track as planned React server route."
+    },
+    {
+      "id": "lit",
+      "label": "Lit",
+      "category": "web",
+      "language": "TypeScript",
+      "maturity": "prototype",
+      "packageName": "@lotosui/web-components",
+      "limitations": [
+        "Only base custom elements exist."
+      ],
+      "agentGuidance": "Align with web component package."
+    },
+    {
+      "id": "vanilla",
+      "label": "Vanilla HTML/CSS/JS",
+      "category": "web",
+      "language": "TypeScript/JavaScript",
+      "maturity": "prototype",
+      "packageName": "@lotosui/web-components",
+      "limitations": [
+        "Requires manual registration."
+      ],
+      "agentGuidance": "Use for universal demos."
+    },
+    {
+      "id": "react-native-expo",
+      "label": "React Native / Expo",
+      "category": "mobile",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No native package implemented."
+      ],
+      "agentGuidance": "Do not imply web components work here."
+    },
+    {
+      "id": "flutter",
+      "label": "Flutter",
+      "category": "mobile",
+      "language": "Dart",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Flutter package implemented."
+      ],
+      "agentGuidance": "Potential token export target."
+    },
+    {
+      "id": "swiftui",
+      "label": "SwiftUI",
+      "category": "mobile",
+      "language": "Swift",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Swift package implemented."
+      ],
+      "agentGuidance": "Potential token mapping target."
+    },
+    {
+      "id": "kotlin-compose",
+      "label": "Kotlin Compose",
+      "category": "mobile",
+      "language": "Kotlin",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Kotlin package implemented."
+      ],
+      "agentGuidance": "Potential token mapping target."
+    },
+    {
+      "id": "tauri",
+      "label": "Tauri",
+      "category": "desktop",
+      "language": "Rust/TypeScript",
+      "maturity": "alpha",
+      "packageName": "@lotosui/cli",
+      "limitations": [
+        "Starter only."
+      ],
+      "agentGuidance": "Use desktop-init and keep shell HTML portable."
+    },
+    {
+      "id": "electron",
+      "label": "Electron",
+      "category": "desktop",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Electron starter implemented."
+      ],
+      "agentGuidance": "Planned desktop shell target."
+    },
+    {
+      "id": "laravel-blade",
+      "label": "Laravel Blade",
+      "category": "server-rendered",
+      "language": "PHP",
+      "maturity": "alpha",
+      "packageName": "lotos-laravel",
+      "limitations": [
+        "Adapter skeleton exists."
+      ],
+      "agentGuidance": "Use for business admin panels."
+    },
+    {
+      "id": "rails-erb",
+      "label": "Rails ERB",
+      "category": "server-rendered",
+      "language": "Ruby",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Rails package implemented."
+      ],
+      "agentGuidance": "Roadmap only."
+    },
+    {
+      "id": "django-jinja",
+      "label": "Django/Jinja",
+      "category": "server-rendered",
+      "language": "Python",
+      "maturity": "alpha",
+      "packageName": "lotos-django",
+      "limitations": [
+        "Adapter skeleton exists."
+      ],
+      "agentGuidance": "Use for backoffice workflows."
+    },
+    {
+      "id": "fastapi-htmx",
+      "label": "FastAPI + Jinja/HTMX",
+      "category": "server-rendered",
+      "language": "Python",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No FastAPI starter implemented."
+      ],
+      "agentGuidance": "Potential internal tools target."
+    },
+    {
+      "id": "phoenix-liveview",
+      "label": "Phoenix LiveView",
+      "category": "server-rendered",
+      "language": "Elixir",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Phoenix package implemented."
+      ],
+      "agentGuidance": "Roadmap only."
+    },
+    {
+      "id": "go-templ",
+      "label": "Go templ",
+      "category": "server-rendered",
+      "language": "Go",
+      "maturity": "alpha",
+      "packageName": "lotos-go",
+      "limitations": [
+        "Adapter skeleton exists."
+      ],
+      "agentGuidance": "Use for monitoring and low-overhead dashboards."
+    },
+    {
+      "id": "rust-leptos",
+      "label": "Rust Leptos",
+      "category": "server-rendered",
+      "language": "Rust",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Leptos package implemented."
+      ],
+      "agentGuidance": "Roadmap only."
+    },
+    {
+      "id": "blazor-razor",
+      "label": "Blazor/Razor",
+      "category": "server-rendered",
+      "language": "C#/.NET",
+      "maturity": "alpha",
+      "packageName": "lotos-dotnet",
+      "limitations": [
+        "Razor adapter exists."
+      ],
+      "agentGuidance": "Use for line-of-business apps."
+    },
+    {
+      "id": "openai-apps-sdk",
+      "label": "OpenAI Apps SDK",
+      "category": "agent",
+      "language": "TypeScript/JavaScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No Apps SDK package implemented."
+      ],
+      "agentGuidance": "Use docs/MCP guidance first."
+    },
+    {
+      "id": "mcp",
+      "label": "Model Context Protocol",
+      "category": "agent",
+      "language": "JSON over HTTP",
+      "maturity": "stable",
+      "packageName": "@lotosui/core",
+      "limitations": [],
+      "agentGuidance": "Use MCP endpoints before guessing props or routes."
+    },
+    {
+      "id": "agents-sdk",
+      "label": "Agents SDK Workflows",
+      "category": "agent",
+      "language": "TypeScript/Python",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "No workflow integration implemented."
+      ],
+      "agentGuidance": "Map to AI console templates first."
+    },
+    {
+      "id": "langgraph-style-ui",
+      "label": "LangGraph-style UI",
+      "category": "agent",
+      "language": "Python/TypeScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "UI templates only."
+      ],
+      "agentGuidance": "Use as pattern language, not package claim."
+    },
+    {
+      "id": "crewai-dashboard",
+      "label": "CrewAI-style Dashboard",
+      "category": "agent",
+      "language": "Python/TypeScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "UI templates only."
+      ],
+      "agentGuidance": "Use as pattern language, not package claim."
+    },
+    {
+      "id": "n8n-workflow-ui",
+      "label": "n8n-style Workflow UI",
+      "category": "agent",
+      "language": "TypeScript",
+      "maturity": "planned",
+      "packageName": null,
+      "limitations": [
+        "UI templates only."
+      ],
+      "agentGuidance": "Use as workflow UX target."
+    }
+  ]
+}

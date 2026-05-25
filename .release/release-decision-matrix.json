@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "decisionOwner": "human",
+  "recommendedNextMove": "A_private_pilot_only_if_human_approves_scope; B_for_eventual_public_repo_after_secret_rotation_and_premium_split; D_before_wide_sales",
+  "currentBlock": {
+    "publicReleaseReady": false,
+    "wideSalesReady": false,
+    "failedGate": "verify:no-secrets",
+    "missingRemoteEvidence": [
+      "supabase_remote_validated",
+      "lemon_remote_validated"
+    ],
+    "premiumSplitRequired": true,
+    "manualPublishAllowed": false
+  },
+  "options": [
+    {
+      "id": "A",
+      "name": "private_repo_plus_pilot",
+      "decision": "Use for controlled private pilot only.",
+      "blockingNow": [
+        "verify:no-secrets failed",
+        "wide sales blocked until staging Supabase/Lemon validation"
+      ],
+      "humanDecisionRequired": "Approve limited private pilot or wait for staging."
+    },
+    {
+      "id": "B",
+      "name": "public_repo_free_plus_private_premium",
+      "decision": "Best long-term open-core model after split.",
+      "blockingNow": [
+        "premium source exists in workspace",
+        "secret rotation unresolved",
+        "public gate expected to fail"
+      ],
+      "humanDecisionRequired": "Approve public repo strategy and private premium destination."
+    },
+    {
+      "id": "C",
+      "name": "public_npm_packages_only",
+      "decision": "Possible only after public package gates pass.",
+      "blockingNow": [
+        "verify:no-secrets failed",
+        "publish workflow blocks until public-release gates pass"
+      ],
+      "humanDecisionRequired": "Decide whether npm-only release waits for full public-release safety."
+    },
+    {
+      "id": "D",
+      "name": "wait_for_real_staging",
+      "decision": "Required before wide sales.",
+      "blockingNow": [
+        "supabase_remote_validated false",
+        "lemon_remote_validated false",
+        "wide_sales_ready false"
+      ],
+      "humanDecisionRequired": "Approve waiting for staging evidence before broad launch."
+    }
+  ]
+}

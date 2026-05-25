@@ -1,0 +1,573 @@
+{
+  "generatedFrom": "ONE/verify-entitlement-boundary.mjs",
+  "generatedAt": "static",
+  "status": "pass",
+  "checks": [
+    {
+      "id": "file:apps/web/app/api/entitlements/grant/route.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "grant-route:getServerSession",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:isOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:normalizeEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:upsertEntitlement",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:manual_owner_test",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:manual_owner_paid_recovery",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:normalizeProvider",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:allowedTrialDays",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:recoveryReason",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:trialDays",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:createdByOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "grant-route:console",
+      "status": "pass",
+      "detail": "no sensitive console output detected"
+    },
+    {
+      "id": "file:apps/web/app/api/entitlements/revoke/route.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "revoke-route:getServerSession",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:isOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:normalizeEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:revokeEntitlement",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:revokeReason",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:cleanRequiredText",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "revoke-route:console",
+      "status": "pass",
+      "detail": "no sensitive console output detected"
+    },
+    {
+      "id": "file:apps/web/lib/entitlement-lifecycle.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "lifecycle-helper:EntitlementLifecycleMetadata",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:trialEndsAt",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:revokedAt",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:revokedBy",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:revokeReason",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:isEntitlementActive",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:past_due",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:manual_recovery",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:mapEntitlementForVault",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "lifecycle-helper:buildLifecycleMetadata",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/lib/entitlement-state-machine.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "state-machine:decideEntitlementTransition",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "state-machine:revoked_requires_explicit_owner_reactivation",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "state-machine:paid_recovery_requires_reason_and_evidence",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "state-machine:invalid_entitlement_transition",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/lib/entitlements.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "entitlements-helper:listUserEntitlements",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "entitlements-helper:listAdminEntitlementsByEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "entitlements-helper:revokeEntitlement",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "entitlements-helper:isEntitlementActive",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "entitlements-helper:decideEntitlementTransition",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "entitlements-helper:createdByOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/lib/entitlements-rest.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "entitlements-rest:canAccessPremiumFromRows",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/lib/plans.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "plans-helper:@lotosui/registry",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "plans-helper:registryCommercialPlans",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/app/admin/entitlements/page.tsx",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "admin-page:isOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:EntitlementLookupForm",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:GrantAccessForm",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:RevokeAccessForm",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:Prueba sin pago",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:Pago confirmado",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-page:Revocar acceso",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/app/vault/page.tsx",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "vault-page:mapSummaryForVault",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "vault-page:Entitlement lifecycle",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "vault-page:/admin/entitlements",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/app/api/webhooks/lemon/route.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "webhook-route:mapLemonWebhookEvent",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-route:hasProcessedProviderEvent",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-route:recordEntitlementAuditEvent",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-route:webhook_applied",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-route:console",
+      "status": "pass",
+      "detail": "no sensitive console output detected"
+    },
+    {
+      "id": "file:apps/web/test/fixtures/lemon/README.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "webhook-fixtures:not copied from Lemon",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-fixtures:example.test",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "webhook-fixtures:Do not commit real webhook",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:docs/ADMIN_JOURNEY.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "admin-docs:manual_owner_test:<provider>",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-docs:manual_owner_paid_recovery:<provider>",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-docs:/api/entitlements/revoke",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "admin-docs:Google",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:docs/BUYER_JOURNEY.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "buyer-docs:Google",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "buyer-docs:Manual test access is separate",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "buyer-docs:Paid recovery is also separate",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "buyer-docs:Buyer-facing copy must not imply that Google login alone unlocks premium assets.",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:docs/PREMIUM_ENTITLEMENT_FLOW.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "flow-docs:revokedAt",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "flow-docs:trialEndsAt",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "flow-docs:manual_owner_test:<provider>",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "flow-docs:manual_owner_paid_recovery:<provider>",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "flow-docs:Supabase Migration TODO",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:docs/ENTITLEMENT_AUDIT.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "audit-docs:verify:entitlement-boundary",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "audit-docs:manual_owner_revoke",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "audit-docs:entitlement_audit_events",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "audit-docs:Do not log entitlement URLs",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:docs/STAGING_LIFECYCLE_TEST_RUNBOOK.md",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "staging-runbook:Supabase Backup",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "staging-runbook:Provider Contract Validation",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "staging-runbook:Invalid Signature",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "staging-runbook:Paid Recovery With Evidence",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "staging-runbook:Pass Criteria",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "registry-flow:paid_checkout",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
+      "id": "registry-flow:subscription_payment_recovered",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
+      "id": "registry-flow:manual_owner_test",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
+      "id": "registry-flow:manual_owner_paid_recovery",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
+      "id": "registry-flow:manual_owner_revoke",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
+      "id": "registry-route:/api/entitlements/revoke",
+      "status": "pass",
+      "detail": "ownerOnly"
+    },
+    {
+      "id": "registry-validation:verify:entitlement-boundary",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "registry-validation:pnpm run verify:webhook-contracts",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "registry-validation:pnpm run verify:entitlement-state-machine",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "registry-validation:pnpm run verify:admin-lifecycle",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "registry-validation:pnpm run verify:vault-lifecycle",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "registry-validation:pnpm run verify:rls-policy-plan",
+      "status": "pass",
+      "detail": "listed"
+    },
+    {
+      "id": "generated-ai:entitlementFlows",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "generated-ai:commercial entitlementFlows",
+      "status": "pass",
+      "detail": "present"
+    }
+  ],
+  "notes": [
+    "No secret values are printed by this verifier.",
+    "Manual test grants are temporary and separate from paid checkout.",
+    "Paid recovery requires owner review of payment evidence.",
+    "Revoked or expired entitlements must not unlock premium access."
+  ]
+}

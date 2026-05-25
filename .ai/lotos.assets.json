@@ -1,0 +1,98 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "permissions": [
+    {
+      "id": "public-packages",
+      "tier": "free",
+      "paths": [
+        "packages/registry",
+        "packages/core",
+        "packages/sentinel",
+        "packages/cli",
+        "packages/claude-arm",
+        "packages/web-components"
+      ],
+      "rule": "May ship publicly when license, package files, exports, and dependency graph stay public-safe."
+    },
+    {
+      "id": "pro-source",
+      "tier": "pro",
+      "paths": [
+        "packages/claude-arm-pro",
+        "packages/pro"
+      ],
+      "rule": "Keep private before public launch."
+    },
+    {
+      "id": "private-dist",
+      "tier": "launch_pack",
+      "paths": [
+        "packages/pro/.private-dist",
+        ".commercial-dist"
+      ],
+      "rule": "Serve only through entitlement checks or private release channels."
+    }
+  ],
+  "premiumStubBoundaries": [
+    {
+      "id": "pro-components-metadata",
+      "privateSurface": "packages/claude-arm-pro",
+      "publicRepresentation": "metadata-only",
+      "message": "Premium components are distributed through private access after entitlement.",
+      "allowedPublicFields": [
+        "id",
+        "name",
+        "tier",
+        "maturity",
+        "category",
+        "tags",
+        "runtimes",
+        "docs",
+        "tests"
+      ],
+      "forbiddenPublicFields": [
+        "sourcePath",
+        "assetPath",
+        "downloadUrl",
+        "privateImport",
+        "packageExport"
+      ]
+    },
+    {
+      "id": "commercial-bundles-placeholder",
+      "privateSurface": ".commercial-dist",
+      "publicRepresentation": "metadata-only",
+      "message": "Premium components are distributed through private access after entitlement.",
+      "allowedPublicFields": [
+        "plan",
+        "tier",
+        "entitlementGate",
+        "supportContactPlaceholder"
+      ],
+      "forbiddenPublicFields": [
+        "bundlePath",
+        "signedUrl",
+        "storageBucket",
+        "privateAssetRoot"
+      ]
+    }
+  ],
+  "publicCleanRoom": {
+    "ready": false,
+    "status": "public-clean-room-blocked",
+    "evidencePath": ".release/public-clean-room-report.json",
+    "validationCommand": "pnpm run verify:public-clean-room",
+    "requiredBeforePublicRepo": [
+      "Evacuate and rotate local secrets before any public branch or package release.",
+      "Detach packages/claude-arm-pro, packages/pro, .commercial-dist, and private assets from the public worktree.",
+      "Replace premium source/code references with metadata-only stubs.",
+      "Regenerate public dependency graph, lockfile, AI context, and package tarball reports."
+    ],
+    "expectedCurrentBlockers": [
+      "Local secrets are intentionally detected by verify:no-secrets.",
+      "Premium source and commercial bundles are still present in the private workspace.",
+      "Public AI/MCP context still exposes private path metadata until sanitized projection exists."
+    ]
+  }
+}

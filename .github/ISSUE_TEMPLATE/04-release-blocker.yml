@@ -1,0 +1,34 @@
+name: Release blocker
+description: Track a public clean-room, package, or launch blocker.
+title: "[Release blocker]: "
+labels: ["release-blocker"]
+body:
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This report uses paths/types only and does not include secret values.
+          required: true
+        - label: This is not a security vulnerability report.
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - public clean room
+        - secrets
+        - premium split
+        - npm packages
+        - docs
+        - AI/MCP context
+        - staging lifecycle
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Blocker
+    validations:
+      required: true

@@ -1,0 +1,803 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "rule": "Public copy should say 8 free React exports plus 19 pro components, 27 total component contracts.",
+  "totals": {
+    "free": 8,
+    "pro": 19,
+    "all": 27
+  },
+  "components": [
+    {
+      "id": "alert",
+      "name": "Alert",
+      "description": "Alert contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/alert.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "badge",
+      "name": "Badge",
+      "description": "Badge contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react",
+        "web-components",
+        "laravel-blade"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/badge.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "description": "Button contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react",
+        "web-components",
+        "laravel-blade"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/button.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "description": "Card contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react",
+        "web-components",
+        "laravel-blade"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/card.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "divider",
+      "name": "Divider",
+      "description": "Divider contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/divider.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "empty-state",
+      "name": "Empty State",
+      "description": "Empty State contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/empty-state.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "input",
+      "name": "Input",
+      "description": "Input contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react",
+        "web-components",
+        "laravel-blade"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/input.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "spinner",
+      "name": "Spinner",
+      "description": "Spinner contract for product-grade LotOS UI surfaces.",
+      "tier": "free",
+      "maturity": "stable",
+      "category": "core-ui",
+      "tags": [
+        "forms",
+        "surface",
+        "status"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/spinner.mdx",
+      "publicExport": true,
+      "aiUsageNotes": "Safe for public package examples and quickstarts."
+    },
+    {
+      "id": "accordion",
+      "name": "Accordion",
+      "description": "Accordion contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/accordion.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "description": "Avatar contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/avatar.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "description": "Breadcrumbs contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/breadcrumbs.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "checkbox",
+      "name": "Checkbox",
+      "description": "Checkbox contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/checkbox.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "combobox",
+      "name": "Combobox",
+      "description": "Combobox contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/combobox.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "dropdown",
+      "name": "Dropdown",
+      "description": "Dropdown contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/dropdown.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "form",
+      "name": "Form",
+      "description": "Form contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/form.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "modal",
+      "name": "Modal",
+      "description": "Modal contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/modal.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "progress",
+      "name": "Progress",
+      "description": "Progress contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/progress.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "radio-group",
+      "name": "Radio Group",
+      "description": "Radio Group contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/radio-group.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "select",
+      "name": "Select",
+      "description": "Select contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/select.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "skeleton",
+      "name": "Skeleton",
+      "description": "Skeleton contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/skeleton.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "stat",
+      "name": "Stat",
+      "description": "Stat contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/stat.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "switch",
+      "name": "Switch",
+      "description": "Switch contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/switch.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "description": "Table contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/table.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "description": "Tabs contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/tabs.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "textarea",
+      "name": "Textarea",
+      "description": "Textarea contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/textarea.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "toast",
+      "name": "Toast",
+      "description": "Toast contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/toast.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    },
+    {
+      "id": "tooltip",
+      "name": "Tooltip",
+      "description": "Tooltip contract for product-grade LotOS UI surfaces.",
+      "tier": "pro",
+      "maturity": "alpha",
+      "category": "advanced-ui",
+      "tags": [
+        "workflow",
+        "data",
+        "navigation"
+      ],
+      "runtimes": [
+        "react"
+      ],
+      "a11y": [
+        "keyboard",
+        "screen-reader-name",
+        "focus-visible"
+      ],
+      "dependencies": [
+        "@lotosui/core"
+      ],
+      "docs": "complete",
+      "tests": "passing",
+      "examplePath": "apps/docs/content/docs/components/tooltip.mdx",
+      "publicExport": false,
+      "aiUsageNotes": "Protected tier. Do not imply public package export unless using the pro package."
+    }
+  ]
+}

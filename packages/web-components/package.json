@@ -4,6 +4,12 @@
   "description": "LotOS UI Web Components prototype - framework-agnostic custom elements powered by @lotosui/core tokens.",
   "license": "MIT",
   "author": "Lotos Technologies <lotos@lotos.dev>",
+  "homepage": "https://lotos-ui.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lotos-technologies/lotos-ui.git",
+    "directory": "packages/web-components"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -17,6 +23,14 @@
     "./input": {
       "import": "./dist/input.js",
       "types": "./dist/input.d.ts"
+    },
+    "./badge": {
+      "import": "./dist/badge.js",
+      "types": "./dist/badge.d.ts"
+    },
+    "./card": {
+      "import": "./dist/card.js",
+      "types": "./dist/card.d.ts"
     }
   },
   "main": "./dist/index.js",

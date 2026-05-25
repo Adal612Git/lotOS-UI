@@ -7,10 +7,12 @@
 import * as http from 'node:http';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { lotosManifest } from '@lotosui/registry';
 import {
     componentSchemas,
     type ComponentName,
 } from '../schemas/components.js';
+import { lotosMcpTransportSpec } from './spec.js';
 import {
     createPatternBlueprint,
     getDesignPattern,
@@ -36,7 +38,7 @@ import {
 } from '../runtime/runtimes.js';
 
 const DEFAULT_PORT = 3100;
-const MCP_VERSION = '0.2.0';
+const MCP_VERSION = '1.1.0';
 type FrameworkId = 'react' | 'web-component' | 'laravel-blade';
 type RenderRequest = {
     framework?: string;
@@ -51,6 +53,17 @@ interface ComponentExample {
 }
 
 const componentNames = Object.keys(componentSchemas) as ComponentName[];
+const publicReactComponents = new Set(
+    lotosManifest.components
+        .filter((entry) => entry.tier === 'free' && entry.publicExport)
+        .map((entry) => entry.id),
+);
+
+function getReactImportPath(component: ComponentName): string {
+    return publicReactComponents.has(component)
+        ? '@lotosui/claude-arm'
+        : '@lotosui/claude-arm-pro';
+}
 
 const componentExamplesOverrides: Partial<Record<ComponentName, ComponentExample[]>> = {
     button: [
@@ -260,6 +273,44 @@ const frameworkCatalog = {
     planned: ['django-template', 'spring-thymeleaf'] as const,
 };
 
+const projectMap = {
+    product: {
+        name: 'LotOS UI',
+        positioning: 'AI-native universal UI platform',
+        root: 'lotos-ui/',
+    },
+    apps: {
+        web: 'Commercial Next app: landing, pricing, checkout, auth, vault, Lemon webhook, protected downloads.',
+        docs: 'Fumadocs/Next documentation portal and commercial docs vault.',
+        demos: 'Dropdown demo and desktop demos for Python, .NET, Java, and Rust.',
+    },
+    packages: {
+        core: 'Pure TypeScript contracts: tokens, schemas, runtime catalogs, patterns, MCP.',
+        'claude-arm': 'Public React package with 8 free exports and MCP-aware catalog.',
+        'claude-arm-pro': 'Premium React package. Keep private before selling.',
+        cli: 'Stack, desktop, blueprint, and pattern scaffolding.',
+        'web-components': 'Framework-neutral custom elements prototype.',
+        adapters: 'Laravel, Django, Flask, Spring, Go, .NET runtime adapters.',
+        sentinel: 'Runtime guardrails for schema misuse.',
+        registry: 'Manifest-driven source of truth for agents and generators.',
+    },
+    validation: [
+        'pnpm run verify:structure',
+        'pnpm run verify:100',
+        'pnpm --filter @lotosui/core test',
+        'pnpm --filter @lotosui/cli test',
+        'pnpm --filter @lotosui/claude-arm test',
+        'pnpm --filter web check-types',
+        'pnpm --filter docs check-types',
+    ],
+    safety: [
+        'Never print or commit .env files or client_secret*.json.',
+        'Login eligibility is not ownership; owners only bypass admin/premium checks.',
+        'Entitlements, not owner emails, unlock buyer vault access.',
+        'Do not move pro assets into public packages.',
+    ],
+} as const;
+
 const componentFrameworksOverrides: Partial<Record<ComponentName, readonly FrameworkId[]>> = {
     button: ['react', 'web-component', 'laravel-blade'],
     input: ['react', 'web-component', 'laravel-blade'],
@@ -281,7 +332,7 @@ function getImportPathByFramework(component: ComponentName): Record<FrameworkId,
     const frameworks = componentFrameworks[component];
     return {
         react: frameworks.includes('react')
-            ? `@lotosui/claude-arm/components/${component}`
+            ? getReactImportPath(component)
             : null,
         'web-component': frameworks.includes('web-component')
             ? `@lotosui/web-components/${component}`
@@ -436,11 +487,11 @@ function buildReactSnippet({
         .join(' ');
     const attrPart = attributes.length > 0 ? ` ${attributes}` : '';
     if (component === 'input') {
-        return `import { ${tag} } from '@lotosui/claude-arm';\n\n<${tag}${attrPart} />`;
+        return `import { ${tag} } from '${getReactImportPath(component)}';\n\n<${tag}${attrPart} />`;
     }
 
     const content = children ?? (component === 'button' ? 'Click me' : 'Content');
-    return `import { ${tag} } from '@lotosui/claude-arm';\n\n<${tag}${attrPart}>${content}</${tag}>`;
+    return `import { ${tag} } from '${getReactImportPath(component)}';\n\n<${tag}${attrPart}>${content}</${tag}>`;
 }
 
 function buildWebComponentSnippet({
@@ -628,9 +679,65 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
                 status: 'ok',
                 version: MCP_VERSION,
                 components: Object.keys(componentSchemas).length,
+                registryComponents: lotosManifest.components.length,
+                registryTemplates: lotosManifest.templates.length,
+                registryRuntimes: lotosManifest.runtimes.length,
                 runtimes: listRuntimeProfiles().length,
                 patterns: listDesignPatterns().length,
                 timestamp: new Date().toISOString(),
+            });
+            return;
+        }
+
+        if (pathname === '/mcp/spec') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                spec: lotosMcpTransportSpec,
+            });
+            return;
+        }
+
+        if (pathname === '/manifest') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                manifest: lotosManifest,
+            });
+            return;
+        }
+
+        if (pathname === '/ai/context') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                product: lotosManifest.product,
+                routes: lotosManifest.routes,
+                components: {
+                    total: lotosManifest.components.length,
+                    free: lotosManifest.components.filter((entry) => entry.tier === 'free').length,
+                    pro: lotosManifest.components.filter((entry) => entry.tier === 'pro').length,
+                },
+                templates: lotosManifest.templates.map((template) => ({
+                    id: template.id,
+                    name: template.name,
+                    tier: template.tier,
+                    maturity: template.maturity,
+                    runtimes: template.runtimes,
+                    previewRoute: template.previewRoute,
+                    aiPrompt: template.aiPrompt,
+                })),
+                runtimes: lotosManifest.runtimes.map((runtime) => ({
+                    id: runtime.id,
+                    label: runtime.label,
+                    category: runtime.category,
+                    maturity: runtime.maturity,
+                    packageName: runtime.packageName,
+                    limitations: runtime.limitations,
+                })),
+                themes: lotosManifest.themes,
+                tools: lotosManifest.mcpTools,
+                validation: lotosManifest.validation,
+                guardrails: lotosManifest.aiRules,
+                releaseReadiness: lotosManifest.releaseReadiness,
+                entitlementFlows: lotosManifest.entitlementFlows,
             });
             return;
         }
@@ -641,6 +748,29 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
                 version: MCP_VERSION,
                 totalRuntimes: runtimes.length,
                 runtimes,
+                registryRuntimeMatrix: lotosManifest.runtimes,
+            });
+            return;
+        }
+
+        if (pathname === '/runtime-matrix') {
+            const categoryQuery = url.searchParams.get('category');
+            const maturityQuery = url.searchParams.get('maturity');
+            const runtimes = lotosManifest.runtimes.filter((runtime) => {
+                const categoryMatches = categoryQuery ? runtime.category === categoryQuery : true;
+                const maturityMatches = maturityQuery ? runtime.maturity === maturityQuery : true;
+                return categoryMatches && maturityMatches;
+            });
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                filters: {
+                    category: categoryQuery,
+                    maturity: maturityQuery,
+                },
+                totalRuntimes: runtimes.length,
+                runtimes,
+                rule: 'Maturity is explicit. Planned runtimes are roadmap targets, not package claims.',
             });
             return;
         }
@@ -656,6 +786,184 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
                     'laravel-blade': 'alpha',
                 },
                 note: 'Framework support is progressive. React is production-ready. Web components and Laravel Blade are in active expansion.',
+            });
+            return;
+        }
+
+        if (pathname === '/project-map') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                ...projectMap,
+                product: lotosManifest.product,
+                routes: lotosManifest.routes,
+                validation: lotosManifest.validation,
+                releaseReadiness: lotosManifest.releaseReadiness,
+            });
+            return;
+        }
+
+        if (pathname === '/routes') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                routes: lotosManifest.routes,
+                rule: 'Route access must stay aligned with auth, entitlement, and owner boundaries.',
+            });
+            return;
+        }
+
+        if (pathname === '/entitlement-flows') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                flows: lotosManifest.entitlementFlows,
+                rules: [
+                    'Google login identifies the user; it does not grant premium access by itself.',
+                    'Manual test grants are temporary and must not be treated as revenue.',
+                    'Paid recovery requires reviewed evidence of a real payment.',
+                    'past_due, paused, cancelled, expired, and revoked do not unlock premium by default.',
+                    'Revoked or expired entitlements must not unlock vaults or downloads.',
+                ],
+            });
+            return;
+        }
+
+        if (pathname === '/component-tiers') {
+            const freeComponents = lotosManifest.components.filter((entry) => entry.tier === 'free');
+            const proComponents = lotosManifest.components.filter((entry) => entry.tier === 'pro');
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                totals: {
+                    all: lotosManifest.components.length,
+                    free: freeComponents.length,
+                    pro: proComponents.length,
+                },
+                tiers: {
+                    free: freeComponents,
+                    pro: proComponents,
+                },
+                rule: 'Public copy should say 8 free React exports plus 19 pro components, 27 total contracts.',
+            });
+            return;
+        }
+
+        if (pathname === '/pricing-plans') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                plans: lotosManifest.plans,
+                rule: 'Pricing UI, docs, CLI, and MCP should stay aligned with the registry plan catalog.',
+            });
+            return;
+        }
+
+        if (pathname === '/asset-permissions') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                permissions: lotosManifest.assetPermissions,
+                rule: 'Premium code and delivery artifacts stay private even when public demos are visible.',
+            });
+            return;
+        }
+
+        if (pathname === '/env-requirements') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                env: lotosManifest.env,
+                rule: 'Agents may name required env vars but must not print or infer secret values.',
+            });
+            return;
+        }
+
+        if (pathname === '/templates') {
+            const tierQuery = url.searchParams.get('tier');
+            const runtimeQuery = url.searchParams.get('runtime');
+            const industryQuery = url.searchParams.get('industry');
+            const templates = lotosManifest.templates.filter((template) => {
+                const tierMatches = tierQuery ? template.tier === tierQuery : true;
+                const runtimeMatches = runtimeQuery ? template.runtimes.includes(runtimeQuery) : true;
+                const industryMatches = industryQuery ? template.industry.includes(industryQuery) : true;
+                return tierMatches && runtimeMatches && industryMatches;
+            });
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                filters: {
+                    tier: tierQuery,
+                    runtime: runtimeQuery,
+                    industry: industryQuery,
+                },
+                totalTemplates: templates.length,
+                templates,
+            });
+            return;
+        }
+
+        const templatePromptMatch = pathname.match(/^\/templates\/([a-z0-9-]+)\/prompt$/);
+        if (templatePromptMatch) {
+            const templateId = templatePromptMatch[1];
+            const template = lotosManifest.templates.find((entry) => entry.id === templateId);
+            if (!template) {
+                sendJSON(res, 404, {
+                    error: 'Template not found',
+                    available: lotosManifest.templates.map((entry) => entry.id),
+                });
+                return;
+            }
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                id: template.id,
+                name: template.name,
+                aiPrompt: template.aiPrompt,
+                runtimes: template.runtimes,
+                deployChecklist: template.deployChecklist,
+            });
+            return;
+        }
+
+        const templateMatch = pathname.match(/^\/templates\/([a-z0-9-]+)$/);
+        if (templateMatch) {
+            const templateId = templateMatch[1];
+            const template = lotosManifest.templates.find((entry) => entry.id === templateId);
+            if (!template) {
+                sendJSON(res, 404, {
+                    error: 'Template not found',
+                    available: lotosManifest.templates.map((entry) => entry.id),
+                });
+                return;
+            }
+
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                template,
+            });
+            return;
+        }
+
+        if (pathname === '/themes') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                totalThemes: lotosManifest.themes.length,
+                themes: lotosManifest.themes,
+            });
+            return;
+        }
+
+        if (pathname === '/release-readiness') {
+            sendJSON(res, 200, {
+                version: MCP_VERSION,
+                releaseReadiness: lotosManifest.releaseReadiness,
+                lifecycleValidation: lotosManifest.releaseReadiness.lifecycleValidation,
+                validation: lotosManifest.validation,
+                entitlementFlows: lotosManifest.entitlementFlows,
+                entitlementLifecycle: {
+                    manualTestsExpire: true,
+                    ownerOnlyRevocation: true,
+                    supabaseLifecycleMigration: 'local-only-not-remotely-executed',
+                    auditEventsMigration: 'local-only-not-remotely-executed',
+                    recurringCancellationAutomation: 'prepared-locally-provider-validation-required',
+                    wideSalesReady: lotosManifest.releaseReadiness.lifecycleValidation.wide_sales_ready,
+                    supabaseRemoteValidated: lotosManifest.releaseReadiness.lifecycleValidation.supabase_remote_validated,
+                    lemonRemoteValidated: lotosManifest.releaseReadiness.lifecycleValidation.lemon_remote_validated,
+                },
             });
             return;
         }
@@ -907,7 +1215,7 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
                     ? `@lotosui/web-components/${normalized}`
                     : frameworkQuery === 'laravel-blade'
                         ? `x-lotos-ui::lotos-${normalized}`
-                        : `@lotosui/claude-arm/components/${normalized}`,
+                    : getReactImportPath(normalized),
                 frameworks,
                 importPathByFramework: getImportPathByFramework(normalized),
                 restrictions: getComponentRestrictions(normalized),
@@ -945,8 +1253,24 @@ function createMCPServer(port: number = DEFAULT_PORT): http.Server {
             error: 'Not found',
             endpoints: [
                 'GET /health',
+                'GET /mcp/spec',
+                'GET /manifest',
+                'GET /ai/context',
                 'GET /runtimes',
+                'GET /runtime-matrix?category=<web|agent|desktop>&maturity=<stable|alpha|planned>',
                 'GET /frameworks',
+                'GET /project-map',
+                'GET /routes',
+                'GET /entitlement-flows',
+                'GET /component-tiers',
+                'GET /pricing-plans',
+                'GET /asset-permissions',
+                'GET /env-requirements',
+                'GET /templates?tier=<free|pro|enterprise>&runtime=<runtime>&industry=<industry>',
+                'GET /templates/:id',
+                'GET /templates/:id/prompt',
+                'GET /themes',
+                'GET /release-readiness',
                 'GET /patterns',
                 'GET /patterns/:id?runtime=<runtime>',
                 'GET /desktop/templates?tier=<free|pro>',
@@ -1135,7 +1459,11 @@ if (import.meta.url === entryFile) {
         console.log(`LotOS MCP Server running at http://localhost:${port}`);
         console.log(`Components: ${Object.keys(componentSchemas).join(', ')}`);
         console.log('Runtimes: GET /runtimes');
+        console.log('Registry: GET /manifest, /templates, /runtime-matrix, /themes');
         console.log('Frameworks: GET /frameworks');
+        console.log('Project:   GET /project-map');
+        console.log('AI:        GET /ai/context, /release-readiness, /mcp/spec');
+        console.log('Entitlements: GET /entitlement-flows');
         console.log('Patterns: GET /patterns');
         console.log('Catalog:  GET /components');
     });

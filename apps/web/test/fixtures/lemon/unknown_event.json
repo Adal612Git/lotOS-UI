@@ -1,0 +1,38 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "unknown_event",
+  "provider": "lemon_squeezy",
+  "kind": "mapper_and_route",
+  "request": {
+    "signatureMode": "valid",
+    "headers": {
+      "content-type": "application/json",
+      "x-event-name": "customer_updated",
+      "x-signature": "__TEST_GENERATED__"
+    }
+  },
+  "payload": {
+    "meta": {
+      "event_name": "customer_updated",
+      "event_id": "evt_fixture_unknown_001"
+    },
+    "data": {
+      "type": "customers",
+      "id": "cus_fixture_001",
+      "attributes": {
+        "user_email": "buyer+unknown@example.test"
+      }
+    }
+  },
+  "expectedMapping": {
+    "action": "ignore_unknown",
+    "status": null,
+    "plan": null,
+    "providerEventId": "evt_fixture_unknown_001"
+  },
+  "expectedRoute": {
+    "status": 202,
+    "upsert": false,
+    "audit": ["webhook_ignored"]
+  }
+}

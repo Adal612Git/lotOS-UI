@@ -4,8 +4,8 @@ import path from 'node:path';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../auth-options';
 import { getProtectedAsset } from '../../../../lib/commercial-assets';
-import { hasEntitlement } from '../../../../lib/entitlements';
-import { isOwnerEmail, normalizeEmail } from '../../../../lib/owner';
+import { canAccessPremium } from '../../../../lib/entitlement-access';
+import { normalizeEmail } from '../../../../lib/owner';
 
 export const runtime = 'nodejs';
 
@@ -25,7 +25,9 @@ async function resolveAssetPath(candidates: readonly string[]) {
 
   for (const rootCandidate of rootCandidates) {
     for (const candidate of candidates) {
-      const absolutePath = path.join(rootCandidate, candidate);
+      const absolutePath = path.isAbsolute(candidate)
+        ? path.normalize(candidate)
+        : path.resolve(rootCandidate, candidate);
 
       try {
         await access(absolutePath, fsConstants.R_OK);
@@ -57,15 +59,13 @@ export async function GET(
     return Response.json({ ok: false, error: 'Authentication required.' }, { status: 401 });
   }
 
-  if (!isOwnerEmail(email)) {
-    const allowed = await hasEntitlement(email, asset.plan);
+  const allowed = await canAccessPremium(email, asset.plan);
 
-    if (!allowed) {
-      return Response.json(
-        { ok: false, error: `Missing ${asset.plan} entitlement for ${asset.id}.` },
-        { status: 403 }
-      );
-    }
+  if (!allowed) {
+    return Response.json(
+      { ok: false, error: 'Premium access required.' },
+      { status: 403 }
+    );
   }
 
   const assetPath = await resolveAssetPath(asset.sourceCandidates);
@@ -91,6 +91,7 @@ export async function GET(
       'Content-Type': contentType,
       'Content-Disposition': `attachment; filename="${asset.fileName}"`,
       'Cache-Control': 'private, no-store',
+      'X-Content-Type-Options': 'nosniff',
     },
   });
 }

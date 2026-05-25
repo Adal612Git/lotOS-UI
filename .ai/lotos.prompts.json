@@ -1,0 +1,106 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "prompts": [
+    {
+      "id": "saas-dashboard",
+      "prompt": "Generate a SaaS Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "ai-agent-console",
+      "prompt": "Generate a AI Agent Console using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "rag-knowledge-base",
+      "prompt": "Generate a RAG Knowledge Base using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "promptops-dashboard",
+      "prompt": "Generate a PromptOps Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "evalops-dashboard",
+      "prompt": "Generate a EvalOps Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "mcp-server-explorer",
+      "prompt": "Generate a MCP Server Explorer using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "devtools-portal",
+      "prompt": "Generate a DevTools Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "internal-tools-dashboard",
+      "prompt": "Generate a Internal Tools Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the react, laravel-blade, django-jinja runtime path."
+    },
+    {
+      "id": "crm-mini",
+      "prompt": "Generate a CRM Mini using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "support-center",
+      "prompt": "Generate a Support Center using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "legal-compliance-portal",
+      "prompt": "Generate a Legal Compliance Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, blazor-razor runtime path."
+    },
+    {
+      "id": "analytics-dashboard",
+      "prompt": "Generate a Analytics Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path."
+    },
+    {
+      "id": "marketplace-starter",
+      "prompt": "Generate a Marketplace Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "docs-portal",
+      "prompt": "Generate a Docs Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "billing-starter",
+      "prompt": "Generate a Billing Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "auth-starter",
+      "prompt": "Generate a Auth Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "agency-landing",
+      "prompt": "Generate a Agency Landing using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, astro runtime path."
+    },
+    {
+      "id": "startup-landing",
+      "prompt": "Generate a Startup Landing using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, astro runtime path."
+    },
+    {
+      "id": "education-lms-mini",
+      "prompt": "Generate a Education LMS Mini using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "healthcare-admin-shell",
+      "prompt": "Generate a Healthcare Admin Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, blazor-razor runtime path."
+    },
+    {
+      "id": "fintech-dashboard-shell",
+      "prompt": "Generate a Fintech Dashboard Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path."
+    },
+    {
+      "id": "monitoring-observability-console",
+      "prompt": "Generate a Monitoring Observability Console using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path."
+    },
+    {
+      "id": "team-workspace",
+      "prompt": "Generate a Team Workspace using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "booking-scheduling-shell",
+      "prompt": "Generate a Booking Scheduling Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    },
+    {
+      "id": "content-studio",
+      "prompt": "Generate a Content Studio using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path."
+    }
+  ]
+}

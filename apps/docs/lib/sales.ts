@@ -133,7 +133,7 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'solo',
     name: 'Solo Access',
-    priceLabel: 'MX$59 / mes',
+    priceLabel: 'MX$59 / mes (placeholder)',
     summary: 'Founders launch entry tier for private proof, evaluation assets, and buyer-only monthly access.',
     features: [
       'Founders launch pricing locked for one of the first 20 customers',
@@ -148,7 +148,7 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'pro',
     name: 'Pro Studio',
-    priceLabel: 'MX$129 / mes',
+    priceLabel: 'MX$129 / mes (placeholder)',
     summary: 'The main founders tier: protected kits, layouts, and private production-facing assets.',
     features: [
       'Founders launch pricing locked for one of the first 20 customers',
@@ -163,7 +163,7 @@ export const docsSalesPlans: readonly SalesPlan[] = [
   {
     id: 'launch_pack',
     name: 'Full Signature',
-    priceLabel: 'MX$249 / mes',
+    priceLabel: 'MX$249 / mes (placeholder)',
     summary: 'Top-tier founders pricing with full-only operator surfaces and the strongest private positioning.',
     features: [
       'Founders launch pricing locked for one of the first 20 customers',

@@ -16,7 +16,7 @@
       "id": "@lotosui/claude-arm",
       "path": "packages/claude-arm",
       "type": "package",
-      "notes": "React component arm with 27 real components."
+      "notes": "Public React component arm with 8 free exports. Pro components stay in the private arm."
     },
     {
       "id": "@lotosui/cli",

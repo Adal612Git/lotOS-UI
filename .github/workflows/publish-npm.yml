@@ -3,6 +3,10 @@ name: Publish NPM Packages
 on:
   workflow_dispatch:
     inputs:
+      publish_registry:
+        description: "Publish @lotosui/registry"
+        type: boolean
+        default: true
       publish_core:
         description: "Publish @lotosui/core"
         type: boolean
@@ -15,6 +19,10 @@ on:
         description: "Publish @lotosui/cli"
         type: boolean
         default: true
+      publish_claude_arm:
+        description: "Publish @lotosui/claude-arm"
+        type: boolean
+        default: true
       publish_web_components:
         description: "Publish @lotosui/web-components"
         type: boolean
@@ -25,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,6 +53,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify public release gates
+        run: |
+          pnpm run verify:no-secrets
+          pnpm run verify:packages
+          pnpm run verify:package-exports
+          pnpm run verify:public-release
+
       - name: Configure publish auth mode
         env:
           NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
@@ -57,18 +73,22 @@ jobs:
 
       - name: Build publishable packages
         run: |
-          rm -rf packages/core/dist packages/sentinel/dist packages/cli/dist packages/web-components/dist
-          rm -f packages/core/tsconfig.build.tsbuildinfo packages/sentinel/tsconfig.build.tsbuildinfo packages/cli/tsconfig.build.tsbuildinfo packages/web-components/tsconfig.build.tsbuildinfo
+          rm -rf packages/registry/dist packages/core/dist packages/sentinel/dist packages/cli/dist packages/claude-arm/dist packages/web-components/dist
+          rm -f packages/registry/tsconfig.build.tsbuildinfo packages/core/tsconfig.build.tsbuildinfo packages/sentinel/tsconfig.build.tsbuildinfo packages/cli/tsconfig.build.tsbuildinfo packages/claude-arm/tsconfig.build.tsbuildinfo packages/web-components/tsconfig.build.tsbuildinfo
+          pnpm --filter @lotosui/registry run build
           pnpm --filter @lotosui/core run build
           pnpm --filter @lotosui/sentinel run build
           pnpm --filter @lotosui/cli run build
+          pnpm --filter @lotosui/claude-arm run build
           pnpm --filter @lotosui/web-components run build
 
       - name: Publish selected packages
         env:
           NPM_CONFIG_PROVENANCE: "true"
+          PUBLISH_REGISTRY: ${{ inputs.publish_registry }}
           PUBLISH_CORE: ${{ inputs.publish_core }}
           PUBLISH_SENTINEL: ${{ inputs.publish_sentinel }}
           PUBLISH_CLI: ${{ inputs.publish_cli }}
+          PUBLISH_CLAUDE_ARM: ${{ inputs.publish_claude_arm }}
           PUBLISH_WEB_COMPONENTS: ${{ inputs.publish_web_components }}
         run: node .github/scripts/publish-npm.mjs

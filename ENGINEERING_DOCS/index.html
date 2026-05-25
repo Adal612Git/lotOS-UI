@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Ingeniería de Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04101b;
+            --bg2: #0a1929;
+            --bg3: #0d2037;
+            --line: rgba(120, 149, 184, .2);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background:
+                radial-gradient(ellipse 900px 500px at 10% -5%, rgba(45, 212, 191, .13), transparent 55%),
+                radial-gradient(ellipse 800px 450px at 95% 5%, rgba(167, 139, 250, .13), transparent 50%),
+                radial-gradient(ellipse 700px 400px at 50% 110%, rgba(251, 113, 133, .08), transparent 50%),
+                linear-gradient(160deg, var(--bg), #071525 50%, var(--bg2));
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .7);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .nav-logo-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--c);
+            box-shadow: 0 0 14px var(--c)
+        }
+
+        .nav-logo-text {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--c)
+        }
+
+        .nav-right {
+            font-size: 11px;
+            color: var(--mut);
+            letter-spacing: .05em
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 40px 60px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(103, 232, 249, .28);
+            background: rgba(103, 232, 249, .06);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--c);
+            margin-bottom: 28px;
+        }
+
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--c);
+            animation: pulse 2s ease infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(.8)
+            }
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 900;
+            line-height: .92;
+            letter-spacing: -.05em;
+            margin-bottom: 24px;
+            background: linear-gradient(100deg, var(--c) 0%, var(--b) 35%, var(--v) 60%, var(--r) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--mut);
+            max-width: 620px;
+            margin: 0 auto 60px;
+        }
+
+        /* STATS */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            padding: 28px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 80px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1
+        }
+
+        .stat span {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-top: 4px;
+            display: block
+        }
+
+        /* GRID */
+        .grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* CARDS */
+        .card {
+            position: relative;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(8, 21, 37, .6);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, .3);
+            transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(120, 149, 184, .38)
+        }
+
+        .card:hover::before {
+            opacity: 1
+        }
+
+        /* card color themes */
+        .card.cyan {
+            --tone: var(--c)
+        }
+
+        .card.blue {
+            --tone: var(--b)
+        }
+
+        .card.violet {
+            --tone: var(--v)
+        }
+
+        .card.amber {
+            --tone: var(--a)
+        }
+
+        .card.rose {
+            --tone: var(--r)
+        }
+
+        .card.green {
+            --tone: var(--g)
+        }
+
+        .card.teal {
+            --tone: var(--t)
+        }
+
+        .card.pink {
+            --tone: #f472b6
+        }
+
+        .card:hover {
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 255, 255, .04), inset 0 1px 0 rgba(255, 255, 255, .06)
+        }
+
+        .card .card-glow {
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--tone, var(--c)) 0%, transparent 70%);
+            opacity: .08;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+
+        .card:hover .card-glow {
+            opacity: .16
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+        }
+
+        .card-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .04);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--tone, var(--c));
+            margin-bottom: 14px;
+        }
+
+        .card-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--tone, var(--c))
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            letter-spacing: -.02em
+        }
+
+        .card p {
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--mut);
+            margin-bottom: 20px
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 18px;
+            border-top: 1px solid rgba(120, 149, 184, .12);
+        }
+
+        .card-formats {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .chip {
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(120, 149, 184, .18);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--mut);
+        }
+
+        .card-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(120, 149, 184, .28);
+            background: rgba(255, 255, 255, .04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--mut);
+            transition: background .2s, border-color .2s, color .2s, transform .2s;
+            flex-shrink: 0;
+        }
+
+        .card:hover .card-arrow {
+            background: rgba(255, 255, 255, .1);
+            border-color: var(--tone, var(--c));
+            color: var(--tone, var(--c));
+            transform: translateX(3px);
+        }
+
+        /* SECTION LABEL */
+        .section-label {
+            max-width: 1200px;
+            margin: 60px auto 24px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .section-label-line {
+            flex: 1;
+            height: 1px;
+            background: var(--line)
+        }
+
+        .section-label span {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--mut);
+            white-space: nowrap
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(4, 16, 27, .7);
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        .footer-logo {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--c)
+        }
+
+        @media(max-width:640px) {
+
+            nav,
+            footer {
+                padding: 16px 20px
+            }
+
+            .hero {
+                padding: 50px 20px 40px
+            }
+
+            .grid {
+                padding: 0 20px 60px
+            }
+
+            .section-label {
+                padding: 0 20px
+            }
+
+            .stats {
+                gap: 28px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <div class="nav-logo-dot"></div>
+            <span class="nav-logo-text">LotOS UI</span>
+        </div>
+        <span class="nav-right">Engineering Docs · 2026</span>
+    </nav>
+
+    <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Ingeniería de Software</div>
+        <h1>Documentación<br>de Ingeniería</h1>
+        <p class="hero-sub">
+            Artefactos completos de ingeniería de software para LotOS UI: casos de uso, historias de usuario, diagramas
+            de flujo, ERD, máquinas de estado, UML de clases y diagramas de secuencia.
+        </p>
+        <div class="stats">
+            <div class="stat"><strong>8</strong><span>Diagramas</span></div>
+            <div class="stat"><strong>5+</strong><span>Vistas UML</span></div>
+            <div class="stat"><strong>17</strong><span>Paquetes</span></div>
+            <div class="stat"><strong>100%</strong><span>Interactivo</span></div>
+        </div>
+    </section>
+
+    <div class="section-label">
+        <div class="section-label-line"></div><span>Requerimientos</span>
+        <div class="section-label-line"></div>
+    </div>
+    <div class="grid">
+
+        <a class="card cyan" href="use-cases.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🎯</div>
+            <div class="card-tag">UML · Requerimientos</div>
+            <h2>Casos de Uso</h2>
+            <p>Diagrama UML de casos de uso: actores (Developer, Buyer, Admin, AI Agent), 20+ casos de uso y relaciones
+                &laquo;include&raquo; / &laquo;extend&raquo;.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Actores</span><span class="chip">Include</span><span
+                        class="chip">Extend</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+        <a class="card blue" href="user-stories.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">📋</div>
+            <div class="card-tag">Ágil · Backlog</div>
+            <h2>Historias de Usuario</h2>
+            <p>Historias de usuario por épica en tarjetas kanban interactivas, con criterios de aceptación, prioridad y
+                estado de implementación.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Épicas</span><span class="chip">Criterios</span><span
+                        class="chip">Prioridad</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="section-label">
+        <div class="section-label-line"></div><span>Comportamiento y Flujo</span>
+        <div class="section-label-line"></div>
+    </div>
+    <div class="grid">
+
+        <a class="card violet" href="flow-diagrams.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🔀</div>
+            <div class="card-tag">Control · Proceso</div>
+            <h2>Diagramas de Flujo</h2>
+            <p>Flujos de instalación npm, compra+unlock en vault, CI/CD pipeline y render MCP. Notación con decisiones,
+                bucles y terminadores.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">npm flow</span><span class="chip">CI/CD</span><span
+                        class="chip">MCP render</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+        <a class="card amber" href="sequence-diagrams.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">⏱️</div>
+            <div class="card-tag">UML · Interacción</div>
+            <h2>Diagramas de Secuencia</h2>
+            <p>OAuth login, flujo de render MCP, compra+unlock de vault y onboarding de desarrollador. Lifelines,
+                mensajes síncronos y asíncronos.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">OAuth</span><span class="chip">MCP</span><span
+                        class="chip">Checkout</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+        <a class="card rose" href="state-machines.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🔄</div>
+            <div class="card-tag">UML · Comportamiento</div>
+            <h2>Máquinas de Estado</h2>
+            <p>Ciclo de vida de componente LotOS, sesión de usuario, pedido/entitlement y pipeline de CI. Estados,
+                transiciones y guardas.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Estados</span><span class="chip">Guardas</span><span
+                        class="chip">Transiciones</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="section-label">
+        <div class="section-label-line"></div><span>Estructura y Datos</span>
+        <div class="section-label-line"></div>
+    </div>
+    <div class="grid">
+
+        <a class="card green" href="uml-classes.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🧩</div>
+            <div class="card-tag">UML · Estructura</div>
+            <h2>Diagrama de Clases</h2>
+            <p>Clases del sistema con herencia, composición (◆), agregación (◇), realización (punteado+triángulo) y
+                dependencias. Semántica UML real.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Herencia</span><span class="chip">Composición</span><span
+                        class="chip">Agregación</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+        <a class="card teal" href="erd.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🗄️</div>
+            <div class="card-tag">Base de Datos · ER</div>
+            <h2>Diagrama ER</h2>
+            <p>Modelo entidad-relación con usuarios, sesiones, planes, entitlements, órdenes, pagos y entregas.
+                Cardinalidad Crow's Foot.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Entidades</span><span class="chip">Crow's Foot</span><span
+                        class="chip">Supabase</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+        <a class="card pink" href="architecture.html">
+            <div class="card-glow"></div>
+            <div class="card-icon">🏛️</div>
+            <div class="card-tag">Arquitectura · Sistema</div>
+            <h2>Arquitectura Completa</h2>
+            <p>Mapa maestro de arquitectura: monorepo, paquetes, apps, CI/CD, Vercel, Supabase, OAuth y payment rails.
+                Basado en LOTOSdiagrama.</p>
+            <div class="card-footer">
+                <div class="card-formats"><span class="chip">Topología</span><span class="chip">Comercial</span><span
+                        class="chip">ERD</span></div>
+                <div class="card-arrow">→</div>
+            </div>
+        </a>
+
+    </div>
+
+    <footer>
+        <div class="footer-logo">LotOS UI</div>
+        <p>Ingeniería de Software · LotosTechnologies · 2026</p>
+        <p>8 diagramas · vis-network.js · SVG · Dark theme</p>
+    </footer>
+
+</body>
+
+</html>

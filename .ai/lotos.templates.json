@@ -1,0 +1,898 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "totals": {
+    "all": 25,
+    "implementedPreview": 6
+  },
+  "templates": [
+    {
+      "id": "saas-dashboard",
+      "name": "SaaS Dashboard",
+      "description": "SaaS Dashboard template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "saas",
+        "b2b"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "card",
+        "table",
+        "stat",
+        "tabs",
+        "badge"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id saas-dashboard",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a SaaS Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "saas",
+        "b2b",
+        "pro"
+      ]
+    },
+    {
+      "id": "ai-agent-console",
+      "name": "AI Agent Console",
+      "description": "AI Agent Console template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "ai",
+        "agents"
+      ],
+      "tier": "pro",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "card",
+        "table",
+        "tabs",
+        "toast",
+        "progress"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id ai-agent-console",
+      "previewRoute": "/ai",
+      "screenshot": "/ai/screenshot.png",
+      "aiPrompt": "Generate a AI Agent Console using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "ai",
+        "agents",
+        "pro"
+      ]
+    },
+    {
+      "id": "rag-knowledge-base",
+      "name": "RAG Knowledge Base",
+      "description": "RAG Knowledge Base template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "ai",
+        "knowledge"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "input",
+        "card",
+        "badge",
+        "table"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id rag-knowledge-base",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a RAG Knowledge Base using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "ai",
+        "knowledge",
+        "pro"
+      ]
+    },
+    {
+      "id": "promptops-dashboard",
+      "name": "PromptOps Dashboard",
+      "description": "PromptOps Dashboard template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "ai",
+        "ops"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "textarea",
+        "tabs",
+        "stat",
+        "table"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id promptops-dashboard",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a PromptOps Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "ai",
+        "ops",
+        "pro"
+      ]
+    },
+    {
+      "id": "evalops-dashboard",
+      "name": "EvalOps Dashboard",
+      "description": "EvalOps Dashboard template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "ai",
+        "quality"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "progress",
+        "table",
+        "stat",
+        "alert"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id evalops-dashboard",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a EvalOps Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "ai",
+        "quality",
+        "pro"
+      ]
+    },
+    {
+      "id": "mcp-server-explorer",
+      "name": "MCP Server Explorer",
+      "description": "MCP Server Explorer template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "developer-tools",
+        "ai"
+      ],
+      "tier": "free",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "input",
+        "card",
+        "badge",
+        "empty-state"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id mcp-server-explorer",
+      "previewRoute": "/ai",
+      "screenshot": "/ai/screenshot.png",
+      "aiPrompt": "Generate a MCP Server Explorer using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "developer-tools",
+        "ai",
+        "free"
+      ]
+    },
+    {
+      "id": "devtools-portal",
+      "name": "DevTools Portal",
+      "description": "DevTools Portal template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "developer-tools"
+      ],
+      "tier": "free",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "button",
+        "card",
+        "divider",
+        "spinner"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id devtools-portal",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a DevTools Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "developer-tools",
+        "free"
+      ]
+    },
+    {
+      "id": "internal-tools-dashboard",
+      "name": "Internal Tools Dashboard",
+      "description": "Internal Tools Dashboard template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "operations"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "react",
+        "laravel-blade",
+        "django-jinja"
+      ],
+      "includedComponents": [
+        "form",
+        "table",
+        "alert",
+        "badge"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id internal-tools-dashboard",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Internal Tools Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the react, laravel-blade, django-jinja runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "operations",
+        "pro"
+      ]
+    },
+    {
+      "id": "crm-mini",
+      "name": "CRM Mini",
+      "description": "CRM Mini template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "sales",
+        "crm"
+      ],
+      "tier": "solo",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "table",
+        "avatar",
+        "tabs",
+        "modal"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id crm-mini",
+      "previewRoute": "/demo/con-lotos-web",
+      "screenshot": "/demo/con-lotos-web/screenshot.png",
+      "aiPrompt": "Generate a CRM Mini using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "sales",
+        "crm",
+        "solo"
+      ]
+    },
+    {
+      "id": "support-center",
+      "name": "Support Center",
+      "description": "Support Center template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "support"
+      ],
+      "tier": "solo",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "alert",
+        "table",
+        "badge",
+        "empty-state"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id support-center",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Support Center using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "support",
+        "solo"
+      ]
+    },
+    {
+      "id": "legal-compliance-portal",
+      "name": "Legal Compliance Portal",
+      "description": "Legal Compliance Portal template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "legal",
+        "compliance"
+      ],
+      "tier": "enterprise",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "blazor-razor"
+      ],
+      "includedComponents": [
+        "accordion",
+        "table",
+        "alert",
+        "breadcrumbs"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id legal-compliance-portal",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Legal Compliance Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, blazor-razor runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "legal",
+        "compliance",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "analytics-dashboard",
+      "name": "Analytics Dashboard",
+      "description": "Analytics Dashboard template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "analytics"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "go-templ"
+      ],
+      "includedComponents": [
+        "stat",
+        "card",
+        "table",
+        "progress"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id analytics-dashboard",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Analytics Dashboard using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "analytics",
+        "pro"
+      ]
+    },
+    {
+      "id": "marketplace-starter",
+      "name": "Marketplace Starter",
+      "description": "Marketplace Starter template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "commerce"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "card",
+        "badge",
+        "modal",
+        "tabs"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id marketplace-starter",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Marketplace Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "commerce",
+        "pro"
+      ]
+    },
+    {
+      "id": "docs-portal",
+      "name": "Docs Portal",
+      "description": "Docs Portal template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "developer-tools",
+        "docs"
+      ],
+      "tier": "free",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "button",
+        "card",
+        "breadcrumbs",
+        "divider"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id docs-portal",
+      "previewRoute": "/docs",
+      "screenshot": "/docs/screenshot.png",
+      "aiPrompt": "Generate a Docs Portal using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "developer-tools",
+        "docs",
+        "free"
+      ]
+    },
+    {
+      "id": "billing-starter",
+      "name": "Billing Starter",
+      "description": "Billing Starter template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "billing",
+        "saas"
+      ],
+      "tier": "pro",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "card",
+        "table",
+        "badge",
+        "alert"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id billing-starter",
+      "previewRoute": "/pricing",
+      "screenshot": "/pricing/screenshot.png",
+      "aiPrompt": "Generate a Billing Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "billing",
+        "saas",
+        "pro"
+      ]
+    },
+    {
+      "id": "auth-starter",
+      "name": "Auth Starter",
+      "description": "Auth Starter template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "auth"
+      ],
+      "tier": "free",
+      "maturity": "prototype",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "input",
+        "button",
+        "alert",
+        "spinner"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id auth-starter",
+      "previewRoute": "/login",
+      "screenshot": "/login/screenshot.png",
+      "aiPrompt": "Generate a Auth Starter using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "auth",
+        "free"
+      ]
+    },
+    {
+      "id": "agency-landing",
+      "name": "Agency Landing",
+      "description": "Agency Landing template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "agency",
+        "marketing"
+      ],
+      "tier": "solo",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "astro"
+      ],
+      "includedComponents": [
+        "button",
+        "card",
+        "badge",
+        "divider"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id agency-landing",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Agency Landing using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, astro runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "agency",
+        "marketing",
+        "solo"
+      ]
+    },
+    {
+      "id": "startup-landing",
+      "name": "Startup Landing",
+      "description": "Startup Landing template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "startup",
+        "marketing"
+      ],
+      "tier": "solo",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "astro"
+      ],
+      "includedComponents": [
+        "button",
+        "card",
+        "badge",
+        "stat"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id startup-landing",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Startup Landing using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, astro runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "startup",
+        "marketing",
+        "solo"
+      ]
+    },
+    {
+      "id": "education-lms-mini",
+      "name": "Education LMS Mini",
+      "description": "Education LMS Mini template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "education"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "tabs",
+        "progress",
+        "card",
+        "table"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id education-lms-mini",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Education LMS Mini using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "education",
+        "pro"
+      ]
+    },
+    {
+      "id": "healthcare-admin-shell",
+      "name": "Healthcare Admin Shell",
+      "description": "Healthcare Admin Shell template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "healthcare"
+      ],
+      "tier": "enterprise",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "blazor-razor"
+      ],
+      "includedComponents": [
+        "table",
+        "alert",
+        "badge",
+        "form"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id healthcare-admin-shell",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Healthcare Admin Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, blazor-razor runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "healthcare",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "fintech-dashboard-shell",
+      "name": "Fintech Dashboard Shell",
+      "description": "Fintech Dashboard Shell template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "fintech"
+      ],
+      "tier": "enterprise",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "go-templ"
+      ],
+      "includedComponents": [
+        "stat",
+        "table",
+        "alert",
+        "tabs"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id fintech-dashboard-shell",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Fintech Dashboard Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "fintech",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "monitoring-observability-console",
+      "name": "Monitoring Observability Console",
+      "description": "Monitoring Observability Console template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "monitoring",
+        "ops"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react",
+        "go-templ"
+      ],
+      "includedComponents": [
+        "stat",
+        "progress",
+        "table",
+        "toast"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id monitoring-observability-console",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Monitoring Observability Console using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react, go-templ runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "monitoring",
+        "ops",
+        "pro"
+      ]
+    },
+    {
+      "id": "team-workspace",
+      "name": "Team Workspace",
+      "description": "Team Workspace template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "collaboration"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "avatar",
+        "tabs",
+        "card",
+        "toast"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id team-workspace",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Team Workspace using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "collaboration",
+        "pro"
+      ]
+    },
+    {
+      "id": "booking-scheduling-shell",
+      "name": "Booking Scheduling Shell",
+      "description": "Booking Scheduling Shell template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "booking"
+      ],
+      "tier": "solo",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "form",
+        "input",
+        "table",
+        "alert"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id booking-scheduling-shell",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Booking Scheduling Shell using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "booking",
+        "solo"
+      ]
+    },
+    {
+      "id": "content-studio",
+      "name": "Content Studio",
+      "description": "Content Studio template governed by the LotOS registry with runtime, tier, deploy, and AI generation metadata.",
+      "industry": [
+        "content",
+        "marketing"
+      ],
+      "tier": "pro",
+      "maturity": "planned",
+      "runtimes": [
+        "next",
+        "react"
+      ],
+      "includedComponents": [
+        "textarea",
+        "tabs",
+        "modal",
+        "toast"
+      ],
+      "installCommand": "pnpm --filter @lotosui/cli exec lotos-ui templates --id content-studio",
+      "previewRoute": null,
+      "screenshot": null,
+      "aiPrompt": "Generate a Content Studio using LotOS UI contracts, semantic sections, explicit empty/loading/error states, and the next, react runtime path.",
+      "deployChecklist": [
+        "confirm runtime maturity",
+        "verify auth and entitlement needs",
+        "run focused typecheck",
+        "capture preview screenshot"
+      ],
+      "tags": [
+        "content",
+        "marketing",
+        "pro"
+      ]
+    }
+  ]
+}

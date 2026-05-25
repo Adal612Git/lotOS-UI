@@ -1,0 +1,40 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "subscription_cancelled",
+  "provider": "lemon_squeezy",
+  "kind": "mapper_and_route",
+  "request": {
+    "signatureMode": "valid",
+    "headers": {
+      "content-type": "application/json",
+      "x-event-name": "subscription_cancelled",
+      "x-signature": "__TEST_GENERATED__"
+    }
+  },
+  "payload": {
+    "meta": {
+      "event_name": "subscription_cancelled",
+      "event_id": "evt_fixture_subscription_cancelled_001"
+    },
+    "data": {
+      "type": "subscriptions",
+      "id": "sub_fixture_001",
+      "attributes": {
+        "customer_id": "cus_fixture_001",
+        "user_email": "buyer+pro@example.test",
+        "variant_id": "var_fixture_pro"
+      }
+    }
+  },
+  "expectedMapping": {
+    "action": "mark_cancelled",
+    "status": "cancelled",
+    "plan": "pro",
+    "providerEventId": "evt_fixture_subscription_cancelled_001"
+  },
+  "expectedRoute": {
+    "status": 200,
+    "upsert": true,
+    "audit": ["webhook_received", "webhook_applied"]
+  }
+}

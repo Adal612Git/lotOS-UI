@@ -2,10 +2,12 @@
 
 Framework-agnostic custom elements for LotOS UI.
 
-Current status: prototype package with two production-style components:
+Current status: prototype package with four production-style components:
 
 - `<lotos-button>`
 - `<lotos-input>`
+- `<lotos-badge>`
+- `<lotos-card>`
 
 ## Quick start
 
@@ -19,6 +21,8 @@ registerLotosWebComponents();
 <lotos-button variant="primary" size="md">Get Started</lotos-button>
 <lotos-button variant="outline" size="sm">Learn More</lotos-button>
 <lotos-input type="email" label="Work Email" placeholder="you@company.com"></lotos-input>
+<lotos-badge variant="success">Active</lotos-badge>
+<lotos-card>Framework-neutral surface</lotos-card>
 ```
 
 ## Attributes (`lotos-button`)

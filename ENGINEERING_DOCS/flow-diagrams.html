@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Diagramas de Flujo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04101b;
+            --bg2: #0a1929;
+            --line: rgba(120, 149, 184, .18);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%),
+                radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%),
+                linear-gradient(160deg, var(--bg), #071525 55%, var(--bg2))
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .75);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .back {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .page-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tx)
+        }
+
+        .page-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(167, 139, 250, .1);
+            border: 1px solid rgba(167, 139, 250, .28);
+            color: var(--v)
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 32px 80px
+        }
+
+        .page-header {
+            margin-bottom: 40px
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -.04em;
+            line-height: 1;
+            margin-bottom: 8px;
+            background: linear-gradient(100deg, var(--v), var(--b));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: var(--mut);
+            line-height: 1.6;
+            max-width: 600px
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap
+        }
+
+        .tab {
+            padding: 9px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .tab.active {
+            color: #fff;
+            background: rgba(167, 139, 250, .12);
+            border-color: rgba(167, 139, 250, .4);
+            box-shadow: 0 0 18px rgba(167, 139, 250, .12)
+        }
+
+        .diagram-panel {
+            display: none
+        }
+
+        .diagram-panel.active {
+            display: block
+        }
+
+        /* FLOW DIAGRAM — SVG based */
+        .diagram-wrap {
+            border-radius: 20px;
+            border: 1px solid rgba(120, 149, 184, .2);
+            background: rgba(8, 17, 32, .6);
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            overflow: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+        }
+
+        .diagram-wrap h3 {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 4px
+        }
+
+        .diagram-wrap p {
+            font-size: 12px;
+            color: var(--mut);
+            margin-bottom: 24px
+        }
+
+        svg.flow {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+            margin: 0 auto;
+            height: auto;
+            overflow: visible
+        }
+
+        /* Nodes */
+        .node-term {
+            fill: rgba(52, 211, 153, .15);
+            stroke: #34d399;
+            stroke-width: 2;
+            rx: 28
+        }
+
+        .node-process {
+            fill: rgba(96, 165, 250, .1);
+            stroke: #60a5fa;
+            stroke-width: 1.5
+        }
+
+        .node-decision {
+            fill: rgba(251, 191, 36, .1);
+            stroke: #fbbf24;
+            stroke-width: 1.5
+        }
+
+        .node-io {
+            fill: rgba(167, 139, 250, .1);
+            stroke: #a78bfa;
+            stroke-width: 1.5
+        }
+
+        .node-sub {
+            fill: rgba(45, 212, 191, .08);
+            stroke: #2dd4bf;
+            stroke-width: 1.5;
+            stroke-dasharray: 6, 3
+        }
+
+        text {
+            font-family: Inter, sans-serif;
+            fill: #edf6ff;
+            dominant-baseline: middle;
+            text-anchor: middle;
+            font-size: 13px;
+            font-weight: 500
+        }
+
+        text.small {
+            font-size: 11px;
+            fill: #7a98b8
+        }
+
+        text.label {
+            font-size: 10px;
+            fill: #fbbf24;
+            font-weight: 700
+        }
+
+        /* Arrows */
+        .arrow {
+            stroke: #60a5fa;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arr-blue)
+        }
+
+        .arrow-green {
+            stroke: #34d399;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arr-green)
+        }
+
+        .arrow-red {
+            stroke: #fb7185;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arr-red)
+        }
+
+        .arrow-amber {
+            stroke: #fbbf24;
+            stroke-width: 1.8;
+            fill: none;
+            marker-end: url(#arr-amber);
+            stroke-dasharray: 7, 4
+        }
+
+        .arrow-teal {
+            stroke: #2dd4bf;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arr-teal)
+        }
+
+        /* Legend */
+        .legend-wrap {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(120, 149, 184, .16);
+            background: rgba(4, 12, 24, .5)
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        .leg-shape {
+            width: 28px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0
+        }
+
+        .leg-line {
+            width: 28px;
+            height: 2px;
+            flex-shrink: 0
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a class="back" href="index.html">← Hub</a>
+            <span class="page-title">Diagramas de Flujo — LotOS UI</span>
+        </div>
+        <span class="page-badge">Control · Proceso</span>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Diagramas de Flujo</h1>
+            <p>Flujos principales del sistema LotOS UI. Notación estándar: terminadores redondeados, procesos
+                rectangulares, decisiones en rombo, E/S en paralelogramo.</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="install">Instalación npm</button>
+            <button class="tab" data-tab="purchase">Compra + Unlock</button>
+            <button class="tab" data-tab="cicd">CI/CD Pipeline</button>
+            <button class="tab" data-tab="mcp">Render MCP</button>
+        </div>
+
+        <!-- FLOW 1: npm Install -->
+        <div class="diagram-panel active" id="panel-install">
+            <div class="diagram-wrap">
+                <h3>Flujo de Instalación de @lotosui/claude-arm</h3>
+                <p>Pasos desde que el Developer decide usar LotOS UI hasta tener componentes renderizados en su app.
+                    Incluye rutas alternativas via CDN y CLI scaffold.</p>
+                <svg class="flow" viewBox="0 0 800 1020" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa" />
+                        </marker>
+                        <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+                        </marker>
+                        <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+                        </marker>
+                        <marker id="arr-amber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+                        </marker>
+                        <marker id="arr-teal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#2dd4bf" />
+                        </marker>
+                    </defs>
+                    <!-- START -->
+                    <rect x="300" y="20" width="200" height="44" rx="22" class="node-term" />
+                    <text x="400" y="42">INICIO</text>
+                    <!-- Arrow -->
+                    <line x1="400" y1="64" x2="400" y2="96" class="arrow" />
+                    <!-- Decision: tiene node? -->
+                    <polygon points="400,100 520,140 400,180 280,140" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24;stroke-width:1.5" />
+                    <text x="400" y="135">¿Tiene Node.js ≥18?</text>
+                    <!-- No → instalar node -->
+                    <line x1="280" y1="140" x2="160" y2="140" class="arrow-red" />
+                    <text x="240" y="128" class="label">No</text>
+                    <rect x="60" y="112" width="160" height="56" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.1)" />
+                    <text x="140" y="140">Instalar Node.js</text>
+                    <line x1="140" y1="168" x2="140" y2="220" class="arrow-red" />
+                    <line x1="140" y1="220" x2="400" y2="220" class="arrow-red" />
+                    <!-- Yes -->
+                    <line x1="400" y1="180" x2="400" y2="212" class="arrow-green" />
+                    <text x="414" y="200" class="label">Sí</text>
+                    <!-- Decision: usa pnpm? -->
+                    <polygon points="400,216 520,256 400,296 280,256" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24;stroke-width:1.5" />
+                    <text x="400" y="251">¿Prefiere pnpm/yarn?</text>
+                    <!-- No: npm -->
+                    <line x1="400" y1="296" x2="400" y2="328" class="arrow" />
+                    <text x="414" y="316" class="label">npm</text>
+                    <rect x="280" y="330" width="240" height="50" rx="10" class="node-process" />
+                    <text x="400" y="355">npm install @lotosui/claude-arm</text>
+                    <!-- Yes left alt: pnpm -->
+                    <line x1="280" y1="256" x2="120" y2="256" class="arrow-amber" />
+                    <text x="190" y="244" class="label">pnpm</text>
+                    <rect x="20" y="228" width="200" height="50" rx="10" class="node-process"
+                        style="stroke:#fbbf24;fill:rgba(251,191,36,.08)" />
+                    <text x="120" y="253">pnpm add @lotosui/claude-arm</text>
+                    <line x1="120" y1="278" x2="120" y2="355" class="arrow-amber" />
+                    <line x1="120" y1="355" x2="280" y2="355" class="arrow-amber" />
+                    <!-- Arrow down -->
+                    <line x1="400" y1="380" x2="400" y2="410" class="arrow" />
+                    <!-- Process: import styles -->
+                    <rect x="280" y="412" width="240" height="50" rx="10" class="node-process" />
+                    <text x="400" y="434">import '@lotosui/claude-arm/</text>
+                    <text x="400" y="450" style="font-size:11px">styles.css'</text>
+                    <line x1="400" y1="462" x2="400" y2="494" class="arrow" />
+                    <!-- Process: import component -->
+                    <rect x="260" y="496" width="280" height="50" rx="10" class="node-process" />
+                    <text x="400" y="518">import &#123; Button &#125; from</text>
+                    <text x="400" y="534" style="font-size:11px">'@lotosui/claude-arm'</text>
+                    <line x1="400" y1="546" x2="400" y2="578" class="arrow" />
+                    <!-- Decision: TS types OK? -->
+                    <polygon points="400,582 520,622 400,662 280,622" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24;stroke-width:1.5" />
+                    <text x="400" y="617">¿TypeScript types OK?</text>
+                    <!-- No -->
+                    <line x1="520" y1="622" x2="640" y2="622" class="arrow-red" />
+                    <text x="580" y="610" class="label">No</text>
+                    <rect x="580" y="595" width="180" height="54" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="670" y="618">Verificar tsconfig</text>
+                    <text x="670" y="634" style="font-size:11px">moduleResolution: bundler</text>
+                    <line x1="670" y1="649" x2="670" y2="685" class="arrow-red" />
+                    <line x1="670" y1="685" x2="400" y2="685" class="arrow-red" />
+                    <!-- Yes -->
+                    <line x1="400" y1="662" x2="400" y2="690" class="arrow-green" />
+                    <text x="414" y="680" class="label">Sí</text>
+                    <!-- IO: Renderizar componente -->
+                    <polygon points="280,695 520,695 500,745 260,745" class="node-io" />
+                    <text x="390" y="720">Renderizar componente en app</text>
+                    <line x1="400" y1="745" x2="400" y2="775" class="arrow" />
+                    <!-- Decision: Look OK? -->
+                    <polygon points="400,779 520,820 400,861 280,820" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24;stroke-width:1.5" />
+                    <text x="400" y="815">¿Render correcto?</text>
+                    <!-- No: check peer deps -->
+                    <line x1="520" y1="820" x2="650" y2="820" class="arrow-red" />
+                    <text x="584" y="808" class="label">No</text>
+                    <rect x="590" y="793" width="180" height="54" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="680" y="813">Verificar peer deps</text>
+                    <text x="680" y="829" style="font-size:11px">react ≥18, react-dom</text>
+                    <line x1="680" y1="847" x2="680" y2="930" class="arrow-red" />
+                    <line x1="680" y1="930" x2="400" y2="930" class="arrow-red" />
+                    <!-- Yes -->
+                    <line x1="400" y1="861" x2="400" y2="892" class="arrow-green" />
+                    <text x="414" y="880" class="label">Sí</text>
+                    <!-- END -->
+                    <rect x="300" y="895" width="200" height="44" rx="22" class="node-term"
+                        style="fill:rgba(52,211,153,.2);stroke:#34d399" />
+                    <text x="400" y="917">✓ LotOS UI listo</text>
+                    <!-- CDN alternative note -->
+                    <rect x="580" y="20" width="200" height="70" rx="12" class="node-sub" />
+                    <text x="680" y="42">Alternativa CDN</text>
+                    <text x="680" y="58" class="small">&lt;script src="unpkg..."&gt;</text>
+                    <text x="680" y="74" class="small">Sin build step</text>
+                </svg>
+                <div class="legend-wrap">
+                    <div class="legend-item"><svg width="28" height="16">
+                            <rect rx="8" x="0" y="2" width="28" height="12" fill="rgba(52,211,153,.15)" stroke="#34d399"
+                                stroke-width="1.5" />
+                        </svg>Terminador (inicio/fin)</div>
+                    <div class="legend-item"><svg width="28" height="16">
+                            <rect rx="4" x="0" y="2" width="28" height="12" fill="rgba(96,165,250,.1)" stroke="#60a5fa"
+                                stroke-width="1.5" />
+                        </svg>Proceso</div>
+                    <div class="legend-item"><svg width="28" height="16">
+                            <polygon points="14,2 28,8 14,14 0,8" fill="rgba(251,191,36,.1)" stroke="#fbbf24"
+                                stroke-width="1.5" />
+                        </svg>Decisión</div>
+                    <div class="legend-item"><svg width="28" height="16">
+                            <polygon points="4,2 28,2 24,14 0,14" fill="rgba(167,139,250,.1)" stroke="#a78bfa"
+                                stroke-width="1.5" />
+                        </svg>Entrada/Salida</div>
+                    <div class="legend-item"><svg width="28" height="16">
+                            <rect rx="4" x="0" y="2" width="28" height="12" fill="rgba(45,212,191,.08)" stroke="#2dd4bf"
+                                stroke-width="1.5" stroke-dasharray="4,2" />
+                        </svg>Subproceso externo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOW 2: Purchase + Unlock -->
+        <div class="diagram-panel" id="panel-purchase">
+            <div class="diagram-wrap">
+                <h3>Flujo de Compra y Unlock de Vault</h3>
+                <p>Desde que el Buyer visita /pricing hasta tener el vault desbloqueado con sus recursos descargables.
+                </p>
+                <svg class="flow" viewBox="0 0 900 960" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arr-blue2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa" />
+                        </marker>
+                        <marker id="arr-green2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+                        </marker>
+                        <marker id="arr-red2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+                        </marker>
+                        <marker id="arr-amber2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+                        </marker>
+                    </defs>
+                    <!-- Swimlanes background -->
+                    <rect x="0" y="60" width="300" height="860" rx="0" fill="rgba(96,165,250,.03)"
+                        stroke="rgba(96,165,250,.12)" stroke-width="1" />
+                    <rect x="300" y="60" width="300" height="860" rx="0" fill="rgba(251,191,36,.02)"
+                        stroke="rgba(251,191,36,.1)" stroke-width="1" />
+                    <rect x="600" y="60" width="300" height="860" rx="0" fill="rgba(52,211,153,.02)"
+                        stroke="rgba(52,211,153,.1)" stroke-width="1" />
+                    <!-- Swimlane headers -->
+                    <rect x="0" y="60" width="300" height="36" fill="rgba(96,165,250,.12)" />
+                    <text x="150" y="82" style="fill:#60a5fa;font-weight:700;font-size:12px">Buyer</text>
+                    <rect x="300" y="60" width="300" height="36" fill="rgba(251,191,36,.1)" />
+                    <text x="450" y="82" style="fill:#fbbf24;font-weight:700;font-size:12px">Payment Rail</text>
+                    <rect x="600" y="60" width="300" height="36" fill="rgba(52,211,153,.1)" />
+                    <text x="750" y="82" style="fill:#34d399;font-weight:700;font-size:12px">Sistema (Backend)</text>
+
+                    <!-- START -->
+                    <rect x="60" y="116" width="180" height="40" rx="20" class="node-term" />
+                    <text x="150" y="136">Visitar /pricing</text>
+                    <line x1="150" y1="156" x2="150" y2="186" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue2)" />
+                    <!-- Decision: logged in? -->
+                    <polygon points="150,190 240,220 150,250 60,220" class="node-decision" />
+                    <text x="150" y="216">¿Tiene sesión?</text>
+                    <text x="150" y="230" class="small">activa</text>
+                    <!-- No → login -->
+                    <line x1="60" y1="220" x2="20" y2="220" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red2)" />
+                    <text x="38" y="208" class="label">No</text>
+                    <rect x="-160" y="193" width="180" height="54" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08);display:none" />
+                    <!-- simplified: show label -->
+                    <rect x="20" y="270" width="180" height="40" rx="10" class="node-process"
+                        style="stroke:#34d399;fill:rgba(52,211,153,.08)" />
+                    <text x="110" y="288">OAuth → Google</text>
+                    <text x="110" y="302" class="small">Login automático</text>
+                    <line x1="20" y1="293" x2="-20" y2="293" stroke="#fb7185" stroke-width="2" />
+                    <line x1="-20" y1="220" x2="-20" y2="293" stroke="#fb7185" stroke-width="2" />
+                    <line x1="-20" y1="293" x2="20" y2="293" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red2)" />
+                    <line x1="110" y1="310" x2="110" y2="340" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <line x1="110" y1="340" x2="150" y2="340" stroke="#34d399" stroke-width="2" />
+                    <!-- Yes -->
+                    <line x1="150" y1="250" x2="150" y2="340" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <text x="162" y="300" class="label">Sí</text>
+                    <!-- Process: select plan -->
+                    <rect x="60" y="342" width="180" height="44" rx="10" class="node-process" />
+                    <text x="150" y="360">Seleccionar plan</text>
+                    <text x="150" y="376" class="small">Solo / Pro / Full</text>
+                    <line x1="150" y1="386" x2="150" y2="416" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue2)" />
+                    <!-- IO: redirect checkout -->
+                    <polygon points="60,420 240,420 220,460 40,460" class="node-io" />
+                    <text x="140" y="440">Redirigir a Checkout</text>
+                    <text x="140" y="452" class="small">Lemon Squeezy</text>
+                    <!-- Arrow to payment lane -->
+                    <line x1="240" y1="440" x2="320" y2="440" stroke="#fbbf24" stroke-width="2"
+                        marker-end="url(#arr-amber2)" />
+                    <!-- Payment: form -->
+                    <rect x="320" y="412" width="220" height="56" rx="10" class="node-process"
+                        style="stroke:#fbbf24;fill:rgba(251,191,36,.08)" />
+                    <text x="430" y="436">Formulario de pago</text>
+                    <text x="430" y="452" class="small">Card / PayPal / manual</text>
+                    <line x1="430" y1="468" x2="430" y2="500" stroke="#fbbf24" stroke-width="2"
+                        marker-end="url(#arr-amber2)" />
+                    <!-- Decision: payment ok? -->
+                    <polygon points="430,504 530,540 430,576 330,540" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24" />
+                    <text x="430" y="536">¿Pago exitoso?</text>
+                    <!-- No: error -->
+                    <line x1="330" y1="540" x2="280" y2="540" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red2)" />
+                    <text x="304" y="528" class="label">No</text>
+                    <rect x="140" y="514" width="140" height="52" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="210" y="538">Error de pago</text>
+                    <text x="210" y="553" class="small">Retry o fallback</text>
+                    <line x1="210" y1="566" x2="210" y2="600" stroke="#fb7185" stroke-width="2" />
+                    <line x1="210" y1="600" x2="430" y2="600" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red2)" />
+                    <!-- Yes: webhook -->
+                    <line x1="530" y1="540" x2="620" y2="540" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <text x="576" y="528" class="label">Sí</text>
+                    <!-- Backend: webhook -->
+                    <rect x="622" y="512" width="230" height="56" rx="10" class="node-process"
+                        style="stroke:#34d399;fill:rgba(52,211,153,.08)" />
+                    <text x="737" y="536">Webhook recibido</text>
+                    <text x="737" y="552" class="small">Verificar firma HMAC</text>
+                    <line x1="737" y1="568" x2="737" y2="600" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <!-- Decision: idempotent? -->
+                    <polygon points="737,604 830,636 737,668 644,636" class="node-decision"
+                        style="fill:rgba(251,191,36,.1);stroke:#fbbf24" />
+                    <text x="737" y="632">¿Duplicado?</text>
+                    <line x1="830" y1="636" x2="880" y2="636" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red2)" />
+                    <text x="860" y="624" class="label">Sí</text>
+                    <rect x="880" y="618" width="10" height="10" rx="5" fill="#fb7185" />
+                    <!-- No: grant -->
+                    <line x1="737" y1="668" x2="737" y2="700" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <text x="749" y="688" class="label">No</text>
+                    <rect x="622" y="702" width="230" height="54" rx="10" class="node-process"
+                        style="stroke:#34d399;fill:rgba(52,211,153,.12)" />
+                    <text x="737" y="722">Crear Entitlement</text>
+                    <text x="737" y="738" class="small">Supabase entitlements table</text>
+                    <line x1="737" y1="756" x2="737" y2="786" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                    <!-- IO: unlock vault -->
+                    <polygon points="622,790 860,790 840,830 642,830" class="node-io" style="stroke:#34d399" />
+                    <text x="731" y="810">Vault desbloqueado</text>
+                    <text x="731" y="822" class="small">Recursos del tier disponibles</text>
+                    <!-- Arrow back to buyer -->
+                    <line x1="622" y1="810" x2="240" y2="810" stroke="#34d399" stroke-width="1.5" stroke-dasharray="6,3"
+                        marker-end="url(#arr-green2)" />
+                    <text x="430" y="800" class="small" style="fill:#34d399">Notificación al Buyer</text>
+                    <!-- END buyer -->
+                    <rect x="60" y="870" width="180" height="40" rx="20" class="node-term"
+                        style="fill:rgba(52,211,153,.2);stroke:#34d399" />
+                    <text x="150" y="890">✓ Compra completa</text>
+                    <line x1="150" y1="810" x2="150" y2="870" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green2)" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- FLOW 3: CI/CD -->
+        <div class="diagram-panel" id="panel-cicd">
+            <div class="diagram-wrap">
+                <h3>Flujo CI/CD Pipeline</h3>
+                <p>Desde el push al repositorio hasta el deploy en Vercel pasando por todos los quality gates.</p>
+                <svg class="flow" viewBox="0 0 700 860" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arr-blue3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa" />
+                        </marker>
+                        <marker id="arr-green3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+                        </marker>
+                        <marker id="arr-red3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+                        </marker>
+                        <marker id="arr-amber3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+                        </marker>
+                    </defs>
+                    <!-- START -->
+                    <rect x="250" y="20" width="200" height="44" rx="22" class="node-term" />
+                    <text x="350" y="42">git push origin main</text>
+                    <line x1="350" y1="64" x2="350" y2="96" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue3)" />
+                    <!-- Trigger CI -->
+                    <rect x="220" y="98" width="260" height="48" rx="10" class="node-process" />
+                    <text x="350" y="118">GitHub Actions dispara</text>
+                    <text x="350" y="134" class="small">workflow: ci.yml</text>
+                    <line x1="350" y1="146" x2="350" y2="176" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue3)" />
+                    <!-- Build core -->
+                    <rect x="220" y="178" width="260" height="48" rx="10" class="node-process"
+                        style="stroke:#2dd4bf;fill:rgba(45,212,191,.08)" />
+                    <text x="350" y="198">Build @lotosui/core</text>
+                    <text x="350" y="214" class="small">pnpm --filter @lotosui/core build</text>
+                    <line x1="350" y1="226" x2="350" y2="256" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue3)" />
+                    <!-- verify:100 -->
+                    <rect x="220" y="258" width="260" height="48" rx="10" class="node-process"
+                        style="stroke:#a78bfa;fill:rgba(167,139,250,.08)" />
+                    <text x="350" y="278">pnpm verify:100</text>
+                    <text x="350" y="294" class="small">Consistency check</text>
+                    <line x1="350" y1="306" x2="350" y2="340" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue3)" />
+                    <!-- Decision: verify OK? -->
+                    <polygon points="350,344 470,384 350,424 230,384" class="node-decision" />
+                    <text x="350" y="380">¿verify:100 green?</text>
+                    <!-- No → fail -->
+                    <line x1="470" y1="384" x2="580" y2="384" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red3)" />
+                    <text x="526" y="372" class="label">No</text>
+                    <rect x="520" y="358" width="160" height="52" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="600" y="378">❌ Build falla</text>
+                    <text x="600" y="394" class="small">Notifica al admin</text>
+                    <!-- Yes -->
+                    <line x1="350" y1="424" x2="350" y2="456" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green3)" />
+                    <text x="362" y="444" class="label">Sí ✓</text>
+                    <!-- verify:commercial -->
+                    <rect x="220" y="458" width="260" height="48" rx="10" class="node-process"
+                        style="stroke:#a78bfa;fill:rgba(167,139,250,.08)" />
+                    <text x="350" y="478">pnpm verify:commercial</text>
+                    <text x="350" y="494" class="small">Bundle manifest check</text>
+                    <line x1="350" y1="506" x2="350" y2="540" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue3)" />
+                    <!-- Decision: commercial ok? -->
+                    <polygon points="350,544 470,584 350,624 230,584" class="node-decision" />
+                    <text x="350" y="580">¿commercial green?</text>
+                    <!-- No -->
+                    <line x1="470" y1="584" x2="580" y2="584" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red3)" />
+                    <text x="526" y="572" class="label">No</text>
+                    <rect x="520" y="558" width="160" height="52" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="600" y="578">❌ Gate falla</text>
+                    <text x="600" y="594" class="small">Deploy bloqueado</text>
+                    <!-- Yes -->
+                    <line x1="350" y1="624" x2="350" y2="656" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green3)" />
+                    <text x="362" y="644" class="label">Sí ✓</text>
+                    <!-- Deploy Vercel -->
+                    <rect x="220" y="658" width="260" height="56" rx="10" class="node-process"
+                        style="stroke:#67e8f9;fill:rgba(103,232,249,.08)" />
+                    <text x="350" y="680">Deploy a Vercel</text>
+                    <text x="350" y="696" class="small">apps/web + apps/docs</text>
+                    <line x1="350" y1="714" x2="350" y2="744" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green3)" />
+                    <!-- IO: live -->
+                    <polygon points="220,748 480,748 460,790 200,790" class="node-io" style="stroke:#34d399" />
+                    <text x="340" y="770">lotos-ui.vercel.app LIVE</text>
+                    <line x1="350" y1="790" x2="350" y2="820" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green3)" />
+                    <!-- END -->
+                    <rect x="250" y="822" width="200" height="40" rx="22" class="node-term"
+                        style="fill:rgba(52,211,153,.2);stroke:#34d399" />
+                    <text x="350" y="842">✓ Deploy exitoso</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- FLOW 4: MCP Render -->
+        <div class="diagram-panel" id="panel-mcp">
+            <div class="diagram-wrap">
+                <h3>Flujo de Render vía Protocolo MCP</h3>
+                <p>Desde que el AI Agent descubre el spec hasta obtener el componente renderizado en el runtime
+                    solicitado.</p>
+                <svg class="flow" viewBox="0 0 760 900" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arr-blue4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa" />
+                        </marker>
+                        <marker id="arr-green4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" />
+                        </marker>
+                        <marker id="arr-red4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" />
+                        </marker>
+                        <marker id="arr-amber4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" />
+                        </marker>
+                    </defs>
+                    <!-- START -->
+                    <rect x="270" y="20" width="220" height="44" rx="22" class="node-term"
+                        style="fill:rgba(251,191,36,.15);stroke:#fbbf24" />
+                    <text x="380" y="42" style="fill:#fbbf24">AI Agent inicia request</text>
+                    <line x1="380" y1="64" x2="380" y2="96" stroke="#fbbf24" stroke-width="2"
+                        marker-end="url(#arr-amber4)" />
+                    <!-- GET /components -->
+                    <rect x="230" y="98" width="300" height="54" rx="10" class="node-process"
+                        style="stroke:#fbbf24;fill:rgba(251,191,36,.07)" />
+                    <text x="380" y="118">GET /components</text>
+                    <text x="380" y="134" class="small">Descubrir spec MCP disponible</text>
+                    <line x1="380" y1="152" x2="380" y2="182" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue4)" />
+                    <!-- Decision: spec version ok? -->
+                    <polygon points="380,186 500,226 380,266 260,226" class="node-decision" />
+                    <text x="380" y="222">¿Spec version compatible?</text>
+                    <!-- No -->
+                    <line x1="500" y1="226" x2="600" y2="226" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red4)" />
+                    <text x="550" y="214" class="label">No</text>
+                    <rect x="540" y="200" width="190" height="52" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="635" y="220">Error 409</text>
+                    <text x="635" y="236" class="small">Version mismatch</text>
+                    <!-- Yes -->
+                    <line x1="380" y1="266" x2="380" y2="296" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green4)" />
+                    <text x="392" y="284" class="label">Sí</text>
+                    <!-- Select component -->
+                    <rect x="230" y="298" width="300" height="52" rx="10" class="node-process" />
+                    <text x="380" y="318">Seleccionar componente</text>
+                    <text x="380" y="334" class="small">id: "button", "card", "badge"…</text>
+                    <line x1="380" y1="350" x2="380" y2="380" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue4)" />
+                    <!-- Select runtime -->
+                    <polygon points="260,384 500,384 480,426 240,426" class="node-io" />
+                    <text x="370" y="405">Especificar runtime + props</text>
+                    <text x="370" y="418" class="small">react | web-component | laravel-blade</text>
+                    <line x1="380" y1="426" x2="380" y2="456" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue4)" />
+                    <!-- POST /components/render -->
+                    <rect x="200" y="458" width="360" height="60" rx="10" class="node-process"
+                        style="stroke:#fbbf24;fill:rgba(251,191,36,.07)" />
+                    <text x="380" y="480">POST /components/render</text>
+                    <text x="380" y="496" class="small">&#123; component, runtime, props, theme &#125;</text>
+                    <line x1="380" y1="518" x2="380" y2="548" stroke="#60a5fa" stroke-width="2"
+                        marker-end="url(#arr-blue4)" />
+                    <!-- Decision: component valid? -->
+                    <polygon points="380,552 500,592 380,632 260,592" class="node-decision" />
+                    <text x="380" y="588">¿Componente válido?</text>
+                    <!-- No: 422 -->
+                    <line x1="500" y1="592" x2="600" y2="592" stroke="#fb7185" stroke-width="2"
+                        marker-end="url(#arr-red4)" />
+                    <text x="550" y="580" class="label">No</text>
+                    <rect x="540" y="566" width="190" height="52" rx="10" class="node-process"
+                        style="stroke:#fb7185;fill:rgba(251,113,133,.08)" />
+                    <text x="635" y="586">Error 422</text>
+                    <text x="635" y="602" class="small">Schema de validación</text>
+                    <!-- Yes: render -->
+                    <line x1="380" y1="632" x2="380" y2="662" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green4)" />
+                    <text x="392" y="650" class="label">Sí</text>
+                    <!-- Render engine -->
+                    <rect x="210" y="664" width="340" height="60" rx="10" class="node-process"
+                        style="stroke:#a78bfa;fill:rgba(167,139,250,.1)" />
+                    <text x="380" y="686">Motor de render LotOS</text>
+                    <text x="380" y="702" class="small">Genera JSX | HTML | Blade según runtime</text>
+                    <line x1="380" y1="724" x2="380" y2="754" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green4)" />
+                    <!-- IO: response -->
+                    <polygon points="210,758 550,758 530,802 190,802" class="node-io" style="stroke:#34d399" />
+                    <text x="370" y="778">Respuesta &#123; html, code, metadata &#125;</text>
+                    <text x="370" y="793" class="small">200 OK — Componente listo</text>
+                    <line x1="380" y1="802" x2="380" y2="832" stroke="#34d399" stroke-width="2"
+                        marker-end="url(#arr-green4)" />
+                    <!-- END -->
+                    <rect x="270" y="834" width="220" height="44" rx="22" class="node-term"
+                        style="fill:rgba(52,211,153,.2);stroke:#34d399" />
+                    <text x="380" y="856">✓ Componente entregado</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab').forEach(t => {
+            t.onclick = () => {
+                document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+                document.querySelectorAll('.diagram-panel').forEach(x => x.classList.remove('active'));
+                t.classList.add('active');
+                document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+            };
+        });
+    </script>
+</body>
+
+</html>

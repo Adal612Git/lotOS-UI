@@ -275,6 +275,7 @@ export default function MultiFrameworkPage() {
         <div className="mf-actions">
           <Link href="/docs/multi-runtime" className="mf-button mf-button--primary">Open Runtime Guide</Link>
           <Link href="/examples" className="mf-button mf-button--ghost">Open Examples</Link>
+          <Link href="/design-lab" className="mf-button mf-button--ghost">Open Design Lab</Link>
           <Link href="/architecture-map.html" className="mf-button mf-button--ghost">Open Architecture Map</Link>
         </div>
       </section>

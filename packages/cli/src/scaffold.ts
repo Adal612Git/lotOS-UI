@@ -2,6 +2,7 @@ import path from 'node:path';
 import fs from 'fs-extra';
 import {
     componentToPascalCase,
+    getComponentImportPackage,
     normalizeComponentName,
     type SupportedComponent,
 } from './catalog.js';
@@ -20,8 +21,9 @@ export interface ScaffoldResult {
 
 export function getComponentTemplate(component: SupportedComponent): string {
     const componentName = componentToPascalCase(component);
+    const importPackage = getComponentImportPackage(component);
     return `import React from 'react';
-import { ${componentName} as Lotos${componentName} } from '@lotosui/claude-arm';
+import { ${componentName} as Lotos${componentName} } from '${importPackage}';
 
 export type ${componentName}Props = React.ComponentProps<typeof Lotos${componentName}>;
 

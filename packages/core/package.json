@@ -1,9 +1,15 @@
 {
   "name": "@lotosui/core",
   "version": "0.1.0",
-  "description": "LotOS UI Core â€” design tokens, contracts, RTL engine. Zero framework dependencies.",
+  "description": "LotOS UI Core - design tokens, contracts, RTL engine. Zero framework dependencies.",
   "license": "MIT",
   "author": "Lotos Technologies <lotos@lotos.dev>",
+  "homepage": "https://lotos-ui.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lotos-technologies/lotos-ui.git",
+    "directory": "packages/core"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -21,12 +27,21 @@
     "./runtime": {
       "import": "./dist/runtime/index.js",
       "types": "./dist/runtime/index.d.ts"
+    },
+    "./theme": {
+      "import": "./dist/theme/index.js",
+      "types": "./dist/theme/index.d.ts"
+    },
+    "./mcp": {
+      "import": "./dist/mcp/index.js",
+      "types": "./dist/mcp/index.d.ts"
     }
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -46,6 +61,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
+    "@lotosui/registry": "workspace:*",
     "zod": "^3.24.0"
   },
   "publishConfig": {

@@ -7,10 +7,11 @@ const requiredEnv = ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'AUTH_SECRET'] 
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ callbackUrl?: string }>;
+  searchParams?: Promise<{ callbackUrl?: string; error?: string }>;
 }) {
   const params = await searchParams;
   const callbackUrl = params?.callbackUrl?.startsWith('/') ? params.callbackUrl : '/vault';
+  const accessDenied = params?.error === 'AccessDenied';
 
   return (
     <main className="landing pricing-page">
@@ -30,6 +31,12 @@ export default async function LoginPage({
           Free content remains public. Solo, Pro, and Full routes require Google sign-in and
           entitlement checks before protected assets can be delivered.
         </p>
+        {accessDenied ? (
+          <div className="pricing-state-banner warning">
+            <strong>Access denied.</strong>
+            <span>Google sign-in failed or did not return a valid email. Paid vault access still depends on entitlement checks after login.</span>
+          </div>
+        ) : null}
         <div className="hero-actions">
           {env.googleConfigured && env.AUTH_SECRET ? (
             <a
@@ -60,11 +67,12 @@ export default async function LoginPage({
           </ul>
         </article>
         <article className="card">
-          <p className="section-label">Owner bypass</p>
-          <h2>Direct premium access for the owner</h2>
+          <p className="section-label">Buyer login</p>
+          <h2>Google login first, entitlement gate second</h2>
           <p>
-            Accounts listed in <code>LOTOS_OWNER_EMAILS</code> skip entitlement checks after login.
-            The route is still authenticated, but payment verification is bypassed.
+            Any valid Google account can sign in. Paid routes unlock only when Supabase/Lemon
+            entitlements match the buyer email. Emails in <code>LOTOS_OWNER_EMAILS</code> are
+            administrative bypasses, not the buyer login policy.
           </p>
         </article>
       </section>

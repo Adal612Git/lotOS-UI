@@ -1,0 +1,263 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "loginRule": "Any normalized Google email may sign in. Owner status is only for administrative bypass and manual grants.",
+  "entitlementRule": "Premium buyer access is controlled by Supabase entitlement rows and Lemon webhook unlocks.",
+  "plans": [
+    {
+      "id": "free",
+      "tier": "free",
+      "gate": "public",
+      "unlocks": [
+        "docs",
+        "examples",
+        "8 free React exports",
+        "MCP facts"
+      ]
+    },
+    {
+      "id": "solo",
+      "tier": "solo",
+      "gate": "entitlement:solo",
+      "unlocks": [
+        "solo vault",
+        "starter commercial assets"
+      ]
+    },
+    {
+      "id": "pro",
+      "tier": "pro",
+      "gate": "entitlement:pro",
+      "unlocks": [
+        "pro vault",
+        "advanced assets",
+        "pro templates"
+      ]
+    },
+    {
+      "id": "launch_pack",
+      "tier": "launch_pack",
+      "gate": "entitlement:launch_pack",
+      "unlocks": [
+        "launch vault",
+        "full private bundle"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "tier": "enterprise",
+      "gate": "manual contract",
+      "unlocks": [
+        "private deployment",
+        "custom runtime support"
+      ]
+    }
+  ],
+  "routes": [
+    "/vault/solo",
+    "/vault/pro",
+    "/vault/launch",
+    "/api/download/[asset]"
+  ],
+  "entitlementFlows": [
+    {
+      "id": "paid_checkout",
+      "name": "Normal paid checkout",
+      "route": "/checkout/[plan]",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": true,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Buyer signs in with Google.",
+        "Lemon webhook grants Supabase entitlement metadata.",
+        "Premium access remains active until cancelled, expired, or revoked by lifecycle handling."
+      ],
+      "humanRiskNotes": [
+        "Buyer must use the same email in checkout and Google login.",
+        "Recurring cancellation and failed payment handling must be verified before broad selling."
+      ]
+    },
+    {
+      "id": "manual_owner_test",
+      "name": "Owner manual test access",
+      "route": "/admin/entitlements",
+      "source": "manual_owner_test:<provider>",
+      "ownerOnly": true,
+      "requiresGoogleLogin": true,
+      "defaultTrialDays": 14,
+      "allowedTrialDays": [
+        7,
+        14,
+        30
+      ],
+      "lifecycle": [
+        "Owner grants a temporary entitlement for QA, demos, pilots, or controlled validation.",
+        "Metadata stores trialEndsAt/expiresAt and createdByOwnerEmail.",
+        "Vault labels the record as a temporary manual test, not a paid purchase."
+      ],
+      "humanRiskNotes": [
+        "Manual tests are not revenue and should expire.",
+        "Do not use test grants to bypass payment for real buyers."
+      ]
+    },
+    {
+      "id": "subscription_payment_failed",
+      "name": "Subscription payment failed",
+      "route": "/api/webhooks/lemon",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Verified provider webhook maps payment failure to past_due.",
+        "past_due blocks premium access until payment recovery is verified.",
+        "Exact Lemon event names must be validated against provider docs before live sales."
+      ],
+      "humanRiskNotes": [
+        "Do not grant premium from unverified webhooks.",
+        "Decide grace-period policy before wide recurring sales."
+      ]
+    },
+    {
+      "id": "subscription_payment_recovered",
+      "name": "Subscription payment recovered",
+      "route": "/api/webhooks/lemon",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Verified provider webhook maps payment recovery to active.",
+        "Recovery must not reactivate a revoked entitlement silently.",
+        "Exact recovery/resume event names must be validated against provider docs before wide sales."
+      ],
+      "humanRiskNotes": [
+        "Confirm whether provider uses subscription_payment_recovered, subscription_payment_success, resumed, or unpaused events.",
+        "Run duplicate event and invalid signature tests before wide sales."
+      ]
+    },
+    {
+      "id": "subscription_paused",
+      "name": "Subscription paused",
+      "route": "/api/webhooks/lemon",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Verified provider webhook maps pause to paused.",
+        "paused blocks premium access by default."
+      ],
+      "humanRiskNotes": [
+        "Confirm provider pause semantics before live sales."
+      ]
+    },
+    {
+      "id": "subscription_cancelled",
+      "name": "Subscription cancelled",
+      "route": "/api/webhooks/lemon",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Verified provider webhook maps cancellation to cancelled.",
+        "cancelled blocks premium access unless a future paid period policy says otherwise."
+      ],
+      "humanRiskNotes": [
+        "Confirm whether cancelled means immediate loss or end-of-period loss before live sales."
+      ]
+    },
+    {
+      "id": "subscription_expired",
+      "name": "Subscription expired",
+      "route": "/api/webhooks/lemon",
+      "source": "lemon",
+      "ownerOnly": false,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Verified provider webhook maps expiration to expired.",
+        "expired blocks premium access."
+      ],
+      "humanRiskNotes": [
+        "Run end-to-end expiration test before broad sales."
+      ]
+    },
+    {
+      "id": "manual_owner_paid_recovery",
+      "name": "Owner paid recovery",
+      "route": "/admin/entitlements",
+      "source": "manual_owner_paid_recovery:<provider>",
+      "ownerOnly": true,
+      "requiresGoogleLogin": true,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Owner reviews evidence of a real payment.",
+        "Owner records recoveryReason and optional paymentReference/internalNote.",
+        "Metadata separates paid recovery from automatic Lemon webhook unlock."
+      ],
+      "humanRiskNotes": [
+        "Use only when checkout, webhook, or email matching failed after a real payment.",
+        "Owner must verify payment evidence before granting recovery."
+      ]
+    },
+    {
+      "id": "manual_owner_revoke",
+      "name": "Owner revocation",
+      "route": "/api/entitlements/revoke",
+      "source": "manual_owner_revoke",
+      "ownerOnly": true,
+      "requiresGoogleLogin": false,
+      "defaultTrialDays": null,
+      "allowedTrialDays": [],
+      "lifecycle": [
+        "Owner submits buyer email and required reason.",
+        "Entitlement metadata stores revokedAt, revokedBy, revokeReason, and updatedAt.",
+        "Vault and download checks ignore revoked or expired entitlements."
+      ],
+      "humanRiskNotes": [
+        "Reason is required for auditability.",
+        "Revocation should be tested before selling recurring access broadly."
+      ]
+    }
+  ],
+  "lifecycleValidation": {
+    "wide_sales_ready": false,
+    "migrations_local_validated": true,
+    "webhook_contracts_validated": true,
+    "audit_validated": true,
+    "entitlement_boundary_validated": true,
+    "supabase_remote_validated": false,
+    "lemon_remote_validated": false,
+    "evidencePath": ".release/lifecycle-validation.json",
+    "runbook": "docs/STAGING_LIFECYCLE_TEST_RUNBOOK.md",
+    "validationCommands": [
+      "pnpm run verify:entitlement-boundary",
+      "pnpm run verify:webhook-lifecycle",
+      "pnpm run verify:webhook-contracts",
+      "pnpm run verify:supabase-migrations",
+      "pnpm run verify:entitlement-audit",
+      "pnpm run verify:commercial-lifecycle",
+      "pnpm run verify:rls-policy-plan"
+    ],
+    "requiredHumanTests": [
+      "Back up staging public.entitlements before migration.",
+      "Apply lifecycle and audit migrations in staging Supabase.",
+      "Validate RLS posture for entitlement and audit tables.",
+      "Confirm purchase creates active entitlement.",
+      "Confirm duplicate webhook delivery is idempotent.",
+      "Confirm invalid Lemon signature does not mutate entitlements.",
+      "Confirm payment failed, pause, resume, cancellation, expiration, revocation, and paid recovery.",
+      "Confirm audit rows do not store raw emails, secrets, raw payloads, cookies, or auth headers."
+    ]
+  }
+}

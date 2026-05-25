@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Diagrama ER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        :root {
+            --bg: #04101b;
+            --line: rgba(120, 149, 184, .18);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%), radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%), linear-gradient(160deg, var(--bg), #071525 55%, #0a1929)
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .8);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nav-l {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .back {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 5px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .ptitle {
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .pbadge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(52, 211, 153, .1);
+            border: 1px solid rgba(52, 211, 153, .28);
+            color: var(--g)
+        }
+
+        .shell {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            height: calc(100vh - 53px)
+        }
+
+        .stage {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--line)
+        }
+
+        .top {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .5);
+            backdrop-filter: blur(10px)
+        }
+
+        .top h2 {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 3px;
+            letter-spacing: -.02em
+        }
+
+        .top p {
+            font-size: 12px;
+            color: var(--mut)
+        }
+
+        .tbr {
+            display: flex;
+            gap: 7px;
+            margin-top: 9px
+        }
+
+        .btn {
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .24);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .btn:hover {
+            color: #fff;
+            border-color: rgba(52, 211, 153, .4);
+            background: rgba(52, 211, 153, .07)
+        }
+
+        .net {
+            flex: 1;
+            position: relative
+        }
+
+        .network {
+            position: absolute;
+            inset: 0
+        }
+
+        .leg {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(4, 16, 27, .88);
+            backdrop-filter: blur(12px);
+            padding: 10px 13px
+        }
+
+        .leg-t {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 6px
+        }
+
+        .li {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 4px;
+            font-size: 10px;
+            color: var(--mut)
+        }
+
+        .side {
+            padding: 14px;
+            overflow: auto;
+            background: rgba(4, 16, 27, .45)
+        }
+
+        .sc {
+            border-radius: 15px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(8, 21, 37, .7);
+            padding: 13px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(8px)
+        }
+
+        .lbl {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t);
+            margin-bottom: 6px
+        }
+
+        .sc h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
+
+        .note {
+            background: rgba(2, 6, 23, .5);
+            border: 1px solid rgba(120, 149, 184, .14);
+            border-radius: 9px;
+            padding: 9px;
+            font-size: 11px;
+            line-height: 1.7;
+            color: var(--mut);
+            margin-top: 5px
+        }
+
+        .al {
+            list-style: none;
+            margin-top: 7px
+        }
+
+        .al li {
+            padding: 5px 8px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(120, 149, 184, .1);
+            margin-bottom: 3px;
+            font-size: 11px;
+            display: flex;
+            gap: 7px;
+            align-items: center
+        }
+
+        .pk {
+            font-size: 8px;
+            font-weight: 700;
+            background: rgba(251, 191, 36, .12);
+            border: 1px solid rgba(251, 191, 36, .25);
+            color: var(--a);
+            padding: 1px 5px;
+            border-radius: 4px;
+            flex-shrink: 0
+        }
+
+        .fk {
+            font-size: 8px;
+            font-weight: 700;
+            background: rgba(96, 165, 250, .12);
+            border: 1px solid rgba(96, 165, 250, .25);
+            color: var(--b);
+            padding: 1px 5px;
+            border-radius: 4px;
+            flex-shrink: 0
+        }
+
+        .tt {
+            font-size: 9px;
+            color: var(--mut);
+            font-family: monospace;
+            margin-left: auto
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-l"><a class="back" href="index.html">← Hub</a><span class="ptitle">Diagrama ER — LotOS UI</span>
+        </div><span class="pbadge">BD · ER</span>
+    </nav>
+    <div class="shell">
+        <section class="stage">
+            <div class="top">
+                <h2>Entidad-Relación</h2>
+                <p>Modelo conceptual: usuarios, sesiones, planes, entitlements, órdenes, pagos y entregas. Click en
+                    entidad para ver atributos.</p>
+                <div class="tbr">
+                    <button class="btn" id="fit-btn">Recentrar</button>
+                    <button class="btn" id="phy-btn">Toggle Física</button>
+                </div>
+            </div>
+            <div class="net">
+                <div class="network" id="network"></div>
+                <div class="leg">
+                    <div class="leg-t">Crow's Foot / Notación</div>
+                    <div class="li"><svg width="36" height="10">
+                            <line x1="0" y1="5" x2="28" y2="5" stroke="#60a5fa" stroke-width="2" />
+                            <polygon points="28,2 36,5 28,8" fill="#60a5fa" />
+                        </svg>Relación directa (solid)</div>
+                    <div class="li"><svg width="36" height="10">
+                            <line x1="0" y1="5" x2="28" y2="5" stroke="#34d399" stroke-width="1.6"
+                                stroke-dasharray="5,3" />
+                            <polygon points="28,2 36,5 28,8" fill="none" stroke="#34d399" stroke-width="1.5" />
+                        </svg>Relación opcional (dashed)</div>
+                    <div class="li"><svg width="36" height="10">
+                            <rect x="0" y="3" width="36" height="4" rx="2" fill="rgba(96,165,250,.2)" stroke="#60a5fa"
+                                stroke-width="1" />
+                        </svg>Entidad principal</div>
+                </div>
+            </div>
+        </section>
+        <aside class="side">
+            <div class="sc">
+                <div class="lbl">Entidad</div>
+                <h3 id="en">—</h3>
+                <div id="ed" class="note">Selecciona una entidad para ver sus atributos y relaciones.</div>
+            </div>
+            <div class="sc">
+                <div class="lbl">Atributos</div>
+                <ul class="al" id="ea">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+            <div class="sc">
+                <div class="lbl">Relaciones</div>
+                <ul class="al" id="er">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <script>
+        const E = {
+            users: { c: '#34d399', desc: 'Identidad principal. Supabase Auth, Google OAuth.', attrs: [{ n: 'id', k: 'PK', t: 'uuid' }, { n: 'email', k: '', t: 'text' }, { n: 'name', k: '', t: 'text' }, { n: 'provider', k: '', t: 'text' }, { n: 'created_at', k: '', t: 'timestamptz' }], rels: ['1..* → sessions', '0..* → orders', '0..* → entitlements'] },
+            sessions: { c: '#60a5fa', desc: 'Sesión activa del usuario. NextAuth + cookie httpOnly.', attrs: [{ n: 'session_id', k: 'PK', t: 'uuid' }, { n: 'user_id', k: 'FK', t: 'uuid' }, { n: 'expires_at', k: '', t: 'timestamptz' }, { n: 'provider', k: '', t: 'text' }, { n: 'token_hash', k: '', t: 'text' }], rels: ['1..1 ← users'] },
+            plans: { c: '#67e8f9', desc: 'Catálogo de planes: free, solo, pro, full. Configurado en sales-config.ts.', attrs: [{ n: 'plan_id', k: 'PK', t: 'text' }, { n: 'name', k: '', t: 'text' }, { n: 'price_usd', k: '', t: 'numeric' }, { n: 'tier_level', k: '', t: 'int' }, { n: 'is_active', k: '', t: 'bool' }], rels: ['1..* → entitlements', '1..* → orders'] },
+            entitlements: { c: '#fb7185', desc: 'Acceso de usuario a un plan. Creado por grant service tras pago confirmado.', attrs: [{ n: 'id', k: 'PK', t: 'uuid' }, { n: 'user_id', k: 'FK', t: 'uuid' }, { n: 'plan_id', k: 'FK', t: 'text' }, { n: 'granted_at', k: '', t: 'timestamptz' }, { n: 'is_active', k: '', t: 'bool' }, { n: 'source', k: '', t: 'text' }], rels: ['1..1 ← users', '1..1 ← plans'] },
+            orders: { c: '#fbbf24', desc: 'Intento o confirmación de compra. Estado: pending→paid→failed.', attrs: [{ n: 'order_id', k: 'PK', t: 'uuid' }, { n: 'user_id', k: 'FK', t: 'uuid' }, { n: 'plan_id', k: 'FK', t: 'text' }, { n: 'status', k: '', t: 'text' }, { n: 'provider_ref', k: '', t: 'text' }, { n: 'paid_at', k: '', t: 'timestamptz' }], rels: ['1..1 ← users', '1..1 ← plans', '1..1 → payments', '0..* → asset_deliveries'] },
+            payments: { c: '#fbbf24', desc: 'Respuesta normalizada de Lemon Squeezy, PayPal o manual.', attrs: [{ n: 'payment_id', k: 'PK', t: 'uuid' }, { n: 'order_id', k: 'FK', t: 'uuid' }, { n: 'provider', k: '', t: 'text' }, { n: 'amount_usd', k: '', t: 'numeric' }, { n: 'status', k: '', t: 'text' }, { n: 'provider_event_id', k: '', t: 'text' }], rels: ['1..1 ← orders'] },
+            asset_deliveries: { c: '#a78bfa', desc: 'Entrega de bundles o previews. Generado por vault o prep:first-sale.', attrs: [{ n: 'delivery_id', k: 'PK', t: 'uuid' }, { n: 'order_id', k: 'FK', t: 'uuid' }, { n: 'plan_id', k: 'FK', t: 'text' }, { n: 'channel', k: '', t: 'text' }, { n: 'file_key', k: '', t: 'text' }, { n: 'delivered_at', k: '', t: 'timestamptz' }], rels: ['1..1 ← orders'] }
+        };
+        function clr(c) { const m = { g: 'rgba(52,211,153,.2)', b: 'rgba(96,165,250,.2)', r: 'rgba(251,113,133,.2)', a: 'rgba(251,191,36,.2)', v: 'rgba(167,139,250,.2)', c: 'rgba(103,232,249,.2)' }; return m[c] || 'rgba(96,165,250,.2)' }
+        function mkN(id, e) {
+            const bg = { g: 'rgba(6,38,26,.9)', b: 'rgba(10,24,48,.9)', r: 'rgba(46,6,16,.9)', a: 'rgba(42,26,4,.9)', v: 'rgba(28,15,58,.9)', c2: 'rgba(10,30,50,.9)' };
+            const cl = { v: '#a78bfa', a: '#fbbf24', r: '#fb7185', g: '#34d399', b: '#60a5fa', c2: '#67e8f9' };
+            const cm = { '#a78bfa': ['rgba(28,15,58,.9)', clr('v')], '#fbbf24': ['rgba(42,26,4,.9)', clr('a')], '#fb7185': ['rgba(46,6,16,.9)', clr('r')], '#34d399': ['rgba(6,38,26,.9)', clr('g')], '#60a5fa': ['rgba(10,24,48,.9)', clr('b')], '#67e8f9': ['rgba(10,30,50,.9)', clr('c')] };
+            const [bg2, glow] = cm[e.c] || ['rgba(10,24,48,.9)', 'rgba(96,165,250,.2)'];
+            return {
+                id, label: id, shape: 'box', margin: 14, borderWidth: 2, shapeProperties: { borderRadius: 13 },
+                font: { color: '#edf6ff', size: 14, face: 'Inter' },
+                color: { background: bg2, border: e.c, highlight: { background: bg2, border: e.c }, hover: { background: bg2, border: e.c } },
+                shadow: { enabled: true, color: glow, x: 0, y: 0, size: 20 }, meta: e
+            };
+        }
+        const nodes = new vis.DataSet([mkN('users', E.users), mkN('sessions', E.sessions), mkN('plans', E.plans), mkN('entitlements', E.entitlements), mkN('orders', E.orders), mkN('payments', E.payments), mkN('asset_deliveries', E.asset_deliveries)]);
+        function mkE(from, to, lbl, c, d) { return { id: `${from}-${to}`, from, to, label: lbl, arrows: { to: { enabled: true, type: 'arrow', scaleFactor: .8 } }, dashes: !!d, width: d ? 1.4 : 2, smooth: { type: 'curvedCW', roundness: .18 }, color: { color: c, highlight: c, hover: c, opacity: .76 }, font: { color: '#64748b', size: 9 } } }
+        const edges = new vis.DataSet([
+            mkE('users', 'sessions', '1..*', '#60a5fa'), mkE('users', 'orders', '0..*', '#fbbf24', true), mkE('users', 'entitlements', '0..*', '#fb7185'),
+            mkE('plans', 'orders', '1..*', '#fbbf24'), mkE('plans', 'entitlements', '1..*', '#fb7185'),
+            mkE('orders', 'payments', '1..1', '#fbbf24'), mkE('payments', 'entitlements', '0..1', '#fb7185', true),
+            mkE('orders', 'asset_deliveries', '0..*', '#a78bfa', true), mkE('plans', 'asset_deliveries', '1..1', '#a78bfa'),
+        ]);
+        let phy = true;
+        const net = new vis.Network(document.getElementById('network'), { nodes, edges }, {
+            layout: { improvedLayout: true },
+            physics: { enabled: true, solver: 'forceAtlas2Based', forceAtlas2Based: { gravitationalConstant: -90, centralGravity: .02, springLength: 220, springConstant: .04, damping: .32, avoidOverlap: .8 }, stabilization: { iterations: 180, fit: false } },
+            interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true },
+            nodes: { chosen: false }, edges: { smooth: { type: 'dynamic' } }
+        });
+        net.on('click', p => {
+            const id = p.nodes && p.nodes[0]; if (!id) return;
+            const e = E[id]; if (!e) return;
+            document.getElementById('en').textContent = id;
+            document.getElementById('ed').textContent = e.desc;
+            document.getElementById('ea').innerHTML = e.attrs.map(a => `<li>${a.k ? `<span class="${a.k === 'PK' ? 'pk' : 'fk'}">${a.k}</span>` : ''}<strong>${a.n}</strong><span class="tt">${a.t}</span></li>`).join('');
+            document.getElementById('er').innerHTML = e.rels.map(r => `<li>${r}</li>`).join('');
+        });
+        setTimeout(() => net.fit({ animation: { duration: 300 } }), 120);
+        document.getElementById('fit-btn').onclick = () => net.fit({ animation: { duration: 300 } });
+        document.getElementById('phy-btn').onclick = () => { phy = !phy; net.setOptions({ physics: { enabled: phy } }) };
+    </script>
+</body>
+
+</html>

@@ -76,6 +76,22 @@ pnpm install
 pnpm dev
 ```
 
+## AI-native operation
+
+LotOS UI now includes a machine-readable operating layer for Codex, Claude Code, Gemini, and other agents:
+
+- `AGENTS.md` - shared rules for agents
+- `CLAUDE.md` - Claude Code orientation
+- `GEMINI.md` - Gemini orientation
+- `.codex/config.toml` - Codex local profile defaults
+- `.ai/lotos.project-map.json` - project map, packages, safety, validation
+- `.ai/lotos.components.json` - free/pro component split
+- `.ai/lotos.runtimes.json` - runtime maturity map
+- `.ai/lotos.commercial.json` - buyer login, entitlement, plans, and private surfaces
+- `packages/registry/src/lotos.manifest.ts` - TypeScript manifest source of truth
+
+Agents should read the manifest and `.ai/` files before scanning huge pages. The long-term direction is to generate docs, pricing, CLI catalogs, MCP facts, and playground metadata from this registry.
+
 ## Build y test
 
 ```bash
@@ -191,6 +207,55 @@ Verificacion de consistencia web/docs/diagrama (objetivo 100%):
 pnpm verify:100
 ```
 
+Verificacion de la capa AI-native:
+
+```bash
+pnpm verify:ai
+```
+
+## Release candidate
+
+LotOS UI now has explicit private-workspace and public-release gates.
+
+Private workspace mode is allowed to contain premium source for development, but it must say that public release is unsafe while premium is present:
+
+```bash
+pnpm run verify:private-workspace
+pnpm run verify:release-candidate
+```
+
+Public release mode is now backed by the Phase 6 clean-room gate. It must fail if premium source/assets, generated private bundles, sensitive local files, unsafe public docs, unsafe AI/MCP context, or contaminated npm tarballs are present:
+
+```bash
+pnpm run verify:public-clean-room
+pnpm run verify:public-release
+```
+
+New RC gates:
+
+- `verify:drift`
+- `verify:packages`
+- `verify:package-exports`
+- `verify:routes`
+- `verify:web-smoke`
+- `verify:mcp-smoke`
+- `verify:cli-smoke`
+- `verify:generated-ai`
+- `verify:registry-consumers`
+- `verify:ci`
+- `verify:public-clean-room`
+- `verify:public-docs`
+- `verify:public-ai-context`
+- `verify:npm-tarballs`
+- `verify:premium-stubs`
+
+Human blockers before public release:
+
+- rotate local and CI secrets
+- move premium source/assets to private repo, private registry, or private storage
+- approve final pricing and legal/support copy
+- configure real domain, support email, and provider legal data
+
 Mapa visual de arquitectura:
 
 - Fuente canonica: `LOTOSdiagrama.html`
@@ -204,13 +269,49 @@ Workflow listo: `.github/workflows/publish-npm.yml`
 Requisitos:
 
 1. Crear token npm tipo **Automation**.
-2. Guardarlo en GitHub repo secrets como `NPM_TOKEN`.
+2. Guardarlo en GitHub repo secrets como `NPM_PUBLISH_TOKEN`.
 3. Ejecutar workflow **Publish NPM Packages** desde Actions (manual).
 
 Publica en orden:
 
-1. `@lotosui/core`
-2. `@lotosui/sentinel`
-3. `@lotosui/cli`
-4. `@lotosui/web-components`
+1. `@lotosui/registry`
+2. `@lotosui/core`
+3. `@lotosui/sentinel`
+4. `@lotosui/cli`
+5. `@lotosui/claude-arm`
+6. `@lotosui/web-components`
+
+El workflow corre `verify:public-release` antes de publicar. Mientras `packages/pro` o `packages/claude-arm-pro` sigan en el repo, ese gate debe fallar.
+
+Antes de publicar paquetes, revisar tambien:
+
+```bash
+pnpm run verify:npm-tarballs
+pnpm run verify:package-exports
+```
+
+## Licenciamiento
+
+La capa publica del monorepo usa MIT.
+
+La capa privada en `packages/pro` no usa MIT y mantiene su propia licencia en `packages/pro/LICENSE.proprietary.txt`.
+
+## Estado comercial real
+
+Hoy el flujo tecnico de venta existe:
+
+- `apps/web` tiene pricing, checkout, webhook Lemon, entitlements y vault
+- `pnpm.cmd run verify:go-live` pasa en este repo
+- `pnpm.cmd run verify:commercial` pasa en este repo
+
+Pero hay una condicion no negociable:
+
+- si este repositorio sigue publico y contiene `packages/claude-arm-pro` o assets premium reales, cualquiera puede descargar esa capa sin pagar
+
+Para que la venta sea realmente self-service y protegida:
+
+1. deja este repo privado, o
+2. mueve `packages/claude-arm-pro` y cualquier asset premium a un repo o registry privado separado
+
+La proteccion de `vault` solo protege entregas runtime. No protege codigo premium que siga versionado en un repo publico.
 

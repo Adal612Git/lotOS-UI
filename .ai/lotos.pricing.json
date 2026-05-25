@@ -1,0 +1,54 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "plans": [
+    {
+      "id": "free",
+      "tier": "free",
+      "gate": "public",
+      "unlocks": [
+        "docs",
+        "examples",
+        "8 free React exports",
+        "MCP facts"
+      ]
+    },
+    {
+      "id": "solo",
+      "tier": "solo",
+      "gate": "entitlement:solo",
+      "unlocks": [
+        "solo vault",
+        "starter commercial assets"
+      ]
+    },
+    {
+      "id": "pro",
+      "tier": "pro",
+      "gate": "entitlement:pro",
+      "unlocks": [
+        "pro vault",
+        "advanced assets",
+        "pro templates"
+      ]
+    },
+    {
+      "id": "launch_pack",
+      "tier": "launch_pack",
+      "gate": "entitlement:launch_pack",
+      "unlocks": [
+        "launch vault",
+        "full private bundle"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "tier": "enterprise",
+      "gate": "manual contract",
+      "unlocks": [
+        "private deployment",
+        "custom runtime support"
+      ]
+    }
+  ]
+}

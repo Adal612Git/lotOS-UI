@@ -1,0 +1,23 @@
+{
+  "generatedFrom": "ONE/verify-commercial-lifecycle.mjs",
+  "generatedAt": "static",
+  "status": "human-action-required",
+  "public_release_ready": false,
+  "wide_sales_ready": false,
+  "actions": [
+    "Evacuate local secret files from the repo, then rotate credentials in provider dashboards.",
+    "Detach packages/pro, packages/claude-arm-pro, .commercial-dist, and private assets before public branch export.",
+    "Replace public premium references with metadata-only stubs.",
+    "Regenerate public lockfile, generated AI artifacts, MCP public context, and npm tarball reports.",
+    "Run pnpm run verify:public-clean-room and keep public release blocked until it passes.",
+    "Back up staging public.entitlements before migration.",
+    "Apply lifecycle and audit migrations in staging Supabase.",
+    "Validate RLS posture for entitlement and audit tables.",
+    "Confirm purchase creates active entitlement.",
+    "Confirm duplicate webhook delivery is idempotent.",
+    "Confirm invalid Lemon signature does not mutate entitlements.",
+    "Confirm payment failed, pause, resume, cancellation, expiration, revocation, and paid recovery.",
+    "Confirm audit rows do not store raw emails, secrets, raw payloads, cookies, or auth headers."
+  ],
+  "runbook": "docs/STAGING_LIFECYCLE_TEST_RUNBOOK.md"
+}

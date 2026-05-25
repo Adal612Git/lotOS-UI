@@ -13,7 +13,8 @@ import {
     listRuntimeProfiles,
     normalizeRuntimeId,
 } from '@lotosui/core';
-import { SUPPORTED_COMPONENTS } from './catalog.js';
+import { lotosManifest } from '@lotosui/registry';
+import { COMPONENT_CATALOG } from './catalog.js';
 import {
     desktopStarterLanguages,
     normalizeDesktopLanguage,
@@ -42,7 +43,9 @@ export function createProgram(
         .command('list')
         .description('List available components')
         .action(() => {
-            stdout(SUPPORTED_COMPONENTS.join('\n'));
+            for (const entry of COMPONENT_CATALOG) {
+                stdout(`${entry.id}\t${entry.tier.toUpperCase()}`);
+            }
         });
 
     program
@@ -52,6 +55,73 @@ export function createProgram(
             const runtimes = listRuntimeProfiles();
             for (const runtime of runtimes) {
                 stdout(`${runtime.id}\t${runtime.label}\t${runtime.category}`);
+            }
+        });
+
+    program
+        .command('runtime-matrix')
+        .description('List registry runtime maturity, limitations, and package targets')
+        .action(() => {
+            for (const runtime of lotosManifest.runtimes) {
+                stdout(
+                    `${runtime.id}\t${runtime.maturity}\t${runtime.category}\t${runtime.packageName ?? 'none'}\t${runtime.limitations.join('; ')}`,
+                );
+            }
+        });
+
+    program
+        .command('templates')
+        .description('List registry templates by tier, runtime, industry, or id')
+        .option('--tier <tier>', 'Filter by tier')
+        .option('--runtime <runtime>', 'Filter by runtime')
+        .option('--industry <industry>', 'Filter by industry tag')
+        .option('--id <id>', 'Show a single template as JSON')
+        .action((options: { tier?: string; runtime?: string; industry?: string; id?: string }) => {
+            let templates = [...lotosManifest.templates];
+
+            if (options.id) {
+                const template = templates.find((entry) => entry.id === options.id);
+                if (!template) {
+                    stderr(chalk.red(`Unknown template "${options.id}".`));
+                    process.exitCode = 1;
+                    return;
+                }
+                stdout(JSON.stringify(template, null, 2));
+                return;
+            }
+
+            if (options.tier) {
+                templates = templates.filter((entry) => entry.tier === options.tier);
+            }
+            if (options.runtime) {
+                templates = templates.filter((entry) => entry.runtimes.includes(options.runtime!));
+            }
+            if (options.industry) {
+                templates = templates.filter((entry) => entry.industry.includes(options.industry!));
+            }
+
+            for (const template of templates) {
+                stdout(
+                    `${template.id}\t${template.tier}\t${template.maturity}\t${template.runtimes.join(',')}\t${template.name}`,
+                );
+            }
+        });
+
+    program
+        .command('themes')
+        .description('List registry theme presets')
+        .action(() => {
+            for (const theme of lotosManifest.themes) {
+                stdout(`${theme.id}\t${theme.maturity}\t${theme.name}\t${theme.bestFor.join(',')}`);
+            }
+        });
+
+    program
+        .command('ai-tools')
+        .description('List MCP and AI-facing registry tools')
+        .action(() => {
+            for (const tool of lotosManifest.mcpTools) {
+                stdout(`${tool.id}\t${tool.maturity}\t${tool.endpoint}\t${tool.purpose}`);
             }
         });
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOTOS UI · calendario ejecutable · marzo–mayo 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: #f1f5f9; padding: 2rem 1rem; color: #0b1e33; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        h1 span { background: #0b1e33; color: white; padding: 0.2rem 0.8rem; border-radius: 40px; font-size: 1.2rem; font-weight: 500; }
+        .sub { color: #2c455d; margin: 0.5rem 0 2rem 0; font-size: 1.2rem; border-left: 4px solid #3b82f6; padding-left: 1rem; }
+        .grid-calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; margin-bottom: 3rem; }
+        .weekday-header { background: #0b1e33; color: white; padding: 0.75rem 0.5rem; text-align: center; font-weight: 600; font-size: 0.9rem; border-radius: 12px; letter-spacing: 0.3px; }
+        .day-card { background: white; border-radius: 18px; padding: 1rem 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; transition: 0.1s ease; display: flex; flex-direction: column; height: 100%; }
+        .day-card:hover { border-color: #94a3b8; box-shadow: 0 12px 24px -8px rgba(0,67,156,0.12); }
+        .day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-weight: 600; }
+        .day-num { background: #dbeafe; color: #1e3a8a; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 40px; font-size: 0.95rem; }
+        .weekday { color: #475569; font-size: 0.8rem; text-transform: uppercase; }
+        .sprint-badge { font-size: 0.7rem; background: #e2e8f0; color: #1e293b; padding: 0.2rem 0.5rem; border-radius: 30px; font-weight: 600; display: inline-block; margin-bottom: 0.6rem; }
+        .activity-list { list-style: none; margin: 0.5rem 0 0.75rem 0; flex: 1; }
+        .activity-list li { font-size: 0.76rem; padding: 0.3rem 0 0.3rem 1.1rem; position: relative; line-height: 1.3; color: #1e293b; border-bottom: 1px dashed #f1f5f9; }
+        .activity-list li::before { content: "▹"; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
+        .deliverable { background: #e6f7ed; border-radius: 30px; padding: 0.35rem 0.7rem; font-size: 0.7rem; font-weight: 600; color: #0b4d2e; display: inline-block; margin-top: 0.5rem; border: 1px solid #a7f3d0; text-align: center; width: fit-content; }
+        .deliverable strong { font-weight: 700; }
+        .empty-note { color: #94a3b8; font-style: italic; font-size: 0.75rem; padding: 0.5rem 0; }
+        .legend { display: flex; gap: 2rem; flex-wrap: wrap; background: white; border-radius: 30px; padding: 1rem 2rem; margin: 2rem 0; border: 1px solid #e2e8f0; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .dot { width: 12px; height: 12px; border-radius: 20px; }
+        .dot.s1 { background: #f97316; } /* Sprint 1 */
+        .dot.s2 { background: #3b82f6; } /* Sprint 2 */
+        .dot.s3 { background: #8b5cf6; } /* Sprint 3 */
+        .dot.s4 { background: #10b981; } /* Sprint 4 */
+        .dot.s5 { background: #ec4899; } /* Sprint 5 */
+        .dot.s6 { background: #f59e0b; } /* Sprint 6 */
+        .footer-stamp { text-align: center; margin-top: 3rem; font-size: 0.9rem; color: #475569; border-top: 2px dashed #cbd5e1; padding-top: 1.5rem; }
+        .highlight { background: #fef9c3; font-weight: 600; padding: 0 0.2rem; }
+        @media (max-width: 1000px) { .grid-calendar { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 700px) { .grid-calendar { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🗓️ LOTOS UI · plan de ejecución <span>marzo → mayo 2026</span></h1>
+    <div class="sub">cada día una actividad · entregables de alto valor · basado en sprints y backlog</div>
+
+    <div class="legend">
+        <div class="legend-item"><span class="dot s1"></span> Sprint 1 (estabilizar)</div>
+        <div class="legend-item"><span class="dot s2"></span> Sprint 2 (primer experimento)</div>
+        <div class="legend-item"><span class="dot s3"></span> Sprint 3 (transición revenue)</div>
+        <div class="legend-item"><span class="dot s4"></span> Sprint 4 (patrón revenue)</div>
+        <div class="legend-item"><span class="dot s5"></span> Sprint 5 (sistematizar)</div>
+        <div class="legend-item"><span class="dot s6"></span> Sprint 6 (crecimiento sistemático)</div>
+    </div>
+
+    <div class="grid-calendar">
+        <!-- weekdays headers -->
+        <div class="weekday-header">LUN</div><div class="weekday-header">MAR</div><div class="weekday-header">MIÉ</div><div class="weekday-header">JUE</div><div class="weekday-header">VIE</div><div class="weekday-header">SÁB</div><div class="weekday-header">DOM</div>
+
+        <!-- MARZO 2026 (el 1 cae domingo) -->
+        <!-- semana 1: 1 marzo (dom) -->
+        <div class="day-card"><div class="day-header"><span class="day-num">1</span><span class="weekday">DOM</span></div><span class="sprint-badge">S1 · día 1</span><ul class="activity-list"><li>Crear cuentas: Discord, Reddit, X, LinkedIn, Dev.to, Medium, TikTok, YouTube, IH</li><li>Landing con pricing (HTML + tier table)</li><li>Servidor Discord LOTOS (canales base)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 9+ cuentas activas, dominio landing preview, discord.lotos.gg</div></div>
+        <!-- 2 marzo lun -->
+        <div class="day-card"><div class="day-header"><span class="day-num">2</span><span class="weekday">LUN</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Terminar landing + conectar Lemon Squeezy (productos dummy)</li><li>Grabar Demo 1: CLI scaffold (60s short + 5min)</li><li>Publicar demo en YouTube + TikTok</li></ul><div class="deliverable"><strong>✅ entregable:</strong> checkout funcional + video "scaffold en 60s" publicado</div></div>
+        <!-- 3 marzo mar -->
+        <div class="day-card"><div class="day-header"><span class="day-num">3</span><span class="weekday">MAR</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Grabar Demo 2: MCP + IA guiada por contratos</li><li>Publicar Demo 2</li><li>Unirse a 5 Discord servers y presentarse</li></ul><div class="deliverable"><strong>✅ entregable:</strong> demo MCP online + 5 conexiones en comunidad</div></div>
+        <!-- 4 marzo mié -->
+        <div class="day-card"><div class="day-header"><span class="day-num">4</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Grabar Demo 3: Excel antes/después (modernización)</li><li>Publicar Demo 3 en YouTube Shorts + LinkedIn</li><li>Preparar preview premium (pnpm prep:paid-preview)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> demo Excel online + preview premium ejecutable</div></div>
+        <!-- 5 marzo jue -->
+        <div class="day-card"><div class="day-header"><span class="day-num">5</span><span class="weekday">JUE</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Primer post r/SideProject (introducción LOTOS)</li><li>Asset kit Product Hunt (logo, GIF, tagline)</li><li>TikTok compilación 3 demos</li></ul><div class="deliverable"><strong>✅ entregable:</strong> PH draft listo + 300 views estimadas</div></div>
+        <!-- 6 marzo vie -->
+        <div class="day-card"><div class="day-header"><span class="day-num">6</span><span class="weekday">VIE</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Indie Hackers build in public post</li><li>Setup Gumroad backup</li><li>Unirse a 5 grupos Facebook PyMEs</li></ul><div class="deliverable"><strong>✅ entregable:</strong> presencia en IH + Gumroad con productos espejo</div></div>
+        <!-- 7 marzo sáb -->
+        <div class="day-card"><div class="day-header"><span class="day-num">7</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S1</span><ul class="activity-list"><li>Responder en Stack Overflow (3 preguntas con mención sutil)</li><li>Twitter thread #1: "contract‑first UI"</li><li>Revisar analytics</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 3 respuestas SO + thread con 5+ interacciones</div></div>
+        <!-- 8 marzo dom retro/sprint2 plan -->
+        <div class="day-card"><div class="day-header"><span class="day-num">8</span><span class="weekday">DOM</span></div><span class="sprint-badge">S1 → S2</span><ul class="activity-list"><li>Retrospectiva semana 1</li><li>Planificar Sprint 2 (posts, outreach)</li><li>Enviar newsletter #1 "LOTOS ha llegado"</li></ul><div class="deliverable"><strong>✅ entregable:</strong> newsletter enviada + plan S2 escrito</div></div>
+
+        <!-- semana 2: 9-15 marzo (inicio S2) -->
+        <!-- 9 marzo lun S2 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">9</span><span class="weekday">LUN</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Post en r/reactjs (showcase + value prop)</li><li>Preparar Show HN borrador</li></ul><div class="deliverable"><strong>✅ entregable:</strong> post en reactjs con 20+ upvotes, enlace a docs</div></div>
+        <!-- 10 marzo mar -->
+        <div class="day-card"><div class="day-header"><span class="day-num">10</span><span class="weekday">MAR</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Artículo Dev.to "Por qué la IA rompe tu UI"</li><li>Post r/webdev artículo contract‑first</li></ul><div class="deliverable"><strong>✅ entregable:</strong> artículo Dev.to publicado + 50 claps</div></div>
+        <!-- 11 marzo mié -->
+        <div class="day-card"><div class="day-header"><span class="day-num">11</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Post r/laravel (adapter showcase)</li><li>5 TikTok/Shorts antes/después (editar de demos)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 5 shorts publicados cross‑platform</div></div>
+        <!-- 12 marzo jue -->
+        <div class="day-card"><div class="day-header"><span class="day-num">12</span><span class="weekday">JUE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Show HN: launch post</li><li>Twitter 5 threads #buildinpublic</li></ul><div class="deliverable"><strong>✅ entregable:</strong> HN post con 30+ puntos, 5 threads</div></div>
+        <!-- 13 marzo vie -->
+        <div class="day-card"><div class="day-header"><span class="day-num">13</span><span class="weekday">VIE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Pitchear Launch Pack a 5 contactos directos (DM/email)</li><li>LinkedIn 5 posts de valor</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 5 conversaciones iniciadas + 5 posts</div></div>
+        <!-- 14 marzo sáb -->
+        <div class="day-card"><div class="day-header"><span class="day-num">14</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Participar en 10 Discord servers (ayudar + showcase)</li><li>Post en r/artificial (MCP demo)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 20+ interacciones en Discord, mención LOTOS en 3 canales</div></div>
+        <!-- 15 marzo dom -->
+        <div class="day-card"><div class="day-header"><span class="day-num">15</span><span class="weekday">DOM</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Recopilar leads de la semana</li><li>Preparar assets finales para Product Hunt (S3)</li><li>Email de seguimiento a leads</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 10+ leads cualificados en base</div></div>
+
+        <!-- 16 marzo lun sigue S2 (S2 termina 28 mar) pero pongo hitos hasta S3 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">16</span><span class="weekday">LUN</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>YouTube: video "MCP en 5 min"</li><li>Unirse a Discord AI/ML</li></ul><div class="deliverable"><strong>✅ entregable:</strong> video MCP online</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">17</span><span class="weekday">MAR</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Post en r/startups (LOTOS para founders)</li><li>LinkedIn post Excel modernization</li></ul><div class="deliverable"><strong>✅ entregable:</strong> post con 5k impresiones</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">18</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Participar en Indie Hackers (update de métricas)</li><li>Configurar email warmup</li></ul><div class="deliverable"><strong>✅ entregable:</strong> post IH con comentarios</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">19</span><span class="weekday">JUE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>FB grupos PyMEs: antes/después Excel</li><li>Artículo Medium "De planilla a dashboard"</li></ul><div class="deliverable"><strong>✅ entregable:</strong> borrador Medium listo</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">20</span><span class="weekday">VIE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Twitter/X hilo "7 dolores UI"</li><li>Unirse a 5 grupos más (Telegram, Slack)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 50 nuevos followers</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">21</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Primer directo Twitch (live coding scaffold)</li><li>Recopilar feedback preview</li></ul><div class="deliverable"><strong>✅ entregable:</strong> VOD en YouTube</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">22</span><span class="weekday">DOM</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Plan PH launch (hunter, copy, scheduling)</li><li>Email a 3 posibles testers</li></ul><div class="deliverable"><strong>✅ entregable:</strong> día H-3 listo</div></div>
+
+        <!-- 23-29: S2 continúa y luego S3. resumir sin perder entregas -->
+        <div class="day-card"><div class="day-header"><span class="day-num">23</span><span class="weekday">LUN</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Publicar en r/django (adapter)</li><li>1 nuevo demo corto con runtime Go</li></ul><div class="deliverable"><strong>✅ entregable:</strong> showcase Django online</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">24</span><span class="weekday">MAR</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Contactar 3 agencias vía LinkedIn</li><li>Mejorar README con GIFs nuevos</li></ul><div class="deliverable"><strong>✅ entregable:</strong> README actualizado + 3 agencias en radar</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">25</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Post r/ExperiencedDevs (contratos UI)</li><li>Preparar email de bienvenida automatizado</li></ul><div class="deliverable"><strong>✅ entregable:</strong> lead magnet "preview checklist"</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">26</span><span class="weekday">JUE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>YouTube: runtime adapters side‑by‑side</li><li>Interacción con influencers (theo, fireship)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> video comparativa 6 runtimes</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">27</span><span class="weekday">VIE</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Reddit AMA prep (r/webdev mod mail)</li><li>Página de casos de estudio esqueleto</li></ul><div class="deliverable"><strong>✅ entregable:</strong> borrador AMA + sección web</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">28</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S2</span><ul class="activity-list"><li>Revisar leads, preparar transición S3</li><li>Email a 5 prospects con demo personalizada</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 5 respuestas, 1 demo agendada</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">29</span><span class="weekday">DOM</span></div><span class="sprint-badge">S3 (inicio)</span><ul class="activity-list"><li>🚀 PRODUCT HUNT LAUNCH (día 1 sprint 3)</li><li>Blast en todas las redes + newsletter</li></ul><div class="deliverable"><strong>✅ entregable:</strong> PH live, 80+ upvotes</div></div>
+
+        <!-- 30-31 marzo -->
+        <div class="day-card"><div class="day-header"><span class="day-num">30</span><span class="weekday">LUN</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Seguimiento PH (responder comments)</li><li>YouTube: "Launch Pack walkthrough"</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 5 comentarios respondidos + video</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">31</span><span class="weekday">MAR</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Reddit AMA en r/webdev</li><li>Facebook grupos PyMEs: 3 posts modernización</li></ul><div class="deliverable"><strong>✅ entregable:</strong> AMA con 30 preguntas, 3 posts</div></div>
+
+        <!-- ABRIL 2026 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">1</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Seguimiento leads S2 (todos contactados)</li><li>Primer cierre (Launch Pack o Spreadsheet)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> venta cerrada #1 · $499+</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">2</span><span class="weekday">JUE</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Artículo Medium "De planilla a dashboard en 4h"</li><li>Twitter con métricas launch</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 500 views artículo</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">3</span><span class="weekday">VIE</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Discord office hours (primera sesión)</li><li>Email nurture secuencia (día 1)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 10 asistentes, grabación</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">4</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Extraer feedback de previews</li><li>Ajustar pricing page</li></ul><div class="deliverable"><strong>✅ entregable:</strong> nueva versión pricing con social proof</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">5</span><span class="weekday">DOM</span></div><span class="sprint-badge">S3</span><ul class="activity-list"><li>Plan sprint 4 con foco en testimoniales</li><li>Enviar encuesta a primeros usuarios</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 2 respuestas testimonial</div></div>
+
+        <!-- 6-12 abril S4 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">6</span><span class="weekday">LUN</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Contactar 10 leads viejos con caso nuevo</li><li>Cerrar segunda venta</li></ul><div class="deliverable"><strong>✅ entregable:</strong> venta #2 cerrada</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">7</span><span class="weekday">MAR</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Recopilar testimonial en video (cliente real)</li><li>Publicar en LinkedIn + landing</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 1 testimonial video + texto</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">8</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Case study page con antes/después</li><li>YouTube caso de estudio</li></ul><div class="deliverable"><strong>✅ entregable:</strong> página de casos live</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">9</span><span class="weekday">JUE</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>5 TikTok/Shorts con social proof</li><li>Post en r/smallbusiness (Excel modernizado)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 5 shorts, post con 20k views</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">10</span><span class="weekday">VIE</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Email nurture secuencia (email 2 y 3)</li><li>cerrar venta #3</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 3 ventas acumuladas</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">11</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Analizar qué canal convierte mejor</li><li>Ajustar precios si necesario</li></ul><div class="deliverable"><strong>✅ entregable:</strong> tabla de conversión por canal</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">12</span><span class="weekday">DOM</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Plan sprint 5 + plantillas oferta</li><li>Newsletter semanal con milestone $1k</li></ul><div class="deliverable"><strong>✅ entregable:</strong> newsletter + template launch pack</div></div>
+
+        <!-- 13-19 abril S4/S5 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">13</span><span class="weekday">LUN</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Venta #4 (spreadsheet pack)</li><li>Publicar revenue milestone en Indie Hackers</li></ul><div class="deliverable"><strong>✅ entregable:</strong> $1.5k acum</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">14</span><span class="weekday">MAR</span></div><span class="sprint-badge">S4</span><ul class="activity-list"><li>Discord "build in public" voice</li><li>Escribir caso de estudio Excel</li></ul><div class="deliverable"><strong>✅ entregable:</strong> audio Q&A + artículo</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">15</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S5 (inicio)</span><ul class="activity-list"><li>3 ofertas estandarizadas (Solo/Pro/Launch templates)</li><li>Calendario editorial 8 semanas</li></ul><div class="deliverable"><strong>✅ entregable:</strong> plantillas venta + calendario</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">16</span><span class="weekday">JUE</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>LinkedIn outbound: 20 PyMEs Excel</li><li>YouTube serie semanal "LOTOS Weekly" ep1</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 20 DMs enviados + episodio 1</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">17</span><span class="weekday">VIE</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Dev.to serie técnica (artículo 1: MCP deep dive)</li><li>Automatizar welcome email</li></ul><div class="deliverable"><strong>✅ entregable:</strong> email sequence active</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">18</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Referral program (descuento por referido)</li><li>Discord 50 miembros (organizar evento)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> #referrals channel + 53 miembros</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">19</span><span class="weekday">DOM</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Analítica: contenido top de S4</li><li>Preparar plantillas para S6</li></ul><div class="deliverable"><strong>✅ entregable:</strong> dashboard de métricas</div></div>
+
+        <!-- 20-30 ABRIL S5 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">20</span><span class="weekday">LUN</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Facebook 3 demos Excel (grupos PyME)</li><li>Cerrar venta con template estandarizado</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 1 venta con plantilla</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">21</span><span class="weekday">MAR</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Reddit contributor regular (3 subreddits)</li><li>Crear "agency license" draft</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 10 comentarios de valor</div></div>
+        <!-- ... para no extender, últimos días resumidos con hitos finales S6 -->
+        <div class="day-card"><div class="day-header"><span class="day-num">22</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Email automation (nurture 2.0)</li><li>Contactar 3 agencias para partnership</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 2 respuestas partnership</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">23</span><span class="weekday">JUE</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>YouTube "LOTOS Weekly" ep2</li><li>Post mortem S5 (ajustes)</li></ul><div class="deliverable"><strong>✅ entregable:</strong> episodio publicado</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">24</span><span class="weekday">VIE</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Venta #6 (cross‑sell a antiguo)</li><li>Newsletter "cómo vendí $2k"</li></ul><div class="deliverable"><strong>✅ entregable:</strong> $2k revenue acum</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">25</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S5</span><ul class="activity-list"><li>Explorar partnerships agencias</li><li>Actualizar pricing page con testimonios</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 3 leads partnership</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">26</span><span class="weekday">DOM</span></div><span class="sprint-badge">S6 (inicio)</span><ul class="activity-list"><li>Email frío a 50 targets cualificados (primer batch)</li><li>Definir plan Q2</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 50 emails enviados</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">27</span><span class="weekday">LUN</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>YouTube 2 casos estudio (compilación)</li><li>Cerrar venta #7 y #8</li></ul><div class="deliverable"><strong>✅ entregable:</strong> 2 ventas cerradas</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">28</span><span class="weekday">MAR</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>TikTok campaña 7 días seguidos (día1)</li><li>LinkedIn revenue milestone post</li></ul><div class="deliverable"><strong>✅ entregable:</strong> post con 10k impresiones</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">29</span><span class="weekday">MIÉ</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>Evaluar webhook de entrega automática</li><li>Artículo "primeros $5K vendiendo UI OSS"</li></ul><div class="deliverable"><strong>✅ entregable:</strong> artículo en IH/Medium</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">30</span><span class="weekday">JUE</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>Revisar todo el funnel con datos 12 semanas</li><li>Planificar S7-12</li></ul><div class="deliverable"><strong>✅ entregable:</strong> retrospectiva Q1 + plan Q2</div></div>
+
+        <!-- 1-3 mayo cierre -->
+        <div class="day-card"><div class="day-header"><span class="day-num">1</span><span class="weekday">VIE</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>Venta #9 y #10 (acelerar)</li><li>Pipeline de leads activo documentado</li></ul><div class="deliverable"><strong>✅ entregable:</strong> $3k+ revenue</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">2</span><span class="weekday">SÁB</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>Agency license si hay demanda</li><li>Últimos outreach del plan</li></ul><div class="deliverable"><strong>✅ entregable:</strong> agency tier draft</div></div>
+        <div class="day-card"><div class="day-header"><span class="day-num">3</span><span class="weekday">DOM</span></div><span class="sprint-badge">S6</span><ul class="activity-list"><li>🎯 CIERRE Q1 · revisar KPIs vs target</li><li>Celebrar + preparar S7</li></ul><div class="deliverable"><strong>✅ entregable:</strong> reporte final con lecciones</div></div>
+    </div>
+
+    <div class="footer-stamp">
+        ✅ cada día genera un entregable tangible · basado en LOTOS UI scrum plan · backlog ejecutado al 100% · <span class="highlight">foco APC: atraer · probar · cerrar</span>
+    </div>
+</div>
+</body>
+</html>

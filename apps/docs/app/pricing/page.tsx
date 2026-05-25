@@ -21,9 +21,9 @@ export default async function DocsPricingPage() {
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Pricing / Precios</p>
           <div className={styles.heroBadges} aria-label="Commercial plans">
-            <span className={`${styles.heroBadge} ${styles.badgeStable}`}>Solo MX$59 / mes</span>
-            <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Pro MX$129 / mes</span>
-            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Full MX$249 / mes</span>
+            <span className={`${styles.heroBadge} ${styles.badgeStable}`}>Solo MX$59 / mes placeholder</span>
+            <span className={`${styles.heroBadge} ${styles.badgeProof}`}>Pro MX$129 / mes placeholder</span>
+            <span className={`${styles.heroBadge} ${styles.badgeActive}`}>Full MX$249 / mes placeholder</span>
           </div>
           <h1>
             Commercial access starts here
@@ -74,9 +74,9 @@ export default async function DocsPricingPage() {
 
       <section className={`${styles.band} ${styles.statsBand}`}>
         <article><strong>$0</strong><span>Free docs</span></article>
-        <article><strong>MX$59</strong><span>Solo proof</span></article>
-        <article><strong>MX$129</strong><span>Pro assets</span></article>
-        <article><strong>MX$249</strong><span>Full polish</span></article>
+        <article><strong>MX$59</strong><span>Solo placeholder</span></article>
+        <article><strong>MX$129</strong><span>Pro placeholder</span></article>
+        <article><strong>MX$249</strong><span>Full placeholder</span></article>
       </section>
 
       <section className={`${styles.band} ${styles.plansGrid}`}>

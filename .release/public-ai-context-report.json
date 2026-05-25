@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/verify-public-ai-context.mjs",
+  "generatedAt": "2026-05-19T03:51:20.313Z",
+  "result": "blocked",
+  "publicAiContextReady": false,
+  "redacted": true,
+  "scanned": [
+    ".ai/golden-prompts.md",
+    ".ai/known-failures.md",
+    ".ai/lotos.assets.json",
+    ".ai/lotos.commercial.json",
+    ".ai/lotos.components.json",
+    ".ai/lotos.entitlements.json",
+    ".ai/lotos.env.json",
+    ".ai/lotos.pricing.json",
+    ".ai/lotos.project-map.json",
+    ".ai/lotos.prompts.json",
+    ".ai/lotos.public-context.json",
+    ".ai/lotos.release-readiness.json",
+    ".ai/lotos.runtimes.json",
+    ".ai/lotos.templates.json",
+    ".ai/lotos.themes.json",
+    ".ai/review-checklist.md",
+    ".release/release-notes.json",
+    ".release/lifecycle-validation.json",
+    ".release/public-release-blockers.md",
+    "packages/core/src/mcp/client.ts",
+    "packages/core/src/mcp/index.ts",
+    "packages/core/src/mcp/server.ts",
+    "packages/core/src/mcp/spec.ts",
+    "docs/AI_ONBOARDING.md",
+    "docs/MCP_REFERENCE.md",
+    "docs/REGISTRY_REFERENCE.md"
+  ],
+  "findings": [
+    {
+      "severity": "warning",
+      "id": "private_workspace_note_in_public_ai_context",
+      "path": ".ai/golden-prompts.md",
+      "line": 73
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 22
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 23
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 31
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 32
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 40
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 64
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.assets.json",
+      "line": 88
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.commercial.json",
+      "line": 264
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.commercial.json",
+      "line": 275
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.commercial.json",
+      "line": 276
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.commercial.json",
+      "line": 277
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.commercial.json",
+      "line": 278
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.project-map.json",
+      "line": 129
+    },
+    {
+      "severity": "warning",
+      "id": "private_workspace_note_in_public_ai_context",
+      "path": ".ai/lotos.project-map.json",
+      "line": 188
+    },
+    {
+      "severity": "blocker",
+      "id": "private_path_in_public_ai_context",
+      "path": ".ai/lotos.release-readiness.json",
+      "line": 14
+    },
+    {
+      "severity": "warning",
+      "id": "private_workspace_note_in_public_ai_context",
+      "path": ".ai/lotos.release-readiness.json",
+      "line": 73
+    },
+    {
+      "severity": "warning",
+      "id": "private_workspace_note_in_public_ai_context",
+      "path": ".release/release-notes.json",
+      "line": 29
+    }
+  ]
+}

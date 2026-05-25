@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# apps/docs
 
-## Getting Started
+Documentation and trust surface for LotOS UI.
 
-First, run the development server:
+This app contains:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- public documentation
+- component docs
+- multi-runtime guides
+- AI/MCP integration docs
+- docs-domain login and vault proof surface
+
+## Local Run
+
+From the monorepo root:
+
+```powershell
+pnpm.cmd --filter docs dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3001` when the docs app is configured for its usual local port.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commercial Notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+- Docs login uses the same Google OAuth pattern as the web app.
+- Buyer login should accept a valid Google email.
+- Premium access should be based on entitlement rows, not owner emails.
+- Owner accounts only provide administrative bypass.
 
-## Learn More
+## AI Context
 
-To learn more about Next.js, take a look at the following resources:
+Agents should read these before editing docs:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `AGENTS.md`
+- `.ai/lotos.project-map.json`
+- `.ai/lotos.components.json`
+- `.ai/lotos.runtimes.json`
+- `packages/registry/src/lotos.manifest.ts`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+When docs mention component counts, use this wording:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```txt
+8 free React exports + 19 pro components = 27 total contracts.
+```

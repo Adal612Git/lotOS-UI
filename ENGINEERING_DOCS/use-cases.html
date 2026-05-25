@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Casos de Uso</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        :root {
+            --bg: #04101b;
+            --bg2: #0a1929;
+            --line: rgba(120, 149, 184, .2);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%),
+                radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%),
+                linear-gradient(160deg, var(--bg), #071525 55%, var(--bg2));
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .75);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .back {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s;
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .page-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tx);
+            letter-spacing: -.01em
+        }
+
+        .page-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(103, 232, 249, .1);
+            border: 1px solid rgba(103, 232, 249, .28);
+            color: var(--c)
+        }
+
+        .shell {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 380px;
+            height: calc(100vh - 57px)
+        }
+
+        .stage {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            border-right: 1px solid var(--line)
+        }
+
+        .top {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .5);
+            backdrop-filter: blur(10px)
+        }
+
+        .top h2 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            margin-bottom: 4px
+        }
+
+        .top p {
+            font-size: 12px;
+            color: var(--mut);
+            line-height: 1.55
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(120, 149, 184, .28);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .btn:hover,
+        .btn.active {
+            color: #fff;
+            border-color: rgba(103, 232, 249, .45);
+            background: rgba(103, 232, 249, .08);
+            box-shadow: 0 0 14px rgba(103, 232, 249, .1)
+        }
+
+        .net {
+            flex: 1;
+            position: relative
+        }
+
+        .network {
+            position: absolute;
+            inset: 0
+        }
+
+        .legend-bar {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(120, 149, 184, .24);
+            background: rgba(4, 16, 27, .85);
+            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        .legend-line {
+            width: 28px;
+            height: 2px;
+            border-radius: 2px
+        }
+
+        .legend-dashed {
+            border-top: 2px dashed;
+            width: 28px
+        }
+
+        .legend-arrow-solid {
+            width: 28px;
+            height: 2px;
+            background: #60a5fa;
+            position: relative
+        }
+
+        .legend-arrow-solid::after {
+            content: '▶';
+            font-size: 8px;
+            position: absolute;
+            right: -6px;
+            top: -5px;
+            color: #60a5fa
+        }
+
+        /* SIDE */
+        .side {
+            padding: 16px;
+            overflow: auto;
+            background: rgba(4, 16, 27, .5)
+        }
+
+        .side-card {
+            border-radius: 18px;
+            border: 1px solid rgba(120, 149, 184, .2);
+            background: rgba(8, 21, 37, .7);
+            padding: 14px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px)
+        }
+
+        .label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t);
+            margin-bottom: 8px
+        }
+
+        .side-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -.02em
+        }
+
+        .note {
+            background: rgba(2, 6, 23, .6);
+            border: 1px solid rgba(120, 149, 184, .18);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--mut);
+            margin-top: 8px
+        }
+
+        .actors-list,
+        .uc-list {
+            list-style: none;
+            margin-top: 8px
+        }
+
+        .actors-list li,
+        .uc-list li {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(120, 149, 184, .16);
+            background: rgba(255, 255, 255, .03);
+            margin-bottom: 6px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .actor-role {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 2px
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .04);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            margin-right: 4px;
+            margin-top: 6px
+        }
+
+        .cyan {
+            color: var(--c)
+        }
+
+        .blue {
+            color: var(--b)
+        }
+
+        .violet {
+            color: var(--v)
+        }
+
+        .amber {
+            color: var(--a)
+        }
+
+        .rose {
+            color: var(--r)
+        }
+
+        .green {
+            color: var(--g)
+        }
+
+        /* detail panel */
+        #uc-detail {
+            transition: all .3s
+        }
+
+        #uc-name {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 4px
+        }
+
+        #uc-type {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 8px
+        }
+
+        #uc-desc {
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--mut)
+        }
+
+        .uc-pre,
+        #uc-pre,
+        #uc-post,
+        #uc-alts {
+            font-size: 11px;
+            line-height: 1.65;
+            color: var(--mut);
+            background: rgba(2, 6, 23, .5);
+            border: 1px solid rgba(120, 149, 184, .16);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 6px;
+            white-space: pre-wrap
+        }
+
+        @media(max-width:900px) {
+            .shell {
+                grid-template-columns: 1fr
+            }
+
+            .side {
+                border-top: 1px solid var(--line)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <a class="back" href="index.html">← Hub</a>
+            <span class="page-title">Casos de Uso — LotOS UI</span>
+        </div>
+        <span class="page-badge">UML · Use Cases</span>
+    </nav>
+
+    <div class="shell">
+        <section class="stage">
+            <div class="top">
+                <h2>Diagrama de Casos de Uso</h2>
+                <p>Actores, casos de uso del sistema LotOS UI y sus relaciones &laquo;include&raquo;,
+                    &laquo;extend&raquo; y generalización. Click en cualquier nodo para ver detalle.</p>
+                <div class="toolbar">
+                    <button class="btn active" data-view="all">Todos</button>
+                    <button class="btn" data-view="dev">Developer</button>
+                    <button class="btn" data-view="buyer">Buyer</button>
+                    <button class="btn" data-view="admin">Admin</button>
+                    <button class="btn" data-view="agent">AI Agent</button>
+                    <button class="btn" id="fit-btn">Recentrar</button>
+                </div>
+            </div>
+            <div class="net">
+                <div class="network" id="network"></div>
+                <div class="legend-bar">
+                    <div class="legend-item">
+                        <svg width="36" height="14">
+                            <line x1="0" y1="7" x2="28" y2="7" stroke="#60a5fa" stroke-width="2" />
+                            <polygon points="28,4 36,7 28,10" fill="#60a5fa" />
+                        </svg>
+                        Asociación
+                    </div>
+                    <div class="legend-item">
+                        <svg width="36" height="14">
+                            <line x1="0" y1="7" x2="28" y2="7" stroke="#a78bfa" stroke-width="2"
+                                stroke-dasharray="5,3" />
+                            <polygon points="28,4 36,7 28,10" fill="none" stroke="#a78bfa" stroke-width="1.5" />
+                        </svg>
+                        «include»
+                    </div>
+                    <div class="legend-item">
+                        <svg width="36" height="14">
+                            <line x1="0" y1="7" x2="28" y2="7" stroke="#fbbf24" stroke-width="2"
+                                stroke-dasharray="5,3" />
+                            <polygon points="28,4 36,7 28,10" fill="none" stroke="#fbbf24" stroke-width="1.5" />
+                        </svg>
+                        «extend»
+                    </div>
+                    <div class="legend-item">
+                        <svg width="36" height="14">
+                            <line x1="0" y1="7" x2="28" y2="7" stroke="#34d399" stroke-width="2" />
+                            <polygon points="28,4 36,7 28,10" fill="none" stroke="#34d399" stroke-width="2" />
+                        </svg>
+                        Generalización
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="side">
+            <div class="side-card">
+                <div class="label">Sistema</div>
+                <h3>LotOS UI Platform</h3>
+                <div class="note">Sistema de design system multi-runtime. Provee componentes, CLI, adapters y un
+                    protocolo MCP para agentes IA. Superficie comercial con vault, pricing y entitlements.</div>
+            </div>
+
+            <div class="side-card" id="uc-detail">
+                <div class="label">Detalle</div>
+                <div id="uc-type">Selecciona un nodo</div>
+                <div id="uc-name">Ningún caso de uso seleccionado</div>
+                <div id="uc-desc">Haz click en un actor o caso de uso para ver su descripción, precondiciones,
+                    postcondiciones y flujos alternativos.</div>
+                <div style="margin-top:10px;display:none" id="uc-extras">
+                    <div class="label" style="margin-top:10px">Precondiciones</div>
+                    <div id="uc-pre" class="uc-pre"></div>
+                    <div class="label" style="margin-top:10px">Postcondiciones</div>
+                    <div id="uc-post" class="uc-pre"></div>
+                    <div class="label" style="margin-top:10px">Flujos alternativos</div>
+                    <div id="uc-alts" class="uc-pre"></div>
+                </div>
+            </div>
+
+            <div class="side-card">
+                <div class="label">Actores</div>
+                <ul class="actors-list">
+                    <li>
+                        <div class="actor-role cyan">Primary</div>Developer: Instala paquetes, usa CLI, genera stacks,
+                        renderiza componentes MCP.
+                    </li>
+                    <li>
+                        <div class="actor-role blue">Primary</div>Buyer: Navega pricing, compra tier, accede a vault,
+                        descarga bundle.
+                    </li>
+                    <li>
+                        <div class="actor-role violet">Secondary</div>Admin: Configura planes, verifica gates, prepara
+                        first-sale.
+                    </li>
+                    <li>
+                        <div class="actor-role amber">External</div>AI Agent: Consulta spec MCP, renderiza componentes
+                        via protocolo.
+                    </li>
+                    <li>
+                        <div class="actor-role green">External</div>Sistema OAuth: Google, provee identidad al web/docs.
+                    </li>
+                    <li>
+                        <div class="actor-role rose">External</div>Payment Rail: Lemon Squeezy, PayPal, confirma compra.
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const UC_DATA = {
+            /* ----- ACTORS ----- */
+            'developer': {
+                type: 'Actor', name: 'Developer', color: '#67e8f9',
+                desc: 'Usuario técnico que instala y usa @lotosui/claude-arm, @lotosui/cli y adapters backend para construir productos.',
+                pre: 'Tiene Node.js y pnpm instalados.',
+                post: 'Crea interfaz con LotOS UI',
+                alts: 'Si no tiene Node, usa CDN. Si prefiere otro runtime, usa adapters.'
+            },
+            'buyer': {
+                type: 'Actor', name: 'Buyer', color: '#60a5fa',
+                desc: 'Usuario que compra un tier (Solo, Pro, Full) y accede al vault.',
+                pre: 'Tiene una cuenta de email.',
+                post: 'Tiene acceso al tier comprado.',
+                alts: 'Puede cancelar o cambiar tier.'
+            },
+            'admin': {
+                type: 'Actor', name: 'Admin', color: '#a78bfa',
+                desc: 'Miembro del equipo LotosTech que gestiona releases, gates y entregas.',
+                pre: 'Acceso al monorepo y deployment.',
+                post: 'Release publicado y verificado.',
+                alts: 'Puede revertir release si gates fallan.'
+            },
+            'ai-agent': {
+                type: 'Actor', name: 'AI Agent', color: '#fbbf24',
+                desc: 'Agente IA externo (Claude, GPT) que consume el protocolo MCP de LotOS.',
+                pre: 'Tiene el endpoint MCP disponible.',
+                post: 'Componente renderizado en el target runtime.',
+                alts: 'Si el protocolo falla, retorna esquema JSON de error.'
+            },
+            'oauth': {
+                type: 'Actor Externo', name: 'Google OAuth', color: '#34d399',
+                desc: 'Proveedor de identidad externo via OAuth 2.0.',
+                pre: 'App registrada en Google Cloud.',
+                post: 'Token de identidad emitido.',
+                alts: 'Token expirado → re-auth.'
+            },
+            'payment': {
+                type: 'Actor Externo', name: 'Payment Rail', color: '#fb7185',
+                desc: 'Lemon Squeezy y PayPal como rieles de pago principal y respaldo.',
+                pre: 'Checkout link activo.',
+                post: 'Pago confirmado, webhook emitido.',
+                alts: 'Pago fallido → reintento o método alternativo.'
+            },
+
+            /* ----- USE CASES ----- */
+            'uc-install': {
+                type: 'Caso de Uso', name: 'Instalar @lotosui/claude-arm', color: '#67e8f9',
+                desc: 'El Developer instala el paquete npm y aplica el stylesheet global a su aplicación React.',
+                pre: 'npm o pnpm disponible. Versión mínima de Node 18.',
+                post: 'Componentes LotOS disponibles en el proyecto.',
+                alts: 'A1: Instalar desde CDN.\nA2: Usar CLI para scaffold completo.'
+            },
+            'uc-scaffold': {
+                type: 'Caso de Uso', name: 'Generar Stack con CLI', color: '#67e8f9',
+                desc: 'El Developer usa @lotosui/cli para generar un stack completo (Next.js, Laravel, Spring, etc.) con LotOS UI ya integrado.',
+                pre: 'CLI instalado. Runtime elegido disponible.',
+                post: 'Proyecto scaffold generado y listo para desarrollo.',
+                alts: 'A1: Usar desktop-init para app nativa.\nA2: Cambiar runtime mid-scaffold.'
+            },
+            'uc-components': {
+                type: 'Caso de Uso', name: 'Usar Componentes UI', color: '#67e8f9',
+                desc: 'El Developer importa y usa Button, Card, Badge, Input, Modal y otros 27+ componentes en su aplicación.',
+                pre: '@lotosui/claude-arm instalado y stylesheet importado.',
+                post: 'UI renderizada con tokens LotOS.',
+                alts: 'A1: Usar web-components para framework-agnóstico.\nA2: Usar adapter blade/django/etc.'
+            },
+            'uc-mcp-query': {
+                type: 'Caso de Uso', name: 'Consultar MCP Spec', color: '#fbbf24',
+                desc: 'El AI Agent hace GET /components o GET /frameworks al endpoint MCP para descubrir capacidades disponibles.',
+                pre: 'Endpoint MCP corriendo. API key válida.',
+                post: 'Schema JSON con capacidades devuelto.',
+                alts: 'A1: Versión de spec no coincide → error 409.'
+            },
+            'uc-mcp-render': {
+                type: 'Caso de Uso', name: 'Renderizar vía MCP', color: '#fbbf24',
+                desc: 'El AI Agent hace POST /components/render con un componente y runtime target. Recibe HTML/JSX listo para usar.',
+                pre: 'Spec descubierta. Runtime válido especificado.',
+                post: 'Componente renderizado en el formato solicitado.',
+                alts: 'A1: Runtime no soportado → fallback a react.\nA2: Componente inválido → schema de error 422.'
+            },
+            'uc-auth': {
+                type: 'Caso de Uso', name: 'Autenticar con OAuth', color: '#60a5fa',
+                desc: 'El Buyer o Developer inicia sesión en apps/web o apps/docs via Google OAuth para acceder a recursos protegidos.',
+                pre: 'App OAuth registrada. Usuario con cuenta Google.',
+                post: 'Sesión activa. Token almacenado en cookie.',
+                alts: 'A1: Acceso denegado si cuenta suspendida.\nA2: Token expirado → refresh automático.'
+            },
+            'uc-browse-pricing': {
+                type: 'Caso de Uso', name: 'Navegar Pricing', color: '#60a5fa',
+                desc: 'El Buyer navega a /pricing y ve los planes Free, Solo, Pro y Full con sus features y precios.',
+                pre: 'apps/web desplegada. sales-config.ts actualizado.',
+                post: 'Buyer entiende las diferencias entre tiers.',
+                alts: 'A1: Sin sesión → mostrar igual pero sin "tu plan actual".'
+            },
+            'uc-checkout': {
+                type: 'Caso de Uso', name: 'Iniciar Checkout', color: '#60a5fa',
+                desc: 'El Buyer hace click en "Get Solo/Pro/Full" y es redirigido al checkout de Lemon Squeezy.',
+                pre: 'Buyer autenticado. Plan seleccionado.',
+                post: 'Sesión de checkout activa en Lemon Squeezy.',
+                alts: 'A1: Usar PayPal como fallback.\nA2: Contacto manual para Full tier.'
+            },
+            'uc-grant': {
+                type: 'Caso de Uso', name: 'Otorgar Entitlement', color: '#34d399',
+                desc: 'El sistema recibe el webhook de pago confirmado y ejecuta el grant de acceso al vault para el plan comprado.',
+                pre: 'Pago confirmado. Webhook recibido y verificado.',
+                post: 'Entitlement registrado en Supabase. Vault desbloqueado.',
+                alts: 'A1: Webhook duplicado → idempotencia, ignorar.\nA2: Usuario no existe → crear y otorgar.'
+            },
+            'uc-vault': {
+                type: 'Caso de Uso', name: 'Acceder al Vault', color: '#60a5fa',
+                desc: 'El Buyer autenticado navega a /vault y ve los recursos desbloqueados según su tier (Free → Full).',
+                pre: 'Sesión activa. Entitlement en Supabase.',
+                post: 'Recursos del tier mostrados y descargables.',
+                alts: 'A1: Sin entitlement → solo Free tier visible.\nA2: Entitlement expirado → notice de renovación.'
+            },
+            'uc-verify': {
+                type: 'Caso de Uso', name: 'Ejecutar Quality Gates', color: '#a78bfa',
+                desc: 'El Admin ejecuta verify:100, verify:commercial y verify:ops para validar consistencia antes de release.',
+                pre: 'Monorepo construido. Scripts en ONE/ disponibles.',
+                post: 'Reporte de gates: todos green o listado de fallos.',
+                alts: 'A1: Gate falla → bloquea release, notifica admin.\nA2: Modo degradado si deps faltan.'
+            },
+            'uc-first-sale': {
+                type: 'Caso de Uso', name: 'Preparar First Sale', color: '#a78bfa',
+                desc: 'El Admin ejecuta prep:first-sale que genera bundles, manifests y prepara el handoff privado.',
+                pre: 'Todos los gates en green. Bundle inventory auditado.',
+                post: 'Bundle .zip generado. release-manifest.json actualizado.',
+                alts: 'A1: Componente faltante → script lista cuáles faltan.'
+            },
+            'uc-publish': {
+                type: 'Caso de Uso', name: 'Publicar en npm', color: '#a78bfa',
+                desc: 'El Admin dispara el workflow GitHub Actions publish-npm.yml que publica @lotosui/core, sentinel, cli y web-components.',
+                pre: 'NPM_TOKEN en GitHub secrets. Versión bumped.',
+                post: 'Paquetes publicados en npm registry.',
+                alts: 'A1: OTP requerido → usar token Automation type.'
+            },
+            'uc-validate-identity': {
+                type: 'Caso de Uso (include)', name: 'Validar Identidad', color: '#c084fc',
+                desc: 'Subproceso incluido en Autenticar OAuth. Verifica el token de Google y crea/actualiza el usuario en la DB.',
+                pre: 'Token OAuth recibido.',
+                post: 'Usuario validado o creado en Supabase.',
+                alts: 'A1: Token inválido → error 401.'
+            },
+            'uc-store-session': {
+                type: 'Caso de Uso (include)', name: 'Almacenar Sesión', color: '#c084fc',
+                desc: 'Subproceso incluido en Autenticar OAuth. Persiste la sesión en cookie httpOnly.',
+                pre: 'Identidad validada.',
+                post: 'Cookie de sesión activa.',
+                alts: 'A1: Cookie bloqueada por browser → fallback localStorage.'
+            },
+        };
+
+        const VIEWS = {
+            all: null,
+            dev: ['developer', 'uc-install', 'uc-scaffold', 'uc-components', 'uc-mcp-query', 'uc-mcp-render', 'ai-agent'],
+            buyer: ['buyer', 'uc-auth', 'uc-browse-pricing', 'uc-checkout', 'uc-grant', 'uc-vault', 'oauth', 'payment', 'uc-validate-identity', 'uc-store-session'],
+            admin: ['admin', 'uc-verify', 'uc-first-sale', 'uc-publish'],
+            agent: ['ai-agent', 'uc-mcp-query', 'uc-mcp-render', 'developer'],
+        };
+
+        function buildGraph(filter) {
+            const P = {
+                actor: { shape: 'ellipse', font: { size: 13, face: 'Inter' }, borderWidth: 2, margin: 14 },
+                uc: { shape: 'ellipse', font: { size: 12, face: 'Inter' }, borderWidth: 1.5, margin: 12 },
+                boundary: { shape: 'box', borderWidth: 2, borderDashes: false, font: { size: 10 }, margin: 10 },
+            };
+
+            const allNodes = [
+                // Actors — left side
+                { id: 'developer', label: '👨‍💻\nDeveloper', group: 'actor', color: { background: 'rgba(10,30,55,.9)', border: '#67e8f9', highlight: { background: 'rgba(15,40,70,.9)', border: '#67e8f9' } }, shadow: { enabled: true, color: 'rgba(103,232,249,.3)', size: 20, x: 0, y: 0 }, ...P.actor, meta: 'developer' },
+                { id: 'buyer', label: '🛒\nBuyer', group: 'actor', color: { background: 'rgba(10,30,55,.9)', border: '#60a5fa', highlight: { background: 'rgba(15,40,70,.9)', border: '#60a5fa' } }, shadow: { enabled: true, color: 'rgba(96,165,250,.3)', size: 20, x: 0, y: 0 }, ...P.actor, meta: 'buyer' },
+                { id: 'admin', label: '🔑\nAdmin', group: 'actor', color: { background: 'rgba(10,30,55,.9)', border: '#a78bfa', highlight: { background: 'rgba(15,40,70,.9)', border: '#a78bfa' } }, shadow: { enabled: true, color: 'rgba(167,139,250,.3)', size: 20, x: 0, y: 0 }, ...P.actor, meta: 'admin' },
+                { id: 'ai-agent', label: '🤖\nAI Agent', group: 'actor', color: { background: 'rgba(10,30,55,.9)', border: '#fbbf24', highlight: { background: 'rgba(15,40,70,.9)', border: '#fbbf24' } }, shadow: { enabled: true, color: 'rgba(251,191,36,.3)', size: 20, x: 0, y: 0 }, ...P.actor, meta: 'ai-agent' },
+                { id: 'oauth', label: '🔓\nGoogle OAuth', group: 'actor-ext', color: { background: 'rgba(6,50,25,.9)', border: '#34d399', highlight: { background: 'rgba(8,60,30,.9)', border: '#34d399' } }, shadow: { enabled: true, color: 'rgba(52,211,153,.3)', size: 18, x: 0, y: 0 }, ...P.actor, meta: 'oauth' },
+                { id: 'payment', label: '💳\nPayment Rail', group: 'actor-ext', color: { background: 'rgba(50,10,20,.9)', border: '#fb7185', highlight: { background: 'rgba(60,12,25,.9)', border: '#fb7185' } }, shadow: { enabled: true, color: 'rgba(251,113,133,.3)', size: 18, x: 0, y: 0 }, ...P.actor, meta: 'payment' },
+
+                // Use cases
+                { id: 'uc-install', label: 'Instalar\n@lotosui/claude-arm', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#67e8f9', highlight: { background: 'rgba(12,28,50,.9)', border: '#67e8f9' } }, shadow: { enabled: true, color: 'rgba(103,232,249,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-install' },
+                { id: 'uc-scaffold', label: 'Generar Stack\ncon CLI', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#67e8f9', highlight: { background: 'rgba(12,28,50,.9)', border: '#67e8f9' } }, shadow: { enabled: true, color: 'rgba(103,232,249,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-scaffold' },
+                { id: 'uc-components', label: 'Usar Componentes UI', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#67e8f9', highlight: { background: 'rgba(12,28,50,.9)', border: '#67e8f9' } }, shadow: { enabled: true, color: 'rgba(103,232,249,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-components' },
+                { id: 'uc-mcp-query', label: 'Consultar\nMCP Spec', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#fbbf24', highlight: { background: 'rgba(12,28,50,.9)', border: '#fbbf24' } }, shadow: { enabled: true, color: 'rgba(251,191,36,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-mcp-query' },
+                { id: 'uc-mcp-render', label: 'Renderizar\nvía MCP', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#fbbf24', highlight: { background: 'rgba(12,28,50,.9)', border: '#fbbf24' } }, shadow: { enabled: true, color: 'rgba(251,191,36,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-mcp-render' },
+                { id: 'uc-auth', label: 'Autenticar\ncon OAuth', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#60a5fa', highlight: { background: 'rgba(12,28,50,.9)', border: '#60a5fa' } }, shadow: { enabled: true, color: 'rgba(96,165,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-auth' },
+                { id: 'uc-browse-pricing', label: 'Navegar Pricing', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#60a5fa', highlight: { background: 'rgba(12,28,50,.9)', border: '#60a5fa' } }, shadow: { enabled: true, color: 'rgba(96,165,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-browse-pricing' },
+                { id: 'uc-checkout', label: 'Iniciar Checkout', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#60a5fa', highlight: { background: 'rgba(12,28,50,.9)', border: '#60a5fa' } }, shadow: { enabled: true, color: 'rgba(96,165,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-checkout' },
+                { id: 'uc-grant', label: 'Otorgar\nEntitlement', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#34d399', highlight: { background: 'rgba(12,28,50,.9)', border: '#34d399' } }, shadow: { enabled: true, color: 'rgba(52,211,153,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-grant' },
+                { id: 'uc-vault', label: 'Acceder\nal Vault', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#60a5fa', highlight: { background: 'rgba(12,28,50,.9)', border: '#60a5fa' } }, shadow: { enabled: true, color: 'rgba(96,165,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-vault' },
+                { id: 'uc-verify', label: 'Ejecutar\nQuality Gates', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#a78bfa', highlight: { background: 'rgba(12,28,50,.9)', border: '#a78bfa' } }, shadow: { enabled: true, color: 'rgba(167,139,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-verify' },
+                { id: 'uc-first-sale', label: 'Preparar\nFirst Sale', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#a78bfa', highlight: { background: 'rgba(12,28,50,.9)', border: '#a78bfa' } }, shadow: { enabled: true, color: 'rgba(167,139,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-first-sale' },
+                { id: 'uc-publish', label: 'Publicar en npm', group: 'uc', color: { background: 'rgba(8,22,40,.9)', border: '#a78bfa', highlight: { background: 'rgba(12,28,50,.9)', border: '#a78bfa' } }, shadow: { enabled: true, color: 'rgba(167,139,250,.18)', size: 14, x: 0, y: 0 }, ...P.uc, meta: 'uc-publish' },
+                { id: 'uc-validate-identity', label: '«include»\nValidar Identidad', group: 'uc-sub', color: { background: 'rgba(40,22,60,.8)', border: '#c084fc', highlight: { background: 'rgba(50,28,75,.8)', border: '#c084fc' } }, shadow: { enabled: true, color: 'rgba(192,132,252,.15)', size: 12, x: 0, y: 0 }, ...P.uc, meta: 'uc-validate-identity' },
+                { id: 'uc-store-session', label: '«include»\nAlmacenar Sesión', group: 'uc-sub', color: { background: 'rgba(40,22,60,.8)', border: '#c084fc', highlight: { background: 'rgba(50,28,75,.8)', border: '#c084fc' } }, shadow: { enabled: true, color: 'rgba(192,132,252,.15)', size: 12, x: 0, y: 0 }, ...P.uc, meta: 'uc-store-session' },
+            ];
+
+            const allEdges = [
+                // Developer associations
+                { id: 'e1', from: 'developer', to: 'uc-install', arrows: 'to', color: { color: '#67e8f9', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCW', roundness: .15 } },
+                { id: 'e2', from: 'developer', to: 'uc-scaffold', arrows: 'to', color: { color: '#67e8f9', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCW', roundness: .15 } },
+                { id: 'e3', from: 'developer', to: 'uc-components', arrows: 'to', color: { color: '#67e8f9', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCW', roundness: .15 } },
+                { id: 'e4', from: 'developer', to: 'uc-mcp-query', arrows: 'to', color: { color: '#67e8f9', opacity: .5 }, width: 1.5, dashes: true, smooth: { type: 'curvedCW', roundness: .15 }, label: 'via API', font: { color: '#64748b', size: 9 } },
+                // AI Agent
+                { id: 'e5', from: 'ai-agent', to: 'uc-mcp-query', arrows: 'to', color: { color: '#fbbf24', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'dynamic' } },
+                { id: 'e6', from: 'ai-agent', to: 'uc-mcp-render', arrows: 'to', color: { color: '#fbbf24', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'dynamic' } },
+                // Buyer
+                { id: 'e7', from: 'buyer', to: 'uc-auth', arrows: 'to', color: { color: '#60a5fa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCCW', roundness: .15 } },
+                { id: 'e8', from: 'buyer', to: 'uc-browse-pricing', arrows: 'to', color: { color: '#60a5fa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCCW', roundness: .15 } },
+                { id: 'e9', from: 'buyer', to: 'uc-checkout', arrows: 'to', color: { color: '#60a5fa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCCW', roundness: .15 } },
+                { id: 'e10', from: 'buyer', to: 'uc-vault', arrows: 'to', color: { color: '#60a5fa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'curvedCCW', roundness: .15 } },
+                // Admin
+                { id: 'e11', from: 'admin', to: 'uc-verify', arrows: 'to', color: { color: '#a78bfa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'dynamic' } },
+                { id: 'e12', from: 'admin', to: 'uc-first-sale', arrows: 'to', color: { color: '#a78bfa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'dynamic' } },
+                { id: 'e13', from: 'admin', to: 'uc-publish', arrows: 'to', color: { color: '#a78bfa', opacity: .7 }, width: 2, dashes: false, smooth: { type: 'dynamic' } },
+                // External actors
+                { id: 'e14', from: 'oauth', to: 'uc-auth', arrows: 'to', color: { color: '#34d399', opacity: .6 }, width: 1.5, dashes: true, smooth: { type: 'curvedCCW', roundness: .2 } },
+                { id: 'e15', from: 'payment', to: 'uc-grant', arrows: 'to', color: { color: '#fb7185', opacity: .6 }, width: 1.5, dashes: true, smooth: { type: 'curvedCCW', roundness: .2 }, label: 'webhook', font: { color: '#64748b', size: 9 } },
+                { id: 'e16', from: 'uc-checkout', to: 'payment', arrows: 'to', color: { color: '#fb7185', opacity: .5 }, width: 1.5, dashes: true, smooth: { type: 'dynamic' } },
+                // Include relationships (dashed open arrow)
+                { id: 'e17', from: 'uc-auth', to: 'uc-validate-identity', arrows: { to: { enabled: true, type: 'arrow' } }, color: { color: '#c084fc', opacity: .8 }, width: 1.8, dashes: [6, 4], smooth: { type: 'dynamic' }, label: '«include»', font: { color: '#9d4edd', size: 10, bold: true } },
+                { id: 'e18', from: 'uc-auth', to: 'uc-store-session', arrows: { to: { enabled: true, type: 'arrow' } }, color: { color: '#c084fc', opacity: .8 }, width: 1.8, dashes: [6, 4], smooth: { type: 'dynamic' }, label: '«include»', font: { color: '#9d4edd', size: 10, bold: true } },
+                // Extend (dashed open arrow, amber)
+                { id: 'e19', from: 'uc-vault', to: 'uc-grant', arrows: { to: { enabled: true, type: 'arrow' } }, color: { color: '#fbbf24', opacity: .7 }, width: 1.5, dashes: [8, 4], smooth: { type: 'dynamic' }, label: '«extend»', font: { color: '#b45309', size: 10, bold: true } },
+                { id: 'e20', from: 'uc-first-sale', to: 'uc-verify', arrows: { to: { enabled: true, type: 'arrow' } }, color: { color: '#a78bfa', opacity: .7 }, width: 1.5, dashes: [8, 4], smooth: { type: 'dynamic' }, label: '«include»', font: { color: '#7c3aed', size: 10, bold: true } },
+            ];
+
+            let nodes = allNodes, edges = allEdges;
+            if (filter) {
+                nodes = allNodes.filter(n => filter.includes(n.id));
+                const nids = new Set(nodes.map(n => n.id));
+                edges = allEdges.filter(e => nids.has(e.from) && nids.has(e.to));
+            }
+            return { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+        }
+
+        let net, currentFilter = null;
+        function draw(filter) {
+            currentFilter = filter;
+            const data = buildGraph(filter);
+            const opts = {
+                layout: { improvedLayout: true },
+                physics: {
+                    enabled: true, solver: 'forceAtlas2Based',
+                    forceAtlas2Based: { gravitationalConstant: -80, centralGravity: .015, springLength: 200, springConstant: .04, damping: .3, avoidOverlap: .9 },
+                    stabilization: { iterations: 160, fit: false }
+                },
+                interaction: { hover: true, navigationButtons: false, keyboard: true, dragNodes: true, dragView: true, zoomView: true },
+                nodes: { chosen: false },
+                edges: { smooth: { type: 'dynamic' }, font: { align: 'middle' } },
+            };
+            if (!net) {
+                net = new vis.Network(document.getElementById('network'), data, opts);
+                net.on('click', p => {
+                    const id = p.nodes && p.nodes[0];
+                    if (!id) return;
+                    const d = UC_DATA[id];
+                    if (!d) return;
+                    document.getElementById('uc-type').textContent = d.type;
+                    document.getElementById('uc-name').textContent = d.name;
+                    document.getElementById('uc-desc').textContent = d.desc;
+                    document.getElementById('uc-pre').textContent = d.pre || '—';
+                    document.getElementById('uc-post').textContent = d.post || '—';
+                    document.getElementById('uc-alts').textContent = d.alts || '—';
+                    document.getElementById('uc-extras').style.display = 'block';
+                });
+            } else {
+                net.setData(data);
+            }
+            setTimeout(() => net && net.fit({ animation: { duration: 300 } }), 80);
+        }
+
+        document.querySelectorAll('.btn[data-view]').forEach(b => {
+            b.onclick = () => {
+                document.querySelectorAll('.btn[data-view]').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                draw(VIEWS[b.dataset.view]);
+            };
+        });
+        document.getElementById('fit-btn').onclick = () => net && net.fit({ animation: { duration: 300 } });
+        draw(null);
+    </script>
+</body>
+
+</html>

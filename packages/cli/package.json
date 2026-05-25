@@ -3,6 +3,13 @@
     "version": "0.0.1",
     "description": "LotOS UI CLI — add components, start MCP server, manage registry.",
     "license": "MIT",
+    "author": "Lotos Technologies <lotos@lotos.dev>",
+    "homepage": "https://lotos-ui.vercel.app",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lotos-technologies/lotos-ui.git",
+        "directory": "packages/cli"
+    },
     "type": "module",
     "bin": {
         "lotos-ui": "dist/index.js"
@@ -14,7 +21,8 @@
         }
     },
     "files": [
-        "dist"
+        "dist",
+        "README.md"
     ],
     "publishConfig": {
         "access": "public"
@@ -35,6 +43,7 @@
     },
     "dependencies": {
         "@lotosui/core": "workspace:*",
+        "@lotosui/registry": "workspace:*",
         "commander": "^12.0.0",
         "ora": "^8.0.0",
         "chalk": "^5.3.0",

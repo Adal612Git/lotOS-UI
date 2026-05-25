@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "planned-not-executed",
+  "generatedFrom": "Phase 6 public clean-room audit",
+  "keep": [
+    "apps/docs",
+    "packages/registry",
+    "packages/core",
+    "packages/sentinel",
+    "packages/cli",
+    "packages/web-components",
+    "packages/claude-arm",
+    "public examples",
+    "public docs",
+    ".ai public-safe generated context",
+    "MCP public-safe spec"
+  ],
+  "removeBeforePublic": [
+    "packages/pro",
+    "packages/claude-arm-pro",
+    "packages/pro/.private-dist",
+    ".commercial-dist",
+    "premium assets",
+    ".env.local",
+    ".vercel/.env.*",
+    "client_secret*.json",
+    ".claude/settings.local.json",
+    "*.tgz local tarballs"
+  ],
+  "stub": [
+    {
+      "id": "premium-components",
+      "mode": "metadata-only",
+      "message": "Premium components are distributed through private access after entitlement."
+    },
+    {
+      "id": "commercial-assets",
+      "mode": "metadata-only",
+      "message": "Private bundles must live in private storage or a private release channel."
+    }
+  ],
+  "validationCommand": "pnpm run verify:public-clean-room",
+  "currentExpectedResult": "blocked"
+}

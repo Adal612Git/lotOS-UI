@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter @lotosui/core build && pnpm --filter @lotosui/claude-arm build && pnpm --filter web build",
+  "buildCommand": "pnpm --filter @lotosui/registry build && pnpm --filter @lotosui/core build && pnpm --filter @lotosui/claude-arm build && pnpm --filter web build",
   "installCommand": "pnpm install",
   "outputDirectory": "apps/web/.next",
   "framework": "nextjs"

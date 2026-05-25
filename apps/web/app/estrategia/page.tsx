@@ -28,7 +28,7 @@ export default function StrategyPage() {
                         STRATEGIC SALES ROADMAP // 2026.v1
                     </div>
                     <p style={{ maxWidth: 600, margin: '0 auto', fontSize: '16px', lineHeight: 1.6, fontWeight: 300 }}>
-                        "LotOS UI: componentes React listos para SaaS, con accesibilidad seria y enfoque AI-first (MCP/agent workflows), instalables en minutos."
+                        &quot;LotOS UI: componentes React listos para SaaS, con accesibilidad seria y enfoque AI-first (MCP/agent workflows), instalables en minutos.&quot;
                     </p>
                 </header>
 
@@ -107,7 +107,7 @@ export default function StrategyPage() {
                     <div className="font-pixel animate-pulse" style={{ fontSize: '18px', color: 'var(--pixel-yellow)', marginBottom: 20 }}>
                         FOUNDERS PACK ($19–$39)
                     </div>
-                    <div style={{ fontSize: '14px', marginBottom: 20 }}>"Free product, paid acceleration."</div>
+                    <div style={{ fontSize: '14px', marginBottom: 20 }}>&quot;Free product, paid acceleration.&quot;</div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 15, marginBottom: 30 }}>
                         <div style={{ padding: 10, background: 'rgba(255,255,255,0.05)' }}>
                             <div style={{ fontSize: '20px', marginBottom: 5 }}>💎</div>
@@ -130,7 +130,7 @@ export default function StrategyPage() {
                 {/* ─── Risk Mitigation ────────────────────────────────────────── */}
                 <section className="card card-magenta" style={{ borderColor: 'var(--pixel-red)', borderLeft: '8px solid var(--pixel-red)' }}>
                     <div className="font-pixel" style={{ fontSize: '14px', marginBottom: 20, color: 'var(--pixel-red)' }}>
-                        RISK ASSESSMENT: BRAND NAME "CLAUDE-ARM"
+                        RISK ASSESSMENT: BRAND NAME &quot;CLAUDE-ARM&quot;
                     </div>
                     <p style={{ fontSize: '13px', lineHeight: 1.6 }}>
                         NPM and Anthropic have policies against using registered trademarks in package names.
@@ -148,7 +148,7 @@ export default function StrategyPage() {
                         START MISSION NOW (90 MIN)
                     </div>
                     <div style={{ color: 'var(--pixel-green)', fontSize: '14px', lineHeight: 2 }}>
-                        <div> [ ] Set single CTA "Run the starter"</div>
+                        <div> [ ] Set single CTA &quot;Run the starter&quot;</div>
                         <div> [ ] Deploy Starter Repo to Vercel</div>
                         <div> [ ] Record 60s Trailer (Installer + WOW)</div>
                         <div> [ ] Open Discord with 4 channels</div>

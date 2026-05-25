@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0] - 2026-05-18
+
+### Changed
+
+- Public API clarified as the free evaluation layer with 8 React exports.
+- Registry, MCP, CLI, and release-candidate gates now verify public/pro boundaries before release.
+- Premium component source is excluded from public package files and must move to private distribution before public repo launch.
+
 All notable changes to `@lotosui/claude-arm` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

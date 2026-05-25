@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '../../auth-options';
 import { AuthAction } from '../auth-action';
 import { listUserPlans } from '../../lib/entitlements';
-import { isOwnerEmail } from '../../lib/owner';
+import { isAuthorizedEmail, isOwnerEmail } from '../../lib/owner';
 import { docsSalesPlans } from '../../lib/sales';
 import styles from '../commercial-shell.module.css';
 
@@ -20,6 +20,10 @@ export default async function DocsVaultPage() {
 
   if (!email) {
     redirect('/login');
+  }
+
+  if (!isAuthorizedEmail(email)) {
+    redirect('/login?error=AccessDenied');
   }
 
   const owner = isOwnerEmail(email);

@@ -1,24 +1,27 @@
-export const SUPPORTED_COMPONENTS = [
-    'accordion',
+export const FREE_COMPONENTS = [
     'alert',
-    'avatar',
     'badge',
     'button',
     'card',
+    'divider',
+    'empty-state',
+    'input',
+    'spinner',
+] as const;
+
+export const PRO_COMPONENTS = [
+    'accordion',
+    'avatar',
+    'breadcrumbs',
     'checkbox',
     'combobox',
-    'divider',
     'dropdown',
-    'empty-state',
     'form',
-    'input',
     'modal',
     'progress',
     'radio-group',
-    'breadcrumbs',
     'select',
     'skeleton',
-    'spinner',
     'stat',
     'switch',
     'table',
@@ -28,7 +31,20 @@ export const SUPPORTED_COMPONENTS = [
     'tooltip',
 ] as const;
 
+export const SUPPORTED_COMPONENTS = [...FREE_COMPONENTS, ...PRO_COMPONENTS] as const;
+
 export type SupportedComponent = (typeof SUPPORTED_COMPONENTS)[number];
+export type ComponentTier = 'free' | 'pro';
+
+export type ComponentCatalogEntry = {
+    id: SupportedComponent;
+    tier: ComponentTier;
+};
+
+export const COMPONENT_CATALOG: readonly ComponentCatalogEntry[] = SUPPORTED_COMPONENTS.map((id) => ({
+    id,
+    tier: FREE_COMPONENTS.includes(id as (typeof FREE_COMPONENTS)[number]) ? 'free' : 'pro',
+}));
 
 function toLookupKey(value: string): string {
     return value.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -47,4 +63,12 @@ export function componentToPascalCase(component: SupportedComponent): string {
         .split('-')
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join('');
+}
+
+export function getComponentTier(component: SupportedComponent): ComponentTier {
+    return FREE_COMPONENTS.includes(component as (typeof FREE_COMPONENTS)[number]) ? 'free' : 'pro';
+}
+
+export function getComponentImportPackage(component: SupportedComponent): '@lotosui/claude-arm' | '@lotosui/claude-arm-pro' {
+    return getComponentTier(component) === 'free' ? '@lotosui/claude-arm' : '@lotosui/claude-arm-pro';
 }

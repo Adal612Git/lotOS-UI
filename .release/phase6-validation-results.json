@@ -1,0 +1,106 @@
+{
+  "generatedFrom": "phase6-final-validation",
+  "generatedAt": "2026-05-19T03:51:38.1112603Z",
+  "results": [
+    {
+      "command": "pnpm run verify:private-workspace",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:no-secrets",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:no-premium-leak",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:public-release",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:registry",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:mcp",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:templates",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:generated-ai",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:drift",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:release-readiness",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:packages",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:package-exports",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:ci",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter web check-types",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter web build",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm run verify:public-clean-room",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:public-docs",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:public-ai-context",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:npm-tarballs",
+      "status": "FAIL",
+      "exitCode": 1
+    },
+    {
+      "command": "pnpm run verify:premium-stubs",
+      "status": "FAIL",
+      "exitCode": 1
+    }
+  ]
+}

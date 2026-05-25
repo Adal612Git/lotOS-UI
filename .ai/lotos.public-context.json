@@ -1,0 +1,106 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "status": "private-rc-public-blocked",
+  "publicReleaseReady": false,
+  "wideSalesReady": false,
+  "publicRoutes": [
+    "/",
+    "/ai",
+    "/templates",
+    "/docs",
+    "/examples",
+    "/demo",
+    "/design-lab",
+    "/multi-framework",
+    "/pricing",
+    "/after-purchase",
+    "/manage-subscription",
+    "/cancellations",
+    "/privacy",
+    "/provider",
+    "/refunds",
+    "/support",
+    "/terms",
+    "/playground",
+    "/estrategia",
+    "/architecture-map.html"
+  ],
+  "publicPackages": [
+    "@lotosui/registry",
+    "@lotosui/core",
+    "@lotosui/sentinel",
+    "@lotosui/cli",
+    "@lotosui/claude-arm",
+    "@lotosui/web-components"
+  ],
+  "assetRules": [
+    {
+      "id": "public-packages",
+      "tier": "free",
+      "pathCount": 6,
+      "rule": "May ship publicly when license, package files, exports, and dependency graph stay public-safe."
+    },
+    {
+      "id": "pro-source",
+      "tier": "pro",
+      "pathCount": 2,
+      "rule": "Private surface is represented as metadata only in public context."
+    },
+    {
+      "id": "private-dist",
+      "tier": "launch_pack",
+      "pathCount": 2,
+      "rule": "Private surface is represented as metadata only in public context."
+    }
+  ],
+  "premiumStubBoundaries": [
+    {
+      "id": "pro-components-metadata",
+      "publicRepresentation": "metadata-only",
+      "message": "Premium components are distributed through private access after entitlement.",
+      "allowedPublicFields": [
+        "id",
+        "name",
+        "tier",
+        "maturity",
+        "category",
+        "tags",
+        "runtimes",
+        "docs",
+        "tests"
+      ],
+      "forbiddenPublicFields": [
+        "sourcePath",
+        "assetPath",
+        "downloadUrl",
+        "privateImport",
+        "packageExport"
+      ]
+    },
+    {
+      "id": "commercial-bundles-placeholder",
+      "publicRepresentation": "metadata-only",
+      "message": "Premium components are distributed through private access after entitlement.",
+      "allowedPublicFields": [
+        "plan",
+        "tier",
+        "entitlementGate",
+        "supportContactPlaceholder"
+      ],
+      "forbiddenPublicFields": [
+        "bundlePath",
+        "signedUrl",
+        "storageBucket",
+        "privateAssetRoot"
+      ]
+    }
+  ],
+  "blockers": [
+    "Evacuate and rotate local secrets before any public branch or package release.",
+    "Detach premium source and private commercial bundles from the public worktree.",
+    "Replace premium source/code references with metadata-only stubs.",
+    "Regenerate public dependency graph, lockfile, AI context, and package tarball reports."
+  ],
+  "evidencePath": ".release/public-clean-room-report.json"
+}

@@ -3,6 +3,13 @@
     "version": "0.0.1",
     "description": "LotOS Sentinel — immune system for AI-generated UI. Validates, warns, blocks bad compositions.",
     "license": "MIT",
+    "author": "Lotos Technologies <lotos@lotos.dev>",
+    "homepage": "https://lotos-ui.vercel.app",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lotos-technologies/lotos-ui.git",
+        "directory": "packages/sentinel"
+    },
     "type": "module",
     "exports": {
         ".": {
@@ -12,8 +19,9 @@
     },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": [
-        "dist"
+  "files": [
+        "dist",
+        "README.md"
     ],
     "scripts": {
         "build": "tsc -p tsconfig.build.json",

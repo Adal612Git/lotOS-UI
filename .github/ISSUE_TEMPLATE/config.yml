@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://example.com/security-contact-placeholder
+    about: Do not file public issues for security vulnerabilities. Replace this placeholder before public launch.

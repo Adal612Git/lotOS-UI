@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a reproducible public-package or public-doc bug.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This report does not include secrets, tokens, private URLs, or buyer personal data.
+          required: true
+        - label: This is not a security vulnerability report.
+          required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include commands and expected/actual behavior.
+    validations:
+      required: true
+  - type: input
+    id: package
+    attributes:
+      label: Package or route
+      placeholder: "@lotosui/core or /templates"

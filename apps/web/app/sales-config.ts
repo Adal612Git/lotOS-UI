@@ -52,6 +52,7 @@ const directCheckoutConfigured =
   hasAutomaticCheckoutForPlan('launch_pack');
 const automaticUnlockConfigured =
   env.supabaseConfigured &&
+  env.lemonConfigured &&
   hasAutomaticCheckoutForPlan('solo') &&
   hasAutomaticCheckoutForPlan('pro');
 
@@ -186,9 +187,9 @@ export const commercialReadiness = {
 };
 
 export const foundersOffer = {
-  label: "Founders price",
+  label: "Founder launch price",
   limitLabel: "First 20 customers",
-  summary: "Phase 1 launch pricing stays locked only for the first 20 customers.",
+  summary: "Phase 1 launch pricing for early buyers while the premium surface is being validated.",
 };
 
 export const salesVerificationMarkers = ["Buy Solo", "Buy Pro", "Book Launch Pack"];

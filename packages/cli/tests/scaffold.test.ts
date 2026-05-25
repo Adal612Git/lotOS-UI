@@ -10,6 +10,7 @@ import {
     getComponentTemplate,
     scaffoldComponent,
 } from '../src/scaffold.js';
+import { createProgram } from '../src/index.js';
 
 describe('@lotos/cli catalog', () => {
     it('normalizes component names', () => {
@@ -28,6 +29,31 @@ describe('@lotos/cli catalog', () => {
         const template = getComponentTemplate('button');
         expect(template).toContain('LotosButton');
         expect(template).toContain('export function Button');
+    });
+});
+
+describe('@lotos/cli registry commands', () => {
+    it('prints registry templates', async () => {
+        const lines: string[] = [];
+        const program = createProgram((message) => lines.push(message), (message) => lines.push(message));
+
+        await program.parseAsync(['node', 'lotos-ui', 'templates']);
+
+        expect(lines.some((line) => line.includes('ai-agent-console'))).toBe(true);
+        expect(lines.some((line) => line.includes('saas-dashboard'))).toBe(true);
+    });
+
+    it('prints registry themes and AI tools', async () => {
+        const themeLines: string[] = [];
+        const toolLines: string[] = [];
+        const themeProgram = createProgram((message) => themeLines.push(message), (message) => themeLines.push(message));
+        const toolProgram = createProgram((message) => toolLines.push(message), (message) => toolLines.push(message));
+
+        await themeProgram.parseAsync(['node', 'lotos-ui', 'themes']);
+        await toolProgram.parseAsync(['node', 'lotos-ui', 'ai-tools']);
+
+        expect(themeLines.some((line) => line.includes('operator-grid'))).toBe(true);
+        expect(toolLines.some((line) => line.includes('/project-map'))).toBe(true);
     });
 });
 

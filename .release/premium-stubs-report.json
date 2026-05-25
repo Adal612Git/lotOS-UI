@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/verify-premium-stubs.mjs",
+  "generatedAt": "2026-05-19T03:51:38.044Z",
+  "result": "blocked",
+  "premiumStubsReady": false,
+  "redacted": true,
+  "findings": [
+    {
+      "severity": "blocker",
+      "id": "real_premium_payload_present_not_stub",
+      "path": "packages/claude-arm-pro/src"
+    },
+    {
+      "severity": "blocker",
+      "id": "real_premium_payload_present_not_stub",
+      "path": "packages/claude-arm-pro/dist"
+    },
+    {
+      "severity": "blocker",
+      "id": "real_premium_payload_present_not_stub",
+      "path": "packages/claude-arm-pro/tests"
+    },
+    {
+      "severity": "blocker",
+      "id": "real_premium_payload_present_not_stub",
+      "path": "packages/claude-arm-pro/stories"
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_stub_has_publish_surface",
+      "path": "packages/claude-arm-pro/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "real_premium_payload_present_not_stub",
+      "path": "packages/pro/.private-dist"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/docs/content/docs/start-here.mdx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/docs/content/docs/use-cases.mdx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/dropdown-demo/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/dropdown-demo/src/App.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/README.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/app/vault/launch/page.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/app/vault/page.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/lib/commercial-assets.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/package.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/claude-arm/src/index.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/cli/src/catalog.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/core/src/mcp/server.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": ".ai/lotos.assets.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": ".ai/lotos.commercial.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": ".ai/lotos.project-map.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": ".ai/lotos.release-readiness.json"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/app/playground/playground-cases.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "apps/web/app/playground/playground-client.tsx"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "docs/PACKAGE_PUBLISHING.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "docs/PREMIUM_SPLIT_PLAN.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "docs/PUBLIC_REPO_STRUCTURE.md"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/registry/src/lotos.manifest.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/claude-arm/dist/index.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/claude-arm/dist/index.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/cli/dist/catalog.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/cli/dist/catalog.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/core/dist/mcp/server.js"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/registry/dist/lotos.manifest.d.ts"
+    },
+    {
+      "severity": "blocker",
+      "id": "public_surface_references_premium_real_surface",
+      "path": "packages/registry/dist/lotos.manifest.js"
+    }
+  ]
+}

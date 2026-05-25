@@ -1,0 +1,193 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "product": {
+    "name": "LotOS UI",
+    "versionName": "Lotos UI 2.0",
+    "positioning": "AI-native universal UI platform",
+    "tagline": "Components, templates, themes, CLI, MCP, and agent-ready workflows.",
+    "locales": [
+      "en",
+      "es"
+    ],
+    "realRoot": "lotos-ui/"
+  },
+  "routes": {
+    "public": [
+      "/",
+      "/ai",
+      "/templates",
+      "/docs",
+      "/examples",
+      "/demo",
+      "/design-lab",
+      "/multi-framework",
+      "/pricing",
+      "/after-purchase",
+      "/manage-subscription",
+      "/cancellations",
+      "/privacy",
+      "/provider",
+      "/refunds",
+      "/support",
+      "/terms",
+      "/playground",
+      "/estrategia",
+      "/architecture-map.html"
+    ],
+    "auth": [
+      "/login",
+      "/vault",
+      "/checkout/[plan]",
+      "/api/auth/[...nextauth]"
+    ],
+    "entitlementGated": [
+      "/vault/solo",
+      "/vault/pro",
+      "/vault/launch",
+      "/api/download/[asset]"
+    ],
+    "ownerOnly": [
+      "/admin/entitlements",
+      "/api/entitlements/grant",
+      "/api/entitlements/revoke",
+      "/api/entitlements/lookup"
+    ],
+    "webhook": [
+      "/api/webhooks/lemon"
+    ]
+  },
+  "validationCommands": [
+    "pnpm run verify:structure",
+    "pnpm run verify:registry",
+    "pnpm run verify:mcp",
+    "pnpm run verify:templates",
+    "pnpm run verify:registry-runtimes",
+    "pnpm run verify:no-secrets",
+    "pnpm run verify:no-premium-leak",
+    "pnpm run verify:ai",
+    "pnpm run verify:drift",
+    "pnpm run verify:packages",
+    "pnpm run verify:routes",
+    "pnpm run verify:entitlement-boundary",
+    "pnpm run verify:webhook-lifecycle",
+    "pnpm run verify:webhook-contracts",
+    "pnpm run verify:entitlement-state-machine",
+    "pnpm run verify:supabase-migrations",
+    "pnpm run verify:entitlement-audit",
+    "pnpm run verify:admin-lifecycle",
+    "pnpm run verify:vault-lifecycle",
+    "pnpm run verify:rls-policy-plan",
+    "pnpm run verify:commercial-lifecycle",
+    "pnpm run verify:public-clean-room",
+    "pnpm run verify:public-docs",
+    "pnpm run verify:public-ai-context",
+    "pnpm run verify:npm-tarballs",
+    "pnpm run verify:premium-stubs",
+    "pnpm run verify:100",
+    "pnpm --filter @lotosui/core test",
+    "pnpm --filter @lotosui/cli test",
+    "pnpm --filter @lotosui/claude-arm test",
+    "pnpm --filter @lotosui/claude-arm-pro test",
+    "pnpm --filter @lotosui/web-components check-types",
+    "pnpm --filter web check-types",
+    "pnpm --filter docs check-types"
+  ],
+  "safetyBoundaries": [
+    "Use lotos-ui/ as the real repo root.",
+    "Never print or commit secrets.",
+    "Do not treat owner emails as buyer login allowlists.",
+    "Entitlements unlock premium buyer access.",
+    "Do not copy premium source into public packages.",
+    "Prefer manifest/MCP facts over scanning huge pages.",
+    "Keep generated output separate from hand-written source."
+  ],
+  "mcpEndpoints": [
+    "GET /project-map",
+    "GET /routes",
+    "GET /component-tiers",
+    "GET /pricing-plans",
+    "GET /asset-permissions",
+    "GET /env-requirements",
+    "GET /templates",
+    "GET /themes",
+    "GET /runtime-matrix",
+    "GET /release-readiness",
+    "GET /entitlement-flows",
+    "GET /templates/:id/prompt"
+  ],
+  "releaseReadiness": {
+    "score": 74,
+    "status": "private-rc-public-blocked",
+    "publicCleanRoom": {
+      "ready": false,
+      "status": "public-clean-room-blocked",
+      "evidencePath": ".release/public-clean-room-report.json",
+      "validationCommand": "pnpm run verify:public-clean-room",
+      "requiredBeforePublicRepo": [
+        "Evacuate and rotate local secrets before any public branch or package release.",
+        "Detach packages/claude-arm-pro, packages/pro, .commercial-dist, and private assets from the public worktree.",
+        "Replace premium source/code references with metadata-only stubs.",
+        "Regenerate public dependency graph, lockfile, AI context, and package tarball reports."
+      ],
+      "expectedCurrentBlockers": [
+        "Local secrets are intentionally detected by verify:no-secrets.",
+        "Premium source and commercial bundles are still present in the private workspace.",
+        "Public AI/MCP context still exposes private path metadata until sanitized projection exists."
+      ]
+    },
+    "lifecycleValidation": {
+      "wide_sales_ready": false,
+      "migrations_local_validated": true,
+      "webhook_contracts_validated": true,
+      "audit_validated": true,
+      "entitlement_boundary_validated": true,
+      "supabase_remote_validated": false,
+      "lemon_remote_validated": false,
+      "evidencePath": ".release/lifecycle-validation.json",
+      "runbook": "docs/STAGING_LIFECYCLE_TEST_RUNBOOK.md",
+      "validationCommands": [
+        "pnpm run verify:entitlement-boundary",
+        "pnpm run verify:webhook-lifecycle",
+        "pnpm run verify:webhook-contracts",
+        "pnpm run verify:supabase-migrations",
+        "pnpm run verify:entitlement-audit",
+        "pnpm run verify:commercial-lifecycle",
+        "pnpm run verify:rls-policy-plan"
+      ],
+      "requiredHumanTests": [
+        "Back up staging public.entitlements before migration.",
+        "Apply lifecycle and audit migrations in staging Supabase.",
+        "Validate RLS posture for entitlement and audit tables.",
+        "Confirm purchase creates active entitlement.",
+        "Confirm duplicate webhook delivery is idempotent.",
+        "Confirm invalid Lemon signature does not mutate entitlements.",
+        "Confirm payment failed, pause, resume, cancellation, expiration, revocation, and paid recovery.",
+        "Confirm audit rows do not store raw emails, secrets, raw payloads, cookies, or auth headers."
+      ]
+    },
+    "blockers": [
+      "Rotate/remove any local secrets before public sharing.",
+      "Move premium source/assets to private repo or private registry before public launch.",
+      "Set legal provider and support email env vars in deployment.",
+      "Mark pricing as placeholder until final commercial approval.",
+      "Add subscription cancellation/failed-payment automation and indexed lifecycle columns before selling recurring monthly access at scale.",
+      "Validate Lemon event names and lifecycle semantics against live provider docs before broad sales.",
+      "Keep wide sales blocked until Supabase and Lemon staging validation evidence exists.",
+      "Keep public clean-room blocked until secrets are evacuated and premium source/assets are detached or replaced by metadata-only stubs."
+    ],
+    "passingSignals": [
+      "verify:100 passes",
+      "verify:ai passes",
+      "core, cli, public React, pro React, web-components, web, and docs checks pass",
+      "Buyer login is separated from owner/admin authorization",
+      "Manual test, paid recovery, and revocation paths are owner-only and metadata-audited",
+      "Local Supabase lifecycle and audit migrations exist but are not remotely executed",
+      "Sanitized Lemon fixtures and local lifecycle contract gates exist",
+      "Wide-sales evidence is machine-readable and intentionally blocked by remote validation flags",
+      "Private workspace mode is allowed to warn when premium is present",
+      "Public release mode is expected to fail until premium and local secrets are split",
+      "Public clean-room simulator and machine-readable reports exist to explain blockers without deleting local private assets"
+    ]
+  }
+}

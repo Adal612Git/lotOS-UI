@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/verify-public-docs.mjs",
+  "generatedAt": "2026-05-19T03:51:16.257Z",
+  "result": "blocked",
+  "publicDocsReady": false,
+  "redacted": true,
+  "scanned": [
+    "README.md",
+    "apps/docs/README.md",
+    "apps/docs/content/docs/ai-integration.mdx",
+    "apps/docs/content/docs/architecture.mdx",
+    "apps/docs/content/docs/components/accordion.mdx",
+    "apps/docs/content/docs/components/alert.mdx",
+    "apps/docs/content/docs/components/avatar.mdx",
+    "apps/docs/content/docs/components/badge.mdx",
+    "apps/docs/content/docs/components/breadcrumbs.mdx",
+    "apps/docs/content/docs/components/button.mdx",
+    "apps/docs/content/docs/components/card.mdx",
+    "apps/docs/content/docs/components/checkbox.mdx",
+    "apps/docs/content/docs/components/combobox.mdx",
+    "apps/docs/content/docs/components/divider.mdx",
+    "apps/docs/content/docs/components/dropdown.mdx",
+    "apps/docs/content/docs/components/empty-state.mdx",
+    "apps/docs/content/docs/components/form.mdx",
+    "apps/docs/content/docs/components/input.mdx",
+    "apps/docs/content/docs/components/meta.json",
+    "apps/docs/content/docs/components/modal.mdx",
+    "apps/docs/content/docs/components/progress.mdx",
+    "apps/docs/content/docs/components/radio-group.mdx",
+    "apps/docs/content/docs/components/select.mdx",
+    "apps/docs/content/docs/components/skeleton.mdx",
+    "apps/docs/content/docs/components/spinner.mdx",
+    "apps/docs/content/docs/components/stat.mdx",
+    "apps/docs/content/docs/components/switch.mdx",
+    "apps/docs/content/docs/components/table.mdx",
+    "apps/docs/content/docs/components/tabs.mdx",
+    "apps/docs/content/docs/components/textarea.mdx",
+    "apps/docs/content/docs/components/toast.mdx",
+    "apps/docs/content/docs/components/tooltip.mdx",
+    "apps/docs/content/docs/index.mdx",
+    "apps/docs/content/docs/installation.mdx",
+    "apps/docs/content/docs/mcp-spec.mdx",
+    "apps/docs/content/docs/meta.json",
+    "apps/docs/content/docs/multi-runtime.mdx",
+    "apps/docs/content/docs/start-here.mdx",
+    "apps/docs/content/docs/use-cases.mdx",
+    "apps/docs/app/api/auth/[...nextauth]/route.ts",
+    "apps/docs/app/auth-action.tsx",
+    "apps/docs/app/docs/layout.tsx",
+    "apps/docs/app/docs/[[...slug]]/page.tsx",
+    "apps/docs/app/lang-toggle.tsx",
+    "apps/docs/app/layout.tsx",
+    "apps/docs/app/login/page.tsx",
+    "apps/docs/app/page.tsx",
+    "apps/docs/app/pricing/page.tsx",
+    "apps/docs/app/vault/page.tsx",
+    "apps/web/app/admin/entitlements/page.tsx",
+    "apps/web/app/after-purchase/page.tsx",
+    "apps/web/app/ai/page.tsx",
+    "apps/web/app/api/auth/[...nextauth]/route.ts",
+    "apps/web/app/api/download/[asset]/route.ts",
+    "apps/web/app/api/entitlements/grant/route.ts",
+    "apps/web/app/api/entitlements/lookup/route.ts",
+    "apps/web/app/api/entitlements/revoke/route.ts",
+    "apps/web/app/api/webhooks/lemon/route.ts",
+    "apps/web/app/auth-action.tsx",
+    "apps/web/app/cancellations/page.tsx",
+    "apps/web/app/checkout/[plan]/page.tsx",
+    "apps/web/app/commercial-blocks.tsx",
+    "apps/web/app/commercial-footer.tsx",
+    "apps/web/app/commercial-page-shell.tsx",
+    "apps/web/app/demo/components/page.tsx",
+    "apps/web/app/demo/con-lotos-desktop/page.tsx",
+    "apps/web/app/demo/con-lotos-desktop-langs/page.tsx",
+    "apps/web/app/demo/con-lotos-hoja/page.tsx",
+    "apps/web/app/demo/con-lotos-web/page.tsx",
+    "apps/web/app/demo/operator/page.tsx",
+    "apps/web/app/demo/page.tsx",
+    "apps/web/app/demo/sin-lotos-desktop/page.tsx",
+    "apps/web/app/demo/sin-lotos-desktop-langs/page.tsx",
+    "apps/web/app/demo/sin-lotos-hoja/page.tsx",
+    "apps/web/app/demo/sin-lotos-web/page.tsx",
+    "apps/web/app/demo/vault/page.tsx",
+    "apps/web/app/design-lab/layout.tsx",
+    "apps/web/app/design-lab/page.tsx",
+    "apps/web/app/estrategia/page.tsx",
+    "apps/web/app/examples/gallery-data.ts",
+    "apps/web/app/examples/page.tsx",
+    "apps/web/app/grant-access-form.tsx",
+    "apps/web/app/lang-toggle.tsx",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/loading.tsx",
+    "apps/web/app/login/page.tsx",
+    "apps/web/app/lotos-surface.tsx",
+    "apps/web/app/manage-subscription/page.tsx",
+    "apps/web/app/multi-framework/page.tsx",
+    "apps/web/app/not-found.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/app/playground/page.tsx",
+    "apps/web/app/playground/playground-cases.tsx",
+    "apps/web/app/playground/playground-client.tsx",
+    "apps/web/app/pricing/page.tsx",
+    "apps/web/app/privacy/page.tsx",
+    "apps/web/app/provider/page.tsx",
+    "apps/web/app/refunds/page.tsx",
+    "apps/web/app/sales-config.ts",
+    "apps/web/app/support/page.tsx",
+    "apps/web/app/templates/page.tsx",
+    "apps/web/app/terms/page.tsx",
+    "apps/web/app/vault/launch/page.tsx",
+    "apps/web/app/vault/page.tsx",
+    "apps/web/app/vault/pro/page.tsx",
+    "apps/web/app/vault/solo/page.tsx",
+    "packages/registry/README.md",
+    "packages/core/README.md",
+    "packages/sentinel/README.md",
+    "packages/cli/README.md",
+    "packages/claude-arm/README.md",
+    "packages/web-components/README.md"
+  ],
+  "findings": [
+    {
+      "severity": "warning",
+      "id": "private_path_reference_requires_clean_room_context",
+      "path": "README.md",
+      "line": 284
+    },
+    {
+      "severity": "warning",
+      "id": "private_path_reference_requires_clean_room_context",
+      "path": "README.md",
+      "line": 309
+    },
+    {
+      "severity": "warning",
+      "id": "private_path_reference_requires_clean_room_context",
+      "path": "README.md",
+      "line": 314
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/components/page.tsx",
+      "line": 146
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-desktop/page.tsx",
+      "line": 438
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-desktop-langs/page.tsx",
+      "line": 300
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-hoja/page.tsx",
+      "line": 400
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 10
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 11
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 12
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 13
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 14
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 252
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/con-lotos-web/page.tsx",
+      "line": 469
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 10
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 11
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 12
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 13
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 14
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 30
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/demo/sin-lotos-web/page.tsx",
+      "line": 161
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/grant-access-form.tsx",
+      "line": 132
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/grant-access-form.tsx",
+      "line": 287
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/grant-access-form.tsx",
+      "line": 399
+    },
+    {
+      "severity": "warning",
+      "id": "private_path_reference_requires_clean_room_context",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 35
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 221
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 222
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 297
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 308
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 319
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 330
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 341
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 352
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 363
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 374
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 385
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 396
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 407
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 418
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 429
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 440
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 451
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 462
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 473
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 484
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-cases.tsx",
+      "line": 495
+    },
+    {
+      "severity": "blocker",
+      "id": "premium_package_instruction_in_public_docs",
+      "path": "apps/web/app/playground/playground-client.tsx",
+      "line": 157
+    },
+    {
+      "severity": "warning",
+      "id": "non_reserved_email_in_public_docs",
+      "path": "packages/web-components/README.md",
+      "line": 23
+    }
+  ]
+}

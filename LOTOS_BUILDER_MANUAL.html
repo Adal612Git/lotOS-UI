@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI — Builder Manual 2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04101b;
+            --bg2: #0a1929;
+            --bg3: #0d2037;
+            --line: rgba(120, 149, 184, .16);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf;
+            --p: #f472b6
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            min-height: 100vh;
+            background: radial-gradient(ellipse 1000px 600px at 5% -10%, rgba(45, 212, 191, .1), transparent 50%),
+                radial-gradient(ellipse 800px 500px at 98% 5%, rgba(167, 139, 250, .1), transparent 50%),
+                radial-gradient(ellipse 600px 400px at 50% 110%, rgba(251, 113, 133, .07), transparent 50%),
+                linear-gradient(160deg, var(--bg), #071525 50%, var(--bg2))
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 36px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .85);
+            backdrop-filter: blur(20px)
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .logo-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--c);
+            box-shadow: 0 0 12px var(--c);
+            animation: pulse 2.5s ease infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(.75)
+            }
+        }
+
+        .logo-text {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--c)
+        }
+
+        .logo-sub {
+            font-size: 10px;
+            color: var(--mut);
+            margin-left: 4px;
+            font-weight: 500
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px
+        }
+
+        .nl {
+            padding: 5px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(255, 255, 255, .02);
+            color: var(--mut);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all .18s
+        }
+
+        .nl:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .35)
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 36px 60px;
+            text-align: center
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(103, 232, 249, .25);
+            background: rgba(103, 232, 249, .06);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--c);
+            margin-bottom: 28px
+        }
+
+        .chip-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--c);
+            animation: pulse 2s ease infinite
+        }
+
+        h1 {
+            font-size: clamp(44px, 8vw, 88px);
+            font-weight: 900;
+            line-height: .9;
+            letter-spacing: -.06em;
+            margin-bottom: 22px;
+            background: linear-gradient(105deg, var(--c) 0%, var(--b) 30%, var(--v) 58%, var(--r) 82%, var(--a) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .hero-p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--mut);
+            max-width: 640px;
+            margin: 0 auto 48px
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 24px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 0
+        }
+
+        .hs strong {
+            display: block;
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1;
+            color: #fff
+        }
+
+        .hs span {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-top: 3px;
+            display: block
+        }
+
+        /* SECTION */
+        .sec {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 64px 36px
+        }
+
+        .sec-hd {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 36px
+        }
+
+        .sec-num {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -.05em;
+            color: rgba(255, 255, 255, .06);
+            flex-shrink: 0
+        }
+
+        .sec-info h2 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -.04em;
+            line-height: 1
+        }
+
+        .sec-info p {
+            font-size: 13px;
+            color: var(--mut);
+            margin-top: 5px;
+            line-height: 1.6;
+            max-width: 560px
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--line);
+            margin: 0 36px
+        }
+
+        /* CAPABILITY GRID */
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px
+        }
+
+        .cap-card {
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(120, 149, 184, .16);
+            background: rgba(8, 21, 37, .55);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
+            position: relative;
+            overflow: hidden;
+            transition: transform .22s, border-color .22s, box-shadow .22s
+        }
+
+        .cap-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(120, 149, 184, .3);
+            box-shadow: 0 24px 56px rgba(0, 0, 0, .3)
+        }
+
+        .cap-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--tone, var(--c)) 0%, transparent 70%);
+            opacity: .07;
+            pointer-events: none;
+            transition: opacity .3s
+        }
+
+        .cap-card:hover::after {
+            opacity: .14
+        }
+
+        .cap-icon {
+            font-size: 28px;
+            margin-bottom: 14px
+        }
+
+        .cap-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--tone, var(--c));
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .cap-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--tone, var(--c))
+        }
+
+        .cap-card h3 {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 8px
+        }
+
+        .cap-card p {
+            font-size: 12px;
+            color: var(--mut);
+            line-height: 1.65;
+            margin-bottom: 14px
+        }
+
+        .cmd {
+            background: rgba(2, 6, 23, .7);
+            border: 1px solid rgba(120, 149, 184, .16);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--c);
+            margin-bottom: 6px;
+            position: relative;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-all
+        }
+
+        .cmd-label {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 4px
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 12px
+        }
+
+        .tag {
+            padding: 3px 8px;
+            border-radius: 5px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(255, 255, 255, .04);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: var(--mut)
+        }
+
+        /* PROJECT CARDS */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 22px
+        }
+
+        .proj {
+            border-radius: 22px;
+            padding: 26px;
+            border: 1px solid rgba(120, 149, 184, .16);
+            background: linear-gradient(135deg, rgba(8, 21, 37, .7), rgba(8, 21, 37, .45));
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            transition: transform .22s, border-color .22s;
+            cursor: default
+        }
+
+        .proj:hover {
+            transform: translateY(-4px);
+            border-color: rgba(120, 149, 184, .28)
+        }
+
+        .proj-glow {
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--tone, var(--c)) 0%, transparent 65%);
+            opacity: .06;
+            pointer-events: none
+        }
+
+        .proj-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px
+        }
+
+        .proj-emoji {
+            font-size: 32px
+        }
+
+        .proj-level {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 5px
+        }
+
+        .lv-starter {
+            background: rgba(52, 211, 153, .12);
+            border: 1px solid rgba(52, 211, 153, .25);
+            color: var(--g)
+        }
+
+        .lv-pro {
+            background: rgba(96, 165, 250, .12);
+            border: 1px solid rgba(96, 165, 250, .25);
+            color: var(--b)
+        }
+
+        .lv-epic {
+            background: rgba(167, 139, 250, .12);
+            border: 1px solid rgba(167, 139, 250, .25);
+            color: var(--v)
+        }
+
+        .proj h3 {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            margin-bottom: 6px
+        }
+
+        .proj-sub {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--tone, var(--c));
+            margin-bottom: 10px
+        }
+
+        .proj p {
+            font-size: 12px;
+            color: var(--mut);
+            line-height: 1.65;
+            margin-bottom: 14px
+        }
+
+        .proj-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 14px
+        }
+
+        .proj-steps {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .proj-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--mut);
+            line-height: 1.45
+        }
+
+        .step-n {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(120, 149, 184, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--tone, var(--c));
+            flex-shrink: 0
+        }
+
+        /* RUNTIME TABLE */
+        .rt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px
+        }
+
+        .rt-table th {
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            border-bottom: 1px solid rgba(120, 149, 184, .14)
+        }
+
+        .rt-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(120, 149, 184, .08);
+            vertical-align: top
+        }
+
+        .rt-table tr:hover td {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        .rt-table code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--c);
+            background: rgba(103, 232, 249, .07);
+            padding: 2px 5px;
+            border-radius: 4px
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 5px
+        }
+
+        .s-stable {
+            background: #34d399
+        }
+
+        .s-alpha {
+            background: #fbbf24
+        }
+
+        .s-proto {
+            background: #60a5fa
+        }
+
+        /* FAQ / TIPS */
+        .tip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px
+        }
+
+        .tip {
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(120, 149, 184, .14);
+            background: rgba(8, 21, 37, .5)
+        }
+
+        .tip-icon {
+            font-size: 22px;
+            margin-bottom: 10px
+        }
+
+        .tip h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -.01em
+        }
+
+        .tip p {
+            font-size: 11px;
+            color: var(--mut);
+            line-height: 1.65
+        }
+
+        .tip .cmd {
+            margin-top: 10px;
+            font-size: 10px
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: gap 12px;
+            background: rgba(4, 16, 27, .6)
+        }
+
+        .ft-logo {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--c)
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        @media(max-width:640px) {
+
+            nav,
+            footer,
+            .sec {
+                padding-left: 16px;
+                padding-right: 16px
+            }
+
+            .divider {
+                margin: 0 16px
+            }
+
+            h1 {
+                font-size: 48px
+            }
+
+            .hero {
+                padding: 48px 16px 40px
+            }
+
+            .hero-stats {
+                gap: 24px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-dot"></div><span class="logo-text">LotOS UI</span><span class="logo-sub">Builder Manual
+                2026</span>
+        </div>
+        <div class="nav-links">
+            <a class="nl" href="#capacidades">Capacidades</a>
+            <a class="nl" href="#proyectos">Proyectos</a>
+            <a class="nl" href="#runtimes">Runtimes</a>
+            <a class="nl" href="#tips">Tips</a>
+            <a class="nl" href="ENGINEERING_DOCS/index.html">Ingeniería →</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-chip"><span class="chip-dot"></span>Manual Interactivo</div>
+        <h1>Todo lo que<br>puedes construir</h1>
+        <p class="hero-p">LotOS UI es un design system multi-runtime: un mismo lenguaje visual para React, PHP, Python,
+            Java, Go, .NET, C, C++, desktop nativo, macros de office y agentes IA. Este manual te guía proyecto por
+            proyecto.</p>
+        <div class="hero-stats">
+            <div class="hs"><strong>8</strong><span>Runtimes web</span></div>
+            <div class="hs"><strong>4</strong><span>Desktop langs</span></div>
+            <div class="hs"><strong>27+</strong><span>Componentes</span></div>
+            <div class="hs"><strong>1</strong><span>Protocolo MCP</span></div>
+            <div class="hs"><strong>∞</strong><span>Productos posibles</span></div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SECTION 1: CAPACIDADES -->
+    <section class="sec" id="capacidades">
+        <div class="sec-hd">
+            <div class="sec-num">01</div>
+            <div class="sec-info">
+                <h2
+                    style="background:linear-gradient(90deg,var(--c),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent">
+                    Capacidades del Sistema</h2>
+                <p>Todo lo que LotOS UI puede hacer, agrupado por área. Cada bloque es una puerta de entrada a un tipo
+                    de producto diferente.</p>
+            </div>
+        </div>
+        <div class="cap-grid" id="cap-grid"></div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SECTION 2: PROYECTOS -->
+    <section class="sec" id="proyectos">
+        <div class="sec-hd">
+            <div class="sec-num">02</div>
+            <div class="sec-info">
+                <h2
+                    style="background:linear-gradient(90deg,var(--v),var(--r));-webkit-background-clip:text;background-clip:text;color:transparent">
+                    Proyectos que Brillan</h2>
+                <p>Ideas concretas ordenadas de más simple a más épico. Cada una usa LotOS UI como protagonista visual y
+                    técnico.</p>
+            </div>
+        </div>
+        <div class="proj-grid" id="proj-grid"></div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SECTION 3: RUNTIMES TABLE -->
+    <section class="sec" id="runtimes">
+        <div class="sec-hd">
+            <div class="sec-num">03</div>
+            <div class="sec-info">
+                <h2
+                    style="background:linear-gradient(90deg,var(--g),var(--t));-webkit-background-clip:text;background-clip:text;color:transparent">
+                    Tabla de Runtimes</h2>
+                <p>Referencia rápida de cada adapter, su estado, el comando de inicio y dónde vive en el monorepo.</p>
+            </div>
+        </div>
+        <div
+            style="border-radius:18px;border:1px solid var(--line);background:rgba(8,21,37,.55);backdrop-filter:blur(12px);overflow:auto">
+            <table class="rt-table" id="rt-table"></table>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SECTION 4: TIPS -->
+    <section class="sec" id="tips">
+        <div class="sec-hd">
+            <div class="sec-num">04</div>
+            <div class="sec-info">
+                <h2
+                    style="background:linear-gradient(90deg,var(--a),var(--r));-webkit-background-clip:text;background-clip:text;color:transparent">
+                    Tips & Arquitectura</h2>
+                <p>Patrones probados, flujos recomendados y atajos que te ahorran horas.</p>
+            </div>
+        </div>
+        <div class="tip-grid" id="tip-grid"></div>
+    </section>
+
+    <footer>
+        <span class="ft-logo">LotOS UI</span>
+        <p>Builder Manual 2026 · LotosTechnologies · Todos los runtimes, un solo design system</p>
+        <p style="color:var(--mut);font-size:10px">Última actualización: Marzo 2026</p>
+    </footer>
+
+    <script>
+        // ─── DATA ────────────────────────────────────────────────
+        const CAPS = [
+            { icon: '⚛️', tone: 'var(--c)', tag: 'React · npm', title: '@lotosui/claude-arm', desc: '27+ componentes React listos para producción. Button, Card, Badge, Input, Modal, Table, Dropdown, Tabs y más. Dark theme por defecto, TypeScript first.', cmd: 'npm install @lotosui/claude-arm\nnpm install react react-dom', tags: ['React 18+', 'TypeScript', 'Tree-shaking', 'Dark theme', '27+ components'] },
+            { icon: '🌐', tone: 'var(--b)', tag: 'Web Standards', title: '@lotosui/web-components', desc: 'Los mismos componentes como Custom Elements estándar. Úsalos en CUALQUIER framework o HTML plano: Vue, Svelte, Angular, vanilla JS.', cmd: 'npm install @lotosui/web-components\n<lotos-button variant="solid">Click</lotos-button>', tags: ['Custom Elements', 'Framework-agnóstico', 'Shadow DOM', 'Lit-based'] },
+            { icon: '🛠️', tone: 'var(--a)', tag: 'CLI · Scaffolding', title: '@lotosui/cli', desc: 'Genera proyectos completos con LotOS UI ya integrado. Soporta 8 runtimes web y 4 desktop. Un comando y tienes hello world funcionando.', cmd: 'npx @lotosui/cli stack-init -s next -o mi-proyecto\nnpx @lotosui/cli desktop-init -l python -o mi-desktop', tags: ['stack-init', 'desktop-init', '8 runtimes', 'Templates free/pro'] },
+            { icon: '🤖', tone: 'var(--v)', tag: 'AI · Protocol', title: 'Protocolo MCP', desc: 'Endpoint para agentes IA (Claude, GPT, Gemini). GET /components descubre el sistema. POST /components/render convierte cualquier componente a cualquier runtime.', cmd: 'GET  /components\nGET  /runtimes\nPOST /components/render\n  { component, runtime, props }', tags: ['Claude', 'GPT', 'Gemini', 'React', 'Blade', 'Web Component'] },
+            { icon: '🎨', tone: 'var(--p)', tag: 'Design · Figma', title: 'Figma Plugin', desc: 'Plugin de Figma para exportar diseños directamente a código LotOS UI. Genera JSX, Blade o Web Components desde tus frames.', cmd: 'packages/figma-plugin/', tags: ['Figma API', 'Code export', 'Design tokens', 'Auto-layout'] },
+            { icon: '🔐', tone: 'var(--g)', tag: 'Auth · Vault', title: 'Vault + Entitlements', desc: 'Sistema completo de tiers: Free, Solo, Pro, Full. Supabase para entitlements, Google OAuth, Lemon Squeezy como payment rail. Webhook idempotente incluido.', cmd: '# Unlock flow:\nGET  /pricing  →  checkout\nPOST /api/grant →  vault unlock', tags: ['Supabase', 'Google OAuth', 'Lemon Squeezy', 'Entitlements'] },
+            { icon: '🧪', tone: 'var(--t)', tag: 'Quality · CI', title: 'Quality Gates + CI', desc: 'verify:100, verify:commercial, verify:ops protegen cada release. GitHub Actions publica en npm sin OTP. Modo degradado en Windows.', cmd: 'pnpm verify:100\npnpm verify:commercial\npnpm verify:ops', tags: ['GitHub Actions', 'verify:100', 'publish npm', 'Windows safe'] },
+            { icon: '📚', tone: 'var(--b)', tag: 'Storybook · Docs', title: 'Storybook + Docs Site', desc: 'Storybook con stories para cada componente y controles de props. Portal de docs en apps/docs con rutas mdx y discovery técnico.', cmd: 'pnpm storybook   # packages/claude-arm\npnpm dev         # apps/docs', tags: ['Storybook 8', 'MDX', 'Discovery', 'Vite'] },
+        ];
+
+        const PROJECTS = [
+            { emoji: '🚀', tone: 'var(--c)', level: 'starter', levelTxt: 'Starter', title: 'Dashboard SaaS en React', sub: 'React + Next.js + @lotosui/claude-arm', desc: 'Panel de análisis con sidebar, tarjetas de métricas, tablas y gráficos. El clásico "primer producto" que impresiona a cualquier cliente.', stack: ['Next.js 15', '@lotosui/claude-arm', 'Supabase', 'Vercel'], steps: ['Instalar @lotosui/claude-arm', 'stack-init -s next -o dashboard', 'Agregar auth con NextAuth + Google', 'Conectar Supabase para datos', 'Deploy en Vercel'] },
+            { emoji: '⚗️', tone: 'var(--b)', level: 'starter', levelTxt: 'Starter', title: 'API REST con Laravel + LotOS', sub: 'PHP · lotos-laravel · Blade', desc: 'Backend Laravel con UI admin generada con Blade components de LotOS. Panel CRUD elegante sin tocar React.', stack: ['Laravel 11', 'lotos-laravel', 'MySQL', 'Blade'], steps: ['stack-init -s php-laravel-starter', 'Copiar @lotosui/lotos-card a tu views', 'php artisan serve', 'Agregar CRUD con Blade components'] },
+            { emoji: '🐍', tone: 'var(--g)', level: 'starter', levelTxt: 'Starter', title: 'App Desktop Python', sub: 'Python · pywebview · @lotosui/web-components', desc: 'App nativa para Windows/Mac/Linux con UI LotOS renderizada en webview. Perfecta para herramientas internas o apps de campo.', stack: ['Python 3.12', 'pywebview', 'web-components', 'PyInstaller'], steps: ['desktop-init -l python -t control-center-desktop', 'pip install pywebview', 'python main.py', 'Compilar con PyInstaller para distribución'] },
+            { emoji: '🦀', tone: 'var(--r)', level: 'pro', levelTxt: 'Pro', title: 'App Desktop Rust', sub: 'Rust · wry · Web Components', desc: 'La app desktop más rápida del mundo con UI premium LotOS. Rust backend + webview LotOS frontend. Ideal para apps de productividad.', stack: ['Rust', 'wry (Tauri)', 'web-components', 'cargo build'], steps: ['desktop-init -l rust', 'cargo build', 'Integrar IPC entre Rust y JS', 'Crear WebAssembly modules', 'Distribuir con cargo bundle'] },
+            { emoji: '☕', tone: 'var(--a)', level: 'pro', levelTxt: 'Pro', title: 'App Empresarial Java + Spring', sub: 'Java · Spring Boot · lotos-spring · Thymeleaf', desc: 'Aplicación enterprise con Thymeleaf + LotOS. UI consistente en toda la suite. Stack favorito de corporativos con diseño moderno.', stack: ['Spring Boot 3', 'lotos-spring', 'Thymeleaf', 'MongoDB'], steps: ['stack-init -s java-spring-starter -d mongodb', 'mvn spring-boot:run', 'Agregar lotos-spring dialect', 'Crear templates Thymeleaf con LotOS', 'Deploy en Google Cloud Run'] },
+            { emoji: '🔷', tone: 'var(--b)', level: 'pro', levelTxt: 'Pro', title: 'Microservicio .NET + Razor', sub: 'C# · ASP.NET Core · lotos-dotnet', desc: 'API y UI en .NET con Razor Pages y LotOS. El stack favorito de enterprise Windows. Razor tag helpers para cada componente.', stack: ['.NET 9', 'ASP.NET Core', 'lotos-dotnet', 'SQL Server'], steps: ['stack-init -s dotnet-razor-starter', 'dotnet run', 'Usar <lotos-card> en Razor', 'Integrar Azure AD si necesitas auth', 'Publicar en Azure App Service'] },
+            { emoji: '🐹', tone: 'var(--t)', level: 'pro', levelTxt: 'Pro', title: 'Servidor Go + templ', sub: 'Go · html/template · lotos-go', desc: 'El backend más eficiente del planeta con UI LotOS. Go templates con componentes LotOS. Millones de requests, diseño premium.', stack: ['Go 1.22', 'lotos-go', 'templ', 'PostgreSQL'], steps: ['stack-init -s go-templ-starter', 'go run main.go', 'Integrar lotos-go helpers', 'Usar HTMX para interactividad', 'docker build y deploy'] },
+            { emoji: '🧬', tone: 'var(--v)', level: 'pro', levelTxt: 'Pro', title: 'Agente IA con MCP', sub: 'AI Agent · Protocolo MCP · @lotosui/core', desc: 'Agente IA que genera UIs completas bajo demanda. Le das los requerimientos y produce código de componentes LotOS en el runtime que quieras.', stack: ['Claude API', 'MCP Server', '@lotosui/core', 'Node.js'], steps: ['Levantar MCP server: node packages/core/examples/mcp-render-demo.mjs', 'GET /components para ver capacidades', 'POST /components/render con runtime elegido', 'Integrar en pipeline de Claude/GPT', 'Generar apps completas con prompts'] },
+            { emoji: '⚡', tone: 'var(--c)', level: 'epic', levelTxt: 'Epic', title: 'C/C++ Desktop App', sub: 'C++ · webview · @lotosui/web-components', desc: 'La combinación más brutal: performance nativa de C++ con UI premium LotOS. Webview embebido, IPC JSON, componentes web como thin layer visual.', stack: ['C++17', 'webview library', 'web-components CDN', 'CMake'], steps: ['desktop-init -l cpp', 'cmake -B build && cmake --build build', 'Cargar UI via webview::navigate()', 'IPC: webview bind() para comunicar C++ ↔ JS', 'Compilar estático para distribución zero-deps'] },
+            { emoji: '📊', tone: 'var(--a)', level: 'epic', levelTxt: 'Epic', title: 'Excel / LibreOffice Macro + LotOS', sub: 'VBA · Basic · @lotosui macros', desc: 'Moderniza hojas de cálculo corporativas con UIs generadas por macros LotOS. El mismo design system en el entorno más usado del mundo empresarial.', stack: ['Excel VBA', 'LibreOffice Basic', 'lotos_excel_demo.bas', 'lotos_calc_demo.bas'], steps: ['Abrir OLD/demo-video/excel-lotos/', 'Importar lotos_excel_demo.bas', 'Ejecutar macro LotOS_GenerateReport()', 'Adaptar a tus datos', 'Distribuir como .xlsm o .ods'] },
+            { emoji: '🏗️', tone: 'var(--g)', level: 'epic', levelTxt: 'Epic', title: 'SaaS Multi-Runtime Completo', sub: 'Next.js + Laravel API + Desktop + MCP', desc: 'El producto definitivo: frontend Next.js, API Laravel, app desktop Python, agente MCP y vault de entitlements. Un ecosistema completo con LotOS como nervio visual.', stack: ['Next.js', 'Laravel', 'Python desktop', 'MCP', 'Supabase', 'Lemon Squeezy'], steps: ['Montar apps/web como landing+vault', 'Backend Laravel para API de datos', 'Desktop Python para app nativa del cliente', 'MCP server para integración con agentes', 'Vault con tiers: Free → Full', 'prep:first-sale para comercializar'] },
+            { emoji: '🌌', tone: 'var(--v)', level: 'epic', levelTxt: 'Epic', title: 'IDE / Dev Tool con LotOS UI', sub: 'Electron · Python LSP · C++ Parser · Web Components', desc: 'Build tu propio IDE o herramienta de desarrollo. Frontend web con LotOS, backend en cualquier lenguaje, extensiones en Python/C++. El proyecto más técnicamente ambicioso.', stack: ['Electron', '@lotosui/web-components', 'Python LSP', 'C++ parser', 'Node.js IPC'], steps: ['Crear shell con Electron + web-components', 'Python language server con pyright', 'C++ parser via subprocess o WASM', 'File tree, editor Monaco, terminal embebido', 'Publicar como app nativa multi-plataforma'] },
+        ];
+
+        const RUNTIMES = [
+            { n: 'React', pkg: '@lotosui/claude-arm', cmd: 'npm install @lotosui/claude-arm', dir: 'packages/claude-arm', status: 'stable', note: '27+ components, TypeScript, tree-shaking' },
+            { n: 'Web Components', pkg: '@lotosui/web-components', cmd: 'npm install @lotosui/web-components', dir: 'packages/web-components', status: 'stable', note: 'lotos-button, lotos-input, lotos-card' },
+            { n: 'Next.js Stack', pkg: 'CLI stack-init', cmd: 'npx @lotosui/cli stack-init -s next -o .', dir: 'apps/web (referencia)', status: 'stable', note: 'Full Next.js 15 scaffold con LotOS' },
+            { n: 'Laravel / PHP', pkg: 'packages/lotos-laravel', cmd: 'stack-init -s php-laravel-starter', dir: 'packages/lotos-laravel', status: 'stable', note: 'Blade components. @lotosui/lotos-card' },
+            { n: 'Django / Python', pkg: 'packages/lotos-django', cmd: 'stack-init -s python-django-starter', dir: 'packages/lotos-django', status: 'stable', note: 'Template tags. {% lotos_card %}' },
+            { n: 'Flask / Python', pkg: 'packages/lotos-flask', cmd: 'stack-init -s python-flask-starter', dir: 'packages/lotos-flask', status: 'stable', note: 'Jinja2 macros y helpers' },
+            { n: 'Spring / Java', pkg: 'packages/lotos-spring', cmd: 'stack-init -s java-spring-starter', dir: 'packages/lotos-spring', status: 'stable', note: 'Thymeleaf dialect. lotos:card' },
+            { n: '.NET / Razor', pkg: 'packages/lotos-dotnet', cmd: 'stack-init -s dotnet-razor-starter', dir: 'packages/lotos-dotnet', status: 'stable', note: 'Razor Tag Helpers. <lotos-card>' },
+            { n: 'Go / templ', pkg: 'packages/lotos-go', cmd: 'stack-init -s go-templ-starter', dir: 'packages/lotos-go', status: 'stable', note: 'html/template helpers' },
+            { n: 'Desktop Python', pkg: 'pywebview + web-components', cmd: 'desktop-init -l python -t control-center-desktop', dir: 'apps/desktop-python-demo', status: 'stable', note: 'Runnable. PyInstaller-ready' },
+            { n: 'Desktop Rust', pkg: 'wry + web-components', cmd: 'desktop-init -l rust', dir: 'apps/desktop-rust-demo', status: 'stable', note: 'wry/Tauri webview' },
+            { n: 'Desktop Java', pkg: 'JavaFX WebView', cmd: 'desktop-init -l java', dir: 'apps/desktop-java-demo', status: 'stable', note: 'JavaFX WebView + web-components' },
+            { n: 'Desktop C/C++', pkg: 'webview lib', cmd: 'desktop-init -l cpp', dir: '— (via CLI)', status: 'alpha', note: 'webview.h + CMake},' },
+            { n: 'Excel VBA', pkg: 'lotos_excel_demo.bas', cmd: '— import en Excel', dir: 'OLD/demo-video/excel-lotos', status: 'stable', note: 'Macro LotOS_GenerateReport()' },
+            { n: 'LibreOffice Calc', pkg: 'lotos_calc_demo.bas', cmd: '— import en Calc', dir: 'OLD/demo-video/calc-lotos', status: 'stable', note: 'Basic macro adapter' },
+            { n: 'MCP / AI Agents', pkg: '@lotosui/core/mcp', cmd: 'node packages/core/examples/mcp-render-demo.mjs', dir: 'packages/core/src/mcp', status: 'stable', note: 'GET /components · POST /render' },
+        ];
+
+        const TIPS = [
+            { icon: '🎯', title: 'Empieza por el CLI', text: 'Nunca empieces desde cero. stack-init genera el proyecto listo en 30 segundos con LotOS ya integrado. Ahorra 2-4 horas de setup.', cmd: 'npx @lotosui/cli stack-init --help' },
+            { icon: '🔗', title: 'MCP como superpoder', text: 'El protocolo MCP convierte LotOS en un backend de UI para tus agentes IA. Claude puede generar pantallas completas en cualquier runtime con un prompt.', cmd: 'node packages/core/examples/mcp-render-demo.mjs' },
+            { icon: '🌗', title: 'Web Components = Cero lock-in', text: 'Si no sabes qué framework va a usar el cliente, usa @lotosui/web-components. Funciona en React, Vue, Angular, vanilla HTML y cualquier wrapper.', cmd: 'npm install @lotosui/web-components' },
+            { icon: '⚡', title: 'Desktop en 5 minutos', text: 'desktop-init genera un Hello World nativo funcionando en Python, Rust, Java o C++. Puedes compilar para distribución el mismo día.', cmd: 'desktop-init -l python -t control-center-desktop -o ./mi-desktop' },
+            { icon: '🏪', title: 'Vault = Monetización lista', text: 'El vault con entitlements ya está construido. Solo necesitas actualizar sales-config.ts con tus precios y conectar tu Lemon Squeezy account.', cmd: '# Editar: apps/web/app/sales-config.ts\n# Ejecutar: pnpm verify:commercial' },
+            { icon: '📦', title: 'Releases sin dolor', text: 'prep:first-sale genera todos los bundles y manifests. publish-npm.yml publica en npm sin OTP. Tu release completo en 2 comandos.', cmd: 'pnpm run prep:first-sale\n# GitHub Actions → publish-npm' },
+            { icon: '🧪', title: 'Gates antes de cada deploy', text: 'verify:100 detecta inconsistencias antes de que lleguen a producción. Corre siempre antes de un push importante.', cmd: 'pnpm verify:100\npnpm verify:commercial\npnpm verify:ops' },
+            { icon: '🦀', title: 'C/C++ no es tan difícil', text: 'webview.h es una librería de un solo header. Compila con CMake. LotOS UI va como HTML en el webview. IPC via bind() para comunicar nativo ↔ web.', cmd: '#include "webview.h"\nwebview_t w = webview_create(1, NULL);\nwebview_navigate(w, "file://ui/index.html");' },
+            { icon: '🎨', title: 'Design Tokens consistentes', text: 'Todos los runtimes comparten los mismos tokens CSS. Un theme change en :root afecta React, Blade, Thymeleaf, web-components y desktop al mismo tiempo.', cmd: '/* En cualquier runtime: */\n:root { --lotos-accent: #67e8f9; }' },
+        ];
+
+        // ─── RENDER ─────────────────────────────────────────────
+        function tag(t) { return `<span class="tag">${t}</span>` }
+
+        CAPS.forEach(c => {
+            document.getElementById('cap-grid').insertAdjacentHTML('beforeend', `
+  <div class="cap-card" style="--tone:${c.tone}">
+    <div class="cap-icon">${c.icon}</div>
+    <div class="cap-tag">${c.tag}</div>
+    <h3>${c.title}</h3>
+    <p>${c.desc}</p>
+    <div class="cmd-label">Ejemplo</div>
+    <div class="cmd">${c.cmd}</div>
+    <div class="tags">${c.tags.map(tag).join('')}</div>
+  </div>`);
+        });
+
+        PROJECTS.forEach(p => {
+            document.getElementById('proj-grid').insertAdjacentHTML('beforeend', `
+  <div class="proj" style="--tone:${p.tone}">
+    <div class="proj-glow"></div>
+    <div class="proj-head">
+      <span class="proj-emoji">${p.emoji}</span>
+      <span class="proj-level lv-${p.level}">${p.levelTxt}</span>
+    </div>
+    <h3>${p.title}</h3>
+    <div class="proj-sub">${p.sub}</div>
+    <p>${p.desc}</p>
+    <div class="proj-stack">${p.stack.map(tag).join('')}</div>
+    <ol class="proj-steps">
+      ${p.steps.map((s, i) => `<li><span class="step-n">${i + 1}</span>${s}</li>`).join('')}
+    </ol>
+  </div>`);
+        });
+
+        const statMap = { stable: 's-stable', alpha: 's-alpha', proto: 's-proto' };
+        const statLabel = { stable: 'Stable', alpha: 'Alpha', proto: 'Prototype' };
+        document.getElementById('rt-table').innerHTML = `
+<thead><tr><th>Runtime / Plataforma</th><th>Paquete / Adapter</th><th>Comando rápido</th><th>Ubicación en monorepo</th><th>Estado</th><th>Notas</th></tr></thead>
+<tbody>${RUNTIMES.map(r => `<tr>
+  <td><strong>${r.n}</strong></td>
+  <td><code>${r.pkg}</code></td>
+  <td><code>${r.cmd}</code></td>
+  <td><code>${r.dir}</code></td>
+  <td><span class="status-dot ${statMap[r.status] || 's-proto'}"></span>${statLabel[r.status] || r.status}</td>
+  <td style="color:var(--mut);font-size:11px">${r.note}</td>
+</tr>`).join('')}</tbody>`;
+
+        TIPS.forEach(t => {
+            document.getElementById('tip-grid').insertAdjacentHTML('beforeend', `
+  <div class="tip">
+    <div class="tip-icon">${t.icon}</div>
+    <h4>${t.title}</h4>
+    <p>${t.text}</p>
+    ${t.cmd ? `<div class="cmd">${t.cmd}</div>` : ''}
+  </div>`);
+        });
+    </script>
+</body>
+
+</html>

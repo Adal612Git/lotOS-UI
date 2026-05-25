@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LotOS UI | Máquinas de Estado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        :root {
+            --bg: #04101b;
+            --line: rgba(120, 149, 184, .18);
+            --tx: #edf6ff;
+            --mut: #7a98b8;
+            --c: #67e8f9;
+            --b: #60a5fa;
+            --v: #a78bfa;
+            --a: #fbbf24;
+            --r: #fb7185;
+            --g: #34d399;
+            --t: #2dd4bf
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--tx);
+            background: radial-gradient(ellipse 900px 500px at 8% -5%, rgba(45, 212, 191, .12), transparent 55%), radial-gradient(ellipse 800px 450px at 96% 5%, rgba(167, 139, 250, .12), transparent 50%), linear-gradient(160deg, var(--bg), #071525 55%, #0a1929)
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .8);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nl {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .back {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 5px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(255, 255, 255, .03);
+            transition: color .2s, border-color .2s
+        }
+
+        .back:hover {
+            color: var(--c);
+            border-color: rgba(103, 232, 249, .4)
+        }
+
+        .pt {
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .pb {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(251, 113, 133, .1);
+            border: 1px solid rgba(251, 113, 133, .28);
+            color: var(--r)
+        }
+
+        .shell {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            height: calc(100vh - 53px)
+        }
+
+        .stage {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--line)
+        }
+
+        .top {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(4, 16, 27, .5);
+            backdrop-filter: blur(10px)
+        }
+
+        .top h2 {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 3px;
+            letter-spacing: -.02em
+        }
+
+        .top p {
+            font-size: 11px;
+            color: var(--mut)
+        }
+
+        .tbr {
+            display: flex;
+            gap: 7px;
+            margin-top: 9px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            padding: 6px 11px;
+            border-radius: 8px;
+            border: 1px solid rgba(120, 149, 184, .24);
+            background: rgba(255, 255, 255, .03);
+            color: var(--mut);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .18s
+        }
+
+        .btn.ac,
+        .btn:hover {
+            color: #fff;
+            border-color: rgba(251, 113, 133, .4);
+            background: rgba(251, 113, 133, .07)
+        }
+
+        .net {
+            flex: 1;
+            position: relative
+        }
+
+        .network {
+            position: absolute;
+            inset: 0
+        }
+
+        .leg {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(120, 149, 184, .22);
+            background: rgba(4, 16, 27, .88);
+            backdrop-filter: blur(12px);
+            padding: 10px 13px;
+            min-width: 220px
+        }
+
+        .lt {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--mut);
+            margin-bottom: 7px
+        }
+
+        .li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            font-size: 10px;
+            color: var(--mut)
+        }
+
+        .side {
+            padding: 13px;
+            overflow: auto;
+            background: rgba(4, 16, 27, .45)
+        }
+
+        .sc {
+            border-radius: 14px;
+            border: 1px solid rgba(120, 149, 184, .18);
+            background: rgba(8, 21, 37, .7);
+            padding: 13px;
+            margin-bottom: 9px;
+            backdrop-filter: blur(8px)
+        }
+
+        .lbl {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t);
+            margin-bottom: 5px
+        }
+
+        .sc h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .note {
+            background: rgba(2, 6, 23, .5);
+            border: 1px solid rgba(120, 149, 184, .14);
+            border-radius: 9px;
+            padding: 9px;
+            font-size: 11px;
+            line-height: 1.65;
+            color: var(--mut)
+        }
+
+        .al {
+            list-style: none;
+            margin-top: 7px
+        }
+
+        .al li {
+            padding: 5px 8px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(120, 149, 184, .1);
+            margin-bottom: 3px;
+            font-size: 10px;
+            line-height: 1.45
+        }
+
+        .al li strong {
+            color: var(--a);
+            display: block;
+            font-size: 9px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 1px
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nl"><a class="back" href="index.html">← Hub</a><span class="pt">Máquinas de Estado — LotOS UI</span>
+        </div><span class="pb">UML · Comportamiento</span>
+    </nav>
+    <div class="shell">
+        <section class="stage">
+            <div class="top">
+                <h2>Máquinas de Estado</h2>
+                <p>Ciclos de vida: componente LotOS, sesión de usuario, pedido/entitlement, y CI/CD pipeline. Notación
+                    UML: estado inicial ●, final ⊗, transiciones con guardas.</p>
+                <div class="tbr">
+                    <button class="btn ac" data-sm="component">Componente</button>
+                    <button class="btn" data-sm="session">Sesión</button>
+                    <button class="btn" data-sm="order">Orden/Entitlement</button>
+                    <button class="btn" data-sm="pipeline">CI Pipeline</button>
+                    <button class="btn" id="fit-btn">Recentrar</button>
+                </div>
+            </div>
+            <div class="net">
+                <div class="network" id="network"></div>
+                <div class="leg">
+                    <div class="lt">Notación UML</div>
+                    <div class="li"><svg width="12" height="12">
+                            <circle cx="6" cy="6" r="5" fill="#edf6ff" />
+                        </svg>Estado inicial ●</div>
+                    <div class="li"><svg width="12" height="12">
+                            <circle cx="6" cy="6" r="5" fill="none" stroke="#fb7185" stroke-width="2" />
+                            <circle cx="6" cy="6" r="2" fill="#fb7185" />
+                        </svg>Estado final ⊗</div>
+                    <div class="li"><svg width="36" height="10">
+                            <line x1="0" y1="5" x2="27" y2="5" stroke="#60a5fa" stroke-width="2" />
+                            <polygon points="27,2 36,5 27,8" fill="#60a5fa" />
+                        </svg>Transición</div>
+                    <div class="li"><svg width="36" height="10">
+                            <line x1="0" y1="5" x2="27" y2="5" stroke="#fbbf24" stroke-width="1.8"
+                                stroke-dasharray="5,3" />
+                            <polygon points="27,2 36,5 27,8" fill="#fbbf24" />
+                        </svg>Transición condicional</div>
+                </div>
+            </div>
+        </section>
+        <aside class="side">
+            <div class="sc">
+                <div class="lbl">Estado seleccionado</div>
+                <h3 id="sn">—</h3>
+                <div id="sd" class="note">Haz click en un estado para ver sus transiciones y guardas asociadas.</div>
+            </div>
+            <div class="sc">
+                <div class="lbl">Transiciones</div>
+                <ul class="al" id="st">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+            <div class="sc">
+                <div class="lbl">Guardas / Acciones</div>
+                <ul class="al" id="sg">
+                    <li style="color:var(--mut);font-style:italic">Sin selección</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <script>
+        const SMs = {
+            component: {
+                nodes: [
+                    { id: '__start', label: '●', shape: 'dot', size: 12, color: { background: '#edf6ff', border: '#edf6ff' }, font: { size: 0 }, meta: { name: 'Inicial', desc: 'Estado inicial del componente LotOS.', trans: [], guards: [] } },
+                    { id: 'uninstalled', label: 'Sin Instalar', meta: { name: 'Sin Instalar', desc: 'El paquete no está en el proyecto del Developer.', trans: ['npm install → installing'], guards: ['Pre: Node.js ≥18 disponible'] } },
+                    { id: 'installing', label: 'Instalando', meta: { name: 'Instalando', desc: 'El package manager resuelve dependencias y descarga el paquete.', trans: ['install OK → installed', 'install fail → error'], guards: ['Peer deps: react ≥18'] } },
+                    { id: 'installed', label: 'Instalado', meta: { name: 'Instalado', desc: '@lotosui/claude-arm en node_modules. Ready para importar.', trans: ['import → imported', 'uninstall → uninstalled'], guards: ['stylesheet importado'] } },
+                    { id: 'imported', label: 'Importado', meta: { name: 'Importado', desc: 'El módulo está en el bundle. Estilos aplicados.', trans: ['render → rendering'], guards: ['Estilos CSS aplicados'] } },
+                    { id: 'rendering', label: 'Renderizando', meta: { name: 'Renderizando', desc: 'El componente produce DOM y aplica tokens.', trans: ['render OK → stable', 'render fail → error'], guards: ['Props válidas', 'Theme aplicado'] } },
+                    { id: 'stable', label: '⬡ Stable', meta: { name: 'Stable (Producción)', desc: 'Componente en producción, visible al usuario final.', trans: ['update → updating', 'unmount → unmounted'], guards: ['Version pinned'] } },
+                    { id: 'updating', label: 'Actualizando', meta: { name: 'Actualizando', desc: 'Nueva versión descargada. Hydration en curso.', trans: ['update OK → stable', 'update fail → error'], guards: ['No breaking changes'] } },
+                    { id: 'unmounted', label: 'Desmontado', meta: { name: 'Desmontado', desc: 'Componente fuera del árbol React.', trans: ['re-mount → rendering'], guards: [] } },
+                    { id: 'error', label: '⚠ Error', meta: { name: 'Error', desc: 'Fallo durante install, render o update.', trans: ['retry → installing', 'dismiss → uninstalled'], guards: ['Ver consola para detalles'] } },
+                    { id: '__end', label: '⊗', shape: 'dot', size: 14, color: { background: 'none', border: '#fb7185' }, borderWidth: 3, meta: { name: 'Final', desc: 'Fin del ciclo de vida del componente.', trans: [], guards: [] } },
+                ],
+                edges: [
+                    { from: '__start', to: 'uninstalled', label: '' },
+                    { from: 'uninstalled', to: 'installing', label: 'npm install' },
+                    { from: 'installing', to: 'installed', label: '✓ success' },
+                    { from: 'installing', to: 'error', label: '✗ fail', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'installed', to: 'imported', label: 'import()' },
+                    { from: 'installed', to: 'uninstalled', label: 'npm remove', dashes: true },
+                    { from: 'imported', to: 'rendering', label: 'mount' },
+                    { from: 'rendering', to: 'stable', label: '✓ DOM ready' },
+                    { from: 'rendering', to: 'error', label: '✗ fail', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'stable', to: 'updating', label: 'npm update' },
+                    { from: 'stable', to: 'unmounted', label: 'unmount()' },
+                    { from: 'updating', to: 'stable', label: '✓ ok' },
+                    { from: 'updating', to: 'error', label: '✗ fail', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'unmounted', to: 'rendering', label: 're-mount' },
+                    { from: 'error', to: 'installing', label: 'retry' },
+                    { from: 'error', to: 'uninstalled', label: 'dismiss' },
+                    { from: 'unmounted', to: '__end', label: 'destroy' },
+                ]
+            },
+            session: {
+                nodes: [
+                    { id: '__start', label: '●', shape: 'dot', size: 12, color: { background: '#edf6ff', border: '#edf6ff' }, font: { size: 0 }, meta: { name: 'Inicial', desc: '', trans: [], guards: [] } },
+                    { id: 'anonymous', label: 'Anónimo', meta: { name: 'Anónimo', desc: 'Usuario sin sesión. Accede solo a contenido público.', trans: ['login → authenticating'], guards: ['Solo /pricing y landing visible'] } },
+                    { id: 'authenticating', label: 'Autenticando', meta: { name: 'Autenticando', desc: 'OAuth flow activo. Esperando respuesta de Google.', trans: ['OAuth OK → active', 'OAuth fail → anonymous'], guards: ['URL de callback configurada', 'App registrada en Google Cloud'] } },
+                    { id: 'active', label: '⬡ Activo', meta: { name: 'Activo', desc: 'Sesión válida. Token en cookie httpOnly.', trans: ['logout → anonymous', 'expire → expired', 'buy → purchasing'], guards: ['Token no expirado', 'Cookie presente'] } },
+                    { id: 'purchasing', label: 'Comprando', meta: { name: 'Comprando', desc: 'Checkout activo en Lemon Squeezy. Sesión en espera de confirmación de pago.', trans: ['pay OK → entitled', 'pay fail/cancel → active'], guards: ['plan_id válido', 'checkout activo'] } },
+                    { id: 'entitled', label: '⬡ Con Entitlement', meta: { name: 'Con Entitlement', desc: 'Sesión activa con acceso a vault según tier comprado.', trans: ['logout → anonymous', 'expire → expired', 'upgrade → purchasing'], guards: ['entitlement en Supabase', 'Tier desbloqueado'] } },
+                    { id: 'expired', label: 'Expirada', meta: { name: 'Expirada', desc: 'Token caducado. Sesión inválida.', trans: ['re-auth → authenticating'], guards: ['Refresh token intentado primero'] } },
+                    { id: '__end', label: '⊗', shape: 'dot', size: 14, color: { background: 'none', border: '#fb7185' }, borderWidth: 3, meta: { name: 'Final', desc: '', trans: [], guards: [] } },
+                ],
+                edges: [
+                    { from: '__start', to: 'anonymous', label: '' },
+                    { from: 'anonymous', to: 'authenticating', label: 'login()' },
+                    { from: 'authenticating', to: 'active', label: '✓ OAuth' },
+                    { from: 'authenticating', to: 'anonymous', label: '✗ fail', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'active', to: 'anonymous', label: 'logout()' },
+                    { from: 'active', to: 'expired', label: 'token expire', dashes: true, color: { color: '#fbbf24' } },
+                    { from: 'active', to: 'purchasing', label: 'checkout()' },
+                    { from: 'purchasing', to: 'entitled', label: '✓ webhook' },
+                    { from: 'purchasing', to: 'active', label: '✗ cancel', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'entitled', to: 'anonymous', label: 'logout()' },
+                    { from: 'entitled', to: 'expired', label: 'expire', dashes: true, color: { color: '#fbbf24' } },
+                    { from: 'entitled', to: 'purchasing', label: 'upgrade()' },
+                    { from: 'expired', to: 'authenticating', label: 're-auth' },
+                    { from: 'anonymous', to: '__end', label: 'navigate away' },
+                ]
+            },
+            order: {
+                nodes: [
+                    { id: '__start', label: '●', shape: 'dot', size: 12, color: { background: '#edf6ff', border: '#edf6ff' }, font: { size: 0 }, meta: { name: 'Inicial', desc: '', trans: [], guards: [] } },
+                    { id: 'draft', label: 'Borrador', meta: { name: 'Borrador', desc: 'Orden creada al iniciar checkout. Aún sin pago.', trans: ['submit → pending'], guards: ['user_id y plan_id válidos'] } },
+                    { id: 'pending', label: 'Pendiente', meta: { name: 'Pendiente', desc: 'Checkout activo. Esperando confirmación del rail de pago.', trans: ['pay → paid', 'cancel → cancelled', 'timeout → failed'], guards: ['checkout_url activo'] } },
+                    { id: 'paid', label: 'Pagado', meta: { name: 'Pagado', desc: 'Webhook de pago recibido y verificado. Procesando grant.', trans: ['grant → fulfilled'], guards: ['HMAC válida', 'payment_id único'] } },
+                    { id: 'fulfilled', label: '⬡ Completado', meta: { name: 'Completado', desc: 'Entitlement creado. Vault desbloqueado. Assets disponibles.', trans: ['refund → refunded'], guards: ['entitlement en Supabase', 'tier desbloqueado'] } },
+                    { id: 'cancelled', label: 'Cancelado', meta: { name: 'Cancelado', desc: 'Buyer canceló el checkout antes de pagar.', trans: [], guards: [] } },
+                    { id: 'failed', label: '⚠ Fallido', meta: { name: 'Fallido', desc: 'Pago rechazado o timeout de checkout.', trans: ['retry → draft'], guards: ['Max 3 intentos'] } },
+                    { id: 'refunded', label: 'Reembolsado', meta: { name: 'Reembolsado', desc: 'Pago devuelto. Entitlement revocado.', trans: [], guards: ['entitlement.is_active = false'] } },
+                    { id: '__end', label: '⊗', shape: 'dot', size: 14, color: { background: 'none', border: '#fb7185' }, borderWidth: 3, meta: { name: 'Final', desc: '', trans: [], guards: [] } },
+                ],
+                edges: [
+                    { from: '__start', to: 'draft', label: '' },
+                    { from: 'draft', to: 'pending', label: 'submit()' },
+                    { from: 'pending', to: 'paid', label: '✓ webhook' },
+                    { from: 'pending', to: 'cancelled', label: 'cancel()', dashes: true, color: { color: '#a78bfa' } },
+                    { from: 'pending', to: 'failed', label: 'timeout', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'paid', to: 'fulfilled', label: 'grant()' },
+                    { from: 'fulfilled', to: 'refunded', label: 'refund()', dashes: true, color: { color: '#fbbf24' } },
+                    { from: 'failed', to: 'draft', label: 'retry()' },
+                    { from: 'cancelled', to: '__end', label: '' },
+                    { from: 'refunded', to: '__end', label: '' },
+                    { from: 'fulfilled', to: '__end', label: 'close()' },
+                ]
+            },
+            pipeline: {
+                nodes: [
+                    { id: '__start', label: '●', shape: 'dot', size: 12, color: { background: '#edf6ff', border: '#edf6ff' }, font: { size: 0 }, meta: { name: 'Inicial', desc: '', trans: [], guards: [] } },
+                    { id: 'triggered', label: 'Disparado', meta: { name: 'Disparado', desc: 'git push activa el workflow de GitHub Actions.', trans: ['start → building'], guards: ['Branch: main o PR'] } },
+                    { id: 'building', label: 'Construyendo', meta: { name: 'Construyendo', desc: 'Build de @lotosui/core y paquetes dependientes.', trans: ['build OK → verifying', 'build fail → failed'], guards: ['Node 20, pnpm 8'] } },
+                    { id: 'verifying', label: 'Verificando', meta: { name: 'Verificando', desc: 'verify:100 + verify:commercial + verify:ops corriendo en paralelo.', trans: ['all green → deploying', 'any red → failed'], guards: ['Todos los gates deben ser green'] } },
+                    { id: 'deploying', label: 'Desplegando', meta: { name: 'Desplegando', desc: 'Deploy protegido a Vercel para apps/web y apps/docs.', trans: ['deploy OK → live', 'deploy fail → failed'], guards: ['Vercel token válido', 'No hay cambios pendientes'] } },
+                    { id: 'live', label: '⬡ En Producción', meta: { name: 'En Producción', desc: 'Apps en lotos-ui.vercel.app. Usuarios accediendo.', trans: ['new push → triggered', 'rollback → rolling_back'], guards: ['Health check passing'] } },
+                    { id: 'rolling_back', label: 'Rollback', meta: { name: 'Rollback', desc: 'Deploy anterior restaurado por fallo en producción.', trans: ['rollback OK → live'], guards: ['Deployment anterior disponible'] } },
+                    { id: 'failed', label: '⚠ Fallido', meta: { name: 'Fallido', desc: 'Build, gate o deploy fallaron. Admin notificado.', trans: ['fix → triggered'], guards: ['Error log disponible'] } },
+                    { id: '__end', label: '⊗', shape: 'dot', size: 14, color: { background: 'none', border: '#fb7185' }, borderWidth: 3, meta: { name: 'Final', desc: '', trans: [], guards: [] } },
+                ],
+                edges: [
+                    { from: '__start', to: 'triggered', label: '' },
+                    { from: 'triggered', to: 'building', label: 'start()' },
+                    { from: 'building', to: 'verifying', label: '✓ build' },
+                    { from: 'building', to: 'failed', label: '✗ error', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'verifying', to: 'deploying', label: '✓ all green' },
+                    { from: 'verifying', to: 'failed', label: '✗ gate red', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'deploying', to: 'live', label: '✓ deployed' },
+                    { from: 'deploying', to: 'failed', label: '✗ error', dashes: true, color: { color: '#fb7185' } },
+                    { from: 'live', to: 'triggered', label: 'new commit' },
+                    { from: 'live', to: 'rolling_back', label: 'rollback()', dashes: true, color: { color: '#fbbf24' } },
+                    { from: 'rolling_back', to: 'live', label: '✓ restored' },
+                    { from: 'failed', to: 'triggered', label: 'fix & retry' },
+                    { from: 'live', to: '__end', label: 'retire' },
+                ]
+            }
+        };
+
+        function buildSM(key) {
+            const sm = SMs[key];
+            const baseNode = { shape: 'box', margin: 14, borderWidth: 2, shapeProperties: { borderRadius: 14 }, font: { color: '#edf6ff', size: 13, face: 'Inter' }, chosen: false };
+            const toneMap = {
+                uninstalled: '#a78bfa', installing: '#60a5fa', installed: '#34d399', imported: '#34d399', rendering: '#60a5fa', stable: '#34d399', updating: '#2dd4bf', unmounted: '#94a3b8', error: '#fb7185',
+                anonymous: '#94a3b8', authenticating: '#60a5fa', active: '#34d399', purchasing: '#fbbf24', entitled: '#34d399', expired: '#fb7185',
+                draft: '#94a3b8', pending: '#60a5fa', paid: '#34d399', fulfilled: '#34d399', cancelled: '#a78bfa', failed: '#fb7185', refunded: '#fbbf24',
+                triggered: '#60a5fa', building: '#fbbf24', verifying: '#a78bfa', deploying: '#2dd4bf', live: '#34d399', rolling_back: '#fbbf24'
+            };
+            const nodes = new vis.DataSet(sm.nodes.map(n => {
+                if (n.shape === 'dot') return { ...n, font: { size: 0 }, chosen: false };
+                const c = toneMap[n.id] || '#60a5fa';
+                const bg = c === '#34d399' ? 'rgba(6,38,26,.9)' : c === '#fb7185' ? 'rgba(46,6,16,.9)' : c === '#fbbf24' ? 'rgba(42,26,4,.9)' : c === '#a78bfa' ? 'rgba(28,15,58,.9)' : c === '#2dd4bf' ? 'rgba(6,36,40,.9)' : 'rgba(10,24,48,.9)';
+                return { ...baseNode, ...n, color: { background: bg, border: c, highlight: { background: bg, border: c }, hover: { background: bg, border: c } }, shadow: { enabled: true, color: `${c}30`, x: 0, y: 0, size: 18 } };
+            }));
+            const edges = new vis.DataSet(sm.edges.map((e, i) => ({
+                id: `e${i}`, from: e.from, to: e.to, label: e.label || '',
+                arrows: { to: { enabled: true, type: 'arrow', scaleFactor: .85 } },
+                dashes: !!e.dashes, width: e.dashes ? 1.4 : 2,
+                smooth: { type: 'dynamic' },
+                color: e.color || { color: '#60a5fa', opacity: .75 },
+                font: { color: '#64748b', size: 10, align: 'middle' }
+            })));
+            return { nodes, edges };
+        }
+
+        let net = null;
+        function draw(key) {
+            const { nodes, edges } = buildSM(key);
+            const opts = {
+                layout: { improvedLayout: true },
+                physics: { enabled: true, solver: 'forceAtlas2Based', forceAtlas2Based: { gravitationalConstant: -80, centralGravity: .015, springLength: 190, springConstant: .045, damping: .3, avoidOverlap: .9 }, stabilization: { iterations: 150, fit: false } },
+                interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true },
+                nodes: { chosen: false }, edges: { smooth: { type: 'dynamic' } }
+            };
+            if (!net) {
+                net = new vis.Network(document.getElementById('network'), { nodes, edges }, opts);
+                net.on('click', p => {
+                    const id = p.nodes && p.nodes[0]; if (!id) return;
+                    const n = SMs[currentSM].nodes.find(x => x.id === id);
+                    if (!n || !n.meta) return;
+                    document.getElementById('sn').textContent = n.meta.name || id;
+                    document.getElementById('sd').textContent = n.meta.desc || '—';
+                    document.getElementById('st').innerHTML = n.meta.trans.length ? n.meta.trans.map(t => `<li>${t}</li>`).join('') : '<li style="color:var(--mut)">Sin transiciones</li>';
+                    document.getElementById('sg').innerHTML = n.meta.guards.length ? n.meta.guards.map(g => `<li>${g}</li>`).join('') : '<li style="color:var(--mut)">Sin guardas</li>';
+                });
+            } else { net.setData({ nodes, edges }); }
+            setTimeout(() => net.fit({ animation: { duration: 280 } }), 80);
+        }
+
+        let currentSM = 'component';
+        document.querySelectorAll('.btn[data-sm]').forEach(b => {
+            b.onclick = () => {
+                document.querySelectorAll('.btn[data-sm]').forEach(x => x.classList.remove('ac'));
+                b.classList.add('ac');
+                currentSM = b.dataset.sm;
+                draw(currentSM);
+            };
+        });
+        document.getElementById('fit-btn').onclick = () => net && net.fit({ animation: { duration: 280 } });
+        draw('component');
+    </script>
+</body>
+
+</html>

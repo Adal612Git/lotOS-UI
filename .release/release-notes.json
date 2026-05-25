@@ -1,0 +1,56 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "product": {
+    "name": "LotOS UI",
+    "versionName": "Lotos UI 2.0",
+    "positioning": "AI-native universal UI platform",
+    "tagline": "Components, templates, themes, CLI, MCP, and agent-ready workflows.",
+    "locales": [
+      "en",
+      "es"
+    ],
+    "realRoot": "lotos-ui/"
+  },
+  "releaseReadiness": {
+    "score": 74,
+    "status": "private-rc-public-blocked",
+    "blockers": [
+      "Rotate/remove any local secrets before public sharing.",
+      "Move premium source/assets to private repo or private registry before public launch.",
+      "Set legal provider and support email env vars in deployment.",
+      "Mark pricing as placeholder until final commercial approval.",
+      "Add subscription cancellation/expiration revocation before selling recurring monthly access at scale."
+    ],
+    "passingSignals": [
+      "verify:100 passes",
+      "verify:ai passes",
+      "core, cli, public React, pro React, web-components, web, and docs checks pass",
+      "Buyer login is separated from owner/admin authorization",
+      "Private workspace mode is allowed to warn when premium is present",
+      "Public release mode is expected to fail until premium and local secrets are split"
+    ]
+  },
+  "totals": {
+    "components": 27,
+    "freeComponents": 8,
+    "proComponents": 19,
+    "templates": 25,
+    "runtimes": 34,
+    "themes": 6
+  },
+  "publicPackages": [
+    "@lotosui/registry",
+    "@lotosui/core",
+    "@lotosui/sentinel",
+    "@lotosui/cli",
+    "@lotosui/claude-arm",
+    "@lotosui/web-components"
+  ],
+  "blockers": [
+    "Rotate/remove any local secrets before public sharing.",
+    "Move premium source/assets to private repo or private registry before public launch.",
+    "Set legal provider and support email env vars in deployment.",
+    "Mark pricing as placeholder until final commercial approval.",
+    "Add subscription cancellation/expiration revocation before selling recurring monthly access at scale."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "fixtureSchemaVersion": 1,
+  "name": "missing_email",
+  "provider": "lemon_squeezy",
+  "kind": "mapper_and_route",
+  "request": {
+    "signatureMode": "valid",
+    "headers": {
+      "content-type": "application/json",
+      "x-event-name": "subscription_created",
+      "x-signature": "__TEST_GENERATED__"
+    }
+  },
+  "payload": {
+    "meta": {
+      "event_name": "subscription_created",
+      "event_id": "evt_fixture_missing_email_001"
+    },
+    "data": {
+      "type": "subscriptions",
+      "id": "sub_fixture_missing_email_001",
+      "attributes": {
+        "customer_id": "cus_fixture_001",
+        "variant_id": "var_fixture_pro"
+      }
+    }
+  },
+  "expectedMapping": {
+    "action": "reject_unmappable",
+    "status": null,
+    "plan": "pro",
+    "providerEventId": "evt_fixture_missing_email_001"
+  },
+  "expectedRoute": {
+    "status": 400,
+    "upsert": false,
+    "audit": ["webhook_failed"]
+  }
+}

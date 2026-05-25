@@ -16,7 +16,7 @@ const fullAccentCycle = ['accent-violet', 'accent-rose', 'accent-amber', 'accent
 
 const fullSignals = [
   { value: 'Top', label: 'Tier' },
-  { value: 'MX$249', label: 'Monthly' },
+  { value: 'MX$249', label: 'Placeholder' },
   { value: '6', label: 'New ecosystems' },
   { value: 'Full', label: 'Suite' },
 ];
@@ -164,7 +164,7 @@ export default async function LaunchVaultPage() {
           <p>Exclusive manifests and premium surfaces that do not ship in Pro.</p>
         </article>
         <article className="vault-kpi accent-rose">
-          <strong>MX$249</strong>
+          <strong>MX$249 placeholder</strong>
           <span>Prestige subscription</span>
           <p>Phase 1 founders pricing for the first 20 customers, now tied to a truly distinct top tier.</p>
         </article>

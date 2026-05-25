@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../auth-options';
-import { hasEntitlement, listUserPlans } from './entitlements';
+import { hasEntitlement, listUserEntitlements, listUserPlans, type EntitlementAccessSummary } from './entitlements';
 import { isOwnerEmail, normalizeEmail } from './owner';
 import type { CommercialPlan } from './plans';
 
@@ -9,6 +9,7 @@ export type ViewerContext = {
   email: string;
   isOwner: boolean;
   plans: CommercialPlan[];
+  entitlements: EntitlementAccessSummary[];
   degraded: boolean;
   warnings: string[];
 };
@@ -42,18 +43,23 @@ export async function getViewerContext() {
       email,
       isOwner: true,
       plans: ['launch_pack'] as CommercialPlan[],
+      entitlements: [],
       degraded: false,
       warnings,
     } satisfies ViewerContext;
   }
 
   try {
-    const plans = await listUserPlans(email);
+    const [plans, entitlements] = await Promise.all([
+      listUserPlans(email),
+      listUserEntitlements(email),
+    ]);
 
     return {
       email,
       isOwner: false,
       plans,
+      entitlements,
       degraded: false,
       warnings,
     } satisfies ViewerContext;
@@ -69,6 +75,7 @@ export async function getViewerContext() {
       email,
       isOwner: false,
       plans: [],
+      entitlements: [],
       degraded: true,
       warnings,
     } satisfies ViewerContext;

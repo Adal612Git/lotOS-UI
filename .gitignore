@@ -11,6 +11,13 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
+!.env.*.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
 
 # Testing
 coverage
@@ -22,6 +29,7 @@ __pycache__/
 
 # Vercel
 .vercel
+**/.vercel/
 
 # Local planning / manuals / scratch assets (do not deploy or commit)
 ONE/.claude/
@@ -63,10 +71,16 @@ packages/cli/stack/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.codex-*.log
+.codex/
+*.tgz
 
 # Misc
 .DS_Store
 *.pem
 client_secret_*.json
+client_secret*.json
+.claude/settings.local.json
+**/.claude/settings.local.json
 
 .vercel

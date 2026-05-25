@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "ONE/verify-public-clean-room.mjs",
+  "generatedAt": "2026-05-19T03:51:15.316Z",
+  "mode": "public-clean-room",
+  "result": "blocked",
+  "publicReleaseReady": false,
+  "wideSalesReady": false,
+  "redacted": true,
+  "blockers": [
+    {
+      "id": "public-tree_failed",
+      "severity": "blocker",
+      "check": "public-tree"
+    },
+    {
+      "id": "no-secrets_failed",
+      "severity": "blocker",
+      "check": "no-secrets"
+    },
+    {
+      "id": "no-premium-leak_failed",
+      "severity": "blocker",
+      "check": "no-premium-leak"
+    },
+    {
+      "id": "premium-stubs_failed",
+      "severity": "blocker",
+      "check": "premium-stubs"
+    },
+    {
+      "id": "public-docs_failed",
+      "severity": "blocker",
+      "check": "public-docs"
+    },
+    {
+      "id": "public-ai-context_failed",
+      "severity": "blocker",
+      "check": "public-ai-context"
+    },
+    {
+      "id": "npm-tarballs_failed",
+      "severity": "blocker",
+      "check": "npm-tarballs"
+    }
+  ],
+  "checks": [
+    {
+      "id": "public-tree",
+      "command": "pnpm run release:public-tree:check",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 869
+    },
+    {
+      "id": "no-secrets",
+      "command": "pnpm run verify:no-secrets",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 1452
+    },
+    {
+      "id": "no-premium-leak",
+      "command": "pnpm run verify:no-premium-leak",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 1807
+    },
+    {
+      "id": "premium-stubs",
+      "command": "pnpm run verify:premium-stubs",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 1791
+    },
+    {
+      "id": "public-docs",
+      "command": "pnpm run verify:public-docs",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 604
+    },
+    {
+      "id": "public-ai-context",
+      "command": "pnpm run verify:public-ai-context",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 3625
+    },
+    {
+      "id": "npm-tarballs",
+      "command": "pnpm run verify:npm-tarballs",
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 16375
+    },
+    {
+      "id": "package-exports",
+      "command": "pnpm run verify:package-exports",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 8845
+    },
+    {
+      "id": "packages",
+      "command": "pnpm run verify:packages",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 544
+    },
+    {
+      "id": "drift",
+      "command": "pnpm run verify:drift",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 5768
+    },
+    {
+      "id": "generated-ai",
+      "command": "pnpm run verify:generated-ai",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 1627
+    },
+    {
+      "id": "registry-consumers",
+      "command": "pnpm run verify:registry-consumers",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 3679
+    }
+  ],
+  "publicPackages": [
+    "@lotosui/registry",
+    "@lotosui/core",
+    "@lotosui/sentinel",
+    "@lotosui/cli",
+    "@lotosui/claude-arm",
+    "@lotosui/web-components"
+  ],
+  "evidence": {
+    "publicTree": ".release/public-tree-report.json",
+    "npmTarballs": ".release/npm-tarball-report.json",
+    "publicAiContext": ".release/public-ai-context-report.json",
+    "publicDocs": ".release/public-docs-report.json",
+    "premiumStubs": ".release/premium-stubs-report.json"
+  },
+  "readinessUpdate": {
+    "status": "public-clean-room-blocked",
+    "score": 74,
+    "evidencePath": ".release/public-clean-room-report.json"
+  }
+}

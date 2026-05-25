@@ -3,10 +3,16 @@ import { AuthAction } from '../auth-action';
 import styles from '../commercial-shell.module.css';
 import { docsSalesPlans } from '../../lib/sales';
 
-export default function DocsLoginPage() {
+export default async function DocsLoginPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ error?: string }>;
+}) {
+  const params = await searchParams;
   const authReady = Boolean(
     process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.AUTH_SECRET
   );
+  const accessDenied = params?.error === 'AccessDenied';
 
   return (
     <main className={styles.page}>
@@ -31,6 +37,11 @@ export default function DocsLoginPage() {
             The login surface should sell confidence, not just prove wiring. This is now a branded
             access gate into the paid system.
           </p>
+          {accessDenied ? (
+            <p className={styles.heroProof}>
+              Access denied. Google sign-in is open to valid accounts, but protected vault access still depends on entitlement or owner status.
+            </p>
+          ) : null}
           <div className={styles.heroActions}>
             {authReady ? (
               <AuthAction mode="signin" callbackUrl="/vault" className={`${styles.btn} ${styles.btnGoogle}`}>

@@ -6,10 +6,7 @@ const repoRoot = path.join(__dirname, '../..');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  transpilePackages: ['@lotosui/core', '@lotosui/claude-arm'],
+  transpilePackages: ['@lotosui/core', '@lotosui/claude-arm', '@lotosui/registry'],
   outputFileTracingRoot: repoRoot,
   webpack: (config) => {
     config.resolve ??= {};
@@ -20,6 +17,7 @@ const nextConfig = {
     config.resolve.alias['@lotosui/claude-arm/card'] = path.join(repoRoot, 'packages/claude-arm/dist/components/card/card.js');
     config.resolve.alias['@lotosui/claude-arm/stat'] = path.join(repoRoot, 'packages/claude-arm/dist/components/stat/stat.js');
     config.resolve.alias['@lotosui/core'] = path.join(repoRoot, 'packages/core/dist/index.js');
+    config.resolve.alias['@lotosui/registry'] = path.join(repoRoot, 'packages/registry/dist/index.js');
     return config;
   },
   turbopack: {
@@ -31,6 +29,7 @@ const nextConfig = {
       '@lotosui/claude-arm/card': '../../packages/claude-arm/dist/components/card/card.js',
       '@lotosui/claude-arm/stat': '../../packages/claude-arm/dist/components/stat/stat.js',
       '@lotosui/core': '../../packages/core/dist/index.js',
+      '@lotosui/registry': '../../packages/registry/dist/index.js',
     },
   },
 };

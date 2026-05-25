@@ -1,0 +1,108 @@
+{
+  "generatedFrom": "packages/registry/src/lotos.manifest.ts",
+  "generatedAt": "static",
+  "themes": [
+    {
+      "id": "operator-grid",
+      "name": "Operator Grid",
+      "description": "Dense control room UI for incident and support teams.",
+      "maturity": "stable",
+      "bestFor": [
+        "ops",
+        "monitoring"
+      ],
+      "tokens": {
+        "bg": "#f6faf8",
+        "surface": "#ffffff",
+        "text": "#13201e",
+        "accent": "#0b6b5b",
+        "accentAlt": "#f2b544"
+      }
+    },
+    {
+      "id": "executive-brief",
+      "name": "Executive Brief",
+      "description": "Board-ready metrics with stronger narrative hierarchy.",
+      "maturity": "alpha",
+      "bestFor": [
+        "analytics",
+        "leadership"
+      ],
+      "tokens": {
+        "bg": "#f9f7f0",
+        "surface": "#ffffff",
+        "text": "#1d2430",
+        "accent": "#9a5b00",
+        "accentAlt": "#2f6f88"
+      }
+    },
+    {
+      "id": "minimal-focus",
+      "name": "Minimal Focus",
+      "description": "Calm long-session workspace for docs, data review, and planning.",
+      "maturity": "alpha",
+      "bestFor": [
+        "docs",
+        "planning"
+      ],
+      "tokens": {
+        "bg": "#f8fafc",
+        "surface": "#ffffff",
+        "text": "#172033",
+        "accent": "#335c81",
+        "accentAlt": "#5c7c5a"
+      }
+    },
+    {
+      "id": "craft-studio",
+      "name": "Craft Studio",
+      "description": "Creative production surface for design labs and content studios.",
+      "maturity": "prototype",
+      "bestFor": [
+        "design",
+        "content"
+      ],
+      "tokens": {
+        "bg": "#fbf7f2",
+        "surface": "#ffffff",
+        "text": "#2c2430",
+        "accent": "#7c3aed",
+        "accentAlt": "#d97706"
+      }
+    },
+    {
+      "id": "terminal-ops",
+      "name": "Terminal Ops",
+      "description": "High-contrast operational style for technical users.",
+      "maturity": "prototype",
+      "bestFor": [
+        "developer-tools",
+        "terminal"
+      ],
+      "tokens": {
+        "bg": "#08111d",
+        "surface": "#111827",
+        "text": "#f8fafc",
+        "accent": "#22c55e",
+        "accentAlt": "#38bdf8"
+      }
+    },
+    {
+      "id": "clinical-light",
+      "name": "Clinical Light",
+      "description": "Quiet administrative healthcare shell with restrained semantic color.",
+      "maturity": "planned",
+      "bestFor": [
+        "healthcare",
+        "compliance"
+      ],
+      "tokens": {
+        "bg": "#f5faf9",
+        "surface": "#ffffff",
+        "text": "#1f3430",
+        "accent": "#0f766e",
+        "accentAlt": "#ca8a04"
+      }
+    }
+  ]
+}
