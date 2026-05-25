@@ -54,11 +54,6 @@ export async function GET(
 
   const session = await getServerSession(authOptions);
   const email = normalizeEmail(session?.user?.email);
-
-  if (!email) {
-    return Response.json({ ok: false, error: 'Authentication required.' }, { status: 401 });
-  }
-
   const allowed = await canAccessPremium(email, asset.plan);
 
   if (!allowed) {

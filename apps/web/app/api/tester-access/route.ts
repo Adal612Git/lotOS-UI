@@ -89,10 +89,6 @@ export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const email = normalizeEmail(session?.user?.email);
 
-  if (!email) {
-    return Response.json({ ok: false, error: 'Google sign-in is required before tester unlock.' }, { status: 401 });
-  }
-
   if (!isTesterAccessConfigured()) {
     return Response.json({ ok: false, error: 'Tester access is not configured.' }, { status: 503 });
   }
@@ -115,10 +111,15 @@ export async function POST(request: Request) {
     email,
     phoneHash: authorizedPhone.phoneHash,
   });
-  const persistence = await persistTesterEntitlement({ email, grant });
+  const persistence = email
+    ? await persistTesterEntitlement({ email, grant })
+    : {
+        persisted: false,
+        warning: 'Browser QA unlock activated; no database email grant was created.',
+      };
   const response = NextResponse.json({
     ok: true,
-    email,
+    email: email ?? null,
     plan: grant.plan,
     expiresAt: grant.expiresAt,
     ...persistence,

@@ -81,10 +81,10 @@ export default async function LoginPage({
         </article>
         <article className="card">
           <p className="section-label">Internal QA</p>
-          <h2>Phone-first unlock for testers</h2>
+          <h2>Phone-only unlock for testers</h2>
           <p>
-            Authorized testers should open <code>/team-access</code>, enter their phone first, continue with
-            Google, and receive Full Signature QA access automatically for exhaustive validation.
+            Authorized testers should open <code>/team-access</code>, enter their phone, and receive Full
+            Signature QA access in that browser without needing Google sign-in.
           </p>
         </article>
       </section>

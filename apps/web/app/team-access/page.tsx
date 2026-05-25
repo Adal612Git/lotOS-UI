@@ -16,17 +16,11 @@ export const metadata = buildRouteMetadata({
   path: '/team-access',
 });
 
-export default async function TeamAccessPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ autoUnlock?: string }>;
-}) {
-  const params = await searchParams;
+export default async function TeamAccessPage() {
   const session = await getServerSession(authOptions);
   const email = normalizeEmail(session?.user?.email);
-  const testerAccess = email ? await getActiveTesterAccess(email) : null;
+  const testerAccess = await getActiveTesterAccess(email);
   const configured = isTesterAccessConfigured();
-  const loginHref = `/api/auth/signin/google?callbackUrl=${encodeURIComponent('/team-access?autoUnlock=1')}`;
   const signedIn = Boolean(email);
 
   return (
@@ -41,14 +35,14 @@ export default async function TeamAccessPage({
           {signedIn ? (
             <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
           ) : (
-            <Link href={loginHref} className="nav-link nav-link--muted">Sign In</Link>
+            <Link href="/login?callbackUrl=/team-access" className="nav-link nav-link--muted">Optional Sign In</Link>
           )}
         </nav>
       </header>
 
       <section className="hero compact">
         <p className="kicker">Internal QA</p>
-        <h1>Enter the tester phone, sign in with Google, and get Full Signature QA automatically.</h1>
+        <h1>Enter the tester phone once and unlock Full Signature QA in this browser.</h1>
         {signedIn ? (
           <p className="lead">
             Signed in as <strong>{email}</strong>. This page verifies an authorized tester phone, saves a 30-day
@@ -58,14 +52,15 @@ export default async function TeamAccessPage({
           </p>
         ) : (
           <p className="lead">
-            Start with the authorized tester phone. The next step is Google sign-in, and when Google returns with
-            the tester email this page saves the 30-day Full Signature QA entitlement automatically.
+            No Google account is required for internal QA. This page verifies an authorized tester phone and sets a
+            secure browser unlock so the team can inspect vaults, downloads, demos, playground, templates, and
+            premium routes immediately.
           </p>
         )}
         <div className="payment-meta" aria-label="Team access state">
           <span className="payment-chip ready accent-emerald">Full Signature QA</span>
-          <span className="payment-chip manual accent-amber">Phone first</span>
-          <span className="payment-chip alt accent-cyan">DB grant + cookie</span>
+          <span className="payment-chip manual accent-amber">Phone-only unlock</span>
+          <span className="payment-chip alt accent-cyan">No Google required</span>
         </div>
       </section>
 
@@ -75,10 +70,8 @@ export default async function TeamAccessPage({
           <h2>Activate phone-based QA access</h2>
           <TesterAccessForm
             active={Boolean(testerAccess)}
-            autoUnlock={params?.autoUnlock === '1'}
             configured={configured}
             expiresAt={testerAccess?.expiresAt ?? null}
-            loginHref={loginHref}
             signedIn={signedIn}
           />
         </article>

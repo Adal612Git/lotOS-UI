@@ -18,14 +18,14 @@ const bundledTesterPhoneHashes = [
 type TesterAccessPayload = {
   v: 1;
   role: 'team_qa';
-  email: string;
+  email: string | null;
   phoneHash: string;
   issuedAt: string;
   expiresAt: string;
 };
 
 export type TesterAccessGrant = {
-  email: string;
+  email: string | null;
   phoneHash: string;
   issuedAt: string;
   expiresAt: string;
@@ -111,7 +111,7 @@ function signaturesMatch(actual: string, expected: string): boolean {
 }
 
 export function createTesterAccessToken(input: {
-  email: string;
+  email?: string | null;
   phoneHash: string;
   now?: Date;
 }): { token: string; grant: TesterAccessGrant } {
@@ -120,9 +120,6 @@ export function createTesterAccessToken(input: {
 
   if (!secret) {
     throw new Error('Tester access signing secret is not configured.');
-  }
-  if (!email) {
-    throw new Error('A signed-in email is required for tester access.');
   }
   if (!getAuthorizedTesterPhoneHashes().has(input.phoneHash)) {
     throw new Error('Tester phone is not authorized.');
@@ -145,7 +142,7 @@ export function createTesterAccessToken(input: {
   return {
     token: `${encodedPayload}.${signature}`,
     grant: {
-      email,
+      email: email ?? null,
       phoneHash: input.phoneHash,
       issuedAt,
       expiresAt,
@@ -163,7 +160,7 @@ export function verifyTesterAccessToken(
   const secret = getTesterSigningSecret();
   const email = normalizeEmail(expectedEmail);
 
-  if (!token || !secret || !email) {
+  if (!token || !secret) {
     return null;
   }
 
@@ -183,11 +180,12 @@ export function verifyTesterAccessToken(
   } catch {
     return null;
   }
+  const payloadEmail = normalizeEmail(payload.email);
 
   if (
     payload.v !== 1 ||
     payload.role !== 'team_qa' ||
-    normalizeEmail(payload.email) !== email ||
+    (payloadEmail && email && payloadEmail !== email) ||
     !getAuthorizedTesterPhoneHashes().has(payload.phoneHash)
   ) {
     return null;
@@ -199,7 +197,7 @@ export function verifyTesterAccessToken(
   }
 
   return {
-    email,
+    email: payloadEmail ?? email ?? null,
     phoneHash: payload.phoneHash,
     issuedAt: payload.issuedAt,
     expiresAt: payload.expiresAt,

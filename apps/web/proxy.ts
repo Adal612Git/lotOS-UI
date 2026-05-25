@@ -5,6 +5,12 @@ import { env } from './lib/env';
 import { isOwnerEmail, normalizeEmail } from './lib/owner';
 import type { CommercialPlan } from './lib/plans';
 
+const TESTER_ACCESS_COOKIE = 'lotos_tester_access';
+const bundledTesterPhoneHashes = new Set([
+  'e91fb357689946b6d11ef4fe1cd323a85b4f6e928eadae4c9f710d8b366082ed',
+  'e81544a50cca0c69bd09e5ba7fe30def53cf40f9824acea2f270f95747fb7cc2',
+]);
+
 function resolveRequiredPlan(pathname: string): CommercialPlan | null {
   if (pathname.startsWith('/vault/launch')) {
     return 'launch_pack';
@@ -27,6 +33,92 @@ function redirectToLogin(request: NextRequest) {
   return NextResponse.redirect(url);
 }
 
+function base64UrlEncode(bytes: ArrayBuffer) {
+  let binary = '';
+  for (const byte of new Uint8Array(bytes)) {
+    binary += String.fromCharCode(byte);
+  }
+
+  return btoa(binary).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
+}
+
+function base64UrlDecode(value: string) {
+  const base64 = value.replaceAll('-', '+').replaceAll('_', '/');
+  const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+  return atob(padded);
+}
+
+function signaturesMatch(actual: string, expected: string) {
+  if (actual.length !== expected.length) {
+    return false;
+  }
+
+  let mismatch = 0;
+  for (let index = 0; index < actual.length; index += 1) {
+    mismatch |= actual.charCodeAt(index) ^ expected.charCodeAt(index);
+  }
+
+  return mismatch === 0;
+}
+
+async function hasTesterAccessCookie(request: NextRequest) {
+  const token = request.cookies.get(TESTER_ACCESS_COOKIE)?.value;
+  const secret = env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
+  if (!token || !secret || secret.length < 16) {
+    return false;
+  }
+
+  const [encodedPayload, signature] = token.split('.');
+  if (!encodedPayload || !signature) {
+    return false;
+  }
+
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const expectedSignature = base64UrlEncode(await crypto.subtle.sign('HMAC', key, encoder.encode(encodedPayload)));
+
+  if (!signaturesMatch(signature, expectedSignature)) {
+    return false;
+  }
+
+  let payload: {
+    v?: unknown;
+    role?: unknown;
+    phoneHash?: unknown;
+    expiresAt?: unknown;
+  };
+  try {
+    payload = JSON.parse(base64UrlDecode(encodedPayload)) as typeof payload;
+  } catch {
+    return false;
+  }
+
+  if (
+    payload.v !== 1 ||
+    payload.role !== 'team_qa' ||
+    typeof payload.phoneHash !== 'string' ||
+    typeof payload.expiresAt !== 'string'
+  ) {
+    return false;
+  }
+
+  const authorizedPhoneHashes = new Set([...bundledTesterPhoneHashes, ...env.testerPhoneHashes]);
+  const expiresAt = new Date(payload.expiresAt);
+
+  return (
+    authorizedPhoneHashes.has(payload.phoneHash) &&
+    !Number.isNaN(expiresAt.getTime()) &&
+    expiresAt.getTime() > Date.now()
+  );
+}
+
 export async function proxy(request: NextRequest) {
   const requiredPlan = resolveRequiredPlan(request.nextUrl.pathname);
 
@@ -36,6 +128,10 @@ export async function proxy(request: NextRequest) {
 
   if (!env.AUTH_SECRET) {
     return redirectToLogin(request);
+  }
+
+  if (await hasTesterAccessCookie(request)) {
+    return NextResponse.next();
   }
 
   const token = await getToken({

@@ -37,13 +37,15 @@ export async function requireSignedInEmail() {
 }
 
 export async function getViewerContext() {
-  const email = await requireSignedInEmail();
+  const email = await getSignedInEmail();
+  const testerAccess = await getActiveTesterAccess(email);
+  const viewerEmail = email ?? testerAccess?.email ?? 'team-qa-session@lotos.local';
   const owner = isOwnerEmail(email);
   const warnings: string[] = [];
 
   if (owner) {
     return {
-      email,
+      email: viewerEmail,
       isOwner: true,
       isTester: false,
       testerAccess: null,
@@ -54,35 +56,38 @@ export async function getViewerContext() {
     } satisfies ViewerContext;
   }
 
-  try {
-    const testerAccess = await getActiveTesterAccess(email);
-    if (testerAccess) {
-      return {
-        email,
-        isOwner: false,
-        isTester: true,
-        testerAccess,
-        plans: ['launch_pack'] as CommercialPlan[],
-        entitlements: [
-          {
-            id: 0,
-            plan: 'launch_pack',
-            source: testerAccess.source,
-            kind: 'manual_test',
-            status: 'trialing',
-            active: true,
-            grantedAt: testerAccess.issuedAt,
-            expiresAt: testerAccess.expiresAt,
-            trialEndsAt: testerAccess.expiresAt,
-            revokedAt: null,
-            provider: 'team_qa_phone',
-          },
-        ],
-        degraded: false,
-        warnings,
-      } satisfies ViewerContext;
-    }
+  if (testerAccess) {
+    return {
+      email: viewerEmail,
+      isOwner: false,
+      isTester: true,
+      testerAccess,
+      plans: ['launch_pack'] as CommercialPlan[],
+      entitlements: [
+        {
+          id: 0,
+          plan: 'launch_pack',
+          source: testerAccess.source,
+          kind: 'manual_test',
+          status: 'trialing',
+          active: true,
+          grantedAt: testerAccess.issuedAt,
+          expiresAt: testerAccess.expiresAt,
+          trialEndsAt: testerAccess.expiresAt,
+          revokedAt: null,
+          provider: 'team_qa_phone',
+        },
+      ],
+      degraded: false,
+      warnings,
+    } satisfies ViewerContext;
+  }
 
+  if (!email) {
+    redirect('/login?callbackUrl=/vault');
+  }
+
+  try {
     const [plans, entitlements] = await Promise.all([
       listUserPlans(email),
       listUserEntitlements(email),
@@ -120,6 +125,16 @@ export async function getViewerContext() {
 }
 
 export async function requirePlanAccess(requiredPlan: CommercialPlan) {
+  const testerAccess = await getActiveTesterAccess(null);
+
+  if (testerAccess) {
+    return {
+      email: testerAccess.email ?? 'team-qa-session@lotos.local',
+      isOwner: false,
+      isTester: true,
+    };
+  }
+
   const email = await requireSignedInEmail();
 
   if (isOwnerEmail(email)) {

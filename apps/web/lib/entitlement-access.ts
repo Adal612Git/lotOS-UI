@@ -24,15 +24,23 @@ export function isOwnerEntitlementBypass(value: string | null | undefined): bool
   return isOwnerBypass(value);
 }
 
-export async function canAccessPremium(email: string, requiredPlan: CommercialPlan): Promise<boolean> {
-  if (isOwnerBypass(email)) {
-    return true;
-  }
+export async function canAccessPremium(
+  email: string | null | undefined,
+  requiredPlan: CommercialPlan
+): Promise<boolean> {
   if (await hasTesterPlanAccess(email, requiredPlan)) {
     return true;
   }
+  const normalizedEmail = normalizeOwnerEmail(email);
 
-  return hasEntitlement(email, requiredPlan);
+  if (!normalizedEmail) {
+    return false;
+  }
+  if (isOwnerBypass(normalizedEmail)) {
+    return true;
+  }
+
+  return hasEntitlement(normalizedEmail, requiredPlan);
 }
 
 export async function explainEntitlementAccess(
