@@ -171,6 +171,16 @@ export const appRoutes: AppRouteItem[] = [
     accent: 'rose',
   },
   {
+    path: '/demo/student-control',
+    name: 'Student Control',
+    group: 'Demos',
+    description: 'Demo flagship academica con alumnos, materias, calificaciones, reportes y metricas.',
+    simpleValue: 'Muestra el salto de pantalla generada a superficie de producto.',
+    href: '/demo/student-control',
+    status: 'live',
+    accent: 'aqua',
+  },
+  {
     path: '/demo/components',
     name: 'Demo de componentes',
     group: 'Demos',
@@ -463,6 +473,15 @@ export const appRoutes: AppRouteItem[] = [
 ];
 
 export const demoRoutes: DemoRouteItem[] = [
+  {
+    path: '/demo/student-control',
+    name: 'Student Control',
+    useCase: 'Sistema academico con datos, reportes y superficie de entrega.',
+    description: 'La demo flagship para ver formularios, filtros, metricas, graficas y before/after.',
+    comparison: 'Contrasta output crudo contra LotOS Product Surface.',
+    href: '/demo/student-control',
+    accent: 'aqua',
+  },
   {
     path: '/demo',
     name: 'Demo wall',
@@ -1170,8 +1189,8 @@ function assertCount(label: string, actual: number, expected: number) {
   }
 }
 
-assertCount('app routes', appRoutes.length, 36);
-assertCount('demo routes', demoRoutes.length, 12);
+assertCount('app routes', appRoutes.length, 37);
+assertCount('demo routes', demoRoutes.length, 13);
 assertCount('components', componentCatalog.length, 27);
 assertCount('runtime profiles', runtimeProfiles.length, 19);
 assertCount('CLI starters', cliStarters.length, 18);

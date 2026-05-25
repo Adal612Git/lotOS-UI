@@ -462,11 +462,11 @@ export default function ConLotosWebPage() {
         {/* Status strip */}
         <div className="demo-status-strip">
           <div className="demo-status-item"><span className="demo-status-dot green" />27 de 27 componentes renderizados</div>
-          <div className="demo-status-item"><span className="demo-status-dot green" />WCAG 2.2 AAA</div>
+          <div className="demo-status-item"><span className="demo-status-dot amber" />A11y review in progress</div>
           <div className="demo-status-item"><span className="demo-status-dot green" />Dark-first tokens</div>
           <div className="demo-status-item"><span className="demo-status-dot green" />Zero deps externas</div>
           <div className="demo-status-item" style={{ marginLeft: 'auto' }}>
-            <span style={{ fontSize: 12, color: 'rgba(240,244,255,0.3)' }}>romeromedinar612@gmail.com — Full Signature</span>
+            <span style={{ fontSize: 12, color: 'rgba(240,244,255,0.3)' }}>Full Signature preview</span>
           </div>
         </div>
 

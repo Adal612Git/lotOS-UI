@@ -435,7 +435,7 @@ export default function ConLotosDesktopPage() {
           <div className="demo-status-item"><span className="demo-status-dot green" />lotos-ui desktop-init activo</div>
           <div className="demo-status-item"><span className="demo-status-dot amber" />Pro tier template</div>
           <div className="demo-status-item" style={{ marginLeft: 'auto' }}>
-            <span style={{ fontSize: 12, color: 'rgba(240,244,255,0.3)' }}>romeromedinar612@gmail.com · Full Signature</span>
+            <span style={{ fontSize: 12, color: 'rgba(240,244,255,0.3)' }}>Full Signature preview</span>
           </div>
         </div>
 

@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { env } from '../../lib/env';
 import '../lotos-landing.css';
 
-const requiredEnv = ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'AUTH_SECRET'] as const;
-
 export default async function LoginPage({
   searchParams,
 }: {
@@ -60,23 +58,20 @@ export default async function LoginPage({
 
       <section className="grid two">
         <article className="card">
-          <p className="section-label">Environment status</p>
-          <h2>Required variables</h2>
-          <ul>
-            {requiredEnv.map((item) => (
-              <li key={item}>
-                {item}: {process.env[item] ? 'present' : 'missing'}
-              </li>
-            ))}
-          </ul>
+          <p className="section-label">Sign-in health</p>
+          <h2>{env.googleConfigured && env.AUTH_SECRET ? 'Google sign-in is available.' : 'Google sign-in is temporarily unavailable.'}</h2>
+          <p>
+            The public site remains open. Buyers can retry sign-in, and team testers can use
+            phone-only QA access from the team page.
+          </p>
         </article>
         <article className="card">
           <p className="section-label">Buyer login</p>
           <h2>Google login first, entitlement gate second</h2>
           <p>
             Any valid Google account can sign in. Paid routes unlock only when Supabase/Lemon
-            entitlements match the buyer email. Emails in <code>LOTOS_OWNER_EMAILS</code> are
-            administrative bypasses, not the buyer login policy.
+            entitlements match the buyer email. Admin access is handled server-side and is not
+            part of the public buyer flow.
           </p>
         </article>
         <article className="card">

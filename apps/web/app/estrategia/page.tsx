@@ -93,7 +93,7 @@ export default function StrategyPage() {
                         </div>
                         <div style={{ marginBottom: 15 }}>
                             <div className="tag tag-cyan">A11Y-DRIVEN</div>
-                            <p style={{ fontSize: '12px', margin: '4px 0 10px' }}>Real WCAG 2.2 AAA accessibility.</p>
+                            <p style={{ fontSize: '12px', margin: '4px 0 10px' }}>Accessible interaction patterns with audit backlog visible.</p>
                         </div>
                         <div style={{ marginBottom: 15 }}>
                             <div className="tag tag-magenta">AI-FIRST (MCP)</div>

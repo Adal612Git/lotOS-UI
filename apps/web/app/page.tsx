@@ -7,7 +7,7 @@ import { HomePageContent } from './home-sections';
 export const metadata = buildRouteMetadata({
   title: 'LotOS UI',
   description:
-    'Pantallas, demos, componentes, runtimes, starters CLI y assets premium para construir productos con IA sin empezar desde cero.',
+    'Product surfaces para convertir pantallas generadas por IA en dashboards, CRUDs, reportes y kits listos para entregar.',
   path: '/',
 });
 

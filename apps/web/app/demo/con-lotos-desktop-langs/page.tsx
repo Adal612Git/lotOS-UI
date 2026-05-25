@@ -297,7 +297,7 @@ export default function ConLotosDesktopLangsPage() {
           <div className="demo-status-item"><span className="demo-status-dot green" />WebView bridge contract</div>
           <div className="demo-status-item"><span className="demo-status-dot green" />lotos-ui desktop-init</div>
           <div className="demo-status-item" style={{ marginLeft: 'auto' }}>
-            <span style={{ fontSize: 11, color: 'rgba(240,244,255,0.3)' }}>romeromedinar612@gmail.com · Full Signature</span>
+            <span style={{ fontSize: 11, color: 'rgba(240,244,255,0.3)' }}>Full Signature preview</span>
           </div>
         </div>
 

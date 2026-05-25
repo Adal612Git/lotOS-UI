@@ -1,60 +1,75 @@
 import Link from 'next/link';
 import { LangToggle } from './lang-toggle';
 import { CommercialFooter } from './commercial-footer';
-import { CliStartersShowcase, CollectionExplorer, ComponentShowcaseCarousel } from './home-interactive';
 import {
   appRoutes,
+  cliStarters,
+  componentCatalog,
   demoRoutes,
   inventoryStats,
   premiumAssets,
   runtimeProfiles,
-  stateMachines,
-  useCases,
   type Accent,
-  type AppRouteItem,
 } from './home-data';
 
-const techChips = ['React', 'TypeScript', 'Next.js', 'Vite', 'Node.js', 'PostgreSQL', 'AI-ready', 'CLI'];
+const techChips = ['React stable', 'AI contracts', 'CLI ready', 'Vault Pro', 'Product surfaces', 'SQLite/Prisma proof'];
 
 const valueSteps = [
   {
-    title: 'Elige una base',
-    body: 'Rutas, starters o layouts listos para no abrir una pantalla vacia.',
+    title: 'Parte de una pantalla cruda',
+    body: 'Toma un output de IA, un CRUD rapido o un dashboard sin jerarquia.',
     accent: 'sky' as const,
   },
   {
-    title: 'Prueba en vivo',
-    body: 'Abres una demo, ves el patron y decides si encaja con tu producto.',
+    title: 'Aplica una superficie',
+    body: 'Usa patrones de datos, acciones, estados, reportes y navegacion real.',
     accent: 'rose' as const,
   },
   {
-    title: 'Entrega con confianza',
-    body: 'Assets premium, runtimes, contratos y vault para cerrar el handoff.',
+    title: 'Entrega como producto',
+    body: 'Muestra una interfaz lista para cliente, no una biblioteca de botones.',
     accent: 'mint' as const,
   },
 ];
 
-const architectureLayers = [
+const flagshipDemos = [
   {
-    title: 'Superficie UI',
-    body: 'Pantallas, componentes, demos y patrones que un comprador puede abrir.',
-    accent: 'peach' as const,
+    href: '/demo/student-control',
+    title: 'Student Control',
+    body: 'Sistema academico con alumnos, materias, calificaciones, reportes, filtros y metricas.',
+    proof: 'La demo que mejor demuestra el salto de prototipo a producto.',
+    accent: 'aqua' as const,
   },
   {
-    title: 'Contratos y datos',
-    body: 'Schemas, estados, props y contexto para que humanos y agentes compongan sin improvisar.',
-    accent: 'mint' as const,
+    href: '/demo/operator',
+    title: 'Operator Cockpit',
+    body: 'Centro de comando para incidentes, colas, salud de servicios y acciones rapidas.',
+    proof: 'Densidad operativa sin perder jerarquia.',
+    accent: 'green' as const,
   },
   {
-    title: 'Runtimes y starters',
-    body: 'React estable, backend alpha, desktop shells y CLI para empezar por stack.',
-    accent: 'lavender' as const,
-  },
-  {
-    title: 'Entrega premium',
-    body: 'Vault, assets protegidos, previews, layouts, kits y superficies Full-only.',
+    href: '/demo/con-lotos-hoja',
+    title: 'Spreadsheet Ops',
+    body: 'Modernizacion visual de hojas con KPI ribbon, estados, cola y comandos.',
+    proof: 'El antes/despues se entiende sin explicacion larga.',
     accent: 'gold' as const,
   },
+];
+
+const surfaceLayers = [
+  ['Foundation', 'Tokens, botones, forms, cards, estados y tablas base.'],
+  ['Surfaces', 'Dashboards, CRUDs, reportes, vaults, settings y operator rooms.'],
+  ['Kits', 'Student Control, Operator Cockpit, Spreadsheet Ops y SaaS Admin.'],
+  ['AI Contracts', 'Schemas, prompts, registry, CLI y handoff para agentes.'],
+  ['Vault Pro', 'Assets privados, themes premium, templates verticales y Full-only.'],
+];
+
+const qualityRows = [
+  ['Select', 'Needs polish', 'Replace native look'],
+  ['DataGridPro', 'Roadmap', 'Filters, density, export, mobile card mode'],
+  ['CommandShell', 'Roadmap', 'Topbar, sidebar, command palette, workspace switcher'],
+  ['ReportSurface', 'Roadmap', 'Charts, thresholds, recommendations, print view'],
+  ['Student Control', 'Live', 'Flagship app surface with academic workflows'],
 ];
 
 function AccentIcon({ accent }: { accent: Accent }) {
@@ -77,12 +92,11 @@ export function SiteHeader({ signedInEmail }: { signedInEmail: string | null }) 
       </Link>
       <nav className="home-nav" aria-label="Principal">
         <LangToggle />
+        <Link href="/demo/student-control">Flagship</Link>
         <Link href="/demo">Demos</Link>
-        <Link href="/examples">Ejemplos</Link>
+        <Link href="/demo/components">Componentes</Link>
         <Link href="/pricing">Precios</Link>
-        <Link href="/multi-framework">Matriz de Runtimes</Link>
-        <Link href="/ai">Capa AI</Link>
-        <Link href="/design-lab">Laboratorio</Link>
+        <Link href="/team-access">Team QA</Link>
       </nav>
       <div className="home-header-actions">
         {signedInEmail ? (
@@ -98,39 +112,43 @@ export function SiteHeader({ signedInEmail }: { signedInEmail: string | null }) 
   );
 }
 
-function HeroDashboardPreview() {
+function HeroTransformationPreview() {
   return (
-    <aside className="home-dashboard" aria-label="Panel de inventario LotOS UI">
-      <div className="home-dashboard__top">
-        <span />
-        <span />
-        <span />
-        <strong>LotOS Control Panel</strong>
+    <aside className="home-transform-preview" aria-label="Antes y despues de LotOS UI">
+      <div className="home-before-panel">
+        <span>Before: AI output</span>
+        <div className="home-raw-bar" />
+        <div className="home-raw-grid">
+          <i />
+          <i />
+          <i />
+          <i />
+        </div>
+        <div className="home-raw-table">
+          <b />
+          <b />
+          <b />
+        </div>
       </div>
-      <div className="home-dashboard__stats">
-        {inventoryStats.map((stat) => (
-          <article key={stat.id} className={`home-dashboard-stat home-accent-${stat.accent}`}>
-            <strong>{stat.value}</strong>
-            <span>{stat.label}</span>
-          </article>
-        ))}
-      </div>
-      <div className="home-dashboard__work">
-        {[
-          ['Demos en vivo', '12 rutas para abrir y comparar', 'rose'],
-          ['Quick start CLI', '18 bases para arrancar rapido', 'gold'],
-          ['Capa de control IA', 'Contexto, contratos y registry', 'aqua'],
-          ['Vault / Premium assets', '17 entregables protegidos', 'peach'],
-          ['Contratos seguros', 'Props, estados y rutas claras', 'mint'],
-        ].map(([title, body, accent]) => (
-          <div key={title} className={`home-dashboard-mini home-accent-${accent}`}>
-            <span />
-            <div>
-              <strong>{title}</strong>
-              <p>{body}</p>
+      <div className="home-after-panel">
+        <div className="home-after-top">
+          <span>After: LotOS Product Surface</span>
+          <strong>Student Control</strong>
+        </div>
+        <div className="home-after-kpis">
+          {['428 students', '91.2% attendance', '14 risk cases'].map((item) => (
+            <small key={item}>{item}</small>
+          ))}
+        </div>
+        <div className="home-after-workflow">
+          {['Registry', 'Reports', 'Follow-up'].map((item) => (
+            <div key={item}>
+              <span />
+              <strong>{item}</strong>
+              <p>Ready state</p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </aside>
   );
@@ -140,26 +158,26 @@ export function HeroSection() {
   return (
     <section className="home-hero">
       <div className="home-hero__copy">
-        <p className="home-kicker">Inventario real actualizado · 36 rutas · 12 demos · 27 componentes · 18 starters</p>
+        <p className="home-kicker">LotOS UI - Product surfaces for AI-built apps</p>
         <h1>
-          Construye productos con IA <span>sin empezar desde cero.</span>
+          De pantalla generada a <span>producto vendible.</span>
         </h1>
         <p className="home-lead">
-          LotOS UI te da pantallas, componentes, demos, starters y assets premium listos para construir
-          interfaces serias sin perder semanas armando la base.
+          LotOS UI convierte interfaces creadas con IA en superficies listas para entregar:
+          dashboards densos, CRUDs, formularios, reportes, vaults y kits de operacion con acabado comercial.
         </p>
         <p className="home-plain">
-          No vendemos solo componentes. Te damos una superficie completa para construir, probar y entregar.
+          No es otra libreria de botones. Es el sistema que hace que una app generada se sienta lista para cliente.
         </p>
         <div className="home-hero-actions">
-          <Link href="#coleccion" className="home-btn home-btn--primary">
-            Explorar coleccion
+          <Link href="/demo/student-control" className="home-btn home-btn--primary">
+            Abrir demo flagship
           </Link>
-          <Link href="/demo" className="home-btn home-btn--secondary">
-            Ver demos
+          <Link href="#before-after" className="home-btn home-btn--secondary">
+            Ver antes/despues
           </Link>
-          <Link href="/playground" className="home-btn home-btn--mint">
-            Abrir playground
+          <Link href="/pricing" className="home-btn home-btn--mint">
+            Explorar Pro Studio
           </Link>
         </div>
         <div className="home-chip-row" aria-label="Tecnologias">
@@ -168,7 +186,7 @@ export function HeroSection() {
           ))}
         </div>
       </div>
-      <HeroDashboardPreview />
+      <HeroTransformationPreview />
     </section>
   );
 }
@@ -188,16 +206,162 @@ export function SimpleValueStrip() {
   );
 }
 
+export function ProofSection() {
+  return (
+    <section className="home-section home-proof-section">
+      <div className="home-section__eyebrow">Probado mas alla del showcase</div>
+      <div className="home-section__split">
+        <div>
+          <h2>La prueba ya vive en apps reales, no solo en componentes aislados.</h2>
+          <p>
+            LotOS se probo en superficies como Ops Console, Mini Club y Student Control:
+            formularios, filtros, metricas, reportes y graficas con estructura de producto.
+          </p>
+        </div>
+        <Link href="/demo/student-control" className="home-btn home-btn--primary">
+          Abrir Student Control
+        </Link>
+      </div>
+      <div className="home-proof-grid">
+        {[
+          ['3 apps', 'Pruebas con dashboards, registro y sistema academico.'],
+          ['13 demos', 'Rutas publicas para comparar casos de uso.'],
+          ['17 premium', 'Assets protegidos para vault, kits y Full Signature.'],
+        ].map(([value, label]) => (
+          <article key={value}>
+            <strong>{value}</strong>
+            <span>{label}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function FlagshipDemosSection() {
+  return (
+    <section className="home-section home-demo-showcase">
+      <div className="home-section__eyebrow">Demos flagship</div>
+      <div className="home-section__split">
+        <div>
+          <h2>Tres pruebas visuales antes de mostrar todo el inventario.</h2>
+          <p>
+            Un comprador premium no quiere navegar cien piezas al inicio. Quiere ver si la
+            transformacion es real en una pantalla que podria venderse.
+          </p>
+        </div>
+        <Link href="/demo" className="home-btn home-btn--secondary">
+          Ver todas las demos
+        </Link>
+      </div>
+      <div className="home-demo-grid">
+        {flagshipDemos.map((demo) => (
+          <Link key={demo.href} href={demo.href} className={`home-demo-card home-accent-${demo.accent}`}>
+            <span>Flagship</span>
+            <h3>{demo.title}</h3>
+            <p>{demo.body}</p>
+            <strong>{demo.proof}</strong>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function BeforeAfterSection() {
+  return (
+    <section className="home-section home-before-after-section" id="before-after">
+      <div className="home-section__eyebrow">Antes / despues</div>
+      <div className="home-section__split">
+        <div>
+          <h2>Una CSS library te da estilo. LotOS te da una superficie completa.</h2>
+          <p>
+            El valor premium no vive en un boton suelto. Vive en la jerarquia, el flujo,
+            los estados, los reportes y el handoff que hacen que una app parezca lista.
+          </p>
+        </div>
+      </div>
+      <div className="home-compare-table">
+        {[
+          ['CSS library', 'Botones y cards', 'Tu armas todo el producto.'],
+          ['LotOS UI', 'Superficies completas', 'Arrancas desde demos, kits, vault y contratos AI.'],
+          ['Resultado', 'Salto de madurez', 'Menos prototipo, mas entrega para cliente.'],
+        ].map(([label, middle, result]) => (
+          <div key={label}>
+            <strong>{label}</strong>
+            <span>{middle}</span>
+            <p>{result}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function SurfaceTaxonomySection() {
+  return (
+    <section className="home-section home-surface-taxonomy">
+      <div className="home-section__eyebrow">Nueva taxonomia</div>
+      <div className="home-section__split">
+        <div>
+          <h2>El producto se lee como capas de entrega, no como lista de piezas.</h2>
+          <p>
+            La base publica sirve para evaluar. El valor premium empieza cuando esas piezas
+            se convierten en superficies y kits listos para operar.
+          </p>
+        </div>
+      </div>
+      <div className="home-layer-grid">
+        {surfaceLayers.map(([title, body], index) => (
+          <article key={title} className={`home-layer-card home-accent-${(['sky', 'mint', 'rose', 'aqua', 'gold'] as Accent[])[index]}`}>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function QualityMatrixSection() {
+  return (
+    <section className="home-section home-quality-section">
+      <div className="home-section__eyebrow">Quality matrix</div>
+      <div className="home-section__split">
+        <div>
+          <h2>Lo estable se vende. Lo incompleto se marca o se mueve a roadmap.</h2>
+          <p>
+            La percepcion premium sube cuando el comprador ve estado real, foco y una ruta
+            clara para lo que aun esta en evolucion.
+          </p>
+        </div>
+        <Link href="/demo/components" className="home-btn home-btn--secondary">
+          Abrir catalogo
+        </Link>
+      </div>
+      <div className="home-quality-table">
+        {qualityRows.map(([name, status, action]) => (
+          <div key={name}>
+            <strong>{name}</strong>
+            <span>{status}</span>
+            <p>{action}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function InventoryStatsGrid() {
   return (
     <section className="home-section home-stats-section">
-      <div className="home-section__eyebrow">Inventario visible</div>
+      <div className="home-section__eyebrow">Inventario tecnico</div>
       <div className="home-section__split">
         <div>
-          <h2>La home ya no reduce el producto a un resumen chiquito.</h2>
+          <h2>El volumen existe, pero ahora vive despues de la prueba comercial.</h2>
           <p>
-            Estos conteos salen de la data centralizada de la landing. Si el inventario crece,
-            la historia comercial puede crecer con el producto.
+            Los conteos ayudan a evaluar alcance. La home ya los usa como evidencia secundaria,
+            no como la promesa principal.
           </p>
         </div>
       </div>
@@ -214,52 +378,35 @@ export function InventoryStatsGrid() {
   );
 }
 
-function groupRoutes(routes: AppRouteItem[]) {
-  return routes.reduce<Record<string, AppRouteItem[]>>((groups, route) => {
-    groups[route.group] = [...(groups[route.group] ?? []), route];
-    return groups;
-  }, {});
-}
-
 export function AppRoutesShowcase() {
-  const routeGroups = groupRoutes(appRoutes);
-  const orderedGroups = ['Producto', 'Demos', 'Dashboard', 'Admin', 'AI', 'Vault', 'Premium', 'Templates', 'Runtimes', 'Settings', 'Docs/Delivery'];
+  const publicRoutes = appRoutes.filter((route) =>
+    ['/', '/demo/student-control', '/demo/components', '/pricing', '/templates', '/playground', '/vault'].includes(route.path)
+  );
 
   return (
     <section className="home-section home-route-showcase">
-      <div className="home-section__eyebrow">Rutas app</div>
+      <div className="home-section__eyebrow">Rutas clave</div>
       <div className="home-section__split">
         <div>
-          <h2>36 rutas reales para navegar, adaptar y ensenar.</h2>
+          <h2>El mapa publico apunta a evaluacion, demos y premium.</h2>
           <p>
-            Estas no son promesas de landing. Son pantallas reales para probar valor, operar acceso,
-            explicar premium, revisar ejemplos y arrancar entregas.
+            Se evita tirar todo el backstage al comprador. Las rutas tecnicas siguen existiendo,
+            pero la navegacion principal muestra el camino comercial.
           </p>
         </div>
         <Link href="/examples" className="home-btn home-btn--secondary">
           Ver ejemplos
         </Link>
       </div>
-      <div className="home-route-groups">
-        {orderedGroups
-          .filter((group) => routeGroups[group]?.length)
-          .map((group) => (
-            <article key={group} className="home-route-group">
-              <div className="home-route-group__head">
-                <h3>{group}</h3>
-                <span>{routeGroups[group]?.length ?? 0} rutas</span>
-              </div>
-              <div className="home-route-list">
-                {routeGroups[group]?.map((route) => (
-                  <Link key={route.path} href={route.href} className={`home-route-row home-accent-${route.accent}`}>
-                    <span>{route.path}</span>
-                    <strong>{route.name}</strong>
-                    <p>{route.simpleValue}</p>
-                  </Link>
-                ))}
-              </div>
-            </article>
-          ))}
+      <div className="home-demo-grid">
+        {publicRoutes.map((route) => (
+          <Link key={route.path} href={route.href} className={`home-demo-card home-accent-${route.accent}`}>
+            <span>{route.path}</span>
+            <h3>{route.name}</h3>
+            <p>{route.description}</p>
+            <strong>{route.simpleValue}</strong>
+          </Link>
+        ))}
       </div>
     </section>
   );
@@ -268,42 +415,33 @@ export function AppRoutesShowcase() {
 export function DemoRoutesShowcase() {
   return (
     <section className="home-section home-demo-showcase">
-      <div className="home-section__eyebrow">Demos en vivo</div>
+      <div className="home-section__eyebrow">Demo wall</div>
       <div className="home-section__split">
         <div>
-          <h2>12 demos para ver el producto en situaciones reales.</h2>
+          <h2>El resto de demos queda disponible para inspeccion tecnica.</h2>
           <p>
-            Las demos ensenan como se ve LotOS UI en web, desktop, hojas, componentes, operator rooms
-            y vault. Abres, comparas y entiendes el valor.
+            Quien ya entendio la promesa puede abrir comparativas web, desktop, spreadsheet,
+            vault y componentes sin mezclarlo con el primer mensaje comercial.
           </p>
         </div>
-        <div className="home-callout">Antes era una promesa. Ahora se puede abrir.</div>
-      </div>
-      <div className="home-demo-grid">
-        {demoRoutes.map((demo) => (
-          <Link key={demo.path} href={demo.href} className={`home-demo-card home-accent-${demo.accent}`}>
-            <span>Live demo</span>
-            <h3>{demo.name}</h3>
-            <p>{demo.description}</p>
-            <strong>{demo.useCase}</strong>
-            {demo.comparison ? <small>{demo.comparison}</small> : null}
-          </Link>
-        ))}
+        <div className="home-callout">{demoRoutes.length} demos navegables</div>
       </div>
     </section>
   );
 }
 
 export function RuntimeProfilesMatrix() {
+  const visibleRuntimes = runtimeProfiles.filter((runtime) => runtime.maturity === 'stable' || runtime.maturity === 'preview').slice(0, 6);
+
   return (
     <section className="home-section home-runtime-section">
-      <div className="home-section__eyebrow">Runtimes</div>
+      <div className="home-section__eyebrow">Roadmap honesto</div>
       <div className="home-section__split">
         <div>
-          <h2>19 perfiles runtime para que el roadmap se lea como plataforma.</h2>
+          <h2>React queda como brazo estable; lo demas se presenta como roadmap.</h2>
           <p>
-            React es el brazo estable. El resto se muestra con madurez honesta para que el comprador
-            entienda que puede usar hoy y que esta en camino.
+            La home ya no diluye el mensaje con todos los runtimes alpha arriba. La matriz completa
+            sigue disponible para evaluacion tecnica.
           </p>
         </div>
         <Link href="/multi-framework" className="home-btn home-btn--secondary">
@@ -311,7 +449,7 @@ export function RuntimeProfilesMatrix() {
         </Link>
       </div>
       <div className="home-runtime-grid">
-        {runtimeProfiles.map((runtime) => (
+        {visibleRuntimes.map((runtime) => (
           <Link key={runtime.id} href={runtime.href} className={`home-runtime-card home-accent-${runtime.accent}`}>
             <div>
               <h3>{runtime.name}</h3>
@@ -327,52 +465,70 @@ export function RuntimeProfilesMatrix() {
   );
 }
 
+export function CliStartersShowcase() {
+  return (
+    <section className="home-section home-cli-showcase">
+      <div className="home-section__eyebrow">Starters CLI</div>
+      <div className="home-section__split">
+        <div>
+          <h2>Los starters ayudan a entregar, pero no encabezan la venta.</h2>
+          <p>
+            Quedan como soporte tecnico para equipos que ya compraron la historia de producto.
+          </p>
+        </div>
+      </div>
+      <div className="home-cli-grid">
+        {cliStarters.slice(0, 6).map((starter) => (
+          <article key={starter.id} className={`home-cli-card home-accent-${starter.accent}`}>
+            <div className="home-cli-card__top">
+              <span>{starter.family === 'stack' ? 'Stack starter' : 'Desktop starter'}</span>
+              <strong>{starter.startTime}</strong>
+            </div>
+            <h3>{starter.name}</h3>
+            <p>{starter.useCase}</p>
+            <code>{starter.command}</code>
+            <div className="home-cli-card__footer">
+              <span>{starter.stack}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function PremiumAssetsShowcase() {
   const fullOnly = premiumAssets.filter((asset) => asset.group === 'Full-only surface');
-  const groupedAssets = premiumAssets.reduce<Record<string, typeof premiumAssets>>((groups, asset) => {
-    groups[asset.group] = [...(groups[asset.group] ?? []), asset];
-    return groups;
-  }, {});
 
   return (
     <section className="home-section home-premium-section" id="premium">
-      <div className="home-section__eyebrow">Inventario premium</div>
+      <div className="home-section__eyebrow">Vault Pro</div>
       <div className="home-section__split">
         <div>
-          <h2>17 assets premium. No son solo packs.</h2>
+          <h2>Premium se vende como vault de superficies, no como carpeta de extras.</h2>
           <p>
-            Hay previews para vender, admin shell para construir, layouts para presentar, kits por industria
-            y seis superficies Full-only que hacen que la capa mas alta se sienta completa.
+            Pro Studio desbloquea kits reutilizables. Full Signature reserva superficies ejecutivas,
+            spreadsheet modernization y assets de mayor acabado.
           </p>
         </div>
         <Link href="/pricing" className="home-btn home-btn--primary">
-          Ver precios
+          Ver Pro Studio
         </Link>
       </div>
-      <div className="home-premium-groups">
-        {Object.entries(groupedAssets).map(([group, assets]) => (
-          <article key={group} className="home-premium-group">
-            <div className="home-premium-group__head">
-              <h3>{group}</h3>
-              <span>{assets.length} assets</span>
-            </div>
-            <div className="home-premium-list">
-              {assets.map((asset) => (
-                <Link key={asset.id} href={asset.href ?? '/pricing'} className={`home-premium-card home-accent-${asset.accent}`}>
-                  <span>{asset.status}</span>
-                  <h4>{asset.name}</h4>
-                  <p>{asset.unlocks}</p>
-                  <strong>{asset.audience}</strong>
-                </Link>
-              ))}
-            </div>
-          </article>
+      <div className="home-premium-list home-premium-list--wide">
+        {premiumAssets.slice(0, 6).map((asset) => (
+          <Link key={asset.id} href={asset.href ?? '/pricing'} className={`home-premium-card home-accent-${asset.accent}`}>
+            <span>{asset.status}</span>
+            <h4>{asset.name}</h4>
+            <p>{asset.unlocks}</p>
+            <strong>{asset.audience}</strong>
+          </Link>
         ))}
       </div>
       <div className="home-full-suite">
         <div>
           <span>Full Signature</span>
-          <h3>Las 6 superficies Full-only se ven como suite, no como extra escondido.</h3>
+          <h3>Las superficies Full-only se presentan como suite completa.</h3>
         </div>
         <div className="home-full-suite__grid">
           {fullOnly.map((asset) => (
@@ -386,57 +542,27 @@ export function PremiumAssetsShowcase() {
   );
 }
 
-export function ArchitectureSection() {
+export function CollectionExplorer() {
   return (
-    <section className="home-section home-architecture-section">
-      <div className="home-section__eyebrow">Arquitectura</div>
+    <section className="home-section home-collection" id="coleccion">
+      <div className="home-section__eyebrow">Inventario completo</div>
       <div className="home-section__split">
         <div>
-          <h2>El sistema completo: producto, contratos, runtimes y entrega.</h2>
+          <h2>{appRoutes.length + demoRoutes.length + componentCatalog.length + runtimeProfiles.length + cliStarters.length + premiumAssets.length} items organizados, ahora en el lugar correcto.</h2>
           <p>
-            LotOS UI funciona como catalogo vivo. El comprador ve pantallas; el dev ve componentes,
-            rutas, comandos y estados; el equipo ve como se entrega.
+            El inventario sigue siendo fuerte, pero queda como mapa de inspeccion para usuarios
+            tecnicos y testers despues de entender la promesa.
           </p>
         </div>
       </div>
-
-      <div className="home-layer-grid">
-        {architectureLayers.map((layer) => (
-          <article key={layer.title} className={`home-layer-card home-accent-${layer.accent}`}>
-            <AccentIcon accent={layer.accent} />
-            <h3>{layer.title}</h3>
-            <p>{layer.body}</p>
+      <div className="home-stats-grid">
+        {inventoryStats.map((stat) => (
+          <article key={`inventory-${stat.id}`} className={`home-stat-card home-accent-${stat.accent}`}>
+            <strong>{stat.value}</strong>
+            <h3>{stat.label}</h3>
+            <p>{stat.description}</p>
           </article>
         ))}
-      </div>
-
-      <div className="home-architecture-columns">
-        <div className="home-user-stories">
-          <h3>Historias de usuario</h3>
-          {useCases.map((useCase) => (
-            <article key={useCase.title} className={`home-story-card home-accent-${useCase.accent}`}>
-              <span>{useCase.title}</span>
-              <p>{useCase.story}</p>
-              <strong>{useCase.outcome}</strong>
-            </article>
-          ))}
-        </div>
-        <div className="home-state-machines">
-          <h3>Maquinas de estado</h3>
-          {stateMachines.map((machine) => (
-            <article key={machine.name} className={`home-machine-card home-accent-${machine.accent}`}>
-              <div>
-                <span>{machine.name}</span>
-                <p>{machine.description}</p>
-              </div>
-              <ol>
-                {machine.states.map((state) => (
-                  <li key={`${machine.name}-${state}`}>{state}</li>
-                ))}
-              </ol>
-            </article>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -446,22 +572,22 @@ export function FinalCTA() {
   return (
     <section className="home-final-cta">
       <div>
-        <span>Empieza con una base real</span>
-        <h2>No abras una pantalla vacia para tu proximo producto.</h2>
+        <span>Construye la primera version. Entrega la version que si parece producto.</span>
+        <h2>Haz que el output de IA cruce el salto de madurez.</h2>
         <p>
-          Explora rutas, componentes, demos y starters listos para adaptar. Cuando necesites mas acabado,
-          abre la capa premium y usa assets protegidos.
+          Abre Student Control, compara el antes/despues y usa Pro Studio cuando necesites
+          superficies privadas, kits y vault listos para entrega.
         </p>
       </div>
       <div className="home-final-cta__actions">
-        <Link href="#coleccion" className="home-btn home-btn--primary">
-          Ver coleccion completa
-        </Link>
-        <Link href="/demo" className="home-btn home-btn--secondary">
-          Abrir demos
+        <Link href="/demo/student-control" className="home-btn home-btn--primary">
+          Abrir demo flagship
         </Link>
         <Link href="/pricing" className="home-btn home-btn--mint">
-          Explorar premium
+          Explorar Pro Studio
+        </Link>
+        <Link href="/team-access" className="home-btn home-btn--secondary">
+          Acceso QA
         </Link>
       </div>
     </section>
@@ -471,21 +597,19 @@ export function FinalCTA() {
 export function HomePageContent({ signedInEmail }: { signedInEmail: string | null }) {
   return (
     <main className="lotos-home">
-      <div className="home-bg-shape home-bg-shape--one" />
-      <div className="home-bg-shape home-bg-shape--two" />
-      <div className="home-bg-shape home-bg-shape--three" />
       <SiteHeader signedInEmail={signedInEmail} />
       <HeroSection />
       <SimpleValueStrip />
-      <InventoryStatsGrid />
-      <CollectionExplorer />
-      <ComponentShowcaseCarousel />
+      <ProofSection />
+      <FlagshipDemosSection />
+      <BeforeAfterSection />
+      <SurfaceTaxonomySection />
+      <QualityMatrixSection />
+      <PremiumAssetsShowcase />
       <AppRoutesShowcase />
-      <DemoRoutesShowcase />
       <RuntimeProfilesMatrix />
       <CliStartersShowcase />
-      <PremiumAssetsShowcase />
-      <ArchitectureSection />
+      <CollectionExplorer />
       <FinalCTA />
       <CommercialFooter />
     </main>
