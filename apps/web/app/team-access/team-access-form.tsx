@@ -48,6 +48,8 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
         ok?: boolean;
         error?: string;
         expiresAt?: string;
+        persisted?: boolean;
+        warning?: string;
       };
 
       if (!response.ok || !result.ok) {
@@ -56,9 +58,20 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
       }
 
       setPhone('');
+      const formattedExpiration = formatDate(result.expiresAt ?? null);
+
+      if (result.persisted) {
+        setStatus(
+          `Team QA access activated and saved in the database. Full Signature unlock is ready${
+            formattedExpiration ? ` until ${formattedExpiration}` : ''
+          }.`
+        );
+        return;
+      }
+
       setStatus(
-        `Team QA access activated. Full Signature unlock is ready${
-          formatDate(result.expiresAt ?? null) ? ` until ${formatDate(result.expiresAt ?? null)}` : ''
+        `${result.warning ?? 'Team QA access activated for this browser.'} Full Signature unlock is ready${
+          formattedExpiration ? ` until ${formattedExpiration}` : ''
         }.`
       );
     });
@@ -111,8 +124,9 @@ export function TesterAccessForm({ active, configured, expiresAt }: TesterAccess
       </div>
 
       <p className="grant-note">
-        This creates a temporary browser unlock for QA only. It does not create a paid entitlement row and does
-        not replace checkout, webhook, or buyer access logic.
+        This creates a temporary browser unlock and saves a 30-day QA entitlement for this Google account when
+        the database is available. It does not create a paid entitlement or replace checkout, webhook, or buyer
+        access logic.
       </p>
 
       {status ? <p className="grant-status">{status}</p> : null}

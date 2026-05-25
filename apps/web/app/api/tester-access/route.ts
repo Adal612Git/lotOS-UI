@@ -1,6 +1,8 @@
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../../../auth-options';
+import { recordEntitlementAuditEvent } from '../../../lib/entitlement-audit';
+import { formatEntitlementLogError, upsertEntitlement } from '../../../lib/entitlements';
 import { normalizeEmail } from '../../../lib/owner';
 import {
   authorizeTesterPhone,
@@ -13,9 +15,75 @@ import {
 
 export const runtime = 'nodejs';
 
+const TEAM_QA_ACTOR_REF = 'team-phone-qa';
+const TEAM_QA_OWNER_EMAIL = 'team-phone-qa@lotos.local';
+const TEAM_QA_TRIAL_DAYS = 30;
+const TEAM_QA_INTERNAL_NOTE = 'Automatic team QA grant from authorized phone unlock.';
+
 type TesterAccessRequest = {
   phone?: unknown;
 };
+
+async function persistTesterEntitlement(input: {
+  email: string;
+  grant: ReturnType<typeof createTesterAccessToken>['grant'];
+}) {
+  try {
+    const entitlement = await upsertEntitlement({
+      userEmail: input.email,
+      plan: input.grant.plan,
+      source: input.grant.source,
+      provider: 'manual',
+      createdByOwnerEmail: TEAM_QA_OWNER_EMAIL,
+      internalNote: TEAM_QA_INTERNAL_NOTE,
+      paymentReference: TEAM_QA_ACTOR_REF,
+      trialDays: TEAM_QA_TRIAL_DAYS,
+      metadata: {
+        grantMode: 'test',
+        paymentProvider: 'manual',
+        paymentReference: TEAM_QA_ACTOR_REF,
+        internalNote: TEAM_QA_INTERNAL_NOTE,
+        qaAccess: true,
+        qaGrantSource: 'team_phone',
+        phoneVerified: true,
+        trialDays: TEAM_QA_TRIAL_DAYS,
+      },
+    });
+
+    await recordEntitlementAuditEvent({
+      entitlementId: entitlement.id,
+      actorType: 'system',
+      actorRef: TEAM_QA_ACTOR_REF,
+      action: 'manual_test_granted',
+      reason: TEAM_QA_INTERNAL_NOTE,
+      provider: 'manual',
+      metadata: {
+        plan: entitlement.plan,
+        grantMode: 'test',
+        qaAccess: true,
+        qaGrantSource: 'team_phone',
+        trialDays: TEAM_QA_TRIAL_DAYS,
+      },
+    });
+
+    return {
+      persisted: true,
+      entitlement: {
+        plan: entitlement.plan,
+        user_email: entitlement.user_email,
+      },
+    };
+  } catch (error) {
+    console.error('Tester access entitlement persistence failed.', {
+      error: formatEntitlementLogError(error),
+    });
+
+    return {
+      persisted: false,
+      warning: 'Temporary browser unlock activated; database grant could not be persisted.',
+    };
+  }
+}
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -47,11 +115,13 @@ export async function POST(request: Request) {
     email,
     phoneHash: authorizedPhone.phoneHash,
   });
+  const persistence = await persistTesterEntitlement({ email, grant });
   const response = NextResponse.json({
     ok: true,
     email,
     plan: grant.plan,
     expiresAt: grant.expiresAt,
+    ...persistence,
   });
 
   response.cookies.set(TESTER_ACCESS_COOKIE, token, getTesterAccessCookieOptions());

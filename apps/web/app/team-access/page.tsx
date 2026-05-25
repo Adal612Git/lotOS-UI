@@ -13,7 +13,7 @@ export const runtime = 'nodejs';
 
 export const metadata = buildRouteMetadata({
   title: 'LotOS UI Team QA Access',
-  description: 'Temporary internal tester unlock for exhaustive LotOS UI premium validation.',
+  description: 'Internal tester unlock and QA entitlement registration for exhaustive LotOS UI premium validation.',
   path: '/team-access',
 });
 
@@ -43,15 +43,16 @@ export default async function TeamAccessPage() {
 
       <section className="hero compact">
         <p className="kicker">Internal QA</p>
-        <h1>Register the tester phone, unlock the full premium surface, and validate everything.</h1>
+        <h1>Register the tester phone once, save QA access, and validate the full premium surface.</h1>
         <p className="lead">
-          Signed in as <strong>{email}</strong>. This page gives authorized testers a temporary Full Signature
-          unlock in this browser so they can evaluate the landing, vault, demos, playground, templates, and
-          premium routes without waiting for a paid checkout event.
+          Signed in as <strong>{email}</strong>. This page verifies an authorized tester phone, saves a 30-day
+          Full Signature QA entitlement for this Google account, and sets a temporary browser unlock so the team
+          can evaluate the landing, vault, demos, playground, templates, and premium routes without waiting for a
+          paid checkout event.
         </p>
         <div className="payment-meta" aria-label="Team access state">
           <span className="payment-chip ready accent-emerald">Full Signature QA</span>
-          <span className="payment-chip manual accent-amber">Temporary cookie</span>
+          <span className="payment-chip manual accent-amber">DB grant + cookie</span>
           <span className="payment-chip alt accent-cyan">Google session required</span>
         </div>
       </section>
