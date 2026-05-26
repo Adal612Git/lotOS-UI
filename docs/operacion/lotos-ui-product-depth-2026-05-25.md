@@ -61,9 +61,23 @@ El build de Next genero correctamente las rutas criticas de web, incluyendo:
   - QA phone access
   - capacidades de descarga
 
-## Pendiente Operativo
+## Deploy
 
-- Commit: `feat(product): deepen LotOS UI premium surfaces`
-- Push a `origin/phase1-stable`
-- Deploy Vercel production
-- Verificar HTTP de produccion
+- Commit: `d8d06b1 feat(product): deepen LotOS UI premium surfaces`
+- Push: `origin/phase1-stable`
+- Vercel inspect: `https://vercel.com/adal666s-projects/lotos-ui/9PNRr17tQje8aTnRniMZEwDGHpqu`
+- Vercel production URL: `https://lotos-jjvnk4tdf-adal666s-projects.vercel.app`
+- Vercel alias: `https://lotos-ui.vercel.app`
+
+## HTTP Produccion
+
+Verificado con `curl.exe -I` contra `https://lotos-ui.vercel.app`:
+
+- `/` - 200 OK
+- `/pricing` - 200 OK
+- `/demo` - 200 OK
+- `/demo/student-control` - 200 OK
+- `/demo/components` - 200 OK
+- `/demo/operator` - 200 OK
+- `/team-access` - 200 OK
+- `/login` - 200 OK
