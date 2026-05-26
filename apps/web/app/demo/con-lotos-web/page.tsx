@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import '../../demo/demo.css';
+import { LotOSSelect } from '../../product-surface/lotos-select';
 
 export const metadata = {
   title: 'Con LotOS UI — ClearCRM (after)',
@@ -260,11 +261,14 @@ export default function ConLotosWebPage() {
                 {/* Select (7) */}
                 <div>
                   <label style={{ display: 'block', fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(240,244,255,0.42)', marginBottom: 6 }}>Plan de interés</label>
-                  <select className="demo-sinput" style={{ cursor: 'pointer' }}>
-                    <option>Solo — MX$59/mo</option>
-                    <option>Pro — MX$129/mo</option>
-                    <option selected>Full Signature — MX$249/mo</option>
-                  </select>
+                  <LotOSSelect
+                    defaultValue="full"
+                    options={[
+                      { label: 'Solo - MX$59/mo', value: 'solo' },
+                      { label: 'Pro - MX$129/mo', value: 'pro' },
+                      { label: 'Full Signature - MX$249/mo', value: 'full' },
+                    ]}
+                  />
                 </div>
 
                 {/* Textarea (6) */}

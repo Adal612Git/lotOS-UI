@@ -1,0 +1,190 @@
+.lotos-react-field,
+.lotos-react-grid,
+.lotos-react-shell,
+.lotos-react-report {
+  box-sizing: border-box;
+  color: #f4f8ff;
+  font-family: Inter, Manrope, system-ui, sans-serif;
+}
+
+.lotos-react-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.lotos-react-field > span {
+  color: #93a4bb;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.lotos-react-select {
+  position: relative;
+}
+
+.lotos-react-select > button,
+.lotos-react-grid input,
+.lotos-react-shell button {
+  border: 1px solid rgba(229, 237, 255, 0.16);
+  border-radius: 0.75rem;
+  color: #f4f8ff;
+  background: rgba(255, 255, 255, 0.055);
+  font: inherit;
+}
+
+.lotos-react-select > button,
+.lotos-react-grid input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 0.8rem;
+  text-align: left;
+}
+
+.lotos-react-select-menu {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  display: none;
+  gap: 0.25rem;
+  border: 1px solid rgba(229, 237, 255, 0.18);
+  border-radius: 0.8rem;
+  padding: 0.35rem;
+  background: #111b2b;
+}
+
+.lotos-react-select:focus-within .lotos-react-select-menu {
+  display: grid;
+}
+
+.lotos-react-select-menu button {
+  border: 0;
+  border-radius: 0.55rem;
+  padding: 0.55rem;
+  color: #dbe8fb;
+  background: transparent;
+  text-align: left;
+}
+
+.lotos-react-select-menu button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lotos-react-select-menu small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #93a4bb;
+}
+
+.lotos-react-grid,
+.lotos-react-report,
+.lotos-react-shell {
+  border: 1px solid rgba(229, 237, 255, 0.1);
+  border-radius: 1.1rem;
+  background: #0d1421;
+}
+
+.lotos-react-grid {
+  display: grid;
+  gap: 0.8rem;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.lotos-react-grid h2,
+.lotos-react-report h2,
+.lotos-react-shell h1 {
+  margin: 0;
+}
+
+.lotos-react-grid table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lotos-react-grid th,
+.lotos-react-grid td {
+  border-bottom: 1px solid rgba(229, 237, 255, 0.08);
+  padding: 0.7rem;
+  text-align: left;
+}
+
+.lotos-react-grid th {
+  color: #93a4bb;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.lotos-react-shell {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.lotos-react-shell aside {
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+  border-right: 1px solid rgba(229, 237, 255, 0.1);
+  padding: 1rem;
+}
+
+.lotos-react-shell nav {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.lotos-react-shell button {
+  min-height: 2.3rem;
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+}
+
+.lotos-react-shell button[data-active='true'] {
+  border-color: rgba(101, 216, 255, 0.34);
+  background: rgba(101, 216, 255, 0.1);
+}
+
+.lotos-react-shell main {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.lotos-react-report {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.lotos-react-report > div {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.lotos-react-report article {
+  display: grid;
+  gap: 0.5rem;
+  border: 1px solid rgba(229, 237, 255, 0.1);
+  border-radius: 0.9rem;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.lotos-react-report article strong {
+  font-size: 1.8rem;
+}
+
+@media (max-width: 720px) {
+  .lotos-react-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .lotos-react-shell aside {
+    border-right: 0;
+    border-bottom: 1px solid rgba(229, 237, 255, 0.1);
+  }
+}

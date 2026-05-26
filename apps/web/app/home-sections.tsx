@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { LangToggle } from './lang-toggle';
 import { CommercialFooter } from './commercial-footer';
+import { surfaceQualityHighlights } from './product-surface/component-quality';
 import {
   appRoutes,
   cliStarters,
@@ -64,12 +65,54 @@ const surfaceLayers = [
   ['Vault Pro', 'Assets privados, themes premium, templates verticales y Full-only.'],
 ];
 
+const productSurfaceGallery = [
+  {
+    href: '/demo/student-control',
+    title: 'Student Control',
+    body: 'Academic operations with real filters, local CRUD, reports, and DataGridPro.',
+    proof: 'Flagship demo. Best proof of the product promise.',
+    accent: 'aqua' as const,
+  },
+  {
+    href: '/demo/operator',
+    title: 'Operator Cockpit',
+    body: 'Incident command room with CommandShell, dense queue, service load, and report cards.',
+    proof: 'Proves density without returning to raw dashboard chaos.',
+    accent: 'green' as const,
+  },
+  {
+    href: '/demo/con-lotos-hoja',
+    title: 'Spreadsheet Ops',
+    body: 'Spreadsheet modernization framed as a surface, not just a styled table.',
+    proof: 'Useful for teams selling ops upgrades from sheets.',
+    accent: 'gold' as const,
+  },
+  {
+    href: '/vault/pro',
+    title: 'SaaS Admin',
+    body: 'Admin shell direction for billing, settings, entitlement, and workspace control.',
+    proof: 'Pro Studio value without exposing private payload.',
+    accent: 'sky' as const,
+  },
+  {
+    href: '/vault/launch',
+    title: 'Executive Briefing',
+    body: 'Full Signature surface for founder, boardroom, and client-ready handoff.',
+    proof: 'Full-only positioning with high-finish reporting.',
+    accent: 'lavender' as const,
+  },
+  {
+    href: '/templates',
+    title: 'Data Command Console',
+    body: 'Data-heavy console direction for filters, actions, exports, and status triage.',
+    proof: 'Shows how DataGridPro becomes a delivery pattern.',
+    accent: 'rose' as const,
+  },
+];
+
 const qualityRows = [
-  ['Select', 'Needs polish', 'Replace native look'],
-  ['DataGridPro', 'Roadmap', 'Filters, density, export, mobile card mode'],
-  ['CommandShell', 'Roadmap', 'Topbar, sidebar, command palette, workspace switcher'],
-  ['ReportSurface', 'Roadmap', 'Charts, thresholds, recommendations, print view'],
-  ['Student Control', 'Live', 'Flagship app surface with academic workflows'],
+  ...surfaceQualityHighlights.map((row) => [row.component, row.status, row.note]),
+  ['Student Control', 'Live', 'Flagship app surface with academic workflows and local QA actions'],
 ];
 
 function AccentIcon({ accent }: { accent: Accent }) {
@@ -261,6 +304,36 @@ export function FlagshipDemosSection() {
             <h3>{demo.title}</h3>
             <p>{demo.body}</p>
             <strong>{demo.proof}</strong>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function ProductSurfacesGallerySection() {
+  return (
+    <section className="home-section home-demo-showcase">
+      <div className="home-section__eyebrow">Product surfaces gallery</div>
+      <div className="home-section__split">
+        <div>
+          <h2>La home ya no vende botones. Vende superficies que un cliente puede entender.</h2>
+          <p>
+            Student Control, Operator Cockpit y Spreadsheet Ops son la prueba publica. SaaS Admin,
+            Executive Briefing y Data Command Console quedan como rutas premium o templates.
+          </p>
+        </div>
+        <Link href="/demo/components" className="home-btn home-btn--secondary">
+          Ver componentes reales
+        </Link>
+      </div>
+      <div className="home-demo-grid">
+        {productSurfaceGallery.map((surface) => (
+          <Link key={surface.title} href={surface.href} className={`home-demo-card home-accent-${surface.accent}`}>
+            <span>Surface</span>
+            <h3>{surface.title}</h3>
+            <p>{surface.body}</p>
+            <strong>{surface.proof}</strong>
           </Link>
         ))}
       </div>
@@ -602,6 +675,7 @@ export function HomePageContent({ signedInEmail }: { signedInEmail: string | nul
       <SimpleValueStrip />
       <ProofSection />
       <FlagshipDemosSection />
+      <ProductSurfacesGallerySection />
       <BeforeAfterSection />
       <SurfaceTaxonomySection />
       <QualityMatrixSection />

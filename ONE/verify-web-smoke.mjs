@@ -53,9 +53,16 @@ if (failures.length === 0) {
   }
 
   const download = read('apps/web/app/api/download/[asset]/route.ts');
-  for (const marker of ['getServerSession', 'canAccessPremium', 'Cache-Control', 'private, no-store', 'X-Content-Type-Options']) {
+  for (const marker of ['resolveCurrentAccess', 'accessDecision.allowed', 'accessDecision.capabilities.downloads', 'Cache-Control', 'private, no-store', 'X-Content-Type-Options']) {
     if (!download.includes(marker)) {
       fail(`Download route is missing protected download marker: ${marker}`);
+    }
+  }
+
+  const accessResolver = read('apps/web/lib/access-resolver.ts');
+  for (const marker of ['getServerSession', 'listUserPlans', 'listUserEntitlements', 'isOwnerEmail', 'getActiveTesterAccess', 'accessSatisfies']) {
+    if (!accessResolver.includes(marker)) {
+      fail(`Central access resolver is missing marker: ${marker}`);
     }
   }
 

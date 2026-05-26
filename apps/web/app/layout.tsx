@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './product-surface/signature-v2.css';
 
 export const metadata: Metadata = {
   title: 'LotOS UI - AI-native Multi-runtime UI Platform',

@@ -49,6 +49,15 @@ const proofRows = [
   ['Buyer value', 'Less prototype smell, more delivery confidence'],
 ];
 
+const accessRows = [
+  ['Foundation', 'Public demos, docs, component catalog, and evaluation surfaces.', 'Free'],
+  ['Surfaces', 'Student Control, Operator Cockpit, DataGridPro, CommandShell, ReportSurface.', 'Pro Studio'],
+  ['Kits', 'Reusable delivery patterns for admin, ops, academic, and spreadsheet workflows.', 'Pro Studio'],
+  ['Vault', 'Protected assets, previews, templates, and premium implementation payloads.', 'Solo / Pro'],
+  ['Full-only', 'Executive briefing, launch pack surfaces, and highest-finish handoff assets.', 'Full Signature'],
+  ['Support / handoff', 'Guided close, purchase recovery, and premium delivery framing.', 'Full Signature'],
+];
+
 function safePaymentActions(actions: PaymentAction[] | undefined): PaymentAction[] {
   if (actions && actions.length > 0) return actions;
   return [{ label: 'Talk to sales', href: salesLinks.contact, external: true, tone: 'ghost' }];
@@ -176,6 +185,26 @@ export default async function PricingPage({
         {salesPlans.map((plan) => (
           <PricingCard key={plan.id} plan={plan} />
         ))}
+      </section>
+
+      <section className="pricing-access-matrix">
+        <div>
+          <p className="section-label">What each tier helps you build</p>
+          <h2>Buy access by delivery outcome, not by component count.</h2>
+          <p>
+            The commercial ladder is intentionally simple: evaluate the foundation, build with Pro Studio,
+            and use Full Signature when the buyer needs the most polished handoff.
+          </p>
+        </div>
+        <div className="pricing-access-table">
+          {accessRows.map(([layer, value, tier]) => (
+            <div key={layer}>
+              <strong>{layer}</strong>
+              <span>{value}</span>
+              <em>{tier}</em>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="pricing-proof-band">

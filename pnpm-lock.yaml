@@ -394,6 +394,28 @@ importers:
 
   packages/pro: {}
 
+  packages/react:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.0(react@19.2.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.2(@types/react@19.2.2)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.2
+
   packages/registry:
     devDependencies:
       '@repo/typescript-config':
@@ -11404,7 +11426,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.15.3
-      '@vitest/browser': 2.1.9(@types/node@22.15.3)(typescript@5.9.2)(vite@5.4.21(@types/node@22.15.3)(lightningcss@1.31.1))(vitest@2.1.9)
+      '@vitest/browser': 2.1.9(@types/node@22.15.3)(typescript@5.9.2)(vite@6.4.1(@types/node@22.15.3)(jiti@2.6.1)(lightningcss@1.31.1)(yaml@2.8.2))(vitest@2.1.9)
       jsdom: 25.0.1
     transitivePeerDependencies:
       - less
