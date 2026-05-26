@@ -4,7 +4,7 @@ import { LotOSSelect } from '../../product-surface/lotos-select';
 
 export const metadata = {
   title: 'Con LotOS UI — ClearCRM (after)',
-  description: 'El mismo CRM admin panel, construido con los 27 componentes de LotOS UI. Dark-first, WCAG AAA.',
+  description: 'El mismo CRM admin panel, construido con componentes de LotOS UI. Dark-first y accessibility-conscious.',
 };
 
 const contacts = [

@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import '../../demo/demo.css';
+import { buildRouteMetadata } from '../../../lib/seo';
 import { OperatorDemoClient } from './operator-demo-client';
 
-export const metadata = {
+export const metadata = buildRouteMetadata({
   title: 'Operator Cockpit - LotOS UI Demo',
   description: 'Operations product surface using CommandShell, DataGridPro, and ReportSurface.',
-};
+  path: '/demo/operator',
+});
 
 export default function OperatorDemoPage() {
   return (
@@ -23,6 +25,9 @@ export default function OperatorDemoPage() {
         <nav className="demo-nav">
           <Link href="/demo">All demos</Link>
           <Link href="/demo/student-control">Student Control</Link>
+          <Link href="/demo/components">Components</Link>
+          <Link href="/free">Free</Link>
+          <Link href="/pricing">Pricing</Link>
           <Link href="/">Home</Link>
         </nav>
       </header>

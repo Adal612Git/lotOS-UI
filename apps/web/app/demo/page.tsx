@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import '../demo/demo.css';
+import { buildRouteMetadata } from '../../lib/seo';
 
-export const metadata = {
+export const metadata = buildRouteMetadata({
   title: 'LotOS UI - Product Surface Demos',
   description: 'Flagship product surfaces, before/after comparisons, and component quality previews.',
-};
+  path: '/demo',
+});
 
 const flagshipDemos = [
   {
@@ -56,6 +58,8 @@ export default function DemoIndexPage() {
         <nav className="demo-nav">
           <Link href="/">Home</Link>
           <Link href="/demo/components">Components</Link>
+          <Link href="/free">Free</Link>
+          <Link href="/claim">Claim</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/team-access">Team QA</Link>
         </nav>

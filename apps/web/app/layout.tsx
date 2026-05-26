@@ -3,9 +3,9 @@ import './globals.css';
 import './product-surface/signature-v2.css';
 
 export const metadata: Metadata = {
-  title: 'LotOS UI - AI-native Multi-runtime UI Platform',
+  title: 'LotOS UI - Product surfaces for AI-generated screens',
   description:
-    'Build production-grade interfaces across React, PHP, Python, Java, .NET, Go, and desktop stacks with MCP contracts, schemas, and guardrails.',
+    'LotOS UI turns AI-generated screens into product-ready interfaces with premium dashboards, CRUDs, reports and product surfaces.',
   keywords: [
     'react',
     'ui library',
@@ -15,13 +15,20 @@ export const metadata: Metadata = {
     'ai',
     'desktop ui',
     'multi runtime',
+    'product surfaces',
     'lotos',
   ],
   openGraph: {
     title: 'LotOS UI',
     description:
-      'AI-native multi-runtime UI platform with stack and desktop generators.',
+      'Turn AI-generated screens into product-ready interfaces with premium dashboards, CRUDs, reports and product surfaces.',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'LotOS UI',
+    description:
+      'Product surfaces for AI-generated screens, dashboards, CRUDs and reports.',
   },
 };
 

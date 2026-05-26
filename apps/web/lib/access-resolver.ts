@@ -9,6 +9,7 @@ import {
 import { listUserEntitlements, listUserPlans, type EntitlementAccessSummary } from './entitlements';
 import { isOwnerEmail, normalizeEmail } from './owner';
 import type { CommercialPlan } from './plans';
+import { listUserPromoGrantAccess, type PromoGrantAccessSummary } from './promo-grants';
 import { getActiveTesterAccess, type TesterAccessGrant } from './tester-access';
 
 export interface ResolvedAccess extends AccessDecision {
@@ -18,7 +19,15 @@ export interface ResolvedAccess extends AccessDecision {
   isTester: boolean;
   testerAccess: TesterAccessGrant | null;
   plans: CommercialPlan[];
+  promoGrants: PromoGrantAccessSummary[];
 }
+
+const planRank: Record<CommercialPlan, number> = {
+  free: 0,
+  solo: 1,
+  pro: 2,
+  launch_pack: 3,
+};
 
 function withAllowed(
   decision: AccessDecision,
@@ -32,6 +41,16 @@ function withAllowed(
   };
 }
 
+function pickHighestPromoGrant(grants: PromoGrantAccessSummary[]): PromoGrantAccessSummary | null {
+  return grants.reduce<PromoGrantAccessSummary | null>((highest, grant) => {
+    if (!highest) {
+      return grant;
+    }
+
+    return planRank[grant.plan] > planRank[highest.plan] ? grant : highest;
+  }, null);
+}
+
 export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null): Promise<ResolvedAccess> {
   let email: string | null = null;
   try {
@@ -41,39 +60,106 @@ export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null)
     email = null;
   }
 
-  const testerAccess = await getActiveTesterAccess(email);
   const owner = isOwnerEmail(email);
   const warnings: string[] = [];
 
+  if (owner) {
+    return withAllowed(
+      buildAccessDecision({
+        plan: 'launch_pack',
+        source: 'owner_bypass',
+        accessLevel: 'owner',
+        email,
+        label: 'Full Signature Owner',
+        warnings,
+      }),
+      requiredPlan,
+      {
+        entitlements: [],
+        isOwner: true,
+        isTester: false,
+        testerAccess: null,
+        plans: ['launch_pack'],
+        promoGrants: [],
+      }
+    );
+  }
+
+  const testerAccess = await getActiveTesterAccess(email);
+  let plans: CommercialPlan[] = [];
+  let entitlements: EntitlementAccessSummary[] = [];
+  let promoGrants: PromoGrantAccessSummary[] = [];
+
   if (email) {
-    try {
-      const [plans, entitlements] = await Promise.all([
+    const [entitlementResult, promoResult] = await Promise.allSettled([
+      Promise.all([
         listUserPlans(email),
         listUserEntitlements(email),
-      ]);
+      ]),
+      listUserPromoGrantAccess(email),
+    ]);
 
-      if (plans.length > 0) {
-        const plan = pickHighestPlan(plans);
-        return withAllowed(
-          buildAccessDecision({
-            plan,
-            source: 'purchase',
-            email,
-            warnings,
-          }),
-          requiredPlan,
-          {
-            entitlements,
-            isOwner: false,
-            isTester: false,
-            testerAccess: null,
-            plans,
-          }
-        );
-      }
-    } catch (error) {
+    if (entitlementResult.status === 'fulfilled') {
+      [plans, entitlements] = entitlementResult.value;
+    } else {
+      const error = entitlementResult.reason;
       warnings.push(error instanceof Error ? error.message : 'Unable to resolve persistent entitlements.');
     }
+
+    if (promoResult.status === 'fulfilled') {
+      promoGrants = promoResult.value;
+    } else {
+      const error = promoResult.reason;
+      warnings.push(error instanceof Error ? error.message : 'Unable to resolve promotional access.');
+    }
+  }
+
+  const paidPlan = plans.length > 0 ? pickHighestPlan(plans) : null;
+  const promoGrant = pickHighestPromoGrant(promoGrants);
+
+  if (paidPlan && (!promoGrant || planRank[paidPlan] >= planRank[promoGrant.plan])) {
+    return withAllowed(
+      buildAccessDecision({
+        plan: paidPlan,
+        source: 'paid',
+        email,
+        warnings,
+      }),
+      requiredPlan,
+      {
+        entitlements,
+        isOwner: false,
+        isTester: false,
+        testerAccess: null,
+        plans,
+        promoGrants,
+      }
+    );
+  }
+
+  if (promoGrant) {
+    return withAllowed(
+      buildAccessDecision({
+        plan: promoGrant.plan,
+        source: 'promo_grant',
+        email,
+        expiresAt: promoGrant.expiresAt,
+        label: promoGrant.label,
+        grantLabel: promoGrant.label,
+        isPromotional: true,
+        isRevocable: true,
+        warnings,
+      }),
+      requiredPlan,
+      {
+        entitlements,
+        isOwner: false,
+        isTester: false,
+        testerAccess: null,
+        plans: [...new Set([...plans, promoGrant.plan])],
+        promoGrants,
+      }
+    );
   }
 
   if (testerAccess) {
@@ -82,7 +168,9 @@ export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null)
       buildAccessDecision({
         plan: testerAccess.plan,
         source: 'qa_phone',
+        accessLevel: 'qa',
         email: qaEmail,
+        label: 'QA Access',
         expiresAt: testerAccess.expiresAt,
         warnings,
       }),
@@ -107,25 +195,7 @@ export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null)
         isTester: true,
         testerAccess,
         plans: [testerAccess.plan],
-      }
-    );
-  }
-
-  if (owner) {
-    return withAllowed(
-      buildAccessDecision({
-        plan: 'launch_pack',
-        source: 'owner',
-        email,
-        warnings,
-      }),
-      requiredPlan,
-      {
-        entitlements: [],
-        isOwner: true,
-        isTester: false,
-        testerAccess: null,
-        plans: ['launch_pack'],
+        promoGrants,
       }
     );
   }
@@ -133,7 +203,8 @@ export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null)
   return withAllowed(
     buildAccessDecision({
       plan: 'free',
-      source: email ? 'session' : 'public',
+      source: email ? 'free_default' : 'anonymous',
+      accessLevel: email ? 'free' : 'public',
       email,
       warnings,
     }),
@@ -144,6 +215,7 @@ export async function resolveCurrentAccess(requiredPlan?: CommercialPlan | null)
       isTester: false,
       testerAccess: null,
       plans: [],
+      promoGrants,
     }
   );
 }

@@ -123,6 +123,48 @@ requireMarkers('entitlements-helper', entitlements, [
   'createdByOwnerEmail',
 ]);
 
+const promoGrants = requireFile('apps/web/lib/promo-grants.ts');
+requireMarkers('promo-grants-helper', promoGrants, [
+  'FREE_FOUNDATION',
+  'PRO_TRIAL',
+  'PRO_GIFT',
+  'FULL_GIFT',
+  'QA_ACCESS',
+  'hashPromoCode',
+  'claimPromoCodeForEmail',
+  'listUserPromoGrantAccess',
+  'max_claims_reached',
+  'already_claimed',
+  'revoked',
+  'expired',
+]);
+
+const accessResolver = requireFile('apps/web/lib/access-resolver.ts');
+requireMarkers('access-resolver', accessResolver, [
+  'owner_bypass',
+  'paid',
+  'promo_grant',
+  'qa_phone',
+  'free_default',
+  'listUserPromoGrantAccess',
+]);
+
+const promoClaimRoute = requireFile('apps/web/app/api/promo/claim/route.ts');
+requireMarkers('promo-claim-route', promoClaimRoute, [
+  'getServerSession',
+  'claimPromoCodeForEmail',
+  'login_required',
+]);
+requireNoSensitiveConsole('promo-claim-route', promoClaimRoute);
+
+const promoGrantsRoute = requireFile('apps/web/app/api/promo/grants/route.ts');
+requireMarkers('promo-grants-route', promoGrantsRoute, [
+  'isOwnerEmail',
+  'createPromoGrant',
+  'revokePromoGrant',
+]);
+requireNoSensitiveConsole('promo-grants-route', promoGrantsRoute);
+
 const restHelper = requireFile('apps/web/lib/entitlements-rest.ts');
 requireMarkers('entitlements-rest', restHelper, ['canAccessPremiumFromRows']);
 
@@ -209,6 +251,7 @@ const expectedFlowIds = [
   'paid_checkout',
   'subscription_payment_recovered',
   'manual_owner_test',
+  'promotional_access_grant',
   'manual_owner_paid_recovery',
   'manual_owner_revoke',
 ];
@@ -226,6 +269,18 @@ if (!lotosManifest.routes.ownerOnly.includes('/api/entitlements/revoke')) {
   fail('registry-route:/api/entitlements/revoke', 'revoke route must be ownerOnly');
 } else {
   pass('registry-route:/api/entitlements/revoke', 'ownerOnly');
+}
+
+if (!lotosManifest.routes.ownerOnly.includes('/api/promo/grants')) {
+  fail('registry-route:/api/promo/grants', 'promo grant admin route must be ownerOnly');
+} else {
+  pass('registry-route:/api/promo/grants', 'ownerOnly');
+}
+
+if (!lotosManifest.routes.auth.includes('/api/promo/claim')) {
+  fail('registry-route:/api/promo/claim', 'promo claim route must require authenticated claim handling');
+} else {
+  pass('registry-route:/api/promo/claim', 'auth');
 }
 
 if (!lotosManifest.validation.includes('pnpm run verify:entitlement-boundary')) {

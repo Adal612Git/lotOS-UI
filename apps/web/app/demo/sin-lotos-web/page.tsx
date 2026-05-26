@@ -27,7 +27,7 @@ export default function SinLotosWebPage() {
           <a href="#">Ayuda</a>
         </nav>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="sin-btn secondary sin-btn" style={{ fontSize: 12 }}>user@example.com</button>
+          <button className="sin-btn secondary sin-btn" style={{ fontSize: 12 }}>demo@company.test</button>
           <button className="sin-btn danger" style={{ fontSize: 12 }}>Cerrar sesión</button>
         </div>
       </header>

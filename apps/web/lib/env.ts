@@ -101,6 +101,7 @@ export const env = {
   SUPABASE_SERVICE_ROLE_KEY: supabaseServerKey,
   ownerEmails,
   testerPhoneHashes,
+  authConfigured: Boolean(parsed.AUTH_SECRET),
   googleConfigured: Boolean(parsed.GOOGLE_CLIENT_ID && parsed.GOOGLE_CLIENT_SECRET),
   supabaseConfigured: Boolean(parsed.SUPABASE_URL && supabaseServerKey),
   lemonConfigured: Boolean(

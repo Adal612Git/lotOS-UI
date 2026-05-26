@@ -4443,6 +4443,7 @@ th {
 
 .pricing-hero,
 .pricing-proof-band,
+.pricing-promo-band,
 .pricing-demo-cta,
 .pricing-product-grid,
 .pricing-ops-links {
@@ -4525,6 +4526,7 @@ th {
 
 .pricing-product-card p,
 .pricing-proof-band p,
+.pricing-promo-band p,
 .pricing-demo-cta p {
   margin: 0;
   color: #50657d;
@@ -4564,6 +4566,7 @@ th {
 }
 
 .pricing-proof-band,
+.pricing-promo-band,
 .pricing-demo-cta {
   display: grid;
   gap: 24px;
@@ -4642,6 +4645,7 @@ th {
 }
 
 .pricing-proof-band h2,
+.pricing-promo-band h2,
 .pricing-demo-cta h2 {
   margin: 0 0 10px;
   color: #0d1f38;
@@ -4762,6 +4766,7 @@ th {
   .pricing-product-grid,
   .pricing-access-matrix,
   .pricing-proof-band,
+  .pricing-promo-band,
   .pricing-demo-cta {
     grid-template-columns: 1fr;
   }
@@ -4819,5 +4824,432 @@ th {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+.access-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 32px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #13201e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.access-badge-public,
+.access-badge-free {
+  border-color: rgba(11, 107, 91, 0.24);
+  color: #0b6b5b;
+}
+
+.access-badge-pro {
+  border-color: rgba(79, 70, 229, 0.24);
+  color: #3730a3;
+}
+
+.access-badge-full,
+.access-badge-owner {
+  border-color: rgba(154, 91, 0, 0.26);
+  color: #7a4a05;
+}
+
+.access-badge-qa {
+  border-color: rgba(2, 132, 199, 0.24);
+  color: #075985;
+}
+
+.access-summary-card,
+.claim-panel,
+.claim-result,
+.free-columns article,
+.promo-pass-band,
+.free-demo-card,
+.account-access-grid article,
+.free-grants-form,
+.free-grants-list,
+.free-grants-list article,
+.team-access-denied {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+}
+
+.access-summary-card {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.access-summary-card__header,
+.claim-form-row,
+.access-summary-actions,
+.claim-result-actions,
+.free-proof-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.access-summary-card h3,
+.claim-result h2,
+.free-columns h2,
+.promo-pass-band h2,
+.account-access-grid h2,
+.free-grants-form h2,
+.free-grants-list h2 {
+  margin: 0;
+  color: #13201e;
+  letter-spacing: 0;
+}
+
+.access-summary-meta,
+.free-grants-list dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.access-summary-meta div,
+.free-grants-list dl div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.access-summary-meta dt,
+.free-grants-list dt {
+  color: rgba(19, 32, 30, 0.56);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.access-summary-meta dd,
+.free-grants-list dd {
+  margin: 0;
+  color: #13201e;
+  font-weight: 800;
+}
+
+.access-capability-list,
+.promo-pass-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.access-capability-list span,
+.promo-pass-list span {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: rgba(246, 250, 248, 0.86);
+  color: rgba(19, 32, 30, 0.78);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.free-hero,
+.claim-shell,
+.account-access-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: 28px;
+  align-items: center;
+  padding: 72px 0 48px;
+}
+
+.free-hero-copy,
+.account-access-hero > div:first-child {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+
+.free-hero h1,
+.claim-panel h1,
+.account-access-hero h1 {
+  margin: 0;
+  max-width: 860px;
+  color: #13201e;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.free-hero p,
+.claim-panel p,
+.claim-result p,
+.account-access-hero p,
+.promo-pass-band p,
+.free-columns p,
+.account-access-grid p {
+  margin: 0;
+  color: rgba(19, 32, 30, 0.72);
+  line-height: 1.65;
+}
+
+.free-hero-proof {
+  display: grid;
+  gap: 18px;
+  min-height: 420px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 22px;
+  padding: 20px;
+  background:
+    linear-gradient(135deg, rgba(246, 250, 248, 0.96), rgba(255, 255, 255, 0.9)),
+    radial-gradient(circle at 80% 10%, rgba(242, 181, 68, 0.28), transparent 32%);
+  box-shadow: 0 30px 90px rgba(19, 32, 30, 0.12);
+}
+
+.free-proof-toolbar {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  padding-bottom: 14px;
+  color: rgba(19, 32, 30, 0.64);
+  font-weight: 800;
+}
+
+.free-proof-toolbar strong {
+  color: #0b6b5b;
+}
+
+.free-proof-grid,
+.free-demo-strip,
+.account-access-grid,
+.free-grants-select-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.free-proof-grid div {
+  display: grid;
+  gap: 8px;
+  min-height: 118px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+.free-proof-grid span,
+.free-demo-card span,
+.free-grants-list article span {
+  color: rgba(19, 32, 30, 0.54);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.free-proof-grid strong,
+.free-demo-card strong {
+  color: #13201e;
+  line-height: 1.3;
+}
+
+.free-proof-chart {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  min-height: 160px;
+  border-radius: 16px;
+  padding: 18px;
+  background: #13201e;
+}
+
+.free-proof-chart span {
+  flex: 1;
+  min-height: 32px;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(180deg, #f2b544, #0b6b5b);
+}
+
+.free-access-band,
+.free-columns,
+.promo-pass-band,
+.free-demo-strip,
+.final-cta,
+.account-access-grid,
+.free-grants-shell {
+  margin-top: 28px;
+}
+
+.free-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.free-columns article,
+.account-access-grid article,
+.team-access-denied {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
+.free-columns ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(19, 32, 30, 0.72);
+}
+
+.promo-pass-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 24px;
+}
+
+.free-demo-card {
+  display: grid;
+  gap: 10px;
+  min-height: 170px;
+  padding: 22px;
+  text-decoration: none;
+}
+
+.claim-shell {
+  align-items: stretch;
+}
+
+.claim-panel,
+.claim-result {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding: 28px;
+}
+
+.claim-form {
+  display: grid;
+  gap: 10px;
+}
+
+.claim-form label,
+.free-grants-form label {
+  display: grid;
+  gap: 8px;
+  color: rgba(19, 32, 30, 0.68);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.claim-form input,
+.free-grants-form input,
+.free-grants-form textarea {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 12px;
+  padding: 0 14px;
+  background: #fff;
+  color: #13201e;
+  font: inherit;
+}
+
+.free-grants-form textarea {
+  min-height: 92px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.claim-grant {
+  display: grid;
+  gap: 4px;
+  border-left: 4px solid #0b6b5b;
+  padding: 12px 14px;
+  background: rgba(11, 107, 91, 0.08);
+}
+
+.free-grants-shell {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+  gap: 22px;
+}
+
+.free-grants-form,
+.free-grants-list {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 24px;
+}
+
+.free-grants-list article {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.free-grants-list h3 {
+  margin: 0;
+  color: #13201e;
+}
+
+.free-grants-status {
+  margin: 0;
+  color: #0b6b5b;
+  font-weight: 800;
+}
+
+@media (max-width: 940px) {
+  .free-hero,
+  .claim-shell,
+  .account-access-hero,
+  .free-columns,
+  .promo-pass-band,
+  .free-grants-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .free-proof-grid,
+  .free-demo-strip,
+  .account-access-grid,
+  .free-grants-select-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .access-summary-card__header,
+  .claim-form-row,
+  .access-summary-actions,
+  .claim-result-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .free-hero,
+  .claim-shell,
+  .account-access-hero {
+    padding-top: 42px;
+  }
+
+  .free-hero h1,
+  .claim-panel h1,
+  .account-access-hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .free-hero-proof {
+    min-height: auto;
+  }
+
+  .access-summary-meta {
+    grid-template-columns: 1fr;
   }
 }

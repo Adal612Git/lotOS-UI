@@ -29,6 +29,9 @@ export function buildRouteMetadata(input: {
     metadataBase: new URL(siteUrl),
     title: input.title,
     description: input.description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: input.title,
       description: input.description,

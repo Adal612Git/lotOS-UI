@@ -16,7 +16,7 @@ const fullAccentCycle = ['accent-violet', 'accent-rose', 'accent-amber', 'accent
 
 const fullSignals = [
   { value: 'Top', label: 'Tier' },
-  { value: 'MX$249', label: 'Placeholder' },
+  { value: 'MX$249', label: 'Monthly' },
   { value: '6', label: 'New ecosystems' },
   { value: 'Full', label: 'Suite' },
 ];
@@ -29,7 +29,7 @@ const fullHighlights = [
 ];
 
 const fullProofNotes = [
-  'This tier should feel like a distinct product line, not merely a more decorated version of Pro.',
+  'This tier reads like a distinct product line, not merely a more decorated version of Pro.',
   'Its value comes from broader ecosystem reach, stronger presentation, and assets buyers cannot access below.',
   'That is what makes the top tier feel defendable and worth the premium jump.',
 ];
@@ -104,7 +104,7 @@ export default async function LaunchVaultPage() {
         <div className="tier-head">
           <div className="tier-title-block">
             <p className="plan-tier">Why Full Exists</p>
-            <h3>The top tier should feel like a complete premium suite, not just the final upsell.</h3>
+            <h3>The top tier reads as a complete premium suite, not just the final upsell.</h3>
             <p>
               This route needs to defend its price with broader reach, stronger delivery categories,
               and a visibly more elite product posture than the tier below it.
@@ -140,9 +140,9 @@ export default async function LaunchVaultPage() {
               ))}
             </div>
             <ul>
-              <li>Pro gives the buyer a strong private product. Full should feel like a bigger category of premium delivery.</li>
+              <li>Pro gives the buyer a strong private product. Full opens a bigger category of premium delivery.</li>
               <li>This is where the ladder expands by ecosystem, workflow type, and executive-facing surface area.</li>
-              <li>The buyer should immediately feel that this is the fullest version of the offer, not merely the most expensive one.</li>
+              <li>The buyer can immediately read this as the fullest version of the offer, not merely the most expensive one.</li>
             </ul>
           </div>
           <aside className="free-side-card">
@@ -164,7 +164,7 @@ export default async function LaunchVaultPage() {
           <p>Exclusive manifests and premium surfaces that do not ship in Pro.</p>
         </article>
         <article className="vault-kpi accent-rose">
-          <strong>MX$249 placeholder</strong>
+          <strong>MX$249 / mes</strong>
           <span>Prestige subscription</span>
           <p>Phase 1 founders pricing for the first 20 customers, now tied to a truly distinct top tier.</p>
         </article>
@@ -196,7 +196,7 @@ export default async function LaunchVaultPage() {
         </article>
         <article className="card">
           <p className="section-label">Use it like this</p>
-          <h2>How this tier should feel to the buyer</h2>
+          <h2>How this tier reads to the buyer</h2>
           <ul>
             {launchUseCases.map((item) => (
               <li key={item}>{item}</li>

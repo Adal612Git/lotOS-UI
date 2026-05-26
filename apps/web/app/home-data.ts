@@ -111,6 +111,36 @@ export const appRoutes: AppRouteItem[] = [
     accent: 'peach',
   },
   {
+    path: '/free',
+    name: 'Free Foundation',
+    group: 'Growth',
+    description: 'Ruta gratuita para explorar demos publicas, componentes base y previews sin abrir premium.',
+    simpleValue: 'Permite regalar valor sin regalar descargas privadas.',
+    href: '/free',
+    status: 'ready',
+    accent: 'mint',
+  },
+  {
+    path: '/claim',
+    name: 'Claim promocional',
+    group: 'Growth',
+    description: 'Formulario server-side para reclamar Creator Pass, Pro Trial o Full Gift.',
+    simpleValue: 'Activa regalos promocionales con expiracion y revocacion.',
+    href: '/claim',
+    status: 'ready',
+    accent: 'gold',
+  },
+  {
+    path: '/account/access',
+    name: 'Resumen de acceso',
+    group: 'Growth',
+    description: 'Vista minima de plan, fuente, expiracion y capacidades principales.',
+    simpleValue: 'Ayuda al usuario a entender que tiene y que puede reclamar.',
+    href: '/account/access',
+    status: 'ready',
+    accent: 'aqua',
+  },
+  {
     path: '/admin/entitlements',
     name: 'Admin de accesos',
     group: 'Admin',
@@ -1189,7 +1219,7 @@ function assertCount(label: string, actual: number, expected: number) {
   }
 }
 
-assertCount('app routes', appRoutes.length, 37);
+assertCount('app routes', appRoutes.length, 40);
 assertCount('demo routes', demoRoutes.length, 13);
 assertCount('components', componentCatalog.length, 27);
 assertCount('runtime profiles', runtimeProfiles.length, 19);

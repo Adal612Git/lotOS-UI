@@ -224,6 +224,156 @@
       "detail": "marker present"
     },
     {
+      "id": "file:apps/web/lib/promo-grants.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "promo-grants-helper:FREE_FOUNDATION",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:PRO_TRIAL",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:PRO_GIFT",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:FULL_GIFT",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:QA_ACCESS",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:hashPromoCode",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:claimPromoCodeForEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:listUserPromoGrantAccess",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:max_claims_reached",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:already_claimed",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:revoked",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:expired",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/lib/access-resolver.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "access-resolver:owner_bypass",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "access-resolver:paid",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "access-resolver:promo_grant",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "access-resolver:qa_phone",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "access-resolver:free_default",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "access-resolver:listUserPromoGrantAccess",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "file:apps/web/app/api/promo/claim/route.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "promo-claim-route:getServerSession",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-claim-route:claimPromoCodeForEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-claim-route:login_required",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-claim-route:console",
+      "status": "pass",
+      "detail": "no sensitive console output detected"
+    },
+    {
+      "id": "file:apps/web/app/api/promo/grants/route.ts",
+      "status": "pass",
+      "detail": "present"
+    },
+    {
+      "id": "promo-grants-route:isOwnerEmail",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-route:createPromoGrant",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-route:revokePromoGrant",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-route:console",
+      "status": "pass",
+      "detail": "no sensitive console output detected"
+    },
+    {
       "id": "file:apps/web/lib/entitlements-rest.ts",
       "status": "pass",
       "detail": "present"
@@ -509,6 +659,11 @@
       "detail": "registered"
     },
     {
+      "id": "registry-flow:promotional_access_grant",
+      "status": "pass",
+      "detail": "registered"
+    },
+    {
       "id": "registry-flow:manual_owner_paid_recovery",
       "status": "pass",
       "detail": "registered"
@@ -522,6 +677,16 @@
       "id": "registry-route:/api/entitlements/revoke",
       "status": "pass",
       "detail": "ownerOnly"
+    },
+    {
+      "id": "registry-route:/api/promo/grants",
+      "status": "pass",
+      "detail": "ownerOnly"
+    },
+    {
+      "id": "registry-route:/api/promo/claim",
+      "status": "pass",
+      "detail": "auth"
     },
     {
       "id": "registry-validation:verify:entitlement-boundary",

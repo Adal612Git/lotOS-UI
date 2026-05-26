@@ -16,7 +16,7 @@ const soloAccentCycle = ['accent-cyan', 'accent-emerald', 'accent-amber', 'accen
 
 const soloSignals = [
   { value: '1', label: 'Operator' },
-  { value: 'MX$59', label: 'Placeholder' },
+  { value: 'MX$59', label: 'Monthly' },
   { value: 'Private', label: 'Proof layer' },
   { value: 'Fast', label: 'Upgrade path' },
 ];
@@ -29,7 +29,7 @@ const soloHighlights = [
 ];
 
 const soloProofNotes = [
-  'Solo should feel clearly better than free, but still intentionally lighter than Pro.',
+  'Solo is clearly better than free, while staying intentionally lighter than Pro.',
   'Its job is to create recurring confidence and premium momentum without giving away the strongest execution assets.',
   'That makes Solo easier to buy first and makes the Pro upgrade easier to justify later.',
 ];
@@ -48,7 +48,7 @@ const soloBenefits = [
   {
     title: 'Monthly confidence pack',
     summary:
-      'This tier should feel like a compact subscription that keeps the buyer close to the premium story every month.',
+      'This tier is a compact subscription that keeps the buyer close to the premium story every month.',
     bullets: [
       'Buyer-only access to recurring premium proof assets',
       'A cleaner bridge from public docs into private value',
@@ -115,7 +115,7 @@ export default async function SoloVaultPage() {
         <div className="tier-head">
           <div className="tier-title-block">
             <p className="plan-tier">From Free To Solo</p>
-            <h3>The first paid step should feel noticeably richer without collapsing the upgrade ladder.</h3>
+            <h3>The first paid step is noticeably richer without collapsing the upgrade ladder.</h3>
             <p>
               Solo is where the buyer first feels exclusivity. It should be more valuable than the
               public layer, but still preserve the bigger jump into Pro.
@@ -180,7 +180,7 @@ export default async function SoloVaultPage() {
           <p>Solo is intentionally focused: one buyer, one recurring path, one clean upgrade ladder.</p>
         </article>
         <article className="vault-kpi accent-violet">
-          <strong>MX$59 placeholder</strong>
+          <strong>MX$59 / mes</strong>
           <span>Monthly entry point</span>
           <p>Phase 1 founders pricing for the first 20 customers keeps this tier accessible but still premium.</p>
         </article>

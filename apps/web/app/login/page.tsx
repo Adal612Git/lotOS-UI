@@ -10,6 +10,7 @@ export default async function LoginPage({
   const params = await searchParams;
   const callbackUrl = params?.callbackUrl?.startsWith('/') ? params.callbackUrl : '/vault';
   const accessDenied = params?.error === 'AccessDenied';
+  const signInAvailable = env.googleConfigured && env.authConfigured;
 
   return (
     <main className="landing pricing-page">
@@ -37,7 +38,7 @@ export default async function LoginPage({
           </div>
         ) : null}
         <div className="hero-actions">
-          {env.googleConfigured && env.AUTH_SECRET ? (
+          {signInAvailable ? (
             <a
               href={`/api/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`}
               className="btn primary"
@@ -45,7 +46,7 @@ export default async function LoginPage({
               Continue with Google
             </a>
           ) : (
-            <span className="btn ghost button-like">OAuth Not Configured Yet</span>
+            <span className="btn ghost button-like">Sign-in temporarily unavailable</span>
           )}
           <Link href="/pricing" className="btn ghost">
             Back to Pricing
@@ -59,7 +60,7 @@ export default async function LoginPage({
       <section className="grid two">
         <article className="card">
           <p className="section-label">Sign-in health</p>
-          <h2>{env.googleConfigured && env.AUTH_SECRET ? 'Google sign-in is available.' : 'Google sign-in is temporarily unavailable.'}</h2>
+          <h2>{signInAvailable ? 'Google sign-in is available.' : 'Google sign-in is temporarily unavailable.'}</h2>
           <p>
             The public site remains open. Buyers can retry sign-in, and team testers can use
             phone-only QA access from the team page.

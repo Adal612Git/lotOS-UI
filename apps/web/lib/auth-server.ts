@@ -62,7 +62,7 @@ export async function requirePlanAccess(requiredPlan: CommercialPlan) {
     };
   }
 
-  if (access.source === 'public') {
+  if (access.source === 'public' || access.source === 'anonymous') {
     redirect('/team-access?state=qa-required');
   }
 

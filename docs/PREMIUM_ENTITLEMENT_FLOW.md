@@ -33,6 +33,20 @@ Manual tests are temporary. Current app code stores lifecycle fields in `metadat
 
 Allowed trial durations are 7, 14, and 30 days. Default is 14 days.
 
+## Promotional Grant Path
+
+`/team-access/free-grants` -> owner-only `/api/promo/grants` -> hashed `access_grants` row -> `/claim` -> `/api/promo/claim` -> `resolveCurrentAccess`
+
+Promotional access supports:
+
+- `FREE_FOUNDATION`: no premium downloads.
+- `PRO_TRIAL`: requires expiration.
+- `PRO_GIFT`: revocable promotional Pro access.
+- `FULL_GIFT`: explicit Full Signature gift, normally low-volume.
+- `QA_ACCESS`: separate from the existing phone QA cookie path.
+
+Raw promo codes are never stored. The database stores `code_hash`, claim counters, expiration, revocation, and claim records by normalized account email. Premium downloads still delegate to `resolveCurrentAccess`.
+
 ## Paid Recovery Path
 
 `/admin/entitlements` -> owner-only `/api/entitlements/grant` -> Supabase entitlement with `manual_owner_paid_recovery:<provider>`

@@ -7,6 +7,7 @@ import { normalizeEmail } from '../../lib/owner';
 import { buildRouteMetadata } from '../../lib/seo';
 import { getActiveTesterAccess, isTesterAccessConfigured } from '../../lib/tester-access';
 import '../lotos-landing.css';
+import { AccessSummaryCard } from '../access-ui';
 import { TesterAccessForm } from './team-access-form';
 
 export const dynamic = 'force-dynamic';
@@ -116,6 +117,9 @@ export default async function TeamAccessPage({
           <Link href="/" className="nav-link">Home</Link>
           <Link href="/vault" className="nav-link nav-link--cta">Vault</Link>
           <Link href="/playground" className="nav-link nav-link--components">Playground</Link>
+          <Link href="/free" className="nav-link">Free</Link>
+          <Link href="/claim" className="nav-link">Claim</Link>
+          <Link href="/team-access/free-grants" className="nav-link">Promo Grants</Link>
           <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
           {signedIn ? (
             <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
@@ -183,6 +187,8 @@ export default async function TeamAccessPage({
             signedIn={signedIn}
           />
         </article>
+
+        <AccessSummaryCard access={access} title="Resumen de frontera" ctaHref="/team-access/free-grants" ctaLabel="Promo grants" />
 
         <article className="card">
           <p className="section-label">Diagnostico QA</p>

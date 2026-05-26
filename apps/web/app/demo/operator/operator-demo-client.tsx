@@ -212,6 +212,27 @@ export function OperatorDemoClient() {
                 ))}
               </div>
             </div>
+            <div className="demo-card">
+              <div className="demo-card-head">
+                <p className="demo-card-title">Activity feed</p>
+                <span className="demo-badge green">Live ops</span>
+              </div>
+              <div className="demo-action-list">
+                {[
+                  ['02m', 'Gateway timeout acknowledged by Ops Lead.'],
+                  ['07m', 'Mitigation running on API Gateway pool.'],
+                  ['23m', 'Report queue monitored; no customer-facing outage.'],
+                ].map(([time, body]) => (
+                  <div key={`${time}-${body}`} className="demo-action-item">
+                    <span className="demo-badge blue">{time}</span>
+                    <span className="demo-action-copy">
+                      <strong>{body}</strong>
+                      <span>Incident state retained for handoff.</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </aside>
         </div>
       </CommandShell>

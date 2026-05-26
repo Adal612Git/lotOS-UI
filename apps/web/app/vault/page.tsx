@@ -114,7 +114,7 @@ export default async function VaultPage() {
 
       <section className="hero compact">
         <p className="kicker">Commercial Vault</p>
-        <h1>Protected delivery with a three-tier premium ladder that should feel richer at every step.</h1>
+        <h1>Protected delivery with a three-tier premium ladder that gets richer at every step.</h1>
         <p className="lead">
           Signed in as <strong>{viewer.email}</strong>. Free assets stay public; protected assets
           unlock here based on entitlement or owner status.

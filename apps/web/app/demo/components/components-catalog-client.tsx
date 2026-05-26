@@ -69,9 +69,25 @@ export function ComponentsCatalogClient() {
       <p className="demo-section-label">Premium component catalog with honest status</p>
       <h1 className="demo-page-title">Components are the foundation. Product surfaces are the premium product.</h1>
       <p className="demo-page-subtitle">
-        This catalog now shows the real surfaces that replaced the roadmap placeholders: custom Select,
-        DataGridPro, CommandShell, and ReportSurface. No AAA claim is made here without a public audit.
+        This catalog shows the real surfaces behind the premium story: custom Select, DataGridPro,
+        CommandShell, ReportSurface, honest status, keyboard notes, responsive behavior, and export readiness.
       </p>
+
+      <section className="demo-comp-section">
+        <p className="demo-comp-section-label">Free vs Pro availability</p>
+        <div className="demo-comp-grid-3">
+          {[
+            ['Foundation', 'Base components, public demos, previews, and documentation.'],
+            ['Pro Studio', 'DataGridPro, CommandShell, ReportSurface, kits, and protected downloads.'],
+            ['Full Signature', 'Full-only surfaces, vault exports, and highest-finish handoff assets.'],
+          ].map(([title, body]) => (
+            <article key={title} className="demo-scard">
+              <p className="demo-scard-title">{title}</p>
+              <p className="demo-scard-body">{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="demo-comp-section">
         <p className="demo-comp-section-label">Component Quality Matrix</p>
@@ -156,7 +172,7 @@ export function ComponentsCatalogClient() {
             { id: 'export', label: 'Export matrix', description: 'Use DataGridPro CSV', icon: 'CSV' },
           ]}
           activities={[
-            { label: 'Now stable', body: 'DataGridPro, CommandShell, ReportSurface, and LotOSSelect are no longer roadmap copy.' },
+            { label: 'Now stable', body: 'DataGridPro, CommandShell, ReportSurface, and LotOSSelect are available as real product surfaces.' },
             { label: 'Next audit', body: 'Tooltip, popover, and modal focus trap remain preview-quality work.' },
           ]}
           actions={<Link className="lotos-btn lotos-btn--primary" href="/demo/student-control">Open flagship</Link>}
@@ -214,7 +230,7 @@ export function ComponentsCatalogClient() {
             },
           ]}
           footerTitle="Evidence over claim"
-          footerBody="This page avoids unsupported AAA claims and shows stable/preview status directly."
+          footerBody="Accessibility-conscious components. Formal audit pending."
         />
       </section>
 

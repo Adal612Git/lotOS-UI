@@ -50,10 +50,13 @@ import { Button } from '@lotosui/claude-arm';
 
 Si alguien llega nuevo al producto, el orden correcto es:
 
-1. Instalar `@lotosui/claude-arm` si quiere UI de aplicacion en React.
-2. Leer la ruta de onboarding en `apps/docs/content/docs/start-here.mdx`.
-3. Usar `@lotosui/cli` solo cuando ya necesite scaffolding, stacks o shells desktop.
-4. Tratar Excel y Calc como una linea separada de modernizacion de workflows, no como la ruta normal de npm.
+1. Abrir `/free` para entender Foundation y ver el valor publico sin tocar assets premium.
+2. Abrir `/demo/student-control` para ver la promesa central: de pantalla generada a producto vendible.
+3. Usar `/claim` solo cuando exista un Creator Pass, Founder Pass, Pro Trial o Full Gift valido.
+4. Instalar `@lotosui/claude-arm` si quiere UI de aplicacion en React.
+5. Leer la ruta de onboarding en `apps/docs/content/docs/start-here.mdx`.
+6. Usar `@lotosui/cli` solo cuando ya necesite scaffolding, stacks o shells desktop.
+7. Tratar Excel y Calc como una linea separada de modernizacion de workflows, no como la ruta normal de npm.
 
 ## Excel y Calc
 

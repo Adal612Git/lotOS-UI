@@ -16,7 +16,7 @@ const proAccentCycle = ['accent-amber', 'accent-cyan', 'accent-violet', 'accent-
 
 const proSignals = [
   { value: 'Core', label: 'Paid tier' },
-  { value: 'MX$129', label: 'Placeholder' },
+  { value: 'MX$129', label: 'Monthly' },
   { value: 'Reusable', label: 'Assets' },
   { value: 'Teams', label: 'Ready' },
 ];
@@ -29,16 +29,16 @@ const proHighlights = [
 ];
 
 const proProofNotes = [
-  'Pro should be the first tier where the buyer feels they are holding a serious private system.',
+  'Pro is the first tier where the buyer is holding a serious private system.',
   'It earns the upgrade by saving effort, improving delivery speed, and increasing the sense of ownership.',
-  'That is why this tier should feel materially stronger than Solo, not just more expensive.',
+  'That is why this tier is materially stronger than Solo, not just more expensive.',
 ];
 
 const proPrograms = [
   {
     title: 'Protected execution layer',
     summary:
-      'Pro is the first tier that should feel like the buyer is holding the real paid product, not just a teaser.',
+      'Pro is the first tier where the buyer is holding the real paid product, not just a teaser.',
     bullets: [
       'Reusable private assets that move beyond preview-only proof',
       'The core premium tier for recurring monthly value',
@@ -58,7 +58,7 @@ const proPrograms = [
   {
     title: 'Team-facing premium path',
     summary:
-      'Pro should be the obvious recurring choice for buyers who want the strongest balance of price and value.',
+      'Pro is the obvious recurring choice for buyers who want the strongest balance of price and value.',
     bullets: [
       'Higher-value monthly subscription than Solo',
       'Still below the prestige tier of Full Signature',
@@ -121,9 +121,9 @@ export default async function ProVaultPage() {
         <div className="tier-head">
           <div className="tier-title-block">
             <p className="plan-tier">Why Pro Wins</p>
-            <h3>This is where the buyer should stop feeling &quot;preview&quot; and start feeling &quot;product&quot;.</h3>
+            <h3>This is where the buyer leaves preview mode and starts seeing product utility.</h3>
             <p>
-              Pro is the commercial center of gravity. It is the tier that should most clearly justify
+              Pro is the commercial center of gravity. It is the tier that most clearly justifies
               recurring payment on real utility, not only on premium framing.
             </p>
           </div>
@@ -158,13 +158,13 @@ export default async function ProVaultPage() {
             </div>
             <ul>
               <li>Solo proves the paid layer is real. Pro is where that paid layer becomes operationally useful.</li>
-              <li>It should feel like the buyer unlocked practical commercial leverage, not just more premium copy.</li>
+              <li>It unlocks practical commercial leverage, not just more premium copy.</li>
               <li>This is the tier most buyers should view as the obvious recurring subscription if they want real momentum.</li>
             </ul>
           </div>
           <aside className="free-side-card">
             <p className="tier-mini-label">What Pro must communicate</p>
-            <h4>It should feel like the strongest practical purchase in the entire ladder.</h4>
+            <h4>It reads as the strongest practical purchase in the entire ladder.</h4>
             <ul className="free-proof-list">
               {proProofNotes.map((item) => (
                 <li key={item}>{item}</li>
@@ -186,7 +186,7 @@ export default async function ProVaultPage() {
           <p>Extra operator-facing catalog depth that expands the sense of value beyond raw files.</p>
         </article>
         <article className="vault-kpi accent-violet">
-          <strong>MX$129 placeholder</strong>
+          <strong>MX$129 / mes</strong>
           <span>Core premium tier</span>
           <p>Phase 1 founders pricing for the first 20 customers positions Pro as the value center of the ladder.</p>
         </article>
@@ -264,7 +264,7 @@ export default async function ProVaultPage() {
         <div className="tier-upgrade-grid">
           <article className="value-card accent-cyan">
             <h3>More curation</h3>
-            <p>Full Signature should feel less like a kit library and more like a private launch command room.</p>
+            <p>Full Signature is less like a kit library and more like a private launch command room.</p>
           </article>
           <article className="value-card accent-violet">
             <h3>Higher perceived value</h3>

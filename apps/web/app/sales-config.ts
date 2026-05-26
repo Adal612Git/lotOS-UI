@@ -159,7 +159,7 @@ const launchCheckout = buildPaidActions({
 });
 
 export const salesLinks = {
-  free: "/docs/installation",
+  free: "/free",
   solo: soloCheckout.href,
   pro: proCheckout.href,
   launchPack: launchCheckout.href,

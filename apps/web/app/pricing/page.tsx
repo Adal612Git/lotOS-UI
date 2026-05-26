@@ -58,6 +58,13 @@ const accessRows = [
   ['Support / handoff', 'Guided close, purchase recovery, and premium delivery framing.', 'Full Signature'],
 ];
 
+const promoRows = [
+  ['Creator Pass', 'Campaigns, community drops, and creator previews with controlled Pro access.'],
+  ['Founder Pass', 'Permanent or temporary gift access for early allies, always revocable.'],
+  ['Pro Studio Trial', 'A dated promotional window that falls back to Foundation when it ends.'],
+  ['Full Signature Gift', 'Explicit, low-volume, auditable access for the most sensitive tier.'],
+];
+
 function safePaymentActions(actions: PaymentAction[] | undefined): PaymentAction[] {
   if (actions && actions.length > 0) return actions;
   return [{ label: 'Talk to sales', href: salesLinks.contact, external: true, tone: 'ghost' }];
@@ -141,6 +148,8 @@ export default async function PricingPage({
           <Link href="/" className="nav-link">Home</Link>
           <Link href="/demo/student-control" className="nav-link">Flagship Demo</Link>
           <Link href="/demo/components" className="nav-link">Components</Link>
+          <Link href="/free" className="nav-link">Free</Link>
+          <Link href="/claim" className="nav-link">Claim code</Link>
           <Link href="/team-access" className="nav-link">Team QA</Link>
           {signedInEmail ? (
             <Link href="/vault" className="nav-link nav-link--cta">Open Vault</Link>
@@ -185,6 +194,26 @@ export default async function PricingPage({
         {salesPlans.map((plan) => (
           <PricingCard key={plan.id} plan={plan} />
         ))}
+      </section>
+
+      <section className="pricing-promo-band">
+        <div>
+          <p className="section-label">Have a promotional pass?</p>
+          <h2>Promotional access can unlock Pro or Full without weakening paid plans.</h2>
+          <p>
+            Passes may expire, have max claims, and be revoked. Foundation stays free, while premium assets still
+            require Pro Studio, Full Signature, or a valid promotional grant.
+          </p>
+          <Link href="/claim" className="btn primary">Claim code</Link>
+        </div>
+        <div className="pricing-proof-table">
+          {promoRows.map(([label, value]) => (
+            <div key={label}>
+              <strong>{label}</strong>
+              <span>{value}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="pricing-access-matrix">

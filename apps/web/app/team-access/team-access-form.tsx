@@ -98,7 +98,7 @@ export function TesterAccessForm({ active, configured, expiresAt, signedIn }: Te
       {!configured ? (
         <div className="pricing-state-banner warning">
           <strong>Tester unlock is not configured.</strong>
-          <span>Set AUTH_SECRET and authorized tester phone hashes before using this page.</span>
+          <span>Tester unlock needs secure server configuration before this page can issue access.</span>
         </div>
       ) : null}
 

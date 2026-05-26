@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import '../../demo/demo.css';
+import { buildRouteMetadata } from '../../../lib/seo';
 import { ComponentsCatalogClient } from './components-catalog-client';
 
-export const metadata = {
+export const metadata = buildRouteMetadata({
   title: 'Component Catalog - LotOS UI Demo',
   description: 'Premium product-surface catalog with real DataGridPro, CommandShell, ReportSurface, and LotOSSelect previews.',
-};
+  path: '/demo/components',
+});
 
 export default function ComponentsDemoPage() {
   return (
@@ -23,6 +25,9 @@ export default function ComponentsDemoPage() {
         <nav className="demo-nav">
           <Link href="/demo">All demos</Link>
           <Link href="/demo/student-control">Flagship</Link>
+          <Link href="/free">Free</Link>
+          <Link href="/claim">Claim</Link>
+          <Link href="/pricing">Pricing</Link>
           <Link href="/">Home</Link>
         </nav>
       </header>

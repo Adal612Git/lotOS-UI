@@ -11,6 +11,7 @@ import {
   type LotOSSelectOption,
   type ReportCard,
 } from '../../product-surface';
+import { trackProductEvent } from '../../../lib/product-analytics';
 
 type StudentRisk = 'Low' | 'Watch' | 'High';
 type StudentStatus = 'On track' | 'Needs review' | 'Intervention';
@@ -133,6 +134,10 @@ export function StudentControlClient() {
   const [studentForm, setStudentForm] = useState<StudentForm | null>(null);
   const [gradeForm, setGradeForm] = useState<Student | null>(null);
   const [notice, setNotice] = useState('Local QA mode. Changes stay in this browser.');
+
+  useEffect(() => {
+    trackProductEvent('demo_student_control_opened');
+  }, []);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(storageKey);
@@ -346,6 +351,8 @@ export function StudentControlClient() {
         <nav className="student-product-nav">
           <Link href="/demo">All demos</Link>
           <Link href="/demo/components">Components</Link>
+          <Link href="/free">Free</Link>
+          <Link href="/claim">Claim</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/">Home</Link>
         </nav>
@@ -354,7 +361,8 @@ export function StudentControlClient() {
       <div className="student-product-body">
         <section className="student-product-hero">
           <div className="student-product-hero-copy">
-            <p className="student-product-kicker">Flagship demo - academic product surface</p>
+            <p className="student-product-kicker">Student Control: flagship product surface</p>
+            <span className="lotos-badge" data-tone="info">Built with LotOS Product Surfaces</span>
             <h1>Student Control is the proof that LotOS sells finished surfaces.</h1>
             <p className="student-product-lead">
               A generated CRUD becomes a client-ready school system with CommandShell, DataGridPro, custom filters,
@@ -493,7 +501,7 @@ export function StudentControlClient() {
                     <div>
                       <p className="student-product-section-kicker">Registry powered by DataGridPro</p>
                       <h2>Students, filters, density, actions, export.</h2>
-                      <p>No native select. No static table placeholder. This is the real surface QA should use.</p>
+                      <p>Search, sort, filter, export, edit, grade review, delete, and mobile card mode in one surface.</p>
                     </div>
                   </div>
                   <div className="student-product-filter-row">
@@ -601,8 +609,8 @@ export function StudentControlClient() {
 
               <section className="student-product-lab">
                 <div className="student-product-surface-intro">
-                  <p className="student-product-section-kicker">Before / after proof</p>
-                  <h2>LotOS makes the finished product obvious.</h2>
+                  <p className="student-product-section-kicker">Why this matters</p>
+                  <h2>CRUD plus metrics, reports, states, and actions is what makes the screen sellable.</h2>
                   <p>
                     The raw version has data, but no confidence. The LotOS surface adds navigation, state,
                     filtering, action density, reports, and a handoff shape an AI agent can reuse.

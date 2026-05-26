@@ -22,6 +22,10 @@ const routeFiles = [
   'apps/web/app/ai/page.tsx',
   'apps/web/app/templates/page.tsx',
   'apps/web/app/pricing/page.tsx',
+  'apps/web/app/free/page.tsx',
+  'apps/web/app/claim/page.tsx',
+  'apps/web/app/account/access/page.tsx',
+  'apps/web/app/team-access/free-grants/page.tsx',
   'apps/web/app/design-lab/page.tsx',
   'apps/web/app/vault/page.tsx',
   'apps/web/app/admin/entitlements/page.tsx',
@@ -31,10 +35,13 @@ const routeFiles = [
   'apps/web/app/api/entitlements/grant/route.ts',
   'apps/web/app/api/entitlements/revoke/route.ts',
   'apps/web/app/api/entitlements/lookup/route.ts',
+  'apps/web/app/api/promo/claim/route.ts',
+  'apps/web/app/api/promo/grants/route.ts',
   'apps/web/app/api/webhooks/lemon/route.ts',
   'apps/web/app/loading.tsx',
   'apps/web/app/not-found.tsx',
   'apps/web/lib/seo.ts',
+  'apps/web/lib/promo-grants.ts',
   'apps/web/lib/entitlement-lifecycle.ts',
   'apps/web/lib/entitlement-audit.ts',
   'apps/web/lib/webhooks/lemon-event-mapper.ts',
@@ -60,9 +67,23 @@ if (failures.length === 0) {
   }
 
   const accessResolver = read('apps/web/lib/access-resolver.ts');
-  for (const marker of ['getServerSession', 'listUserPlans', 'listUserEntitlements', 'isOwnerEmail', 'getActiveTesterAccess', 'accessSatisfies']) {
+  for (const marker of ['getServerSession', 'listUserPlans', 'listUserEntitlements', 'listUserPromoGrantAccess', 'isOwnerEmail', 'getActiveTesterAccess', 'accessSatisfies']) {
     if (!accessResolver.includes(marker)) {
       fail(`Central access resolver is missing marker: ${marker}`);
+    }
+  }
+
+  const promoGrants = read('apps/web/lib/promo-grants.ts');
+  for (const marker of ['hashPromoCode', 'claimPromoCodeForEmail', 'max_claims', 'revoked_at', 'expires_at', 'listUserPromoGrantAccess']) {
+    if (!promoGrants.includes(marker)) {
+      fail(`Promo grant helper is missing marker: ${marker}`);
+    }
+  }
+
+  const claimRoute = read('apps/web/app/api/promo/claim/route.ts');
+  for (const marker of ['getServerSession', 'claimPromoCodeForEmail', 'login_required']) {
+    if (!claimRoute.includes(marker)) {
+      fail(`Promo claim route is missing marker: ${marker}`);
     }
   }
 

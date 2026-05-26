@@ -65,6 +65,12 @@ const surfaceLayers = [
   ['Vault Pro', 'Assets privados, themes premium, templates verticales y Full-only.'],
 ];
 
+const accessLadder = [
+  ['Free Foundation', 'Demos publicas, componentes base y previews sin descargas premium.'],
+  ['Pro Studio', 'Product surfaces, kits, DataGridPro, CommandShell y ReportSurface autorizados.'],
+  ['Full Signature', 'Suite completa, vault full, superficies avanzadas y handoff premium.'],
+];
+
 const productSurfaceGallery = [
   {
     href: '/demo/student-control',
@@ -135,17 +141,18 @@ export function SiteHeader({ signedInEmail }: { signedInEmail: string | null }) 
       </Link>
       <nav className="home-nav" aria-label="Principal">
         <LangToggle />
-        <Link href="/demo/student-control">Flagship</Link>
+        <Link href="/#before-after">Product</Link>
         <Link href="/demo">Demos</Link>
-        <Link href="/demo/components">Componentes</Link>
-        <Link href="/pricing">Precios</Link>
-        <Link href="/team-access">Team QA</Link>
+        <Link href="/demo/components">Components</Link>
+        <Link href="/pricing">Pricing</Link>
+        <Link href="/free">Free</Link>
+        <Link href="/claim">Claim code</Link>
       </nav>
       <div className="home-header-actions">
         {signedInEmail ? (
-          <Link href="/api/auth/signout?callbackUrl=/">Cerrar sesion</Link>
+          <Link href="/account/access">Access</Link>
         ) : (
-          <Link href="/login">Iniciar sesion</Link>
+          <Link href="/login">Login</Link>
         )}
         <a href="https://github.com/Adal612Git/lotOS-UI" target="_blank" rel="noreferrer">
           GitHub
@@ -216,8 +223,8 @@ export function HeroSection() {
           <Link href="/demo/student-control" className="home-btn home-btn--primary">
             Abrir demo flagship
           </Link>
-          <Link href="#before-after" className="home-btn home-btn--secondary">
-            Ver antes/despues
+          <Link href="/free" className="home-btn home-btn--secondary">
+            Empezar gratis
           </Link>
           <Link href="/pricing" className="home-btn home-btn--mint">
             Explorar Pro Studio
@@ -396,6 +403,44 @@ export function SurfaceTaxonomySection() {
   );
 }
 
+export function AccessLadderSection() {
+  return (
+    <section className="home-section home-surface-taxonomy">
+      <div className="home-section__eyebrow">Free Foundation, Pro Studio, Full Signature</div>
+      <div className="home-section__split">
+        <div>
+          <h2>Una ruta gratis clara sin regalar la frontera premium.</h2>
+          <p>
+            Foundation permite evaluar el producto. Pro Studio y Full Signature desbloquean superficies,
+            kits y assets privados con acceso centralizado.
+          </p>
+        </div>
+        <Link href="/claim" className="home-btn home-btn--secondary">
+          Tengo un pase
+        </Link>
+      </div>
+      <div className="home-layer-grid">
+        {accessLadder.map(([title, body], index) => (
+          <article key={title} className={`home-layer-card home-accent-${(['mint', 'aqua', 'gold'] as Accent[])[index]}`}>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+      <div className="home-full-suite">
+        <div>
+          <span>Promotional passes</span>
+          <h3>Para campañas, testers, creadores y aliados.</h3>
+        </div>
+        <p>
+          LotOS puede entregar pases promocionales temporales o permanentes sin romper la frontera premium:
+          se validan server-side, pueden expirar y se pueden revocar.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export function QualityMatrixSection() {
   return (
     <section className="home-section home-quality-section">
@@ -453,7 +498,7 @@ export function InventoryStatsGrid() {
 
 export function AppRoutesShowcase() {
   const publicRoutes = appRoutes.filter((route) =>
-    ['/', '/demo/student-control', '/demo/components', '/pricing', '/templates', '/playground', '/vault'].includes(route.path)
+    ['/', '/free', '/claim', '/account/access', '/demo/student-control', '/demo/components', '/pricing', '/templates', '/playground', '/vault'].includes(route.path)
   );
 
   return (
@@ -678,6 +723,7 @@ export function HomePageContent({ signedInEmail }: { signedInEmail: string | nul
       <ProductSurfacesGallerySection />
       <BeforeAfterSection />
       <SurfaceTaxonomySection />
+      <AccessLadderSection />
       <QualityMatrixSection />
       <PremiumAssetsShowcase />
       <AppRoutesShowcase />
