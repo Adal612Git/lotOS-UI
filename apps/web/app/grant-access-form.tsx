@@ -129,7 +129,7 @@ export function GrantAccessForm() {
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="cliente@correo.com"
+          placeholder="cliente@correo.test"
           required
         />
       </label>
@@ -284,7 +284,7 @@ export function RevokeAccessForm() {
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="cliente@correo.com"
+          placeholder="cliente@correo.test"
           required
         />
       </label>
@@ -396,7 +396,7 @@ export function EntitlementLookupForm() {
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="cliente@correo.com"
+          placeholder="cliente@correo.test"
           required
         />
       </label>

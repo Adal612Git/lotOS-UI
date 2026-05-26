@@ -8,11 +8,11 @@ export const metadata = {
 };
 
 const contacts = [
-  { id: 1, name: 'María García',  initials: 'MG', color: '',       email: 'garcia@empresa.mx',    company: 'Fabricaciones MX', status: 'active',   deal: '$18,400', owner: 'RM', ownerColor: '' },
-  { id: 2, name: 'Carlos Vega',   initials: 'CV', color: 'blue',   email: 'cvega@logistica.com',  company: 'Logística Norte',  status: 'pending',  deal: '$7,200',  owner: 'AT', ownerColor: 'green' },
-  { id: 3, name: 'Sandra López',  initials: 'SL', color: 'green',  email: 's.lopez@retail.mx',    company: 'Retail Express',   status: 'active',   deal: '$31,000', owner: 'RM', ownerColor: '' },
-  { id: 4, name: 'Jorge Ruiz',    initials: 'JR', color: 'amber',  email: 'j.ruiz@tech.io',       company: 'TechSol',          status: 'inactive', deal: '—',       owner: 'LS', ownerColor: 'amber' },
-  { id: 5, name: 'Ana Castillo',  initials: 'AC', color: '',       email: 'castillo@fintech.mx',  company: 'FinTech MX',       status: 'active',   deal: '$52,600', owner: 'AT', ownerColor: 'green' },
+  { id: 1, name: 'María García',  initials: 'MG', color: '',       email: 'garcia@empresa.test',    company: 'Fabricaciones MX', status: 'active',   deal: '$18,400', owner: 'RM', ownerColor: '' },
+  { id: 2, name: 'Carlos Vega',   initials: 'CV', color: 'blue',   email: 'cvega@logistica.test',  company: 'Logística Norte',  status: 'pending',  deal: '$7,200',  owner: 'AT', ownerColor: 'green' },
+  { id: 3, name: 'Sandra López',  initials: 'SL', color: 'green',  email: 's.lopez@retail.test',    company: 'Retail Express',   status: 'active',   deal: '$31,000', owner: 'RM', ownerColor: '' },
+  { id: 4, name: 'Jorge Ruiz',    initials: 'JR', color: 'amber',  email: 'j.ruiz@techsol.test',       company: 'TechSol',          status: 'inactive', deal: '—',       owner: 'LS', ownerColor: 'amber' },
+  { id: 5, name: 'Ana Castillo',  initials: 'AC', color: '',       email: 'castillo@fintech.test',  company: 'FinTech MX',       status: 'active',   deal: '$52,600', owner: 'AT', ownerColor: 'green' },
 ] as const;
 
 const statusBadge = (s: string) => {
@@ -250,7 +250,7 @@ export default function ConLotosWebPage() {
                 <div className="demo-comp-grid-2">
                   <div>
                     <label style={{ display: 'block', fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(240,244,255,0.42)', marginBottom: 6 }}>Email</label>
-                    <input className="demo-sinput" type="email" placeholder="email@empresa.com" />
+                    <input className="demo-sinput" type="email" placeholder="email@empresa.test" />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(240,244,255,0.42)', marginBottom: 6 }}>Teléfono</label>

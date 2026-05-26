@@ -8,6 +8,7 @@ type ClaimState =
   | 'idle'
   | 'loading'
   | 'success'
+  | 'invalid_code'
   | 'invalid'
   | 'expired'
   | 'already_claimed'
@@ -30,6 +31,10 @@ const claimCopy: Record<ClaimState, { title: string; body: string }> = {
     body: 'El acceso quedó guardado en tu cuenta. Puedes revisar tus beneficios y expiración cuando quieras.',
   },
   invalid: {
+    title: 'No pudimos validar este código.',
+    body: 'Revisa que esté escrito completo. Los códigos reales no se publican en la web.',
+  },
+  invalid_code: {
     title: 'No pudimos validar este código.',
     body: 'Revisa que esté escrito completo. Los códigos reales no se publican en la web.',
   },
@@ -143,7 +148,7 @@ export function ClaimClient({
               name="promo-code"
               value={code}
               onChange={(event) => setCode(event.target.value)}
-              placeholder="CREATOR-PASS"
+              placeholder="TU-CODIGO"
               autoComplete="off"
               spellCheck={false}
             />

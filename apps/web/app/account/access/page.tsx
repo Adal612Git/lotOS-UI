@@ -21,6 +21,7 @@ export default async function AccountAccessPage() {
         <nav aria-label="Principal">
           <Link href="/free">Free</Link>
           <Link href="/claim">Tengo código</Link>
+          <Link href="/feedback">Feedback</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/team-access">Team QA</Link>
           <Link href="/login">Login</Link>

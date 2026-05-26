@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../auth-options';
 import {
   createPromoGrant,
+  listPromoGrantEventsForOwner,
   listPromoGrantsForOwner,
   revokePromoGrant,
   type PromoGrantType,
@@ -39,7 +40,12 @@ export async function GET() {
   }
 
   try {
-    return Response.json({ ok: true, grants: await listPromoGrantsForOwner() });
+    const [grants, events] = await Promise.all([
+      listPromoGrantsForOwner(),
+      listPromoGrantEventsForOwner().catch(() => []),
+    ]);
+
+    return Response.json({ ok: true, grants, events });
   } catch {
     return Response.json({ ok: false, error: 'Promotional grant storage is not available.' }, { status: 503 });
   }

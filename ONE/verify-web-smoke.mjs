@@ -26,6 +26,8 @@ const routeFiles = [
   'apps/web/app/claim/page.tsx',
   'apps/web/app/account/access/page.tsx',
   'apps/web/app/team-access/free-grants/page.tsx',
+  'apps/web/app/team-access/launch-readiness/page.tsx',
+  'apps/web/app/feedback/page.tsx',
   'apps/web/app/design-lab/page.tsx',
   'apps/web/app/vault/page.tsx',
   'apps/web/app/admin/entitlements/page.tsx',
@@ -74,7 +76,7 @@ if (failures.length === 0) {
   }
 
   const promoGrants = read('apps/web/lib/promo-grants.ts');
-  for (const marker of ['hashPromoCode', 'claimPromoCodeForEmail', 'max_claims', 'revoked_at', 'expires_at', 'listUserPromoGrantAccess']) {
+  for (const marker of ['hashPromoCode', 'claimPromoCodeForEmail', 'claim_promotional_access_grant', 'max_claims', 'revoked_at', 'expires_at', 'listUserPromoGrantAccess']) {
     if (!promoGrants.includes(marker)) {
       fail(`Promo grant helper is missing marker: ${marker}`);
     }

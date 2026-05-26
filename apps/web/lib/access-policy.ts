@@ -174,3 +174,7 @@ export function buildAccessDecision(input: {
 export function accessSatisfies(decision: AccessDecision, requiredPlan: CommercialPlan): boolean {
   return planSatisfies(decision.tier, requiredPlan);
 }
+
+export function hasCapability(decision: Pick<AccessDecision, 'capabilityList'>, capability: string): boolean {
+  return decision.capabilityList.includes(capability);
+}

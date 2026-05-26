@@ -132,9 +132,11 @@ requireMarkers('promo-grants-helper', promoGrants, [
   'QA_ACCESS',
   'hashPromoCode',
   'claimPromoCodeForEmail',
+  'claim_promotional_access_grant',
   'listUserPromoGrantAccess',
   'max_claims_reached',
   'already_claimed',
+  'invalid_code',
   'revoked',
   'expired',
 ]);
@@ -275,6 +277,12 @@ if (!lotosManifest.routes.ownerOnly.includes('/api/promo/grants')) {
   fail('registry-route:/api/promo/grants', 'promo grant admin route must be ownerOnly');
 } else {
   pass('registry-route:/api/promo/grants', 'ownerOnly');
+}
+
+if (!lotosManifest.routes.ownerOnly.includes('/team-access/launch-readiness')) {
+  fail('registry-route:/team-access/launch-readiness', 'launch readiness route must be ownerOnly');
+} else {
+  pass('registry-route:/team-access/launch-readiness', 'ownerOnly');
 }
 
 if (!lotosManifest.routes.auth.includes('/api/promo/claim')) {

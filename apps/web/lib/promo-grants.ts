@@ -6,6 +6,7 @@ import { normalizePlan, planSatisfies, type CommercialPlan } from './plans';
 export type PromoGrantType = 'FREE_FOUNDATION' | 'PRO_TRIAL' | 'PRO_GIFT' | 'FULL_GIFT' | 'QA_ACCESS';
 export type PromoClaimStatus =
   | 'success'
+  | 'invalid_code'
   | 'invalid'
   | 'expired'
   | 'revoked'
@@ -43,6 +44,15 @@ export interface PromoGrantClaimRow {
   notes: string | null;
 }
 
+export interface PromoGrantEventRow {
+  id: string;
+  grant_id: string | null;
+  actor_user_id: string | null;
+  event_type: PromoGrantEventType;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
 export interface PromoGrantAccessSummary {
   id: string;
   grantId: string;
@@ -77,9 +87,33 @@ export interface SanitizedPromoGrant {
   notes: string | null;
 }
 
+export type PromoGrantEventType =
+  | 'created'
+  | 'claimed'
+  | 'revoked'
+  | 'expired_check'
+  | 'max_claims_reached'
+  | 'failed_claim'
+  | 'updated';
+
+export interface SanitizedPromoGrantEvent {
+  id: string;
+  grantId: string | null;
+  eventType: PromoGrantEventType;
+  createdAt: string;
+  metadata: Record<string, unknown>;
+}
+
 export interface PromoClaimResult {
   status: PromoClaimStatus;
   grant: PromoGrantAccessSummary | null;
+}
+
+interface PromoClaimRpcRow {
+  status: PromoClaimStatus;
+  grant_id: string | null;
+  claim_id: string | null;
+  expires_at: string | null;
 }
 
 const promoGrantTypes: PromoGrantType[] = ['FREE_FOUNDATION', 'PRO_TRIAL', 'PRO_GIFT', 'FULL_GIFT', 'QA_ACCESS'];
@@ -110,7 +144,7 @@ function buildHeaders(extraHeaders?: Record<string, string>) {
   };
 }
 
-function buildEndpoint(table: 'access_grants' | 'access_grant_claims') {
+function buildEndpoint(table: 'access_grants' | 'access_grant_claims' | 'access_grant_events') {
   const config = requireSupabaseRestConfig();
 
   if (!config) {
@@ -118,6 +152,16 @@ function buildEndpoint(table: 'access_grants' | 'access_grant_claims') {
   }
 
   return new URL(`/rest/v1/${table}`, config.supabaseUrl);
+}
+
+function buildRpcEndpoint(functionName: 'claim_promotional_access_grant') {
+  const config = requireSupabaseRestConfig();
+
+  if (!config) {
+    throw new Error('Promotional access storage is not configured.');
+  }
+
+  return new URL(`/rest/v1/rpc/${functionName}`, config.supabaseUrl);
 }
 
 async function parseErrorResponse(response: Response) {
@@ -146,6 +190,11 @@ export function hashPromoCode(value: string): string {
   }
 
   return createHash('sha256').update(normalized).digest('hex');
+}
+
+function hashActorRef(value: string | null | undefined): string | null {
+  const normalized = normalizeEmail(value);
+  return normalized ? createHash('sha256').update(normalized).digest('hex') : null;
 }
 
 function parsePromoGrantType(value: unknown): PromoGrantType | null {
@@ -255,6 +304,16 @@ function sanitizeGrant(row: PromoGrantRow): SanitizedPromoGrant {
   };
 }
 
+function sanitizeGrantEvent(row: PromoGrantEventRow): SanitizedPromoGrantEvent {
+  return {
+    id: row.id,
+    grantId: row.grant_id,
+    eventType: row.event_type,
+    createdAt: row.created_at,
+    metadata: row.metadata ?? {},
+  };
+}
+
 function toAccessSummary(row: PromoGrantRow, claim: PromoGrantClaimRow): PromoGrantAccessSummary {
   const sanitized = sanitizeGrant(row);
   const expiresAt = earlierIso(claim.expires_at, sanitized.expiresAt);
@@ -274,6 +333,35 @@ function toAccessSummary(row: PromoGrantRow, claim: PromoGrantClaimRow): PromoGr
     isRevocable: true,
     active: !claim.revoked_at && !sanitized.revokedAt && !isPast(expiresAt),
   };
+}
+
+async function recordPromoGrantEvent(input: {
+  grantId: string | null;
+  actorUserId?: string | null;
+  eventType: PromoGrantEventType;
+  metadata?: Record<string, unknown>;
+}) {
+  if (!requireSupabaseRestConfig()) {
+    return;
+  }
+
+  const endpoint = buildEndpoint('access_grant_events');
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: buildHeaders({ Prefer: 'return=minimal' }),
+    body: JSON.stringify({
+      grant_id: input.grantId,
+      actor_user_id: input.actorUserId ?? null,
+      event_type: input.eventType,
+      metadata: input.metadata ?? {},
+    }),
+    cache: 'no-store',
+  });
+
+  if (!response.ok && response.status !== 404) {
+    throw new Error(await parseErrorResponse(response));
+  }
 }
 
 async function fetchGrantByCodeHash(codeHash: string): Promise<PromoGrantRow | null> {
@@ -368,6 +456,53 @@ async function patchClaimCount(grantId: string, claimCount: number) {
   }
 }
 
+async function claimPromoCodeViaRpc(input: {
+  codeHash: string;
+  email: string;
+}): Promise<PromoClaimResult> {
+  const endpoint = buildRpcEndpoint('claim_promotional_access_grant');
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: buildHeaders(),
+    body: JSON.stringify({
+      p_code_hash: input.codeHash,
+      p_email_normalized: input.email,
+      p_source_ip_hash: null,
+      p_user_agent_hash: null,
+    }),
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  const rows = (await response.json()) as PromoClaimRpcRow[];
+  const claimResult = rows[0];
+
+  if (!claimResult) {
+    throw new Error('Promotional claim RPC returned no result.');
+  }
+
+  const status = claimResult.status === 'invalid' ? 'invalid_code' : claimResult.status;
+
+  if (!claimResult.grant_id || !claimResult.claim_id) {
+    return { status, grant: null };
+  }
+
+  const [grant, claim] = await Promise.all([
+    fetchGrantById(claimResult.grant_id),
+    fetchClaimForUser(claimResult.grant_id, input.email),
+  ]);
+
+  if (!grant || !claim) {
+    return { status, grant: null };
+  }
+
+  return { status, grant: toAccessSummary(grant, claim) };
+}
+
 export async function claimPromoCodeForEmail(input: {
   code: string;
   email: string | null | undefined;
@@ -384,13 +519,38 @@ export async function claimPromoCodeForEmail(input: {
   const normalizedCode = normalizePromoCode(input.code);
 
   if (!normalizedCode) {
-    return { status: 'invalid', grant: null };
+    return { status: 'invalid_code', grant: null };
+  }
+
+  return claimPromoCodeViaRpc({
+    codeHash: hashPromoCode(normalizedCode),
+    email,
+  });
+}
+
+export async function claimPromoCodeForEmailLegacy(input: {
+  code: string;
+  email: string | null | undefined;
+}): Promise<PromoClaimResult> {
+  const email = normalizeEmail(input.email);
+
+  if (!email) {
+    return { status: 'login_required', grant: null };
+  }
+  if (!requireSupabaseRestConfig()) {
+    return { status: 'configuration_required', grant: null };
+  }
+
+  const normalizedCode = normalizePromoCode(input.code);
+
+  if (!normalizedCode) {
+    return { status: 'invalid_code', grant: null };
   }
 
   const grant = await fetchGrantByCodeHash(hashPromoCode(normalizedCode));
 
   if (!grant) {
-    return { status: 'invalid', grant: null };
+    return { status: 'invalid_code', grant: null };
   }
 
   const grantStatus = evaluateGrant(grant);
@@ -520,6 +680,33 @@ export async function listPromoGrantsForOwner(): Promise<SanitizedPromoGrant[]> 
   return rows.map(sanitizeGrant);
 }
 
+export async function listPromoGrantEventsForOwner(grantId?: string | null): Promise<SanitizedPromoGrantEvent[]> {
+  if (!requireSupabaseRestConfig()) {
+    return [];
+  }
+
+  const endpoint = buildEndpoint('access_grant_events');
+  endpoint.searchParams.set('order', 'created_at.desc');
+  endpoint.searchParams.set('limit', '80');
+  endpoint.searchParams.set('select', '*');
+
+  if (grantId) {
+    endpoint.searchParams.set('grant_id', `eq.${grantId}`);
+  }
+
+  const response = await fetch(endpoint, {
+    headers: buildHeaders(),
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorResponse(response));
+  }
+
+  const rows = (await response.json()) as PromoGrantEventRow[];
+  return rows.map(sanitizeGrantEvent);
+}
+
 export async function createPromoGrant(input: {
   code: string;
   label: string;
@@ -580,6 +767,19 @@ export async function createPromoGrant(input: {
     throw new Error('Promotional grant creation returned no row.');
   }
 
+  await recordPromoGrantEvent({
+    grantId: grant.id,
+    actorUserId: hashActorRef(input.createdBy),
+    eventType: 'created',
+    metadata: {
+      grantType,
+      planKey: plan,
+      maxClaims,
+      expiresAt: input.expiresAt ?? null,
+      campaignName: input.campaignName?.trim() || null,
+    },
+  }).catch(() => undefined);
+
   return sanitizeGrant(grant);
 }
 
@@ -599,7 +799,7 @@ export async function revokePromoGrant(input: { id: string; revokedBy: string | 
     body: JSON.stringify({
       revoked_at: nowIso,
       updated_at: nowIso,
-      notes: `Revoked by ${normalizeEmail(input.revokedBy) ?? 'owner'} on ${nowIso}.`,
+      notes: `Revoked by owner/admin on ${nowIso}.`,
     }),
     cache: 'no-store',
   });
@@ -614,6 +814,13 @@ export async function revokePromoGrant(input: { id: string; revokedBy: string | 
   if (!grant) {
     throw new Error('Promotional grant revocation returned no row.');
   }
+
+  await recordPromoGrantEvent({
+    grantId: grant.id,
+    actorUserId: hashActorRef(input.revokedBy),
+    eventType: 'revoked',
+    metadata: { revokedAt: nowIso },
+  }).catch(() => undefined);
 
   return sanitizeGrant(grant);
 }

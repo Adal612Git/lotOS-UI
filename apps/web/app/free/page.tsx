@@ -61,9 +61,10 @@ export default async function FreePage() {
             superficies completas, kits premium y assets privados, Pro Studio esta listo.
           </p>
           <div className="hero-actions">
-            <Link className="btn primary" href="/account/access">Empezar gratis</Link>
-            <Link className="btn secondary" href="/claim">Tengo un codigo promocional</Link>
-            <Link className="btn ghost" href="/demo/student-control">Ver Student Control</Link>
+          <Link className="btn primary" href="/account/access">Empezar gratis</Link>
+          <Link className="btn secondary" href="/claim">Tengo un codigo promocional</Link>
+          <Link className="btn ghost" href="/demo/student-control">Ver Student Control</Link>
+          <Link className="btn ghost" href="/feedback">Enviar feedback</Link>
           </div>
         </div>
         <div className="free-hero-proof" aria-label="Vista previa de producto LotOS Foundation">

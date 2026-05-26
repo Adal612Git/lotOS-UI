@@ -23,12 +23,15 @@ const requiredFiles = [
   'apps/web/app/claim/claim-client.tsx',
   'apps/web/app/account/access/page.tsx',
   'apps/web/app/team-access/free-grants/page.tsx',
+  'apps/web/app/team-access/launch-readiness/page.tsx',
+  'apps/web/app/feedback/page.tsx',
   'apps/web/app/api/promo/claim/route.ts',
   'apps/web/app/api/promo/grants/route.ts',
   'apps/web/app/access-ui.tsx',
   'apps/web/lib/promo-grants.ts',
   'apps/web/lib/access-resolver.ts',
   'apps/web/supabase/migrations/20260525_0003_promotional_access_grants.sql',
+  'apps/web/supabase/migrations/20260525_0004_promotional_claim_rpc.sql',
 ];
 
 for (const relativePath of requiredFiles) {
@@ -70,6 +73,8 @@ if (failures.length === 0) {
     'hashPromoCode',
     'max_claims_reached',
     'already_claimed',
+    'invalid_code',
+    'claim_promotional_access_grant',
     'revoked',
     'expired',
     'configuration_required',
@@ -85,6 +90,13 @@ if (failures.length === 0) {
   for (const marker of ['access_grants', 'access_grant_claims', 'code_hash', 'enable row level security', 'unique (grant_id, email_normalized)']) {
     if (!migration.includes(marker)) {
       fail(`Promo migration missing marker: ${marker}`);
+    }
+  }
+
+  const rpcMigration = read('apps/web/supabase/migrations/20260525_0004_promotional_claim_rpc.sql');
+  for (const marker of ['access_grant_events', 'claim_promotional_access_grant', 'for update', 'claim_count = v_active_claim_count + 1']) {
+    if (!rpcMigration.includes(marker)) {
+      fail(`Promo RPC migration missing marker: ${marker}`);
     }
   }
 

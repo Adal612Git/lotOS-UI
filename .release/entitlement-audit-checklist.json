@@ -264,6 +264,11 @@
       "detail": "marker present"
     },
     {
+      "id": "promo-grants-helper:claim_promotional_access_grant",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
       "id": "promo-grants-helper:listUserPromoGrantAccess",
       "status": "pass",
       "detail": "marker present"
@@ -275,6 +280,11 @@
     },
     {
       "id": "promo-grants-helper:already_claimed",
+      "status": "pass",
+      "detail": "marker present"
+    },
+    {
+      "id": "promo-grants-helper:invalid_code",
       "status": "pass",
       "detail": "marker present"
     },
@@ -680,6 +690,11 @@
     },
     {
       "id": "registry-route:/api/promo/grants",
+      "status": "pass",
+      "detail": "ownerOnly"
+    },
+    {
+      "id": "registry-route:/team-access/launch-readiness",
       "status": "pass",
       "detail": "ownerOnly"
     },

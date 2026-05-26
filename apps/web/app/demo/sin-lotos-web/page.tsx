@@ -7,11 +7,11 @@ export const metadata = {
 };
 
 const contacts = [
-  { id: 1, name: 'María García', email: 'garcia@empresa.mx', company: 'Fabricaciones MX', status: 'active', deal: '$18,400', owner: 'R. Medina' },
-  { id: 2, name: 'Carlos Vega',  email: 'cvega@logistica.com', company: 'Logística Norte', status: 'pending', deal: '$7,200', owner: 'A. Torres' },
-  { id: 3, name: 'Sandra López', email: 's.lopez@retail.mx',  company: 'Retail Express',  status: 'active', deal: '$31,000', owner: 'R. Medina' },
-  { id: 4, name: 'Jorge Ruiz',   email: 'j.ruiz@tech.io',     company: 'TechSol',         status: 'inactive', deal: '$0', owner: 'L. Soto' },
-  { id: 5, name: 'Ana Castillo', email: 'castillo@fintech.mx',company: 'FinTech MX',      status: 'active', deal: '$52,600', owner: 'A. Torres' },
+  { id: 1, name: 'María García', email: 'garcia@empresa.test', company: 'Fabricaciones MX', status: 'active', deal: '$18,400', owner: 'R. Medina' },
+  { id: 2, name: 'Carlos Vega',  email: 'cvega@logistica.test', company: 'Logística Norte', status: 'pending', deal: '$7,200', owner: 'A. Torres' },
+  { id: 3, name: 'Sandra López', email: 's.lopez@retail.test',  company: 'Retail Express',  status: 'active', deal: '$31,000', owner: 'R. Medina' },
+  { id: 4, name: 'Jorge Ruiz',   email: 'j.ruiz@techsol.test',     company: 'TechSol',         status: 'inactive', deal: '$0', owner: 'L. Soto' },
+  { id: 5, name: 'Ana Castillo', email: 'castillo@fintech.test',company: 'FinTech MX',      status: 'active', deal: '$52,600', owner: 'A. Torres' },
 ];
 
 export default function SinLotosWebPage() {
@@ -158,7 +158,7 @@ export default function SinLotosWebPage() {
               <div className="sin-grid-2">
                 <div className="sin-form-group">
                   <label className="sin-label">Email</label>
-                  <input className="sin-input" type="email" placeholder="email@empresa.com" />
+                  <input className="sin-input" type="email" placeholder="email@empresa.test" />
                 </div>
                 <div className="sin-form-group">
                   <label className="sin-label">Teléfono</label>

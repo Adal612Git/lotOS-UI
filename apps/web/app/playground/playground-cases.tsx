@@ -218,8 +218,8 @@ export const playgroundCases: PlaygroundCase[] = [
     summary: 'Labelled input with helper text.',
     plainCode: `<label><span>Email</span><input type="email" /></label>`,
     lotosCode: `import { Input } from '@lotosui/claude-arm';\n\n<Input label="Email" type="email" helperText="Use your work email." />;`,
-    renderPlain: () => <label className="plain-field"><span>Email</span><input className="plain-input" type="email" placeholder="ops@company.com" /><small>Use your work email.</small></label>,
-    renderLotos: () => <Input label="Email" type="email" size="md" placeholder="ops@company.com" helperText="Use your work email." />,
+    renderPlain: () => <label className="plain-field"><span>Email</span><input className="plain-input" type="email" placeholder="ops@company.test" /><small>Use your work email.</small></label>,
+    renderLotos: () => <Input label="Email" type="email" size="md" placeholder="ops@company.test" helperText="Use your work email." />,
   },
   {
     id: 'alert',

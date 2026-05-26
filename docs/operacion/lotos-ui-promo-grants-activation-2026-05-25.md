@@ -12,14 +12,16 @@ Archivo:
 
 ```text
 apps/web/supabase/migrations/20260525_0003_promotional_access_grants.sql
+apps/web/supabase/migrations/20260525_0004_promotional_claim_rpc.sql
 ```
 
 Tablas:
 
 - `public.access_grants`
 - `public.access_grant_claims`
+- `public.access_grant_events`
 
-La migracion solo crea schema, indices, constraints, RLS y comments. No contiene codigos reales, hashes reales de campanas, emails, telefonos ni datos privados.
+Las migraciones solo crean schema, indices, constraints, RLS, comments y la RPC transaccional. No contienen codigos reales, hashes reales de campanas, emails, telefonos ni datos privados.
 
 ## Preflight local
 
@@ -41,13 +43,14 @@ Confirmar:
 ## Aplicar migracion en staging
 
 1. Hacer backup del schema/tablas relevantes de staging antes de migrar.
-2. Aplicar `20260525_0003_promotional_access_grants.sql` con el flujo aprobado para Supabase staging.
+2. Aplicar `20260525_0003_promotional_access_grants.sql` y despues `20260525_0004_promotional_claim_rpc.sql` con el flujo aprobado para Supabase staging.
 3. No pegar codigos promocionales reales en SQL.
 4. Confirmar que las tablas existen:
 
 ```sql
 select to_regclass('public.access_grants') as access_grants;
 select to_regclass('public.access_grant_claims') as access_grant_claims;
+select to_regclass('public.access_grant_events') as access_grant_events;
 ```
 
 Resultado esperado:
@@ -55,6 +58,7 @@ Resultado esperado:
 ```text
 public.access_grants
 public.access_grant_claims
+public.access_grant_events
 ```
 
 5. Confirmar columnas minimas:
@@ -72,10 +76,18 @@ order by table_name, ordinal_position;
 ```sql
 select relname, relrowsecurity
 from pg_class
-where relname in ('access_grants', 'access_grant_claims');
+where relname in ('access_grants', 'access_grant_claims', 'access_grant_events');
 ```
 
 Resultado esperado: `relrowsecurity = true`.
+
+7. Confirmar RPC:
+
+```sql
+select proname
+from pg_proc
+where proname = 'claim_promotional_access_grant';
+```
 
 ## Crear un PRO_TRIAL QA no publico
 
@@ -173,7 +185,7 @@ No hacer pruebas de expiracion manual en produccion con grants reales activos.
 Solo despues de staging QA:
 
 1. Confirmar backup de produccion.
-2. Aplicar `20260525_0003_promotional_access_grants.sql`.
+2. Aplicar `20260525_0003_promotional_access_grants.sql` y `20260525_0004_promotional_claim_rpc.sql`.
 3. Confirmar tablas, columnas y RLS igual que en staging.
 4. Crear un unico `PRO_TRIAL` QA no publico.
 5. Reclamarlo con cuenta QA.
@@ -201,9 +213,9 @@ Evitar `drop table` en produccion. Si se requiere remover schema, hacer backup y
 
 ## Para campanas masivas
 
-El flujo actual valida `maxClaims` leyendo claims activos y luego actualiza `claim_count`. Es suficiente para QA, gifts uno a uno y campanas pequenas.
+Black Diamond agrega `claim_promotional_access_grant`, una RPC transaccional que bloquea la fila del grant con `for update`, valida estado y actualiza `claim_count` de forma atomica. Debe estar aplicada en staging y produccion antes de campanas con volumen.
 
-Para campanas masivas, mover `claimCount` a una funcion SQL transaccional que:
+Para campanas masivas mayores, considerar una version dedicada con rate limiting y observabilidad que:
 
 - reciba `code_hash` y `email_normalized`;
 - bloquee la fila del grant con `for update`;
@@ -212,7 +224,7 @@ Para campanas masivas, mover `claimCount` a una funcion SQL transaccional que:
 - incremente `claim_count` dentro de la misma transaccion;
 - devuelva un estado controlado sin revelar detalles innecesarios.
 
-No lanzar campanas de alto volumen hasta implementar esa funcion.
+No lanzar campanas de alto volumen hasta confirmar la RPC en produccion y monitorear `access_grant_events`.
 
 ## Riesgos
 

@@ -77,9 +77,11 @@ if (migrationFiles.join('\n') !== sorted.join('\n')) {
 
 const lifecyclePath = 'apps/web/supabase/migrations/20260519_0001_entitlements_lifecycle.sql';
 const auditPath = 'apps/web/supabase/migrations/20260519_0002_entitlement_audit_events.sql';
+const promoGrantsPath = 'apps/web/supabase/migrations/20260525_0003_promotional_access_grants.sql';
+const promoClaimRpcPath = 'apps/web/supabase/migrations/20260525_0004_promotional_claim_rpc.sql';
 const docsPath = 'docs/SUPABASE_LOCAL_DRY_RUN.md';
 
-for (const relativePath of [lifecyclePath, auditPath, docsPath]) {
+for (const relativePath of [lifecyclePath, auditPath, promoGrantsPath, promoClaimRpcPath, docsPath]) {
   if (!exists(relativePath)) {
     fail(`Missing Supabase migration support file: ${relativePath}`);
   }
@@ -163,6 +165,36 @@ if (exists(auditPath)) {
       fail(`Audit migration must not add raw email column marker: ${forbidden.trim()}`);
     }
   }
+}
+
+if (exists(promoGrantsPath)) {
+  const promoGrants = read(promoGrantsPath);
+  requireSafeSql(promoGrantsPath, promoGrants);
+  requireMarkers('Promotional grants migration', promoGrants, [
+    'create table if not exists public.access_grants',
+    'create table if not exists public.access_grant_claims',
+    'code_hash text not null unique',
+    "grant_type in ('FREE_FOUNDATION', 'PRO_TRIAL', 'PRO_GIFT', 'FULL_GIFT', 'QA_ACCESS')",
+    'unique (grant_id, email_normalized)',
+    'enable row level security',
+    'Raw promo codes are never stored',
+  ]);
+}
+
+if (exists(promoClaimRpcPath)) {
+  const promoClaimRpc = read(promoClaimRpcPath);
+  requireSafeSql(promoClaimRpcPath, promoClaimRpc);
+  requireMarkers('Promotional claim RPC migration', promoClaimRpc, [
+    'create table if not exists public.access_grant_events',
+    'create or replace function public.claim_promotional_access_grant',
+    'for update',
+    'v_active_claim_count',
+    'max_claims_reached',
+    'already_claimed',
+    'invalid_code',
+    'grant execute on function public.claim_promotional_access_grant',
+    'Raw codes, tokens, cookies, and secrets are forbidden',
+  ]);
 }
 
 if (exists(docsPath)) {

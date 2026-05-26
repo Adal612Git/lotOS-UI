@@ -5206,13 +5206,206 @@ th {
   font-weight: 800;
 }
 
+.free-grants-presets,
+.free-grants-risk-list,
+.free-grants-card-head,
+.free-grants-list-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.free-grants-presets,
+.free-grants-risk-list {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.free-grants-warning,
+.free-grants-events {
+  margin: 0;
+  border-left: 4px solid #f2b544;
+  padding: 10px 12px;
+  background: rgba(242, 181, 68, 0.12);
+  color: rgba(19, 32, 30, 0.74);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.free-grants-warning.strong {
+  border-left-color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+  color: #7a271a;
+  font-weight: 800;
+}
+
+.free-grants-one-time {
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(11, 107, 91, 0.2);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(11, 107, 91, 0.08);
+  color: #13201e;
+}
+
+.free-grants-risk-list span,
+.free-grants-state {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  padding: 7px 9px;
+  background: #fff;
+  color: rgba(19, 32, 30, 0.68);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.free-grants-state-active {
+  border-color: rgba(11, 107, 91, 0.22);
+  color: #0b6b5b;
+}
+
+.free-grants-state-scheduled {
+  border-color: rgba(2, 132, 199, 0.22);
+  color: #075985;
+}
+
+.free-grants-state-expired,
+.free-grants-state-exhausted {
+  border-color: rgba(154, 91, 0, 0.24);
+  color: #7a4a05;
+}
+
+.free-grants-state-revoked {
+  border-color: rgba(180, 35, 24, 0.22);
+  color: #7a271a;
+}
+
+.free-grants-select-grid.compact {
+  min-width: min(420px, 100%);
+}
+
+.launch-readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.launch-readiness-item {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 18px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+}
+
+.launch-readiness-item span {
+  justify-self: start;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  padding: 7px 9px;
+  background: #fff;
+  color: rgba(19, 32, 30, 0.68);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.launch-readiness-item-ready span {
+  border-color: rgba(11, 107, 91, 0.24);
+  color: #0b6b5b;
+}
+
+.launch-readiness-item-manual span {
+  border-color: rgba(154, 91, 0, 0.24);
+  color: #7a4a05;
+}
+
+.launch-readiness-item-pending span {
+  border-color: rgba(180, 35, 24, 0.22);
+  color: #7a271a;
+}
+
+.launch-readiness-item h2 {
+  margin: 0;
+  color: #13201e;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+}
+
+.launch-readiness-item p {
+  margin: 0;
+  color: rgba(19, 32, 30, 0.72);
+  line-height: 1.55;
+}
+
+.feedback-hero {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  padding: 72px 0 36px;
+}
+
+.feedback-hero h1 {
+  margin: 0;
+  max-width: 900px;
+  color: #13201e;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.feedback-hero p {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(19, 32, 30, 0.72);
+  line-height: 1.65;
+}
+
+.feedback-question-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.feedback-question-grid article {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 18px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.feedback-question-grid span {
+  color: #0b6b5b;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.feedback-question-grid h2 {
+  margin: 0;
+  color: #13201e;
+  font-size: 1rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
 @media (max-width: 940px) {
   .free-hero,
   .claim-shell,
   .account-access-hero,
   .free-columns,
   .promo-pass-band,
-  .free-grants-shell {
+  .free-grants-shell,
+  .launch-readiness-grid,
+  .feedback-question-grid {
     grid-template-columns: 1fr;
   }
 
@@ -5226,7 +5419,9 @@ th {
   .access-summary-card__header,
   .claim-form-row,
   .access-summary-actions,
-  .claim-result-actions {
+  .claim-result-actions,
+  .free-grants-card-head,
+  .free-grants-list-head {
     align-items: stretch;
     flex-direction: column;
   }

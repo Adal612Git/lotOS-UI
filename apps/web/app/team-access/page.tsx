@@ -120,6 +120,7 @@ export default async function TeamAccessPage({
           <Link href="/free" className="nav-link">Free</Link>
           <Link href="/claim" className="nav-link">Claim</Link>
           <Link href="/team-access/free-grants" className="nav-link">Promo Grants</Link>
+          <Link href="/team-access/launch-readiness" className="nav-link">Launch RC</Link>
           <Link href="/pricing" className="nav-link nav-link--pricing">Pricing</Link>
           {signedIn ? (
             <Link href="/api/auth/signout?callbackUrl=/" className="nav-link nav-link--muted">Sign Out</Link>
