@@ -2,6 +2,15 @@
 
 Monorepo oficial de LotOS UI.
 
+Convierte pantallas y flujos generados por IA en superficies reutilizables,
+documentadas y entregables mediante paquetes UI, CLI, MCP, demos y adaptadores
+multi-runtime.
+
+Estado verificado el 2026-07-23: operativo local. La instalación congelada,
+lint, tipos, 455 pruebas, build web/docs, 45/45 controles de consistencia y
+smokes de CLI/MCP pasaron. Consulta [STATUS.md](STATUS.md) para distinguir lo
+real de lo pendiente y [RUNBOOK.md](RUNBOOK.md) para operación reproducible.
+
 ## Paquetes npm oficiales
 
 - `@lotosui/claude-arm` (publicado, producción)
@@ -75,9 +84,13 @@ Resumen rapido:
 ## Desarrollo local
 
 ```bash
-pnpm install
-pnpm dev
+corepack pnpm install --frozen-lockfile
+corepack pnpm dev
 ```
+
+El workspace fija `pnpm@9.0.0` mediante `packageManager`. El build y las demos
+locales no requieren secretos. Las integraciones comerciales usan el contrato
+vacío de `apps/web/.env.example`; nunca copies credenciales al repositorio.
 
 ## AI-native operation
 
@@ -98,8 +111,8 @@ Agents should read the manifest and `.ai/` files before scanning huge pages. The
 ## Build y test
 
 ```bash
-pnpm build
-pnpm test
+corepack pnpm test
+corepack pnpm build
 ```
 
 Nota de entorno Windows con restriccion `spawn EPERM`:
@@ -215,6 +228,25 @@ Verificacion de la capa AI-native:
 ```bash
 pnpm verify:ai
 ```
+
+## Despliegue
+
+Los proyectos Vercel vinculados son `lotos-ui` y `docs`. Valida primero con
+`corepack pnpm build`, despliega una preview y ejecuta smoke tests antes de
+promover. El procedimiento y rollback están en [RUNBOOK.md](RUNBOOK.md).
+
+## Limitaciones y próximos pasos
+
+- Login, checkout, entitlement, webhooks y persistencia Supabase necesitan
+  credenciales externas rotadas; el modo local sin ellas demuestra las
+  superficies públicas y los contratos, no una compra real.
+- Los contratos MCP marcan React, Web Components y Laravel Blade como
+  soportados; Django templates y Spring Thymeleaf siguen planeados en ese
+  contrato concreto.
+- La validación visual manual y los flujos de proveedor deben repetirse en una
+  preview con variables seguras antes de producción.
+- Node.js 24 emite una advertencia deprecada desde pnpm 9; el build pasa, pero
+  CI debe conservar también una versión LTS soportada para comparación.
 
 ## Release candidate
 
