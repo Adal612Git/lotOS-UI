@@ -6,10 +6,11 @@ Convierte pantallas y flujos generados por IA en superficies reutilizables,
 documentadas y entregables mediante paquetes UI, CLI, MCP, demos y adaptadores
 multi-runtime.
 
-Estado verificado el 2026-07-23: operativo local. La instalación congelada,
-lint, tipos, 455 pruebas, build web/docs, 45/45 controles de consistencia y
-smokes de CLI/MCP pasaron. Consulta [STATUS.md](STATUS.md) para distinguir lo
-real de lo pendiente y [RUNBOOK.md](RUNBOOK.md) para operación reproducible.
+Estado verificado el 2026-07-23: operativo y desplegado. La instalación
+congelada, lint, tipos, 455 pruebas, build web/docs, 45/45 controles de
+consistencia y smokes de CLI/MCP pasaron; la producción pública respondió en
+`https://lotos-ui.vercel.app`. Consulta [STATUS.md](STATUS.md) para distinguir
+lo real de lo pendiente y [RUNBOOK.md](RUNBOOK.md) para operación reproducible.
 
 ## Paquetes npm oficiales
 

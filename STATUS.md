@@ -13,6 +13,9 @@ Verified: 2026-07-23
 - 455 package tests pass. Lint, TypeScript, 45/45 consistency checks, secret
   gate, package boundary, premium boundary, CLI, MCP, web, and CI checks pass.
 - The local production server returns HTTP 200 for `/` and `/design-lab`.
+- Vercel production deployment `dpl_3FAuA25PcWGdJ8S58QEbtxmLn63t` is `Ready`;
+  the public home and `/design-lab` return HTTP 200 and the home contains the
+  new navigation link.
 
 ## Simulated or local-only
 
@@ -27,7 +30,8 @@ Verified: 2026-07-23
   application secrets in a preview environment.
 - Repeat manual visual QA and authenticated commercial lifecycle tests in that
   preview.
-- Verify the current public deployments against the committed branch.
+- Change the Vercel project runtime from deprecated Node.js 20.x to 24.x before
+  2026-10-01. The complete local build already passes on Node.js 24.11.1.
 
 ## Blocked externally
 
