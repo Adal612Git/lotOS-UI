@@ -5,6 +5,7 @@
     "build": "node ONE/run-build.mjs",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "diagnose:local-env": "node ONE/diagnose-local-toolchain.mjs",

@@ -29,7 +29,7 @@ function check(name, passed, detail, critical = false) {
 }
 
 const files = {
-  webDemoPage: 'apps/web/app/page.tsx',
+  webDemoPage: 'apps/web/app/home-sections.tsx',
   multiFrameworkPage: 'apps/web/app/multi-framework/page.tsx',
   designLabPage: 'apps/web/app/design-lab/page.tsx',
   docsIndex: 'apps/docs/content/docs/index.mdx',
@@ -110,7 +110,7 @@ for (const staleClaim of staleClaims) {
 check(
   'design-lab:link-from-demo',
   webDemoPage.includes('href="/design-lab"'),
-  'apps/web demo should link to /design-lab',
+  'apps/web home navigation should link to /design-lab',
 );
 
 check(

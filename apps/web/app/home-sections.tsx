@@ -144,6 +144,7 @@ export function SiteHeader({ signedInEmail }: { signedInEmail: string | null }) 
         <Link href="/#before-after">Product</Link>
         <Link href="/demo">Demos</Link>
         <Link href="/demo/components">Components</Link>
+        <Link href="/design-lab">Design Lab</Link>
         <Link href="/pricing">Pricing</Link>
         <Link href="/free">Free</Link>
         <Link href="/claim">Claim code</Link>
